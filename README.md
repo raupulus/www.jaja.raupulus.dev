@@ -2,7 +2,33 @@
 
 Proyecto Laravel con backend Filament y api para gestionar chistes y adivinanzas que consumir externamente mediante bots.
 
-## Iniciar
+## Iniciar proyecto en desarrollo
+
+### Preparar .env
+
+Copiamos el .env y rellenamos los datos del entorno, nuestra base de datos y configuraciones necesarias.
+
+```bash
+cp .env.example .env
+```
+
+### Instalar dependencias
+
+```bash
+composer install
+```
+
+### Generar clave de aplicación
+
+```bash
+php artisan key:generate
+```
+
+### Crear enlace simbólico para el storage
+
+```bash
+php artisan storage:link
+```
 
 ### Ejecutar migraciones para generar la base de datos
 
@@ -22,7 +48,12 @@ php artisan make:filament-user
 php artisan db:seed
 ```
 
+---
+
 ## Rutas web
 
+Sitio Principal: /
+
 Panel: /admin
+
 Login: /admin/login
