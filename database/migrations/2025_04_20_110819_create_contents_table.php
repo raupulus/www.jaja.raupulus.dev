@@ -12,9 +12,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('group_id')->constrained('groups');
-            $table->string('title');
+            $table->string('title', 255);
             $table->text('content');
-            $table->foreignId('image_id')->nullable()->constrained('files');
+            $table->string('image', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

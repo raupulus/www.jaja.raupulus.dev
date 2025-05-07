@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('content_options', function (Blueprint $table) {
             $table->id();
             $table->foreignId('content_id')->constrained('contents');
-            $table->string('title');
-            $table->string('value');
-            $table->boolean('is_correct');
-            $table->foreignId('image_id')->nullable()->constrained('files');
+            $table->string('title', 255);
+            $table->string('value', 255);
+            $table->boolean('is_correct')->default(false);
+            $table->string('image', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

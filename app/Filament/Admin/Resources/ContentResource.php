@@ -2,49 +2,53 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\TypeResource\Pages;
-use App\Filament\Admin\Resources\TypeResource\RelationManagers;
-use App\Models\Type;
+use App\Filament\Admin\Resources\ContentResource\Pages;
+use App\Filament\Admin\Resources\ContentResource\RelationManagers;
+use App\Models\Content;
+use App\Models\File;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\ImageFile;
 
-class TypeResource extends Resource
+class ContentResource extends Resource
 {
-    protected static ?string $model = Type::class;
+    protected static ?string $model = Content::class;
 
-    protected static ?string $navigationLabel = 'Tipos';
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationLabel = 'Contenidos';
 
     protected static ?string $navigationGroup = 'Contenidos';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    protected static ?string $recordTitleAttribute = 'title';
+
 
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('title')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\TextInput::make('content')
                     ->required()
-                    ->maxLength(255),
-
+                    ->maxLength(1024),
                 Forms\Components\FileUpload::make('image')
                     ->image()
                     ->disk('public')
-                    ->directory('category-images')
+                    ->directory('content-images')
                     ->visibility('public')
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null),
+
             ]);
     }
 
@@ -53,14 +57,19 @@ class TypeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nombre')
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Usuario')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('group.title')
+                    ->label('Grupo')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->label('Descripción')
-                    ->searchable(),
-
+                Tables\Columns\TextColumn::make('content'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')
                     ->dateTime()
@@ -83,7 +92,6 @@ class TypeResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                //Tables\Actions\CreateAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -104,18 +112,9 @@ class TypeResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTypes::route('/'),
-            'create' => Pages\CreateType::route('/create'),
-            'view' => Pages\ViewType::route('/{record}'),
-            'edit' => Pages\EditType::route('/{record}/edit'),
+            'index' => Pages\ListContents::route('/'),
+            'create' => Pages\CreateContent::route('/create'),
+            'edit' => Pages\EditContent::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

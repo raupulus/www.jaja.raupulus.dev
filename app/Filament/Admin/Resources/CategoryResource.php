@@ -23,7 +23,6 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Contenidos';
 
-
     protected static ?string $recordTitleAttribute = 'title';
 
 
@@ -33,12 +32,19 @@ class CategoryResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('title')
                     ->required()
+                    ->label('Título')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('description')
                     ->required()
+                    ->label('Descripción')
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image_id')
+                Forms\Components\FileUpload::make('image')
                     ->image()
+                    ->disk('public')
+                    ->directory('category-images')
+                    ->visibility('public')
+                    ->imageEditor()
+                    ->label('Imagen')
                     ->default(null),
             ]);
     }
@@ -47,24 +53,26 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
+                    ->label('Descripción')
                     ->searchable(),
-                /*
-                Tables\Columns\ImageColumn::make('image_id')
-                    ->numeric()
-                    ->sortable(),
-                */
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Fecha de Borrado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

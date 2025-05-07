@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                //Widgets\StatsOverviewWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -64,6 +65,14 @@ class AdminPanelProvider extends PanelProvider
                     //->icon('heroicon-o-pencil')
                     ->collapsible(false),
 
-            ]);
+            ])
+
+
+            ->login()
+            //->registration()
+            ->passwordReset()
+            ->emailVerification()
+            ->profile()
+            ;
     }
 }

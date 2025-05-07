@@ -185,13 +185,11 @@ class ContentSeeder extends Seeder
             $categoryId = $content['category_id'];
             unset($content['category_id']);
 
-            // Crear el contenido
             $contentModel = Content::create([
                 ...$content,
-                'user_id' => 1, // Asumiendo que existe un usuario con ID 1
+                'user_id' => 1,
             ]);
 
-            // Crear la relación en content_categories
             ContentCategory::create([
                 'content_id' => $contentModel->id,
                 'category_id' => $categoryId

@@ -10,9 +10,9 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->foreignId('image_id')->nullable()->constrained('files');
+            $table->string('title', 255);
+            $table->string('description', 255);
+            $table->string('image', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
