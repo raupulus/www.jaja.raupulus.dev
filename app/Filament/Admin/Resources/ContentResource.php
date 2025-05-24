@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
+use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\ContentResource\Pages;
 use App\Filament\Admin\Resources\ContentResource\RelationManagers;
 use App\Models\Content;
@@ -20,7 +21,9 @@ class ContentResource extends Resource
 {
     protected static ?string $model = Content::class;
 
-    protected static ?string $navigationLabel = 'Contenidos';
+    protected static ?string $navigationLabel = 'Entradas';
+
+    protected static ?string $label = 'Entrada';
 
     protected static ?string $navigationGroup = 'Contenidos';
 
@@ -34,20 +37,86 @@ class ContentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('content')
-                    ->required()
-                    ->maxLength(1024),
                 Forms\Components\FileUpload::make('image')
+                    ->columnSpanFull()
                     ->image()
                     ->disk('public')
                     ->directory('content-images')
                     ->visibility('public')
                     ->imageEditor()
                     ->label('Imagen')
-                    ->default(null),
+                    ->default(null)
+                    ->imageResizeTargetHeight(600)
+                    ->imageResizeTargetWidth(800)
+                    ->imageResizeMode('crop', )
+                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
+                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                            try {
+                                $tempFile = $state->getRealPath();
+                                $converter = new ConvertImageToWebp();
+                                $newPath = $converter($tempFile);
+
+                                if ($newPath && $newPath !== $tempFile) {
+                                    ## Actualizo el estado con un array en lugar de un string
+                                    $component->state([$newPath]);
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Error en la conversión: ' . $e->getMessage());
+                                \Log::error($e->getTraceAsString());
+                            }
+                        }
+                    })
+                ,
+                Forms\Components\TextInput::make('title')
+                    ->required()
+                    ->columnSpanFull()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('content')
+                    ->required()
+                    ->columnSpanFull()
+                    ->maxLength(1024),
+
+                Forms\Components\Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->label('Usuario')
+                    ->default(fn () => auth()->id())
+                    ->placeholder('Seleccione un usuario'),
+
+                Forms\Components\Select::make('group_id')
+                    ->relationship('group', 'title')
+                    ->searchable()
+                    ->preload()
+                    ->required()
+                    ->label('Grupo')
+                    ->placeholder('Seleccione un grupo')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Título'),
+                        Forms\Components\Select::make('type_id')
+                            ->relationship('type', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->label('Tipo')
+                            ->placeholder('Seleccione un tipo')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('name')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->label('Nombre'),
+                                Forms\Components\Textarea::make('description')
+                                    ->required()
+                                    ->maxLength(1024)
+                                    ->label('Descripción')
+
+                            ]),
+
+                    ]),
 
             ]);
     }
@@ -60,16 +129,23 @@ class ContentResource extends Resource
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Usuario')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('group.title')
                     ->label('Grupo')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
+                    ->limit(100)
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('content')
+                    ->label('Contenido')
+                    ->searchable()
                     ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('content'),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')
                     ->dateTime()

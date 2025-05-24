@@ -2,6 +2,7 @@
 
 namespace App\Filament\Admin\Resources;
 
+use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\CategoryResource\Pages;
 use App\Filament\Admin\Resources\CategoryResource\RelationManagers;
 use App\Models\Category;
@@ -21,6 +22,8 @@ class CategoryResource extends Resource
 
     protected static ?string $navigationLabel = 'Categorías';
 
+    protected static ?string $label = 'Categoría';
+
     protected static ?string $navigationGroup = 'Contenidos';
 
     protected static ?string $recordTitleAttribute = 'title';
@@ -30,22 +33,46 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->label('Título')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->label('Descripción')
-                    ->maxLength(255),
                 Forms\Components\FileUpload::make('image')
+                    ->columnSpanFull()
                     ->image()
                     ->disk('public')
                     ->directory('category-images')
                     ->visibility('public')
                     ->imageEditor()
                     ->label('Imagen')
-                    ->default(null),
+                    ->default(null)
+                    ->imageResizeTargetHeight(250)
+                    ->imageResizeTargetWidth(250)
+                    ->imageResizeMode('crop', )
+                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
+                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                            try {
+                                $tempFile = $state->getRealPath();
+                                $converter = new ConvertImageToWebp();
+                                $newPath = $converter($tempFile);
+
+                                if ($newPath && $newPath !== $tempFile) {
+                                    ## Actualizo el estado con un array en lugar de un string
+                                    $component->state([$newPath]);
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Error en la conversión: ' . $e->getMessage());
+                                \Log::error($e->getTraceAsString());
+                            }
+                        }
+                    })
+                ,
+                Forms\Components\TextInput::make('title')
+                    ->columnSpanFull()
+                    ->required()
+                    ->label('Título')
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('description')
+                    ->columnSpanFull()
+                    ->required()
+                    ->label('Descripción')
+                    ->maxLength(255),
             ]);
     }
 
@@ -105,7 +132,7 @@ class CategoryResource extends Resource
         return [
             'index' => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
-            'view' => Pages\ViewCategory::route('/{record}'),
+            //'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }

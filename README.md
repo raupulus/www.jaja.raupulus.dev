@@ -33,7 +33,7 @@ php artisan storage:link
 ### Ejecutar migraciones para generar la base de datos
 
 ```bash
-php artisan migrate:refresh
+php artisan migrate
 ```
 
 ### Crear tantos usuarios como necesitemos
@@ -57,3 +57,14 @@ Sitio Principal: /
 Panel: /admin
 
 Login: /admin/login
+
+
+## Filament
+
+Documentación: https://filamentphp.com/docs/
+
+### Crear nuevo Recurso con formulario y tabla
+
+```bash
+php artisan make:filament-resource Customer --generate
+```

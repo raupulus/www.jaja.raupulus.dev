@@ -3,40 +3,37 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Actions\ConvertImageToWebp;
-use App\Filament\Admin\Resources\TypeResource\Pages;
-use App\Filament\Admin\Resources\TypeResource\RelationManagers;
-use App\Models\Type;
+use App\Filament\Admin\Resources\GroupResource\Pages;
+use App\Filament\Admin\Resources\GroupResource\RelationManagers;
+use App\Models\Group;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TypeResource extends Resource
+class GroupResource extends Resource
 {
-    protected static ?string $model = Type::class;
+    protected static ?string $model = Group::class;
 
-    protected static ?string $navigationLabel = 'Tipos';
+    protected static ?string $navigationLabel = 'Grupos';
 
-    protected static ?string $label = 'Tipo';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $label = 'Grupo';
     protected static ?string $navigationGroup = 'Contenidos';
 
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\FileUpload::make('image')
-                    ->columnSpanFull()
                     ->image()
+                    ->columnSpanFull()
                     ->disk('public')
-                    ->directory('type-images')
+                    ->directory('group-images')
                     ->visibility('public')
                     ->imageEditor()
                     ->imageResizeTargetHeight(1024)
@@ -53,6 +50,7 @@ class TypeResource extends Resource
                                 //\Log::info("Ruta temporal del archivo: " . $tempFile);
 
                                 $originalName = $state->getClientOriginalName();
+                                $path = 'group-images/' . time() . '_' . $originalName;
 
                                 $converter = new ConvertImageToWebp();
                                 $newPath = $converter($tempFile);
@@ -66,17 +64,34 @@ class TypeResource extends Resource
                                 \Log::error($e->getTraceAsString());
                             }
                         }
-                    }),
-                Forms\Components\TextInput::make('name')
-                    ->label('Nombre')
-                    ->columnSpanFull()
+                    })
+                ,
+
+                Forms\Components\TextInput::make('title')
                     ->required()
+                    ->label('Título')
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('description')
-                    ->label('Descripción')
-                    ->columnSpanFull()
+
+
+                Forms\Components\Select::make('type_id')
+                    ->relationship('type', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required()
-                    ->maxLength(255),
+                    ->label('Tipo')
+                    ->placeholder('Seleccione un tipo')
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Nombre'),
+                        Forms\Components\Textarea::make('description')
+                            ->required()
+                            ->maxLength(1024)
+                            ->label('Descripción')
+
+                    ]),
+
             ]);
     }
 
@@ -84,44 +99,36 @@ class TypeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')->label('Imagen'),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nombre')
-                    ->sortable()
+                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('title')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('description')
-                    ->label('Descripción')
-                    ->searchable(),
-
+                Tables\Columns\TextColumn::make('type.name')
+                    ->label('Tipo')
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
-                    ->label('Fecha de Borrado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                Tables\Filters\TrashedFilter::make(),
+                //
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
-                //Tables\Actions\CreateAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
-                    Tables\Actions\ForceDeleteBulkAction::make(),
-                    Tables\Actions\RestoreBulkAction::make(),
                 ]),
             ]);
     }
@@ -129,25 +136,16 @@ class TypeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\ContentsRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListTypes::route('/'),
-            'create' => Pages\CreateType::route('/create'),
-            //'view' => Pages\ViewType::route('/{record}'),
-            'edit' => Pages\EditType::route('/{record}/edit'),
+            'index' => Pages\ListGroups::route('/'),
+            'create' => Pages\CreateGroup::route('/create'),
+            'edit' => Pages\EditGroup::route('/{record}/edit'),
         ];
-    }
-
-    public static function getEloquentQuery(): Builder
-    {
-        return parent::getEloquentQuery()
-            ->withoutGlobalScopes([
-                SoftDeletingScope::class,
-            ]);
     }
 }

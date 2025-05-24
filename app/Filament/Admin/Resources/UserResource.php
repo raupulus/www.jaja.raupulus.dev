@@ -12,12 +12,16 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Hash;
+use App\Actions\ConvertImageToWebp;
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
     protected static ?string $navigationLabel = 'Usuarios';
+
+    protected static ?string $label = 'Usuario';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -29,6 +33,45 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('avatar')
+                    ->columnSpanFull()
+                    ->alignCenter()
+                    ->avatar()
+                    ->disk('public')
+                    ->directory('user-images')
+                    ->visibility('public')
+                    ->imageEditor()
+                    ->imageResizeTargetHeight(250)
+                    ->imageResizeTargetWidth(250)
+                    //->imageEditorAspectRatios(['1:1'])
+                    ->imageResizeMode('crop', )
+                    //->imageEditorMode(2)
+                    ->label('Avatar')
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
+                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                            try {
+                                $tempFile = $state->getRealPath();
+                                //\Log::info("Ruta temporal del archivo: " . $tempFile);
+
+                                $originalName = $state->getClientOriginalName();
+                                $path = 'user-images/' . time() . '_' . $originalName;
+
+                                $converter = new ConvertImageToWebp();
+                                $newPath = $converter($tempFile);
+
+                                if ($newPath && $newPath !== $tempFile) {
+                                    ## Actualizo el estado con un array en lugar de un string
+                                    $component->state([$newPath]);
+                                }
+                            } catch (\Exception $e) {
+                                \Log::error('Error en la conversión: ' . $e->getMessage());
+                                \Log::error($e->getTraceAsString());
+                            }
+                        }
+                    })
+                ,
+
                 Forms\Components\TextInput::make('name')
                     ->required()
                     ->label('Nombre')
@@ -40,11 +83,14 @@ class UserResource extends Resource
                     ->maxLength(255),
                 Forms\Components\DateTimePicker::make('email_verified_at')
                     ->label('Verificado')
+                    ->hiddenOn(['create', 'edit'])
                     ->readOnly(),
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->required()
+                    ->dehydrated(fn ($state) => filled($state))
+                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->label('Contraseña')
+                    ->hiddenOn('view')
                     ->maxLength(255),
             ]);
     }
@@ -53,6 +99,9 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('avatar')
+                    ->circular()
+                    ->label('Avatar'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
                     ->sortable()
