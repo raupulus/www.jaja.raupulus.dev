@@ -81,6 +81,10 @@ class UserResource extends Resource
                     ->required()
                     ->label('Email')
                     ->maxLength(255),
+                Forms\Components\TextInput::make('nick')
+                    ->required()
+                    ->label('Nick')
+                    ->maxLength(255),
                 Forms\Components\DateTimePicker::make('email_verified_at')
                     ->label('Verificado')
                     ->hiddenOn(['create', 'edit'])
@@ -89,6 +93,7 @@ class UserResource extends Resource
                     ->password()
                     ->dehydrated(fn ($state) => filled($state))
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                    ->required(fn (string $context): bool => $context === 'create')
                     ->label('Contraseña')
                     ->hiddenOn('view')
                     ->maxLength(255),
@@ -104,6 +109,10 @@ class UserResource extends Resource
                     ->label('Avatar'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
+                    ->sortable()
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('nick')
+                    ->label('Nick')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')

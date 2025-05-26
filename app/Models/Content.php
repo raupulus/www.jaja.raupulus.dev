@@ -52,6 +52,16 @@ class Content extends Model
     }
 
     /**
+     * Devuelve el nick del usuario que ha subido el contenido
+     *
+     * @return string
+     */
+    public function getUploaderAttribute(): string
+    {
+        return '@' . ($this->uploaded_by ?? $this->user?->nick ?? 'SinAsignar');
+    }
+
+    /**
      * Devuelve la url hacia la imagen.
      *
      * @return string
