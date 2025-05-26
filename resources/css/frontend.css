@@ -2,8 +2,8 @@
 :root {
     --color-primario: #00bcd4;
     --color-primario-hover: #0097a7;
-    --color-fondo-oscuro: #121212; /* Fondo principal muy oscuro */
-    --color-superficie-oscura: #1e1e1e; /* Para elementos como navbar, cards */
+    --color-fondo-oscuro: #121212; /* Fondo principal gris oscuro */
+    --color-superficie-oscura: #1e1e1e; /* Para elementos como navbar y cards */
     --color-borde-oscuro: #2c2c2c;
     --color-texto-principal: #e0e0e0; /* Texto claro principal */
     --color-texto-secundario: #b0b0b0; /* Texto claro secundario */
@@ -116,10 +116,15 @@ img {
     color: var(--color-texto-secundario);
     margin-bottom: 1.5rem;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
+.text-center {
+    text-align: center;
+}
+
+.m-auto {
+    margin: auto;
+}
 /* --- Cards --- */
 .card {
     background-color: var(--color-superficie-oscura);
@@ -306,22 +311,91 @@ form button.btn {
     color: var(--color-superficie-oscura);
 }
 
-/* --- Footer --- */
-.footer {
-    background-color: var(--color-superficie-oscura);
-    color: var(--color-texto-secundario);
-    text-align: center;
-    padding: 1.5rem 0;
-    border-top: 1px solid var(--color-borde-oscuro);
-    margin-top: auto;
+/* --- Formularios --- */
+.alert {
+    position: relative;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-family: 'Roboto', sans-serif;
+    transition: all 0.3s ease;
+    animation: alertFadeIn 0.3s ease forwards;
+    font-size: 14px;
 }
 
-.footer p {
-    margin: 0;
-    font-size: 0.9em;
+.alert ul {
+    margin: 8px 0 0 0;
+    padding-left: 20px;
 }
 
-/* --- Navbar con Menú Hamburguesa --- */
+.alert li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.alert-danger {
+    background-color: #2c1a1a;
+    color: #f8d7da;
+    border-left: 4px solid #f5515f;
+}
+
+.alert-success {
+    background-color: #1a2c1a;
+    color: #d7f8da;
+    border-left: 4px solid #51f55e;
+}
+
+.alert-warning {
+    background-color: #2c2a1a;
+    color: #f8f4d7;
+    border-left: 4px solid #f5c451;
+}
+
+.alert-info {
+    background-color: #1a202c;
+    color: #d7e1f8;
+    border-left: 4px solid #5170f5;
+}
+
+/* Botón de cierre */
+.alert .close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.alert .close:hover {
+    color: rgba(255, 255, 255, 1);
+}
+
+.form-group-error {
+    border: #f5515f 2px solid !important;
+    animation: errorFadeIn 0.3s ease forwards;
+}
+
+
+/* --- Iconos --- */
+
+.timer-icon {
+    vertical-align: middle;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* --- Navbar Menú Hamburguer --- */
 .mobile-menu-toggle {
     display: none;
     background: none;
