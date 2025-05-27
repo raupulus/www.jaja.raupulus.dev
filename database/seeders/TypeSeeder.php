@@ -11,6 +11,7 @@ class TypeSeeder extends Seeder
     {
         $types = [
             ['name' => 'Chistes', 'description' => 'Chistes relacionados con tecnología y programación'],
+            ['name' => 'Quiz', 'description' => 'Preguntas relacionados con tecnología y programación'],
             ['name' => 'Adivinanzas', 'description' => 'Adivinanzas sobre conceptos de programación'],
         ];
 

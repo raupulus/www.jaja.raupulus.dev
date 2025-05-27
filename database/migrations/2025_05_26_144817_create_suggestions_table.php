@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->constrained('types');
+            $table->foreignId('type_id')->nullable()->constrained('types');
+            $table->foreignId('group_id')->nullable()->constrained('groups');
             $table->string('nick', 255)->nullable();
             $table->string('title', 255);
             $table->text('content');
             $table->string('image_path', 255)->nullable();
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 255)->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -50,10 +50,9 @@ class GroupResource extends Resource
                                 //\Log::info("Ruta temporal del archivo: " . $tempFile);
 
                                 $originalName = $state->getClientOriginalName();
-                                $path = 'group-images/' . time() . '_' . $originalName;
 
                                 $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile);
+                                $newPath = $converter($tempFile, 'group-images');
 
                                 if ($newPath && $newPath !== $tempFile) {
                                     ## Actualizo el estado con un array en lugar de un string

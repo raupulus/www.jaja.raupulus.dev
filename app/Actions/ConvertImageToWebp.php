@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 class ConvertImageToWebp
 {
-    public function __invoke(string $path): string
+    public function __invoke(string $path, string $directory = null): string
     {
         try {
             //\Log::info("Iniciando conversión. Path recibido: " . $path);
@@ -23,11 +23,15 @@ class ConvertImageToWebp
             $manager = new ImageManager(new Driver());
             $image = $manager->read($path);
 
+            $targetDirectory = $directory ?? 'general';
+
+            $targetDirectory = rtrim($targetDirectory, '/');
+
             ## Nuevo nombre
-            $newFileName = 'user-images/' . time() . '_' . Str::random(10) . '.webp';
+            $newFileName = $targetDirectory . '/' . time() . '_' . Str::random(10) . '.webp';
             $newFullPath = Storage::disk('public')->path($newFileName);
 
-            ## Existe el directorio=?
+            ## Existe el directorio?
             if (!file_exists(dirname($newFullPath))) {
                 mkdir(dirname($newFullPath), 0755, true);
             }

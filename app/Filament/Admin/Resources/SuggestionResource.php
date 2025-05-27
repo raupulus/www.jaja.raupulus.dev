@@ -2,9 +2,10 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Filament\Admin\Resources\UserResource\Pages;
-use App\Filament\Admin\Resources\UserResource\RelationManagers;
-use App\Models\User;
+use App\Actions\ConvertImageToWebp;
+use App\Filament\Admin\Resources\SuggestionResource\Pages;
+use App\Filament\Admin\Resources\SuggestionResource\RelationManagers;
+use App\Models\Suggestion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,41 +13,34 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Support\Facades\Hash;
-use App\Actions\ConvertImageToWebp;
 
-class UserResource extends Resource
+class SuggestionResource extends Resource
 {
-    protected static ?string $model = User::class;
+    protected static ?string $model = Suggestion::class;
 
-    protected static ?string $navigationLabel = 'Usuarios';
+    protected static ?string $label = 'Sugerencia';
+    protected static ?string $pluralLabel = 'Sugerencias';
 
-    protected static ?string $label = 'Usuario';
-
+    protected static ?string $navigationLabel = 'Sugerencias';
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
-    protected static ?string $navigationGroup = 'Administración';
-
-    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('avatar')
+                Forms\Components\FileUpload::make('image_path')
+                    ->image()
                     ->columnSpanFull()
-                    ->alignCenter()
-                    ->avatar()
                     ->disk('public')
-                    ->directory('user-images')
+                    ->directory('suggestion-images')
                     ->visibility('public')
                     ->imageEditor()
-                    ->imageResizeTargetHeight(250)
-                    ->imageResizeTargetWidth(250)
+                    ->imageResizeTargetHeight(1024)
+                    ->imageResizeTargetWidth(768)
                     //->imageEditorAspectRatios(['1:1'])
-                    ->imageResizeMode('crop', )
+                    ->imageResizeMode('crop')
                     //->imageEditorMode(2)
-                    ->label('Avatar')
+                    ->label('Imagen')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                     ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
                         if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
@@ -55,10 +49,9 @@ class UserResource extends Resource
                                 //\Log::info("Ruta temporal del archivo: " . $tempFile);
 
                                 $originalName = $state->getClientOriginalName();
-                                $path = 'user-images/' . time() . '_' . $originalName;
 
                                 $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'user-images');
+                                $newPath = $converter($tempFile, 'suggestion-images');
 
                                 if ($newPath && $newPath !== $tempFile) {
                                     ## Actualizo el estado con un array en lugar de un string
@@ -72,31 +65,67 @@ class UserResource extends Resource
                     })
                 ,
 
-                Forms\Components\TextInput::make('name')
+                Forms\Components\TextInput::make('title')
+                    ->label('Título')
                     ->required()
-                    ->label('Nombre')
+                    ->columnSpanFull()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('email')
-                    ->email()
+                Forms\Components\Textarea::make('content')
+                    ->label('Contenido')
                     ->required()
-                    ->label('Email')
-                    ->maxLength(255),
+                    ->columnSpanFull(),
                 Forms\Components\TextInput::make('nick')
-                    ->required()
                     ->label('Nick')
                     ->maxLength(255),
-                Forms\Components\DateTimePicker::make('email_verified_at')
-                    ->label('Verificado')
-                    ->hiddenOn(['create', 'edit'])
+
+
+                Forms\Components\Select::make('type_id')
+                    ->label('Tipo')
+                    ->searchable()
+                    ->relationship('type', 'name')
+                    ->required()
+                    ->preload()
+                    ->afterStateUpdated(function (Forms\Set $set) {
+                        // Cuando cambia el tipo, reseteamos el grupo
+                        $set('group_id', null);
+                    }),
+
+                Forms\Components\Select::make('group_id')
+                    ->label('Grupo')
+                    ->searchable()
+                    ->options(function (Forms\Get $get) {
+                        $typeId = $get('type_id');
+
+                        if (!$typeId) {
+                            return [];
+                        }
+
+                        // Obtiene los grupos que pertenecen al tipo seleccionado
+                        return \App\Models\Group::where('type_id', $typeId)
+                            ->pluck('title', 'id')
+                            ->toArray();
+                    })
+                    ->required()
+                    ->disabled(fn (Forms\Get $get) => !$get('type_id')),
+
+
+
+                Forms\Components\Select::make('categories')
+                    ->label('Categorías')
+                    ->multiple()
+                    ->relationship('categories', 'title')
+                    ->preload()
+                    ->searchable()
+                    ->required()
+                ,
+
+
+                Forms\Components\TextInput::make('ip_address')
+                    ->label('IP')
                     ->readOnly(),
-                Forms\Components\TextInput::make('password')
-                    ->password()
-                    ->dehydrated(fn ($state) => filled($state))
-                    ->dehydrateStateUsing(fn ($state) => Hash::make($state))
-                    ->required(fn (string $context): bool => $context === 'create')
-                    ->label('Contraseña')
-                    ->hiddenOn('view')
-                    ->maxLength(255),
+                Forms\Components\TextInput::make('user_agent')
+                    ->label('User Agent')
+                    ->readOnly(),
             ]);
     }
 
@@ -104,37 +133,32 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('avatar')
-                    ->circular()
-                    ->label('Avatar'),
-                Tables\Columns\TextColumn::make('name')
-                    ->label('Nombre')
-                    ->sortable()
-                    ->searchable(),
+                Tables\Columns\ImageColumn::make('image_path')->label('Imagen'),
+                Tables\Columns\TextColumn::make('type.name')
+                    ->label('Tipo')
+                    ->numeric()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('nick')
                     ->label('Nick')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email')
-                    ->label('Email')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('email_verified_at')
-                    ->label('Verificado')
-                    ->dateTime()
+                    ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('ip_address')->label('IP'),
+                Tables\Columns\TextColumn::make('user_agent')
+                    ->label('User Agent')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
-                    ->label('Fecha de Borrado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -143,7 +167,7 @@ class UserResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                //Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -165,10 +189,9 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/'),
-            'create' => Pages\CreateUser::route('/create'),
-            'view' => Pages\ViewUser::route('/{record}'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            'index' => Pages\ListSuggestions::route('/'),
+            //'create' => Pages\CreateSuggestion::route('/create'),
+            'edit' => Pages\EditSuggestion::route('/{record}/edit'),
         ];
     }
 

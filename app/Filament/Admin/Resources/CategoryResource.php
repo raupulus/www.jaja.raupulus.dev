@@ -50,7 +50,7 @@ class CategoryResource extends Resource
                             try {
                                 $tempFile = $state->getRealPath();
                                 $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile);
+                                $newPath = $converter($tempFile, 'category-images');
 
                                 if ($newPath && $newPath !== $tempFile) {
                                     ## Actualizo el estado con un array en lugar de un string
