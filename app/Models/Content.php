@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Content extends Model
@@ -49,6 +50,16 @@ class Content extends Model
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
+
+    /**
+     * Relación con las categorías del contenido.
+     *
+     * @return BelongsToMany
+     */
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'content_categories', 'content_id', 'category_id');
     }
 
     /**

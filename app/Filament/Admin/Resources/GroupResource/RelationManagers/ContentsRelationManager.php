@@ -66,6 +66,15 @@ class ContentsRelationManager extends RelationManager
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(1024),
+
+                Forms\Components\Select::make('category_id')
+                    ->label('Categories')
+                    ->multiple()
+                    ->relationship('categories', 'title')
+                    ->preload()
+                    ->searchable()
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 

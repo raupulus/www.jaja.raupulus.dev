@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Resources;
 use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\SuggestionResource\Pages;
 use App\Filament\Admin\Resources\SuggestionResource\RelationManagers;
+use App\Models\Group;
 use App\Models\Suggestion;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -100,8 +101,8 @@ class SuggestionResource extends Resource
                             return [];
                         }
 
-                        // Obtiene los grupos que pertenecen al tipo seleccionado
-                        return \App\Models\Group::where('type_id', $typeId)
+                        ## Grupos que pertenecen al tipo seleccionado
+                        return Group::where('type_id', $typeId)
                             ->pluck('title', 'id')
                             ->toArray();
                     })

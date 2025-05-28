@@ -118,6 +118,14 @@ class ContentResource extends Resource
 
                     ]),
 
+                Forms\Components\Select::make('category_id')
+                    ->label('Categories')
+                    ->multiple()
+                    ->relationship('categories', 'title')
+                    ->preload()
+                    ->searchable()
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 

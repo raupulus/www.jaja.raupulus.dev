@@ -109,8 +109,14 @@ class Suggestion extends Model
             'group_id' => $this->group_id,
             'title' => $this->title,
             'content' => $this->content,
+            'uploaded_by' => $this->nick ?? null,
         ]);
 
+        $categories = $this->categories()->pluck('id')->toArray();
+
+        // TODO Añadir categorías al contenido
+
+        // TODO: Mover imagen final al contenido y eliminar de la sugerencia
 
 
         $this->approved_at = now();
@@ -118,8 +124,6 @@ class Suggestion extends Model
         $this->runSoftDelete();
 
 
-        // TODO: Guardar como contenido final
-        // TODO: Mover imagen final y eliminar
 
 
 
@@ -128,7 +132,7 @@ class Suggestion extends Model
     }
 
     /**
-     * Método para eliminar la imagen del almacenamiento.
+     * Elimina la imagen del almacenamiento.
      */
     public function deleteImage(): bool
     {
