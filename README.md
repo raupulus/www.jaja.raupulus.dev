@@ -68,3 +68,12 @@ Documentación: https://filamentphp.com/docs/
 ```bash
 php artisan make:filament-resource Customer --generate
 ```
+
+
+## Api
+
+Headers:
+
+- Accept: application/json
+- Content-type: application/json
+- Añadir Autenticación Bearer token

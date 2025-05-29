@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -58,11 +59,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
      */
     public function getUrlImageAttribute(): string
     {
-        if (!$this->image || ($this->image === 'images/default/avatar.webp')) {
+        if (!$this->avatar || ($this->avatar === 'images/default/avatar.webp')) {
             return asset('images/default/avatar.webp');
         }
 
-        return asset('storage/' . $this->image);
+        return asset('storage/' . $this->avatar);
     }
 
 
