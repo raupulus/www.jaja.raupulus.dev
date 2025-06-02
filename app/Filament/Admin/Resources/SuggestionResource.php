@@ -87,7 +87,7 @@ class SuggestionResource extends Resource
                     ->required()
                     ->preload()
                     ->afterStateUpdated(function (Forms\Set $set) {
-                        // Cuando cambia el tipo, reseteamos el grupo
+                        ## Cuando cambia el tipo, reseteo el grupo
                         $set('group_id', null);
                     }),
 

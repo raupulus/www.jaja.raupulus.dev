@@ -117,24 +117,18 @@ class Suggestion extends Model
         $content->categories()->attach($categories);
 
         if ($this->image_path) {
-            // Obtener el nombre de archivo de la ruta actual
             $filename = basename($this->image_path);
-
-            // Definir la nueva ruta para el contenido en el directorio content-images
             $contentImagePath = 'content-images/' . $content->id . '_' . $filename;
 
-            // Asegurarse de que el directorio existe
+            ## Asegura de que el directorio existe
             Storage::disk('public')->makeDirectory('content-images');
 
-            // Copiar el archivo
             if (Storage::disk('public')->exists($this->image_path)) {
                 Storage::disk('public')->copy($this->image_path, $contentImagePath);
 
-                // Actualizar la ruta de la imagen en el contenido
                 $content->image = $contentImagePath;
                 $content->save();
 
-                // Eliminar el archivo original
                 Storage::disk('public')->delete($this->image_path);
             }
 
@@ -144,11 +138,6 @@ class Suggestion extends Model
         $this->approved_at = now();
         $this->save();
         $this->runSoftDelete();
-
-
-
-
-
 
         return false;
     }
