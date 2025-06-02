@@ -78,6 +78,11 @@ class Suggestion extends Model
         return $this->image_path ? asset('storage' . $this->image_path) : null;
     }
 
+    /**
+     * Aprobar sugerencias de contenido.
+     *
+     * @return bool
+     */
     public function approve(): bool
     {
         if (!$this->group_id) {
@@ -100,11 +105,7 @@ class Suggestion extends Model
             return false;
         }
 
-
-        dd($this);
-
-
-        Content::create([
+        $content = Content::create([
             'user_id' => auth()->id(),
             'group_id' => $this->group_id,
             'title' => $this->title,
@@ -112,13 +113,34 @@ class Suggestion extends Model
             'uploaded_by' => $this->nick ?? null,
         ]);
 
-        $categories = $this->categories()->pluck('id')->toArray();
+        $categories = $this->categories()->pluck('categories.id')->toArray();
+        $content->categories()->attach($categories);
 
-        // TODO Añadir categorías al contenido
+        if ($this->image_path) {
+            // Obtener el nombre de archivo de la ruta actual
+            $filename = basename($this->image_path);
 
-        // TODO: Mover imagen final al contenido y eliminar de la sugerencia
+            // Definir la nueva ruta para el contenido en el directorio content-images
+            $contentImagePath = 'content-images/' . $content->id . '_' . $filename;
 
+            // Asegurarse de que el directorio existe
+            Storage::disk('public')->makeDirectory('content-images');
 
+            // Copiar el archivo
+            if (Storage::disk('public')->exists($this->image_path)) {
+                Storage::disk('public')->copy($this->image_path, $contentImagePath);
+
+                // Actualizar la ruta de la imagen en el contenido
+                $content->image = $contentImagePath;
+                $content->save();
+
+                // Eliminar el archivo original
+                Storage::disk('public')->delete($this->image_path);
+            }
+
+        }
+
+        $this->image_path = null;
         $this->approved_at = now();
         $this->save();
         $this->runSoftDelete();
