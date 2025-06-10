@@ -130,4 +130,27 @@ class ApiResponse
         return self::success($collection->resolve(), $message, 200, $meta);
     }
 
+    public static function collectionPaginated(
+        LengthAwarePaginator $paginator,
+        JsonResource $collection,
+        string $message = 'Datos Obtenidos con éxito.',
+        array $meta = []
+    ): JsonResponse
+    {
+        return self::success($collection->resolve(), $message, 200, array_merge($meta, [
+            'pagination' => [
+                'current_page' => $paginator->currentPage(),
+                'per_page' => $paginator->perPage(),
+                'total' => $paginator->total(),
+                'last_page' => $paginator->lastPage(),
+                'from' => $paginator->firstItem(),
+                'to' => $paginator->lastItem(),
+                'has_more_pages' => $paginator->hasMorePages(),
+                'has_previous_page' => $paginator->currentPage() > 1,
+                'next_page_url' => $paginator->nextPageUrl(),
+                'prev_page_url' => $paginator->previousPageUrl(),
+            ]
+        ]));
+    }
+
 }

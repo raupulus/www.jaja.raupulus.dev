@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\PaginationRequest;
+use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ContentResource;
+use App\Http\Resources\GroupResource;
+use App\Http\Resources\TypeResource;
 use App\Http\Traits\ApiResponseTrait;
 use App\Models\Category;
 use App\Models\Content;
@@ -25,10 +29,9 @@ class v1 extends Controller
         try {
             $contents = Content::inRandomOrder();
 
-            return $this->successResponse(
-                $contents->limit($limit)->get(),
+            return $this->collectionResponse(
+                ContentResource::collection($contents->limit($limit)->get()),
                 'Se obtuvieron ' . $limit . ' contenidos aleatorios',
-                200,
                 [
                     'total_items' => $contents->count(),
                     'limit' => $limit,
@@ -50,7 +53,7 @@ class v1 extends Controller
             $types = Type::orderByDesc('name');
 
             return $this->successResponse(
-                $types->get(),
+                TypeResource::collection($types->get()),
                 'Se obtuvieron ' . $types->count() . ' tipos',
                 200,
                 [
@@ -73,8 +76,9 @@ class v1 extends Controller
         try {
             $groups = Group::orderByDesc('title')->paginate($request->getLimit(), ['*'], 'groups_index', $request->getPage());
 
-            return $this->paginatedResponse(
+            return $this->collectionPaginatedResponse(
                 $groups,
+                GroupResource::collection($groups->items()),
                 'Se devuelven ' . $groups->count() . ' grupos',
             );
         } catch (\Exception $e) {
@@ -104,11 +108,11 @@ class v1 extends Controller
                 );
             }
 
-            return $this->paginatedResponse(
+            return $this->collectionPaginatedResponse(
                 $categories,
+                CategoryResource::collection($categories->items()),
                 'Se obtuvieron ' . $categories->count() . ' categorías de ' . $categories->total() . ', página ' . $page . '.'
             );
-
         } catch (\Exception $e) {
             return $this->errorResponse('Error al obtener la lista de categorías', 500);
         }
@@ -134,10 +138,9 @@ class v1 extends Controller
                 );
             }
 
-            return $this->successResponse(
-                $contents->limit($limit)->get(),
+            return $this->collectionResponse(
+                ContentResource::collection($contents->limit($limit)->get()),
                 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $total . ' contenidos totales para este tipo.',
-                200,
                 [
                     'type' => $type->name,
                     'total_items' => $total,
@@ -169,10 +172,9 @@ class v1 extends Controller
                 );
             }
 
-            return $this->successResponse(
-                $contents->limit($limit)->get(),
+            return $this->collectionResponse(
+                ContentResource::collection($contents->limit($limit)->get()),
                 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $total . ' contenidos totales para estos.',
-                200,
                 [
                     'type' => $type->name,
                     'category' => $category->title,
@@ -205,10 +207,9 @@ class v1 extends Controller
                 );
             }
 
-            return $this->successResponse(
-                $contents->limit($limit)->get(),
+            return $this->collectionResponse(
+                ContentResource::collection($contents->limit($limit)->get()),
                 'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $total . ' contenidos totales para este.',
-                200,
                 [
                     'group' => $group->title,
                     'total_items' => $total,

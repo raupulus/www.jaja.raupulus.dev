@@ -46,4 +46,14 @@ trait ApiResponseTrait
     {
         return ApiResponse::collection($collection, $message, $meta);
     }
+
+    protected function collectionPaginatedResponse(
+        LengthAwarePaginator $paginator,
+        JsonResource $collection,
+        string $message = 'Datos Obtenidos con éxito.',
+        array $meta = []
+    ): JsonResponse
+    {
+        return ApiResponse::collectionPaginated($paginator, $collection, $message, $meta);
+    }
 }
