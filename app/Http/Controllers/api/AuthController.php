@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api; // O la ruta que prefieras
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
+use App\Http\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User; // Asegúrate de usar tu modelo User
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    use ApiResponseTrait;
+
     public function login(Request $request): JsonResponse
     {
         $request->validate([
@@ -23,15 +25,14 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => __('auth.failed')
-            ]);
+            return $this->errorResponse(__('auth.failed'), 401);
         }
 
-        return response()->json([
+        return $this->successResponse([
             'token' => $user->createToken($request->device_name)->plainTextToken,
-            'user' => $user
-        ]);
+            'user' => new UserResource($user)
+        ], 'Login exitoso');
+
     }
 
     public function logout(Request $request): JsonResponse
@@ -39,11 +40,15 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
         // Para revocar todos los tokens del usuario: $request->user()->tokens()->delete();
 
-        return response()->json(['message' => 'Logged out successfully']);
+        return $this->successResponse(null, 'Sesión cerrada exitosamente');
     }
 
     public function user(Request $request): JsonResponse
     {
-        return response()->json(auth()->user()->append('urlImage'));
+        return $this->successResponse(
+            new UserResource($request->user()),
+            'Información del usuario obtenida'
+        );
+
     }
 }
