@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 
 class Content extends Model
 {
@@ -61,6 +62,81 @@ class Content extends Model
     {
         return $this->belongsToMany(Category::class, 'content_categories', 'content_id', 'category_id');
     }
+
+    /**
+     * Scope para filtrar contenidos por grupo
+     */
+    public function scopeByGroup(Builder $query, Group $group): Builder
+    {
+        return $query->where('group_id', $group->id);
+    }
+
+
+    /**
+     * Scope para filtrar contenidos por tipo
+     */
+    public function scopeByType(Builder $query, Type $type): Builder
+    {
+        return $query->whereHas('group', function ($q) use ($type) {
+            $q->where('type_id', $type->id);
+        });
+    }
+
+    /**
+     * Scope para filtrar contenidos por categoría
+     */
+    public function scopeByCategory(Builder $query, Category $category): Builder
+    {
+        return $query->whereHas('categories', function ($q) use ($category) {
+            $q->where('categories.id', $category->id);
+        });
+    }
+
+    /**
+     * Scope para filtrar contenidos por grupo Y categoría
+     */
+    public function scopeByGroupAndCategory(Builder $query, Group $group, Category $category): Builder
+    {
+        return $query->where('group_id', $group->id)
+            ->whereHas('categories', function ($q) use ($category) {
+                $q->where('categories.id', $category->id);
+            });
+    }
+
+    /**
+     * Scope para filtrar contenidos por tipo Y categoría
+     */
+    public function scopeByTypeAndCategory(Builder $query, Type $type, Category $category): Builder
+    {
+        return $query->whereHas('group', function ($q) use ($type) {
+            $q->where('type_id', $type->id);
+        })->whereHas('categories', function ($q) use ($category) {
+            $q->where('categories.id', $category->id);
+        });
+    }
+
+    /**
+     * Scope para filtrar contenidos por grupo, tipo Y categoría
+     */
+    public function scopeByGroupTypeAndCategory(Builder $query, Group $group, Type $type, Category $category): Builder
+    {
+        return $query->where('group_id', $group->id)
+            ->whereHas('group', function ($q) use ($type) {
+                $q->where('type_id', $type->id);
+            })
+            ->whereHas('categories', function ($q) use ($category) {
+                $q->where('categories.id', $category->id);
+            });
+    }
+
+    /**
+     * Scope para obtener contenido aleatorio
+     */
+    public function scopeRandom(Builder $query): Builder
+    {
+        return $query->inRandomOrder();
+    }
+
 
     /**
      * Devuelve el nick del usuario que ha subido el contenido

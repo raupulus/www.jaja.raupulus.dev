@@ -1,42 +1,42 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Api\v1;
+use \App\Http\Controllers\Api\v1 as ApiController;
+use \App\Http\Controllers\Api\AuthController;
 
 ## Ruta para autenticarse y obtener un token.
-Route::post('/login', [App\Http\Controllers\Api\AuthController::class, 'login'])->name('api.login');
+Route::post('/auth/login', [AuthController::class, 'login'])->name('api.auth.login');
 
 ## Devolver un contenido aleatorio de entre todos (Público, 1 cada 5 segundos)
-Route::get('/random/get/{quantity?}', [v1::class, 'random'])
-    ->where('quantity', '[1-5]')
+Route::get('/random/get/{limit?}', [ApiController::class, 'random'])
+    ->where('limit', '[1-5]')
     ->name('api.get.random');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return auth()->user()->append('urlImage');
-    });
+    ## Cerrar sesión y caducar token.
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
 
-    Route::post('/logout', [App\Http\Controllers\Api\AuthController::class, 'logout']);
+    ## Datos del usuario autenticado.
+    Route::get('/auth/user', [AuthController::class, 'user'])->name('api.auth.user');
 
+    ## Tipos de contenido.
+    Route::get('/types', [ApiController::class, 'typesIndex'])->name('api.types.index');
 
+    ## Grupos de contenido.
+    Route::get('/groups', [ApiController::class, 'groupsIndex'])->name('api.groups.index');
 
-    ## Listado de todos los tipos
-    Route::post('/types/list', [v1::class, 'typesList'])->name('api.types.list');
+    ## Categorías de contenido.
+    Route::get('/categories', [ApiController::class, 'categoriesIndex'])->name('api.categories.index');
 
-    ## Contenido random en base a un tipo
-    Route::post('/type/{type}/get/random', [v1::class, 'getContentRandomFromType'])->name('api.type.get.random');
+    ## Contenido random en base a un tipo.
+    Route::get('/types/{type}/content/random', [ApiController::class, 'getContentRandomFromType'])
+        ->name('api.types.content.random');
 
-    ## Listado de todas las categorías
-    Route::post('/categories/list', [v1::class, 'categoriesList'])->name('api.categories.list');
-
-    ## Contenido en base a una categoría y un tipo
-    Route::post('/type/{type}/category/{category}/get/content/random', [v1::class, 'getContentRandomFromCategory'])
-        ->name('api.type.category.get.content.random');
-
-
-
-    // TODO: Replantear si esto es realmente interesante, quizás debería paginarlo pero devolver todos de golpe es una locura si crece
-    ## Listado de todos los grupos en base a una categoría
+    ## Contenido mediante una categoría y un tipo.
+    Route::get('/types/{type}/categories/{category}/content/random', [ApiController::class, 'getContentRandomFromCategory'])
+        ->name('api.types.categories.content.random');
 
     ## Contenido en base a un grupo
+    Route::get('/groups/{group}/content/random', [ApiController::class, 'getContentRandomFromGroup'])
+        ->name('api.groups.content.random');
 });
