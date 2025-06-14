@@ -66,6 +66,15 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return asset('storage/' . $this->avatar);
     }
 
+    /**
+     * Es administrador este usuario.
+     *
+     * @return bool
+     */
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->role_id === 1;
+    }
 
     /** Filament Panel **/
 
@@ -78,9 +87,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     {
         return true;
 
-
         // TODO: Cuando se tengan claras las condiciones de acceso a los paneles, se puede quitar este comentario.
-
 
         ##return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
     }
