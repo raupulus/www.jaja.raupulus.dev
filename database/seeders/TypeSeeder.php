@@ -10,9 +10,9 @@ class TypeSeeder extends Seeder
     public function run(): void
     {
         $types = [
-            ['name' => 'Chistes', 'slug' => 'chistes', 'description' => 'Chistes relacionados con tecnología y programación'],
-            ['name' => 'Quiz', 'slug' => 'quiz', 'description' => 'Preguntas relacionados con tecnología y programación'],
-            ['name' => 'Adivinanzas', 'slug' => 'adivinanzas', 'description' => 'Adivinanzas sobre conceptos de programación'],
+            ['name' => 'Chistes', 'slug' => 'chistes', 'description' => 'Chistes, bromas y situaciones de humor'],
+            ['name' => 'Quiz', 'slug' => 'quiz', 'description' => 'Preguntas tipo quiz'],
+            ['name' => 'Adivinanzas', 'slug' => 'adivinanzas', 'description' => 'Adivinanzas para reflexionar'],
         ];
 
         foreach ($types as $type) {
