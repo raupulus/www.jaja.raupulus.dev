@@ -10,7 +10,7 @@ class Group extends Model
 {
     protected $table = 'groups';
 
-    protected $fillable = ['title', 'type_id', 'image', ];
+    protected $fillable = ['type_id', 'title', 'slug', 'image'];
 
     /**
      * Relación con el tipo del grupo

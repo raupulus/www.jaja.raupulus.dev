@@ -36,8 +36,8 @@ class GroupResource extends Resource
                     ->directory('group-images')
                     ->visibility('public')
                     ->imageEditor()
-                    ->imageResizeTargetHeight(1024)
-                    ->imageResizeTargetWidth(768)
+                    ->imageResizeTargetHeight(768)
+                    ->imageResizeTargetWidth(1024)
                     //->imageEditorAspectRatios(['1:1'])
                     ->imageResizeMode('crop')
                     //->imageEditorMode(2)
@@ -71,7 +71,6 @@ class GroupResource extends Resource
                     ->label('Título')
                     ->maxLength(255),
 
-
                 Forms\Components\Select::make('type_id')
                     ->relationship('type', 'name')
                     ->searchable()
@@ -79,6 +78,9 @@ class GroupResource extends Resource
                     ->required()
                     ->label('Tipo')
                     ->placeholder('Seleccione un tipo')
+
+                    // No me interesa crear tipos
+                    /*
                     ->createOptionForm([
                         Forms\Components\TextInput::make('name')
                             ->required()
@@ -89,7 +91,16 @@ class GroupResource extends Resource
                             ->maxLength(1024)
                             ->label('Descripción')
 
-                    ]),
+                    ])
+                    */
+                ,
+
+                Forms\Components\TextInput::make('slug')
+                    ->columnSpanFull()
+                    ->label('Slug')
+                    ->required()
+                    ->unique('groups', 'slug', ignoreRecord: true)
+                    ->maxLength(255),
 
             ]);
     }
@@ -105,6 +116,10 @@ class GroupResource extends Resource
                     ->label('Tipo')
                     ->searchable()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('slug')
+                    ->label('Slug')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Configuration\Middleware;
 use \Laravel\Sanctum\Http\Middleware\CheckAbilities;
 use \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use Illuminate\Http\Request;
+use \App\Http\Responses\ApiResponse;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -24,18 +25,26 @@ return Application::configure(basePath: dirname(__DIR__))
         //$middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (Throwable $e, Request $request) { // Aquí 'Request' se resolverá correctamente
-             //dd($e, $request->expectsJson(), $request->headers->all()); // Descomenta esta línea para depurar
+        $exceptions->render(function (Throwable $e, Request $request) { // Aquí 'Request' se resuelve correcta
+             //dd($e, $request->expectsJson(), $request->headers->all());
 
             if ($e instanceof \Illuminate\Auth\AuthenticationException) {
                 if ($request->expectsJson()) {
-                    return response()->json(['message' => 'No autenticado.'], 401);
+
+                    return ApiResponse::error('No autenticado.', 401);
                 }
 
                 return redirect()->guest(route('filament.admin.auth.login'));
             }
 
-            // Si es otra excepción, permite que Laravel continúe con su manejo por defecto.
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException && $request->expectsJson()) {
+                if (config('app.debug')) {
+                    return ApiResponse::error($e->getMessage(), 404, null, null, ['trace' => $e->getTrace()]);
+                }
+
+                return ApiResponse::error($e->getMessage(), 404);
+            }
+
             return false; // Importante: retornar false permite que el manejador de Laravel siga con otras excepciones.
         });
 

@@ -11,6 +11,7 @@ class TypeResource extends JsonResource
     {
         return [
             'name' => $this->name,
+            'slug' => $this->slug,
             'description' => $this->description,
             'urlImage' => $this->image ? $this->urlImage : null,
             //'groups' => GroupResource::collection($this->whenLoaded('groups')),

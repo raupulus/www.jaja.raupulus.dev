@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Responses\ApiResponse;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request; // Asegúrate de importar Request
@@ -33,7 +34,7 @@ class Handler extends ExceptionHandler
     protected function unauthenticated($request, AuthenticationException $exception)
     {
         if ($request->expectsJson()) {
-            return response()->json(['message' => 'No autenticado.'], 401);
+            return ApiResponse::error('No autenticado.', 401);
         }
 
         return redirect()->guest(route('filament.admin.auth.login'));

@@ -50,10 +50,14 @@ class v1 extends Controller
     public function typesIndex(): JsonResponse
     {
         try {
-            $types = Type::orderByDesc('name');
+            $types = Type::orderByDesc('name')->get();
+
+            if ( ! $types->count() ) {
+                return $this->errorResponse('No se encontraron tipos de contenido', 404);
+            }
 
             return $this->successResponse(
-                TypeResource::collection($types->get()),
+                TypeResource::collection($types),
                 'Se obtuvieron ' . $types->count() . ' tipos',
                 200,
                 [
@@ -143,6 +147,7 @@ class v1 extends Controller
                 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $total . ' contenidos totales para este tipo.',
                 [
                     'type' => $type->name,
+                    'type_slug' => $type->slug,
                     'total_items' => $total,
                 ]
             );
@@ -155,13 +160,19 @@ class v1 extends Controller
      * Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.
      *
      * @param Type $type Tipo de elemento por el que se filtra.
-     * @param Category $category Categoría por la que se filtra.
+     * @param string $categorySlug Slug de la Categoría por la que se filtra.
      * @param int $limit Cantidad de elementos a devolver.
      * @return JsonResponse
      */
-    public function getContentRandomFromCategory(Type $type, Category $category, int $limit = 1): JsonResponse
+    public function getContentRandomFromCategory(Type $type, string $categorySlug, int $limit = 1): JsonResponse
     {
         try {
+            $category = Category::where('slug', $categorySlug)->first();
+
+            if (!$category) {
+                return $this->errorResponse('Categoría no encontrada', 404);
+            }
+
             $contents = Content::byTypeAndCategory($type, $category)->random();
             $total = $contents->count();
 
@@ -177,7 +188,9 @@ class v1 extends Controller
                 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $total . ' contenidos totales para estos.',
                 [
                     'type' => $type->name,
+                    'type_slug' => $type->slug,
                     'category' => $category->title,
+                    'category_slug' => $category->slug,
                     'total_items' => $total,
                 ]
             );
@@ -212,6 +225,7 @@ class v1 extends Controller
                 'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $total . ' contenidos totales para este.',
                 [
                     'group' => $group->title,
+                    'group_slug' => $group->slug,
                     'total_items' => $total,
                 ]
             );

@@ -107,7 +107,31 @@ class SuggestionResource extends Resource
                             ->toArray();
                     })
                     ->required()
-                    ->disabled(fn (Forms\Get $get) => !$get('type_id')),
+                    ->disabled(fn (Forms\Get $get) => !$get('type_id'))
+
+                    /*
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Título'),
+                        Forms\Components\TextInput::make('slug')
+                            ->columnSpanFull()
+                            ->label('Slug')
+                            ->required()
+                            ->unique('groups', 'slug', ignoreRecord: true)
+                            ->maxLength(255),
+                        Forms\Components\Select::make('type_id')
+                            ->relationship('type', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->label('Tipo')
+                            ->placeholder('Seleccione un tipo')
+
+                    ])
+                    */
+                ,
 
 
 

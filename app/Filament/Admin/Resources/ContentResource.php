@@ -46,8 +46,8 @@ class ContentResource extends Resource
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
-                    ->imageResizeTargetHeight(600)
-                    ->imageResizeTargetWidth(800)
+                    ->imageResizeTargetHeight(768)
+                    ->imageResizeTargetWidth(1024)
                     ->imageResizeMode('crop', )
                     ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
                         if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
@@ -97,6 +97,12 @@ class ContentResource extends Resource
                             ->required()
                             ->maxLength(255)
                             ->label('Título'),
+                        Forms\Components\TextInput::make('slug')
+                            ->columnSpanFull()
+                            ->label('Slug')
+                            ->required()
+                            ->unique('groups', 'slug', ignoreRecord: true)
+                            ->maxLength(255),
                         Forms\Components\Select::make('type_id')
                             ->relationship('type', 'name')
                             ->searchable()
@@ -104,6 +110,7 @@ class ContentResource extends Resource
                             ->required()
                             ->label('Tipo')
                             ->placeholder('Seleccione un tipo')
+                            /*
                             ->createOptionForm([
                                 Forms\Components\TextInput::make('name')
                                     ->required()
@@ -115,6 +122,7 @@ class ContentResource extends Resource
                                     ->label('Descripción')
 
                             ]),
+                            */
 
                     ]),
 

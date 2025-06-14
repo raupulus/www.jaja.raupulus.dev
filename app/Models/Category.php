@@ -11,7 +11,7 @@ class Category extends Model
     use softDeletes;
 
     protected $table = 'categories';
-    protected $fillable = ['title', 'description', 'image', ];
+    protected $fillable = ['title', 'slug', 'description', 'image', ];
 
 
     /**
@@ -34,7 +34,6 @@ class Category extends Model
     {
         return $this->belongsToMany(Suggestion::class, 'suggestion_categories');
     }
-
 
     /**
      * Devuelve la url hacia la imagen.

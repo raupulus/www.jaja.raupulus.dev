@@ -11,6 +11,7 @@ class GroupResource extends JsonResource
     {
         return [
             'title' => $this->title,
+            'slug' => $this->slug,
             'urlImage' => $this->image ? $this->urlImage : null,
             //'type' => new TypeResource($this->whenLoaded('type')),
             //'contents' => ContentResource::collection($this->whenLoaded('contents')),

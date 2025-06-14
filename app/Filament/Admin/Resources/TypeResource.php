@@ -39,8 +39,8 @@ class TypeResource extends Resource
                     ->directory('type-images')
                     ->visibility('public')
                     ->imageEditor()
-                    ->imageResizeTargetHeight(1024)
-                    ->imageResizeTargetWidth(768)
+                    ->imageResizeTargetHeight(768)
+                    ->imageResizeTargetWidth(1024)
                     //->imageEditorAspectRatios(['1:1'])
                     ->imageResizeMode('crop')
                     //->imageEditorMode(2)
@@ -52,7 +52,7 @@ class TypeResource extends Resource
                                 $tempFile = $state->getRealPath();
                                 //\Log::info("Ruta temporal del archivo: " . $tempFile);
 
-                                $originalName = $state->getClientOriginalName();
+                                //$originalName = $state->getClientOriginalName();
 
                                 $converter = new ConvertImageToWebp();
                                 $newPath = $converter($tempFile);
@@ -71,6 +71,12 @@ class TypeResource extends Resource
                     ->label('Nombre')
                     ->columnSpanFull()
                     ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('slug')
+                    ->columnSpanFull()
+                    ->label('Slug')
+                    ->required()
+                    ->unique('types', 'slug', ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\RichEditor::make('description')
                     ->label('Descripción')
@@ -93,6 +99,10 @@ class TypeResource extends Resource
                     ->label('Descripción')
                     ->searchable(),
 
+                Tables\Columns\TextColumn::make('slug')
+                    ->label('Slug')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')
                     ->dateTime()

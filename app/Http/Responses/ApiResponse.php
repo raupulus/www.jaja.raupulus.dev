@@ -43,7 +43,8 @@ class ApiResponse
      * @param string $message
      * @param int $status
      * @param mixed|null $errors
-     * @param array $meta
+     * @param array|null $meta
+     * @param array|null $debug
      *
      * @return JsonResponse
      */
@@ -51,7 +52,8 @@ class ApiResponse
         string $message = 'Error en la operación',
         int    $status = 400,
         mixed  $errors = null,
-        array  $meta = []
+        array|null  $meta = [],
+        array|null  $debug = []
     ): JsonResponse
     {
         $response = [
@@ -67,17 +69,12 @@ class ApiResponse
             $response['meta'] = $meta;
         }
 
-        /*
-        if (config('app.debug')) {
-            $response['debug'] = [
-                'request' => request()->all(),
-                'session' => session()?->all(),
-                'cookies' => request()->cookies->all(),
-                'server' => $_SERVER,
-                'headers' => getallheaders(),
-            ];
+        if (!empty($debug) && config('app.debug')) {
+            $response['debug'] = array_merge(
+                ['request' => request()->all()],
+                $debug
+            );
         }
-        */
 
         return response()->json($response, $status);
     }

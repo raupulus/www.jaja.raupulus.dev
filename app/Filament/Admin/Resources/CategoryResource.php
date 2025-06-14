@@ -65,8 +65,14 @@ class CategoryResource extends Resource
                 ,
                 Forms\Components\TextInput::make('title')
                     ->columnSpanFull()
-                    ->required()
                     ->label('Título')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('slug')
+                    ->columnSpanFull()
+                    ->label('Slug')
+                    ->required()
+                    ->unique('categories', 'slug', ignoreRecord: true)
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull()
@@ -88,6 +94,10 @@ class CategoryResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('slug')
+                    ->label('Slug')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')
                     ->dateTime()

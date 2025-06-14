@@ -13,11 +13,11 @@ class GroupSeeder extends Seeder
         $typeChistes = Type::where('name', 'Chistes')->first();
 
         $groups = [
-            ['title' => 'Chistes de Debugging', 'type_id' => $typeChistes->id],
-            ['title' => 'Chistes de Programadores', 'type_id' => $typeChistes->id],
-            ['title' => 'Chistes de Base de Datos', 'type_id' => $typeChistes->id],
-            ['title' => 'Chistes de Frontend', 'type_id' => $typeChistes->id],
-            ['title' => 'Chistes de DevOps', 'type_id' => $typeChistes->id],
+            ['title' => 'Chistes de Debugging', 'slug' => 'chistes-debugging', 'type_id' => $typeChistes->id],
+            ['title' => 'Chistes de Programadores', 'slug' => 'chistes-developers', 'type_id' => $typeChistes->id],
+            ['title' => 'Chistes de Base de Datos', 'slug' => 'chistes-db', 'type_id' => $typeChistes->id],
+            ['title' => 'Chistes de Frontend', 'slug' => 'chistes-frontend', 'type_id' => $typeChistes->id],
+            ['title' => 'Chistes de DevOps', 'slug' => 'chistes-devops', 'type_id' => $typeChistes->id],
         ];
 
         foreach ($groups as $group) {

@@ -37,8 +37,8 @@ class ContentsRelationManager extends RelationManager
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
-                    ->imageResizeTargetHeight(600)
-                    ->imageResizeTargetWidth(800)
+                    ->imageResizeTargetHeight(768)
+                    ->imageResizeTargetWidth(1024)
                     ->imageResizeMode('crop', )
                     ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
                         if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
@@ -83,8 +83,29 @@ class ContentsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('title')
             ->columns([
-                Tables\Columns\TextColumn::make('title'),
+                Tables\Columns\ImageColumn::make('image')->label('Imagen'),
+                Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
+                    ->limit(120)
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('content')
+                    ->label('Contenido')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
+                    ->dateTime()
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

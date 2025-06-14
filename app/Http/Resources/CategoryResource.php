@@ -11,6 +11,7 @@ class CategoryResource extends JsonResource
     {
         return [
             'title' => $this->title,
+            'slug' => $this->slug,
             'description' => $this->description,
             'urlImage' => $this->image ? $this->urlImage : null,
             //'contents' => ContentResource::collection($this->whenLoaded('contents')),
