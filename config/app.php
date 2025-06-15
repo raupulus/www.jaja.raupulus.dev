@@ -13,7 +13,8 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'JaJa'),
+    'name' => env('APP_NAME', 'JaJa Project'),
+    'author' => env('APP_AUTHOR', ''),
 
     /*
     |--------------------------------------------------------------------------
