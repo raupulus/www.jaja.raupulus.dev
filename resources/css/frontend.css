@@ -20,7 +20,25 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+    font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI Variable",
+        "Segoe UI",
+        Roboto,
+        "Oxygen-Sans",
+        Ubuntu,
+        Cantarell,
+        "Helvetica Neue",
+        Helvetica,
+        Arial,
+        sans-serif,
+        "Apple Color Emoji",
+        "Segoe UI Emoji";
+
     background-color: var(--color-fondo-oscuro);
     color: var(--color-texto-principal);
     line-height: 1.6;

@@ -86,6 +86,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('images/favicon/site.webmanifest') }}">
 
+    <link rel="stylesheet" href="{{ asset('fonts/inter/inter.css') }}">
 
     {{-- CSS Assets --}}
     @vite(['resources/css/frontend.css', 'resources/css/footer.css'])
