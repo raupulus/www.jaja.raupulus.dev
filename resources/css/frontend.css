@@ -7,6 +7,7 @@
     --color-borde-oscuro: #2c2c2c;
     --color-texto-principal: #e0e0e0; /* Texto claro principal */
     --color-texto-secundario: #b0b0b0; /* Texto claro secundario */
+    --color-texto-destacado: #00bcd4;
     --sombra-ligera: 0 2px 4px rgba(0, 0, 0, 0.2);
     --sombra-media: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
@@ -63,9 +64,19 @@ img {
 }
 
 .brand-logo {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 0.3rem;
     font-size: 1.8em;
     font-weight: bold;
     color: var(--color-primario);
+}
+
+.brand-logo > img {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
 }
 
 .nav-links ul {
@@ -113,7 +124,6 @@ img {
 
 .container p {
     font-size: 1.1em;
-    color: var(--color-texto-secundario);
     margin-bottom: 1.5rem;
     max-width: 800px;
 }
@@ -125,6 +135,20 @@ img {
 .m-auto {
     margin: auto;
 }
+
+/* --- Texto --- */
+.text-primary {
+    color: var(--color-texto-principal);
+}
+
+.text-secondary {
+    color: var(--color-texto-secundario);
+}
+
+.text-destacado {
+    color: var(--color-texto-destacado);
+}
+
 /* --- Cards --- */
 .card {
     background-color: var(--color-superficie-oscura);
@@ -390,9 +414,15 @@ form button.btn {
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 /* --- Navbar Menú Hamburguer --- */

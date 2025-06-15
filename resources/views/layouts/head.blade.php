@@ -1,14 +1,14 @@
 
 @php
-    // Valores por defecto
+    ## Valores por defecto
     $pageTitle = trim($__env->yieldContent('title')) ?: config('app.name');
-    $pageDescription = trim($__env->yieldContent('description')) ?: 'JaJa Project - La mejor plataforma de contenido divertido y entretenimiento';
-    $pageKeywords = trim($__env->yieldContent('keywords')) ?: 'jaja project, entretenimiento, contenido, diversión, chistes, humor';
+    $pageDescription = trim($__env->yieldContent('description')) ?: 'JaJa Project - La mejor comunidad para entretenimiento y compartir el humor';
+    $pageKeywords = trim($__env->yieldContent('keywords')) ?: 'jaja project, entretenimiento, contenido, diversión, chistes, humor, adivinanzas, comunidad';
     $pageAuthor = trim($__env->yieldContent('author')) ?: config('app.author');
     $pageRobots = trim($__env->yieldContent('robots')) ?: 'index, follow';
     $pageCanonical = trim($__env->yieldContent('canonical')) ?: request()->url();
 
-    // Open Graph
+    ## Open Graph
     $ogType = trim($__env->yieldContent('og_type')) ?: 'website';
     $ogTitle = trim($__env->yieldContent('og_title')) ?: $pageTitle;
     $ogDescription = trim($__env->yieldContent('og_description')) ?: $pageDescription;
