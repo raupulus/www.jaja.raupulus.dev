@@ -7,9 +7,11 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
-    public function show(string $slug): View
+    public function show(Page $page): View
     {
-        $page = new Page();
+        if (!$page || ($page->status !== 'published')) {
+            abort(404);
+        }
 
         return view('pages.show')->with([
             'page' => $page,

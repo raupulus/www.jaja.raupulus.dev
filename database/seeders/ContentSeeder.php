@@ -182,6 +182,11 @@ class ContentSeeder extends Seeder
         ];
 
         foreach ($contents as $content) {
+
+            if (Content::where('title', $content['title'])->exists()) {
+                continue;
+            }
+
             $categoryId = $content['category_id'];
             unset($content['category_id']);
 

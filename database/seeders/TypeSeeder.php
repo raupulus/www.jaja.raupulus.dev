@@ -16,6 +16,10 @@ class TypeSeeder extends Seeder
         ];
 
         foreach ($types as $type) {
+            if (Type::where('slug', $type['slug'])->exists()) {
+                continue;
+            }
+
             Type::create($type);
         }
     }

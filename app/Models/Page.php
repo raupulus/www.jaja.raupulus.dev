@@ -8,19 +8,13 @@ class Page extends Model
 {
     protected $table = 'pages';
 
-    protected $fillable = ['title', 'slug', 'excerpt', 'content', 'image'];
+    protected $fillable = ['title', 'slug', 'excerpt', 'content', 'image', 'keywords', 'status'];
 
 
-    /* TEMPORAL PARA DISEÑO */
-
-    public $title = 'Título temporal';
-
+    /*
     public function md(): string
     {
         return '
-# Título Principal (H1)
-Este es el contenido principal de la página que muestra cómo se ve un párrafo normal con texto justificado. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-
 ## Subtítulo Principal (H2)
 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
@@ -116,16 +110,24 @@ Para cualquier pregunta sobre estos términos, puedes contactarnos a través de:
 ---
 ';
     }
+*/
 
+    /**
+     * Devuelve la url hacia la imagen principal de la página.
+     *
+     * @return string|null
+     */
+    public function getUrlImageAttribute(): ?string
+    {
+        return $this->image ? asset('storage/' . $this->image) : null;
+    }
 
     public function getHtmlContent(): string
     {
-        //$parsedown = new Parsedown();
-        //$parsedown->setSafeMode(true);
+        $parsedown = new \Parsedown();
+        $parsedown->setSafeMode(true);
 
-        //return $parsedown->text($this->md());
-
-        return '';
+        return $parsedown->text($this->content);
     }
 
 

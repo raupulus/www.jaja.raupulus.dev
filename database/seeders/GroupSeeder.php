@@ -34,6 +34,10 @@ class GroupSeeder extends Seeder
         ];
 
         foreach ($groups as $group) {
+            if (Group::where('slug', $group['slug'])->exists()) {
+                continue;
+            }
+
             Group::create($group);
         }
     }

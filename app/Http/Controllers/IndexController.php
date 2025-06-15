@@ -25,41 +25,6 @@ class IndexController extends Controller
         ]);
     }
 
-    public function api(): View
-    {
-        return view('api');
-    }
-
-    public function about(): View
-    {
-        return view('about');
-    }
-
-    public function normas(): View
-    {
-        return view('normas');
-    }
-
-    public function privacity(): View
-    {
-        return view('privacity');
-    }
-
-    public function cookies(): View
-    {
-        return view('cookies');
-    }
-
-    public function conditions(): View
-    {
-        return view('conditions');
-    }
-
-    public function agradecimientos(): View
-    {
-        return view('agradecimientos');
-    }
-
     /**
      * Procesa el envío de una sugerencia de contenido.
      *

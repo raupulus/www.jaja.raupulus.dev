@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             ContentSeeder::class,
             ContentOptionSeeder::class,
+            PageSeeder::class,
         ]);
 
 

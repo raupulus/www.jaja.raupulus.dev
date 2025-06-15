@@ -4,29 +4,29 @@
     <section>
         <h1>Bienvenid@ a {{config('app.name')}}</h1>
 
-        <div>
+        <div class="mw-800 m-auto">
             <img src="{{asset('images/portada-jaja-project.webp')}}" alt="Logo" class="logo">
         </div>
 
-        <p class="m-auto text-center text-destacado">
+        <p class="mw-800 m-auto text-center text-destacado">
             ¿List@ para hacer <strong>reír</strong> (o intentarlo jeje), compartir y crear en comunidad?
         </p>
 
-        <p class="m-auto text-center text-secondary">
+        <p class="mw-800 m-auto text-center text-secondary">
             En <strong>JaJa Project</strong> venimos a tomarnos la risa en serio (bueno, más o menos)
             creando una comunidad abierta donde los <strong>chistes</strong>, adivinanzas y preguntas tipo quiz cobran vida con tus
             ocurrencias.
         </p>
 
-        <p class="m-auto text-center text-secondary">
+        <p class="mw-800 m-auto text-center text-secondary">
             Aquí puedes disfrutar del contenido más esporádico y subir tus propias invenciones.
         </p>
 
-        <p class="m-auto text-center text-secondary">
+        <p class="mw-800 m-auto text-center text-secondary">
             Además tenemos una API para llevar el humor a tus bots, apps o proyectos.
         </p>
 
-        <p class="m-auto text-center text-destacado">
+        <p class="mw-800 m-auto text-center text-destacado">
             ¿Contará tu <strong>bot</strong> mejores chistes que tú?
         </p>
     </section>

@@ -105,6 +105,10 @@ class CategorySeeder extends Seeder
         ];
 
         foreach ($categories as $category) {
+            if (Category::where('slug', $category['slug'])->exists()) {
+                continue;
+            }
+
             Category::create($category);
         }
     }
