@@ -108,4 +108,6 @@ Listado de tareas pendientes a realizar
 - Crear .env para producción
 - Crear archivo de configuración para sitio virtual en apache
 - Revisar: Añadir gráficas en el backend con cantidad de peticiones api?
+- Implementar gestión de preguntas tipo quiz con respuestas en el backend
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longituds "ja" "jaja" "aj"... y opacidad
+- Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones requeridas para las respuestas

@@ -146,7 +146,7 @@
                     <label for="terms">
                         Confirmo que he leído
                         <a href="#" target="_blank">las Normas</a>
-                        de contenido adecuado para la comunidad y acepto
+                        sobre contenido adecuado para la comunidad y acepto
                         <a href="#" target="_blank">la Política de Privacidad</a>.
                     </label>
 
@@ -165,7 +165,7 @@
             sea posible
         </p>
 
-        <a href="#" class="btn">JAgradecimientos</a>
+        <a href="#" class="btn">JAgradece A...</a>
     </section>
 
     <section class="box-card-content">
