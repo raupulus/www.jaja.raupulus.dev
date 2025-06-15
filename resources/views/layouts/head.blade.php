@@ -74,7 +74,6 @@
         <meta name="twitter:site" content="{{ $twitterSite }}">
     @endif
 
-    {{-- Additional Meta Tags --}}
     @if($themeColor)
         <meta name="theme-color" content="{{ $themeColor }}">
     @endif
@@ -86,6 +85,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/favicon/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('images/favicon/site.webmanifest') }}">
 
+    {{-- Fonts --}}
     <link rel="stylesheet" href="{{ asset('fonts/inter/inter.css') }}">
 
     {{-- CSS Assets --}}

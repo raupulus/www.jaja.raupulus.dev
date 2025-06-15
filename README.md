@@ -98,6 +98,7 @@ Listado de tareas pendientes a realizar
 - [x] Crear página de agradecimiento/colaboradores tanto de github como de uploaders/users dónde se añada la cantidad de subidas que ha realizado y enlazarlo en el home
 - [x] Crear Licencia para el proyecto (GPLv3?)
 - [x] Añadir tipografía más estable/uniforme, actualmente se usa la del sistema "-apple-system"
+- [x] Añadir enlaces a páginas creadas anteriormente en todos los apartados que se dejaron con enlaces "#"
 - Añadir a la página de agradecimientos (quizás también a la principal??) Resumen de estadísticas con cantidades de chistes subidos
 - Cambiar acceso a panel de usuario desde "/user" a "/panel"
 - Añadir recaptcha v3 en formulario de envío

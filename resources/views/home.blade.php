@@ -40,7 +40,7 @@
             para acceder a más contenido, más ratio de consultas y obtener contenido filtrado.
         </p>
 
-        <a href="#" class="btn">Api Docs</a>
+        <a href="{{route('page.show', 'api')}}" title="Enlace a la documentación de la api en {{config('app.name')}}" class="btn">Api Docs</a>
     </section>
 
     <section class="card">
@@ -52,7 +52,7 @@
             bajo tu control.
         </p>
 
-        <a href="#" class="btn">Quiero mi BotHijo</a>
+        <a href="{{route('page.show', 'bot-twitch')}}" title="Enlace a la información sobre el bot de twitch" class="btn">Quiero mi BotHijo</a>
     </section>
 
     <section class="card">
@@ -64,7 +64,7 @@
 
         <p>
             Comparte tu contenido con la comunidad para que todos lo disfrutemos pero asegúrate de que no sean
-            inapropiados o incumplan <a href="#" target="_blank">las normas</a> .
+            inapropiados o incumplan <a href="{{route('page.show', 'normas')}}" title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank">las normas</a> .
         </p>
 
         <div>
@@ -145,9 +145,11 @@
                     <input id="terms" type="checkbox" name="terms" required>
                     <label for="terms">
                         Confirmo que he leído
-                        <a href="#" target="_blank">las Normas</a>
-                        sobre contenido adecuado para la comunidad y acepto
-                        <a href="#" target="_blank">la Política de Privacidad</a>.
+                        <a href="{{route('page.show', 'normas')}}" title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank">las Normas</a>
+                        sobre contenido adecuado para la comunidad, acepto
+                        <a href="{{route('page.show', 'politica-de-privacidad')}}" title="Enlace a la política de privacidad en {{config('app.name')}}" target="_blank">la Política de Privacidad</a>
+                        y las
+                        <a href="{{route('page.show', 'condiciones-de-uso')}}" title="Enlace a las condiciones de uso en {{config('app.name')}}" target="_blank">las Condiciones de Uso</a>
                     </label>
 
                 </div>
@@ -165,7 +167,7 @@
             sea posible
         </p>
 
-        <a href="#" class="btn">JAgradece A...</a>
+        <a href="{{route('page.show', 'agradecimientos')}}" title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}" class="btn">JAgradece A...</a>
     </section>
 
     <section class="box-card-content">
