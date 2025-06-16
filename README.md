@@ -54,7 +54,8 @@ php artisan db:seed
 
 Sitio Principal: /
 
-Panel: /admin
+Panel Administrador: /admin
+Panel Usuarios: /panel
 
 Login: /admin/login
 
@@ -80,9 +81,9 @@ Headers:
 
 
 
-## TODO
+## TODO prioritario
 
-Listado de tareas pendientes a realizar
+Listado de tareas pendientes a realizar antes de la primera publicación
 
 - [x] Añadir favicon
 - [x] Crear y Añadir logotipo en distintas versiones
@@ -106,11 +107,14 @@ Listado de tareas pendientes a realizar
 - Cambiar acceso a panel de usuario desde "/user" a "/panel"
 - Añadir recaptcha v3 en formulario de envío
 - Crear .env para producción
-- Gestión de tokens en panel de usuarios
 - Generar documentación de api phpdoc con automatización
 - Preparar generador de sitemap en cron de laravel
 - Habilitar indexado en motores de búsqueda
+
+## Todo con menor prioridad
+
+- Gestión de tokens en panel de usuarios
 - Revisar: Añadir gráficas en el backend con cantidad de peticiones api?
 - Implementar gestión de preguntas tipo quiz con respuestas en el backend
-- Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longituds "ja" "jaja" "aj"... y opacidad
 - Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones requeridas para las respuestas
+- Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longituds "ja" "jaja" "aj"... y opacidad
