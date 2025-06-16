@@ -18,7 +18,8 @@
 
         <p class="mw-800 m-auto text-center text-secondary">
             En <strong>JaJa Project</strong> venimos a tomarnos la risa en serio (bueno, más o menos)
-            creando una comunidad abierta donde los <strong>chistes</strong>, adivinanzas y preguntas tipo quiz cobran vida con tus
+            creando una comunidad abierta donde los <strong>chistes</strong>, adivinanzas y preguntas tipo quiz cobran
+            vida con tus
             ocurrencias.
         </p>
     </section>
@@ -49,7 +50,8 @@
             para acceder a más contenido, más ratio de consultas y obtener contenido filtrado.
         </p>
 
-        <a href="{{route('page.show', 'api')}}" title="Enlace a la documentación de la api en {{config('app.name')}}" class="btn">Api Docs</a>
+        <a href="{{route('page.show', 'api')}}" title="Enlace a la documentación de la api en {{config('app.name')}}"
+           class="btn">Api Docs</a>
     </section>
 
     <section class="card">
@@ -61,7 +63,8 @@
             bajo tu control.
         </p>
 
-        <a href="{{route('page.show', 'bot-twitch')}}" title="Enlace a la información sobre el bot de twitch" class="btn">Quiero mi BotHijo</a>
+        <a href="{{route('page.show', 'bot-twitch')}}" title="Enlace a la información sobre el bot de twitch"
+           class="btn">Quiero mi BotHijo</a>
     </section>
 
     <section class="card">
@@ -72,7 +75,9 @@
             sea posible
         </p>
 
-        <a href="{{route('page.show', 'agradecimientos')}}" title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}" class="btn">JAgradece A...</a>
+        <a href="{{route('page.show', 'agradecimientos')}}"
+           title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}"
+           class="btn">JAgradece A...</a>
     </section>
 
     <section class="card">
@@ -84,7 +89,9 @@
 
         <p>
             Comparte tu contenido con la comunidad para que todos lo disfrutemos pero asegúrate de que no sean
-            inapropiados o incumplan <a href="{{route('page.show', 'normas')}}" title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank">las normas</a> .
+            inapropiados o incumplan <a href="{{route('page.show', 'normas')}}"
+                                        title="Enlace a las normas de la comunidad en {{config('app.name')}}"
+                                        target="_blank">las normas</a> .
         </p>
 
         <div>
@@ -96,20 +103,44 @@
                 <div class="form-group">
                     <input type="text" name="nick" placeholder="Tu Nick (Sin @)"
                            class="form-control {{$errors->has('nick') ? 'form-group-error' : ''}}"
+                           maxlength="25"
                            value="{{old('nick')}}">
 
                     <select name="type_id" class="form-control {{$errors->has('type_id') ? 'form-group-error' : ''}}">
                         @foreach(\App\Models\Type::all() as $type)
-                            <option
-                                value="{{$type->id}}" {{(old('type_id') === $type->id) ? 'selected' : ''}}>{{$type->name}}</option>
+                            <option value="{{$type->id}}" {{(old('type_id') === $type->id) ? 'selected' : ''}}>
+                                {{$type->name}}
+                            </option>
                         @endforeach
                     </select>
                 </div>
 
-                <div class="form-group {{$errors->has('image') ? 'form-group-error' : ''}}">
-                    <label for="content-image">Imagen (Opcional, 2MB max.)</label>
-                    <input id="content-image" type="file" name="image" class="form-control" accept="image/*">
+                <div class="{{$errors->has('image') ? 'form-group-error' : ''}}" id="image-grid-container">
+                    <!-- Columna de la izquierda - Vista previa de la imagen -->
+                    <div id="image-preview-container">
+                        <div id="preview-placeholder" class="text-center">
+                            Vista previa de imagen
+                        </div>
+                        <img id="preview-img" src="" alt="Vista previa">
+                    </div>
+
+                    <!-- Columna derecha: Label, Input y Errores -->
+                    <div class="image-input-column">
+                        <label for="content-image">
+                            Imagen (Opcional).
+                            <br/>
+                            Tamaño máximo: 2MB. Formatos: JPG, PNG o WebP
+                        </label>
+
+                        <input id="content-image" type="file" name="image"
+                               class="form-control"
+                               accept="image/jpeg,image/png,image/webp">
+
+                        <div id="file-error" class="text-danger"></div>
+                    </div>
                 </div>
+
+
 
                 <div class="form-group {{$errors->has('title') ? 'form-group-error' : ''}}">
                     <input type="text" name="title" placeholder="Título" class="form-control" required
@@ -165,11 +196,17 @@
                     <input id="terms" type="checkbox" name="terms" required>
                     <label for="terms">
                         Confirmo que he leído
-                        <a href="{{route('page.show', 'normas')}}" title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank">las Normas</a>
+                        <a href="{{route('page.show', 'normas')}}"
+                           title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank">las
+                            Normas</a>
                         sobre contenido adecuado para la comunidad, acepto
-                        <a href="{{route('page.show', 'politica-de-privacidad')}}" title="Enlace a la política de privacidad en {{config('app.name')}}" target="_blank">la Política de Privacidad</a>
+                        <a href="{{route('page.show', 'politica-de-privacidad')}}"
+                           title="Enlace a la política de privacidad en {{config('app.name')}}" target="_blank">la
+                            Política de Privacidad</a>
                         y las
-                        <a href="{{route('page.show', 'condiciones-de-uso')}}" title="Enlace a las condiciones de uso en {{config('app.name')}}" target="_blank">las Condiciones de Uso</a>
+                        <a href="{{route('page.show', 'condiciones-de-uso')}}"
+                           title="Enlace a las condiciones de uso en {{config('app.name')}}" target="_blank">las
+                            Condiciones de Uso</a>
                     </label>
 
                 </div>
@@ -208,6 +245,142 @@
     </section>
 @endsection
 
+@section('css')
+
+    <style>
+        #image-grid-container {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 15px;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+
+        #image-preview-container {
+            width: 100%;
+            max-width: 150px;
+            height: 100px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        #preview-placeholder {
+            font-size: 12px;
+            color: #666;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #preview-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+        .image-input-column {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            grid-column: 2;
+            grid-row: 1;
+            min-width: 0; /* Importante para que el contenedor pueda encogerse */
+        }
+
+        #image-grid-container .form-control {
+            max-width: none;
+            width: 100%;
+            min-width: 0; /* Permite que el input se reduzca */
+            box-sizing: border-box;
+        }
+
+        #content-image {
+            width: 100% !important;
+            min-width: 0 !important;
+            max-width: 100% !important;
+        }
+
+        #image-grid-container label {
+            margin: 0;
+            color: var(--color-texto-principal);
+            word-wrap: break-word;
+            hyphens: auto;
+        }
+
+        #file-error {
+            display: none;
+            margin-top: 0;
+            color: #dc3545;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            #image-grid-container {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            #image-preview-container {
+                max-width: 200px;
+                height: 120px;
+                margin: 0 auto;
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .image-input-column {
+                grid-column: 1;
+                grid-row: 2;
+                min-width: 0;
+            }
+        }
+
+        @media (max-width: 400px) {
+            #image-grid-container {
+                grid-template-columns: 1fr;
+                gap: 8px;
+                padding: 0;
+                margin: 0 0 1rem 0;
+            }
+
+            #image-preview-container {
+                max-width: 120px;
+                height: 80px;
+                margin: 0 auto;
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .image-input-column {
+                grid-column: 1;
+                grid-row: 2;
+                gap: 6px;
+                min-width: 0;
+            }
+
+            #preview-placeholder {
+                font-size: 11px;
+                padding: 5px;
+            }
+
+            #image-grid-container label {
+                font-size: 14px;
+                line-height: 1.3;
+            }
+        }
+    </style>
+
+@endsection
+
 @section('js')
     <script>
         function goToForm() {
@@ -217,6 +390,48 @@
         @if($errors->any())
         goToForm();
         @endif
+
+        function handleImagePreview(e) {
+            console.log(e);
+            const input = e.target;
+            const file = input.files[0];
+            const errorElement = document.getElementById('file-error');
+            const previewImg = document.getElementById('preview-img');
+            const placeholder = document.getElementById('preview-placeholder');
+
+            // Limpiar errores previos
+            errorElement.style.display = 'none';
+
+            if (file) {
+                // Validar tamaño (2MB = 2097152 bytes)
+                if (file.size > 2097152) {
+                    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
+                    errorElement.textContent = `La imagen es demasiado grande (${fileSizeMB}MB). Máximo permitido: 2MB`;
+                    errorElement.style.display = 'block';
+                    input.value = '';
+
+                    // Mostrar placeholder, ocultar imagen
+                    placeholder.style.display = 'flex';
+                    previewImg.style.display = 'none';
+                    return false;
+                }
+
+                // Mostrar preview
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImg.src = e.target.result;
+                    previewImg.style.display = 'block';
+                    placeholder.style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            } else {
+                // Si no hay archivo, mostrar placeholder
+                placeholder.style.display = 'flex';
+                previewImg.style.display = 'none';
+            }
+
+            return true;
+        }
 
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -259,6 +474,14 @@
                     }, 1000);
                 }
             }
+
+
+            /* Previsualización de imágenes */
+            document.getElementById('content-image')?.addEventListener('change', handleImagePreview);
+            document.getElementById('image-preview-container')?.addEventListener('click', () => {
+                document.getElementById('content-image')?.click();
+            });
+
         });
 
     </script>

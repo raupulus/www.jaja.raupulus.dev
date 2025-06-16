@@ -76,7 +76,7 @@ class SuggestionRequest extends FormRequest
     {
         return [
             'type_id' => 'required|exists:types,id',
-            'nick' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9_]+$/',
+            'nick' => 'nullable|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:1024',
             'image' => 'nullable|image|max:2048',

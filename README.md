@@ -102,9 +102,11 @@ Listado de tareas pendientes a realizar antes de la primera publicación
 - [x] Añadir enlaces a páginas creadas anteriormente en todos los apartados que se dejaron con enlaces "#"
 - [x] Añadir a la página de agradecimientos (quizás también a la principal??) Resumen de estadísticas con cantidades de chistes subidos
 - [x] Crear estadísticas para los usuarios que han subido más contenido y dinamizarlas
-- Crear comando laravel para regenerar las estadísticas cada 10m o 30m y añadirlo al cron
-- Limitar tamaño del nick en formulario a 20? 30? mirar cuanto cuadra bien en las tarjetas para no permitir aquí 255 y romper diseños
+- [x] Limitar tamaño del nick en formulario a 25 mirar cuanto cuadra bien en las tarjetas para no permitir aquí 255 y romper diseños
+- [x] Añadir previsualización de imagen al subir sugerencia de contenido
+- Crear Validation request para los endpoint api en común (limit)
 - Cambiar acceso a panel de usuario desde "/user" a "/panel"
+- Crear comando laravel para regenerar las estadísticas cada 10m o 30m y añadirlo al cron
 - Añadir recaptcha v3 en formulario de envío
 - Crear .env para producción
 - Generar documentación de api phpdoc con automatización
