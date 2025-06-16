@@ -13,8 +13,16 @@ return new class extends Migration
     {
         Schema::create('suggestions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->nullable()->constrained('types');
-            $table->foreignId('group_id')->nullable()->constrained('groups');
+            $table->foreignId('type_id')
+                ->nullable()
+                ->constrained('types')
+                ->onDelete('SET NULL')
+                ->onUpdate('SET NULL');
+            $table->foreignId('group_id')
+                ->nullable()
+                ->constrained('groups')
+                ->onDelete('SET NULL')
+                ->onUpdate('SET NULL');
             $table->string('nick', 255)->nullable();
             $table->string('title', 255);
             $table->text('content');

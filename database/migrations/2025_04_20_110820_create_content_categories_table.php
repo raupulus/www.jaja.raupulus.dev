@@ -10,8 +10,14 @@ return new class extends Migration
     {
         Schema::create('content_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('category_id')->constrained('categories');
-            $table->foreignId('content_id')->constrained('contents');
+            $table->foreignId('category_id')
+                ->constrained('categories')
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
+            $table->foreignId('content_id')
+                ->constrained('contents')
+                ->onDelete('CASCADE')
+                ->onUpdate('CASCADE');
             $table->timestamps();
             $table->softDeletes();
         });

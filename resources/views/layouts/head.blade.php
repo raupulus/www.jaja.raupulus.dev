@@ -92,5 +92,5 @@
     @vite(['resources/css/frontend.css', 'resources/css/footer.css'])
 
     {{-- Additional Head Content --}}
-    @stack('head')
+    @yield('head')
 </head>

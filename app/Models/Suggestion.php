@@ -158,5 +158,4 @@ class Suggestion extends Model
 
         return false;
     }
-
 }

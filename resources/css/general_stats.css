@@ -1,0 +1,143 @@
+/* ===============================================
+   ESTILOS PARA SECCIÓN DE ESTADÍSTICAS GENERALES
+   =============================================== */
+
+/* Contenedor principal */
+.agradecimientos-section {
+    background: linear-gradient(135deg, var(--color-superficie-oscura) 0%, var(--color-fondo-oscuro) 100%);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 2rem 0;
+    box-shadow: var(--sombra-media);
+    border: 1px solid var(--color-borde-oscuro);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+/* Contenedor para mostrar en grid 3 tarjetas cuadradas */
+.stats-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+/* Cada Tarjeta individual de estadística */
+.stats-card {
+    background: var(--color-superficie-oscura);
+    border: 2px solid var(--color-borde-oscuro);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    aspect-ratio: 1; /* Con esto hago las tarjetas cuadradas */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Efecto hover en tarjetas de estadísticas */
+.stats-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--color-primario);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.2);
+}
+
+/* Efecto de brillo en hover */
+.stats-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(0, 188, 212, 0.1), transparent);
+    transform: rotate(45deg);
+    transition: all 0.6s ease;
+    opacity: 0;
+}
+
+.stats-card:hover::before {
+    opacity: 1;
+    animation: shine 0.6s ease;
+}
+
+/* Título de cada tarjeta */
+.stats-card h3 {
+    color: var(--color-primario);
+    font-size: 1.2em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Descripción de cada tarjeta */
+.stats-card p {
+    color: var(--color-texto-secundario);
+    font-size: 0.9em;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+/* Valor numérico al que le asocio una animación */
+.stats-value {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: var(--color-texto-destacado);
+    animation: countUp 2s ease-out;
+    text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+/* --- ANIMACIONES --- */
+/* Animación muevo hacia arriba */
+@keyframes countUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animación de brillo */
+@keyframes shine {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+/* Animación de entrada para la sección */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- RESPONSIVE PARA ESTADÍSTICAS GENERALES --- */
+@media (max-width: 768px) {
+    /* Ajustes para sección de estadísticas en móvil */
+    .agradecimientos-section {
+        padding: 1.5rem;
+    }
+
+    .stats-cards-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .stats-card {
+        aspect-ratio: auto;
+        min-height: 200px;
+    }
+
+    .stats-value {
+        font-size: 1.8em;
+    }
+}

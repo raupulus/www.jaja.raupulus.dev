@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('head')
+    @vite(['resources/css/components.css', 'resources/css/general_stats.css'])
+@endsection
+
 @section('content')
     <section>
         <h1>Bienvenid@ a {{config('app.name')}}</h1>
@@ -17,7 +21,12 @@
             creando una comunidad abierta donde los <strong>chistes</strong>, adivinanzas y preguntas tipo quiz cobran vida con tus
             ocurrencias.
         </p>
+    </section>
 
+    {{-- Estadísticas generales del contenido en la plataforma --}}
+    @include('partials._general_stats')
+
+    <section>
         <p class="mw-800 m-auto text-center text-secondary">
             Aquí puedes disfrutar del contenido más esporádico y subir tus propias invenciones.
         </p>
@@ -53,6 +62,17 @@
         </p>
 
         <a href="{{route('page.show', 'bot-twitch')}}" title="Enlace a la información sobre el bot de twitch" class="btn">Quiero mi BotHijo</a>
+    </section>
+
+    <section class="card">
+        <h2 class="card-title">Buena Gente</h2>
+
+        <p>
+            La comunidad de jajajeros os agradece la colaboración y apoyo de todas esas personas que ayudan a que esto
+            sea posible
+        </p>
+
+        <a href="{{route('page.show', 'agradecimientos')}}" title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}" class="btn">JAgradece A...</a>
     </section>
 
     <section class="card">
@@ -157,17 +177,6 @@
                 <button type="submit" class="btn">Enviar</button>
             </form>
         </div>
-    </section>
-
-    <section class="card">
-        <h2 class="card-title">Buena Gente</h2>
-
-        <p>
-            La comunidad de jajajeros os agradece la colaboración y apoyo de todas esas personas que ayudan a que esto
-            sea posible
-        </p>
-
-        <a href="{{route('page.show', 'agradecimientos')}}" title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}" class="btn">JAgradece A...</a>
     </section>
 
     <section class="box-card-content">
