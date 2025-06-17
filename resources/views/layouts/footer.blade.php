@@ -95,6 +95,11 @@
                     </a>
                 </p>
 
+                <a href="{{route('page.show', 'agradecimientos')}}"
+                   title="Enlace a la página de agradecimientos por contribuciones de la comunidad en {{config('app.name')}}" class="footer-btn-link">
+                    Agradecimientos
+                </a>
+
                 <p>
                     <a href="https://gitlab.com/raupulus/www.jaja.raupulus.dev" target="_blank"
                        title="Enlace a repositorio de código para esta web en gitlab" class="footer-btn-link">
@@ -108,11 +113,6 @@
                         Código en GitHub
                     </a>
                 </p>
-
-                <a href="{{route('page.show', 'agradecimientos')}}"
-                   title="Enlace a la página de agradecimientos por contribuciones de la comunidad en {{config('app.name')}}" class="footer-btn-link">
-                    Agradecimientos
-                </a>
             </div>
 
             <div>
@@ -123,9 +123,9 @@
                     </a>
                 </p>
                 <p>
-                    <a href="{{route('page.show', 'politica-de-privacidad')}}"
-                       title="Enlace a las políticas de privacidad de {{config('app.name')}}" class="footer-btn-link">
-                        Políticas de privacidad
+                    <a href="{{route('page.show', 'politica-de-cookies')}}"
+                       title="Enlace a las condiciones de uso de {{config('app.name')}}" class="footer-btn-link">
+                        Política de cookies
                     </a>
                 </p>
                 <p>
@@ -135,9 +135,9 @@
                     </a>
                 </p>
                 <p>
-                    <a href="{{route('page.show', 'politica-de-cookies')}}"
-                       title="Enlace a las condiciones de uso de {{config('app.name')}}" class="footer-btn-link">
-                        Política de cookies
+                    <a href="{{route('page.show', 'politica-de-privacidad')}}"
+                       title="Enlace a las políticas de privacidad de {{config('app.name')}}" class="footer-btn-link">
+                        Políticas de privacidad
                     </a>
                 </p>
             </div>
