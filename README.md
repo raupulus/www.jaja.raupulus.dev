@@ -106,7 +106,8 @@ Listado de tareas pendientes a realizar antes de la primera publicación
 - [x] Añadir previsualización de imagen al subir sugerencia de contenido
 - [x] Crear Validation request para endpoint login api de usuario
 - [x] Personalizar metatags en páginas (imágen si tuviera)
-- Crear .env para producción
+- [x] Crear .env para producción
+- [x] Crear archivo de configuración para sitio virtual para apache
 - Cambiar acceso a panel de usuario desde "/user" a "/panel"
 - Crear comando laravel para regenerar las estadísticas cada 10m o 30m y añadirlo al cron
 - Añadir recaptcha v3 en formulario de envío
