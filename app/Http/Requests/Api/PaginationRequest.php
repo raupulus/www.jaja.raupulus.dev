@@ -6,7 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 
-
+/**
+ * Paginación de resultados
+ *
+ * @param int $page Número de página que se desea obtener
+ * @param int $limit Cantidad de resultados que se desea obtener
+ */
 class PaginationRequest extends FormRequest
 {
     /**

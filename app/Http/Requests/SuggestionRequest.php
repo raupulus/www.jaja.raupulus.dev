@@ -3,11 +3,20 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Validator;
 
+/**
+ * Request para envíos de sugerencia de contenido
+ *
+ * @param int $type_id Id del tipo de contenido asociado
+ * @param string $nick Nombre del usuario en las redes sociales con formato de username o nick
+ * @param string $title Título principal del contenido
+ * @param string $content Contenido
+ */
 class SuggestionRequest extends FormRequest
 {
     /**

@@ -104,11 +104,12 @@ Listado de tareas pendientes a realizar antes de la primera publicación
 - [x] Crear estadísticas para los usuarios que han subido más contenido y dinamizarlas
 - [x] Limitar tamaño del nick en formulario a 25 mirar cuanto cuadra bien en las tarjetas para no permitir aquí 255 y romper diseños
 - [x] Añadir previsualización de imagen al subir sugerencia de contenido
-- Crear Validation request para los endpoint api en común (limit)
+- [x] Crear Validation request para endpoint login api de usuario
+- [x] Personalizar metatags en páginas (imágen si tuviera)
+- Crear .env para producción
 - Cambiar acceso a panel de usuario desde "/user" a "/panel"
 - Crear comando laravel para regenerar las estadísticas cada 10m o 30m y añadirlo al cron
 - Añadir recaptcha v3 en formulario de envío
-- Crear .env para producción
 - Generar documentación de api phpdoc con automatización
 - Preparar generador de sitemap en cron de laravel
 - Habilitar indexado en motores de búsqueda
@@ -116,7 +117,9 @@ Listado de tareas pendientes a realizar antes de la primera publicación
 ## Todo con menor prioridad
 
 - Gestión de tokens en panel de usuarios
+- Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Revisar: Añadir gráficas en el backend con cantidad de peticiones api?
 - Implementar gestión de preguntas tipo quiz con respuestas en el backend
 - Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones requeridas para las respuestas
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longituds "ja" "jaja" "aj"... y opacidad
+- Añadir colaboradores de software a la db e intranet (tabla para colaboradores y otra con proyectos asociados a estos)
