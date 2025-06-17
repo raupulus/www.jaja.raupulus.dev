@@ -57,4 +57,14 @@ class IndexController extends Controller
 
         return redirect()->route('index')->with('success', 'Contenido enviado correctamente.');
     }
+
+    /**
+     * Login con redirección al panel para usuarios
+     *
+     * @return RedirectResponse
+     */
+    public function login(): RedirectResponse
+    {
+        return redirect()->route('filament.panel.auth.login');
+    }
 }

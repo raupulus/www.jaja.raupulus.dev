@@ -131,10 +131,10 @@ class StatsHelper
                 ->sortByDesc('total')
                 ->take($limit)
                 ->values()
-                ->map(function($usuario) {
-                    unset($usuario['total']);
-                    return $usuario;
-                })
+                //->map(function($usuario) {
+                //    unset($usuario['total']);
+                //    return $usuario;
+                //})
                 ->toArray();
 
             return $todosLosUsuarios;

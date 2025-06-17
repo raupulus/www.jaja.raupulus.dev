@@ -15,14 +15,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-
-
-        // TODO: Implementar roles de usuario y actualizar este control a algo más firme
-
         if (auth()->id() && auth()->user()->isAdmin) {
             return $next($request);
         } else if (auth()->id()) {
-            return redirect()->route('filament.user.pages.dashboard');
+            return redirect()->route('filament.panel.pages.dashboard');
         }
 
         return $next($request);

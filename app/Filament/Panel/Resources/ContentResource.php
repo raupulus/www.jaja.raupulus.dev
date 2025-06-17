@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\User\Resources;
+namespace App\Filament\Panel\Resources;
 
 use App\Actions\ConvertImageToWebp;
-use App\Filament\User\Resources\ContentResource\Pages;
+use App\Filament\Panel\Resources\ContentResource\Pages;
 use App\Models\Content;
 use Filament\Forms;
 use Filament\Forms\Form;

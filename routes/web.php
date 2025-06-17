@@ -4,8 +4,8 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
-//Route::get('/login', fn () => redirect()->route('filament.admin.auth.login'))->name('login');
-Route::get('/login', fn () => abort(404))->name('login');
+Route::get('/login', fn () => redirect()->route('filament.panel.auth.login'))->name('login');
+//Route::get('/login', fn () => abort(404))->name('login');
 
 
 /*************************************************
