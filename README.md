@@ -128,6 +128,7 @@ estos colaboradores podrán editar sus proyectos desde la intranet, también añ
 - Dinamizar colaboradores y proyectos para tener su propia página con listado de proyectos y ver cada proyecto individual,
 esto permite tener más contenido indexado y dar visibilidad a los colaboradores. Habrá que rediseñar el bloque de
 tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proyecto a su página individual del mismo.
+- Revisar migraciones y validaciones para el campo "nick" que no debe permitir más de 50 carácteres
 - Crear comando laravel para regenerar las estadísticas cada 10m o 30m y añadirlo al cron
 - Preparar generador de sitemap en cron de laravel
 - Añadir recaptcha v3 en formulario de envío
@@ -136,6 +137,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 
 ## TODO con menor prioridad
 
+- Revisar todos los iconos de las secciones en menú lateral y poner uno adecuado para cada CRUD
 - Gestión de tokens en panel de usuarios
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Revisar: Añadir gráficas en el backend con cantidad de peticiones api?
