@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colaborator_projects', function (Blueprint $table) {
+        Schema::create('collaborator_projects', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('colaborator_id')
+            $table->foreignId('collaborator_id')
                 ->comment('Colaborador al que pertenece el proyecto')
-                ->constrained('colaborators')
+                ->constrained('collaborators')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
 
@@ -47,6 +47,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colaborator_projects');
+        Schema::dropIfExists('collaborator_projects');
     }
 };

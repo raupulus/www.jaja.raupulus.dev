@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('colaborators', function (Blueprint $table) {
+        Schema::create('collaborators', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')
                 ->nullable()
@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('name', 255)->comment('Nombre del colaborador');
             $table->string('nick', 50)->comment('Nick del colaborador');
             $table->string('website', 255)->comment('Sitio web')->nullable();
-            $table->string('url_image', 255)
+            $table->string('image', 255)
                 ->nullable()
-                ->comment('URL de la imagen del colaborador por ejemplo de su perfil de GitHub');
+                ->comment('Imagen del colaborador por ejemplo de su logo');
             $table->string('description', 255)
                 ->comment('Un pequeño resumen de su biografía')
                 ->nullable();
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('colaborators');
+        Schema::dropIfExists('collaborators');
     }
 };

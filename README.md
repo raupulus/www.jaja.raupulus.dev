@@ -42,6 +42,16 @@ php artisan migrate
 php artisan make:filament-user
 ```
 
+Actualmente, no vemos interesante un sistema de roles más fuerte y por defecto todos los usuarios se crean sin acceso
+al *panel* de administración.
+
+Para garantizar el acceso (declarar un usuario como administrador) deberás actualizar manualmente el role de ese usuario
+en la base de datos (role_id=1) que por defecto será 2.
+
+Esto queda así para que en el futuro si escala el sistema de roles (nuevo role como editor, gestión de roles en el panel...)
+podamos actualizar manteniendo la misma enumeración de roles, pero actualmente las necesidades de gestionar roles son 
+muy básicas y no llega a ser interesante aumentar la complejidad y querys.
+
 ### Ejecutar seeders para añadir datos de ejemplo a la base de datos
 
 ```bash
