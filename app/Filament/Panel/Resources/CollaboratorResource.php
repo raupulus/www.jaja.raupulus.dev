@@ -1,41 +1,44 @@
 <?php
 
-namespace App\Filament\Admin\Resources;
+namespace App\Filament\Panel\Resources;
 
 use App\Actions\ConvertImageToWebp;
-use App\Filament\Admin\Resources\CollaboratorResource\Pages;
-use App\Filament\Admin\Resources\CollaboratorResource\RelationManagers;
+use App\Filament\Panel\Resources\CollaboratorResource\Pages;
+use App\Filament\Panel\Resources\CollaboratorResource\RelationManagers;
 use App\Models\Collaborator;
-use App\Models\Page;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class CollaboratorResource extends Resource
 {
     protected static ?string $model = Collaborator::class;
 
-    protected static ?string $navigationLabel = 'Colaboradores';
+    protected static ?string $navigationLabel = 'Perfil Colaborador';
 
-    protected static ?string $label = 'Colaborador';
+    protected static ?string $label = 'Perfil Colaborador';
 
-    protected static ?string $pluralLabel = 'Colaboradores';
+    protected static ?string $pluralLabel = 'Perfil Colaborador';
 
-    protected static ?string $modelLabel = 'Colaborador';
+    protected static ?string $modelLabel = 'Perfil Colaborador';
 
-    protected static ?string $pluralModelLabel = 'Colaboradores';
+    protected static ?string $pluralModelLabel = 'Perfil Colaborador';
 
-    protected static ?string $title = 'Colaboradores';
+    protected static ?string $title = 'Perfil Colaborador';
 
-    protected static ?string $navigationGroup = 'Administración';
+    protected static ?string $navigationIcon = 'heroicon-o-user-circle';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $recordTitleAttribute = 'name';
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?int $navigationSort = 1;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->where('user_id', auth()->id());
+    }
 
     public static function form(Form $form): Form
     {
@@ -52,7 +55,7 @@ class CollaboratorResource extends Resource
                     ->default(null)
                     ->imageResizeTargetHeight(400)
                     ->imageResizeTargetWidth(400)
-                    ->imageResizeMode('crop', )
+                    ->imageResizeMode('crop')
                     ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
                         if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
                             try {
@@ -61,7 +64,6 @@ class CollaboratorResource extends Resource
                                 $newPath = $converter($tempFile, 'collaborator-images');
 
                                 if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
                                     $component->state([$newPath]);
                                 }
                             } catch (\Exception $e) {
@@ -69,19 +71,23 @@ class CollaboratorResource extends Resource
                                 \Log::error($e->getTraceAsString());
                             }
                         }
-                    })
-                ,
+                    }),
                 Forms\Components\TextInput::make('name')
+                    ->label('Nombre')
+                    ->columnSpanFull()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nick')
+                    ->label('Nick')
                     ->required()
                     ->maxLength(25),
                 Forms\Components\TextInput::make('website')
+                    ->label('Sitio Web')
                     ->maxLength(255),
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name'),
+                Forms\Components\Hidden::make('user_id')
+                    ->default(auth()->id()),
                 Forms\Components\Textarea::make('description')
+                    ->label('Descripción')
                     ->columnSpanFull()
                     ->rows(3)
                     ->required()
@@ -94,17 +100,12 @@ class CollaboratorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
-                Tables\Columns\TextColumn::make('user.name')
-                    ->label('Usuario')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nick')
                     ->label('Nick')
-                    ->searchable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('website')
                     ->label('Sitio Web')
@@ -112,19 +113,8 @@ class CollaboratorResource extends Resource
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
                     ->searchable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->label('Fecha de Creación')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->label('Fecha de Actualización')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->limit(50),
             ])
-            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
@@ -132,9 +122,14 @@ class CollaboratorResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Remover acciones en lote para usuarios normales
+            ])
+            ->emptyStateHeading('No tienes un perfil de colaborador')
+            ->emptyStateDescription('Crea tu perfil para empezar a gestionar tus proyectos')
+            ->emptyStateActions([
+                Tables\Actions\CreateAction::make()
+                    ->label('Crear mi perfil')
+                    ->icon('heroicon-o-plus'),
             ]);
     }
 
@@ -152,5 +147,20 @@ class CollaboratorResource extends Resource
             'create' => Pages\CreateCollaborator::route('/create'),
             'edit' => Pages\EditCollaborator::route('/{record}/edit'),
         ];
+    }
+
+    public static function canView($record): bool
+    {
+        return $record->user_id === auth()->id();
+    }
+
+    public static function canEdit($record): bool
+    {
+        return $record->user_id === auth()->id();
+    }
+
+    public static function canDelete($record): bool
+    {
+        return false; ## Los usuarios no pueden eliminar su perfil desde aquí
     }
 }

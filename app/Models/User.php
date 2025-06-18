@@ -7,6 +7,7 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -51,6 +52,17 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Relación con el colaborador del usuario.
+     *
+     * @return HasOne
+     */
+    public function collaborator(): HasOne
+    {
+        return $this->hasOne(Collaborator::class, 'user_id', 'id');
+    }
+
 
     /**
      * Devuelve la url hacia el avatar del usuario.

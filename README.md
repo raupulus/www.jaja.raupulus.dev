@@ -123,7 +123,7 @@ Listado de tareas pendientes a realizar antes de la primera publicación
 - [x] Mirar si usar el login en el panel de usuarios para no utilizar el de admin como ahora
 - [x] Quitar widget de documentación en el panel de usuarios
 - [x] Añadir estadísticas en el backend para contenidos y usuarios
-- Añadir colaboradores de software a la db e intranet (tabla para colaboradores y otra con proyectos asociados a estos)
+- [x] Añadir colaboradores de software a la db e intranet (tabla para colaboradores y otra con proyectos asociados a estos)
 estos colaboradores podrán editar sus proyectos desde la intranet, también añadir nuevos pero sin cambiar estado "draft"
 - Dinamizar colaboradores y proyectos para tener su propia página con listado de proyectos y ver cada proyecto individual,
 esto permite tener más contenido indexado y dar visibilidad a los colaboradores. Habrá que rediseñar el bloque de
@@ -144,3 +144,6 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - Implementar gestión de preguntas tipo quiz con respuestas en el backend
 - Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones (máximo) requeridas 2 (mínimo) para las respuestas
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
+- Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
+- Añadir en el panel de admin botón para ejecutar comando artisan y refrescar todo el caché. Así tras modificar
+algo importante en el contenido puedo actualizar caché desde el propio panel.
