@@ -77,7 +77,7 @@ class SuggestionResource extends Resource
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('nick')
                     ->label('Nick')
-                    ->maxLength(255),
+                    ->maxLength(25),
 
 
                 Forms\Components\Select::make('type_id')

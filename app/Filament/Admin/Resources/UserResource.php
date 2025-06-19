@@ -84,7 +84,7 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('nick')
                     ->required()
                     ->label('Nick')
-                    ->maxLength(255),
+                    ->maxLength(25),
                 Forms\Components\DateTimePicker::make('email_verified_at')
                     ->label('Verificado')
                     ->hiddenOn(['create', 'edit'])

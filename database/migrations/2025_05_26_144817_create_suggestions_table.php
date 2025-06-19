@@ -23,7 +23,7 @@ return new class extends Migration
                 ->constrained('groups')
                 ->onDelete('SET NULL')
                 ->onUpdate('SET NULL');
-            $table->string('nick', 255)->nullable();
+            $table->string('nick', 50)->nullable();
             $table->string('title', 255);
             $table->text('content');
             $table->string('image_path', 255)->nullable();
