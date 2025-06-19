@@ -7,6 +7,15 @@ use Illuminate\View\View;
 
 class PageController extends Controller
 {
+
+    public function index(): View
+    {
+        return view('pages.index', [
+            'pages' => Page::select(['title', 'slug', 'excerpt', 'image', 'keywords'])
+                ->where('status', 'published')
+                ->get(),
+        ]);
+    }
     public function show(Page $page): View
     {
         if (!$page || ($page->status !== 'published')) {

@@ -10,7 +10,7 @@
 @endif
 
 @section('css')
-    @vite(['resources/css/pages.css'])
+    @vite(['resources/css/page.css'])
 
     @if($page->slug === 'agradecimientos')
         @vite(['resources/css/contributors.css', 'resources/css/collaborators.css', 'resources/css/general_stats.css'])

@@ -11,6 +11,16 @@ class Page extends Model
     protected $fillable = ['title', 'slug', 'excerpt', 'content', 'image', 'keywords', 'status'];
 
     /**
+     * Devuelve el enlace a la página actual.
+     *
+     * @return string
+     */
+    public function getUrlAttribute(): string
+    {
+        return route('page.show', $this->slug);
+    }
+
+    /**
      * Devuelve la url hacia la imagen principal de la página.
      *
      * @return string|null
@@ -18,6 +28,12 @@ class Page extends Model
     public function getUrlImageAttribute(): ?string
     {
         return $this->image ? asset('storage/' . $this->image) : null;
+    }
+
+    //TODO: Adaptar cuando implemente generar thumbnails
+    public function getUrlImageThumbnailAttribute(): ?string
+    {
+        return $this->urlImage;
     }
 
     /**

@@ -10,7 +10,7 @@
 @endif
 
 @section('css')
-    @vite(['resources/css/pages.css', 'resources/css/projects.css'])
+    @vite(['resources/css/page.css', 'resources/css/projects.css'])
 @endsection
 
 @section('content')

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('head')
-    @vite(['resources/css/components.css', 'resources/css/general_stats.css'])
+    @vite(['resources/css/home.css', 'resources/css/components.css', 'resources/css/general_stats.css'])
 @endsection
 
 @section('content')
@@ -51,7 +51,7 @@
         </p>
 
         <a href="{{route('page.show', 'api')}}" title="Enlace a la documentación de la api en {{config('app.name')}}"
-           class="btn">Api Docs</a>
+           class="btn">A happy Api Docs</a>
     </section>
 
     <section class="card">
@@ -216,6 +216,19 @@
         </div>
     </section>
 
+    <section class="card">
+        <h2 class="card-title">Listado de Páginas</h2>
+
+        <p>
+            Aquí tienes un listado de todas las páginas del sitio de comunidad para que puedas navegar sin problemas.
+            Puedes encontrar documentación legal, normas, información del sitio y contribuidores.
+        </p>
+
+        <a href="{{route('page.index')}}"
+           title="Enlace a todo el listado de páginas de {{config('app.name')}}"
+           class="btn">Legalisasion</a>
+    </section>
+
     <section class="box-card-content">
         <h2>Algunos contenidos</h2>
 
@@ -243,142 +256,6 @@
             </div>
         @endforeach
     </section>
-@endsection
-
-@section('css')
-
-    <style>
-        #image-grid-container {
-            display: grid;
-            grid-template-columns: 150px 1fr;
-            gap: 15px;
-            align-items: start;
-            margin-bottom: 1rem;
-        }
-
-        #image-preview-container {
-            width: 100%;
-            max-width: 150px;
-            height: 100px;
-            border: 2px dashed #ccc;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background-color: #f9f9f9;
-            cursor: pointer;
-            grid-column: 1;
-            grid-row: 1;
-        }
-
-        #preview-placeholder {
-            font-size: 12px;
-            color: #666;
-            padding: 10px;
-            text-align: center;
-        }
-
-        #preview-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .image-input-column {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            grid-column: 2;
-            grid-row: 1;
-            min-width: 0; /* Importante para que el contenedor pueda encogerse */
-        }
-
-        #image-grid-container .form-control {
-            max-width: none;
-            width: 100%;
-            min-width: 0; /* Permite que el input se reduzca */
-            box-sizing: border-box;
-        }
-
-        #content-image {
-            width: 100% !important;
-            min-width: 0 !important;
-            max-width: 100% !important;
-        }
-
-        #image-grid-container label {
-            margin: 0;
-            color: var(--color-texto-principal);
-            word-wrap: break-word;
-            hyphens: auto;
-        }
-
-        #file-error {
-            display: none;
-            margin-top: 0;
-            color: #dc3545;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            #image-grid-container {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-
-            #image-preview-container {
-                max-width: 200px;
-                height: 120px;
-                margin: 0 auto;
-                grid-column: 1;
-                grid-row: 1;
-            }
-
-            .image-input-column {
-                grid-column: 1;
-                grid-row: 2;
-                min-width: 0;
-            }
-        }
-
-        @media (max-width: 400px) {
-            #image-grid-container {
-                grid-template-columns: 1fr;
-                gap: 8px;
-                padding: 0;
-                margin: 0 0 1rem 0;
-            }
-
-            #image-preview-container {
-                max-width: 120px;
-                height: 80px;
-                margin: 0 auto;
-                grid-column: 1;
-                grid-row: 1;
-            }
-
-            .image-input-column {
-                grid-column: 1;
-                grid-row: 2;
-                gap: 6px;
-                min-width: 0;
-            }
-
-            #preview-placeholder {
-                font-size: 11px;
-                padding: 5px;
-            }
-
-            #image-grid-container label {
-                font-size: 14px;
-                line-height: 1.3;
-            }
-        }
-    </style>
-
 @endsection
 
 @section('js')

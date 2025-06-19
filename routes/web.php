@@ -20,8 +20,8 @@ Route::get('/', [IndexController::class, 'index'])->name('index');
 /*************************************************
  * Páginas dinámicas
  ************************************************/
-//Route::get('/pages/index', [PageController::class, 'index'])->name('page.index');
-Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
+Route::get('/paginas', [PageController::class, 'index'])->name('page.index');
+Route::get('/pagina/{page:slug}', [PageController::class, 'show'])->name('page.show');
 
 /*************************************************
  * Solicitudes

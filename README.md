@@ -125,15 +125,16 @@ Listado de tareas pendientes a realizar antes de la primera publicación
 - [x] Añadir estadísticas en el backend para contenidos y usuarios
 - [x] Añadir colaboradores de software a la db e intranet (tabla para colaboradores y otra con proyectos asociados a estos)
 estos colaboradores podrán editar sus proyectos desde la intranet, también añadir nuevos pero sin cambiar estado "draft"
-- Dinamizar colaboradores y proyectos para tener su propia página con listado de proyectos y ver cada proyecto individual,
+- [x] Dinamizar colaboradores y proyectos para tener su propia página con listado de proyectos y ver cada proyecto individual,
 esto permite tener más contenido indexado y dar visibilidad a los colaboradores. Habrá que rediseñar el bloque de
 tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proyecto a su página individual del mismo.
-- Crear página con listado de páginas "/pages/index"
+- [x] Crear página con listado de páginas "/pages/index"
 - Revisar migraciones y validaciones para el campo "nick" que no debe permitir más de 50 carácteres
 - Crear comando laravel para regenerar las estadísticas cada 10m o 30m y añadirlo al cron
 - Preparar generador de sitemap en cron de laravel
 - Añadir recaptcha v3 en formulario de envío
 - Generar documentación de api phpdoc con automatización
+- Aceptación de cookies
 - Habilitar indexado en motores de búsqueda
 
 ## TODO con menor prioridad

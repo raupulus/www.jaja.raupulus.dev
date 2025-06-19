@@ -1,0 +1,298 @@
+/* Contenedor principal de la página */
+.page-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header de la página */
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--color-borde-oscuro);
+}
+
+.page-title {
+    font-size: 2.5em;
+    color: var(--color-primario);
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Contenido principal */
+.page-content {
+    margin-bottom: 4rem;
+}
+
+.page-content-wrapper {
+    background-color: var(--color-superficie-oscura);
+    border-radius: 8px;
+    padding: 3rem;
+    box-shadow: var(--sombra-media);
+    line-height: 1.7;
+}
+
+/* --- Estilos para contenido Markdown convertido --- */
+
+/* Títulos dentro del contenido */
+.page-content-wrapper h1 {
+    font-size: 2.2em;
+    color: var(--color-primario);
+    margin: 2rem 0 1.5rem 0;
+    border-bottom: 2px solid var(--color-borde-oscuro);
+    padding-bottom: 0.5rem;
+}
+
+.page-content-wrapper h1:first-child {
+    margin-top: 0;
+}
+
+.page-content-wrapper h2 {
+    font-size: 1.8em;
+    color: var(--color-primario);
+    margin: 2rem 0 1rem 0;
+    font-weight: 600;
+}
+
+.page-content-wrapper h3 {
+    font-size: 1.4em;
+    color: var(--color-texto-destacado);
+    margin: 1.5rem 0 0.8rem 0;
+    font-weight: 600;
+}
+
+.page-content-wrapper h4 {
+    font-size: 1.2em;
+    color: var(--color-texto-principal);
+    margin: 1.2rem 0 0.6rem 0;
+    font-weight: 600;
+}
+
+.page-content-wrapper h5,
+.page-content-wrapper h6 {
+    font-size: 1.1em;
+    color: var(--color-texto-secundario);
+    margin: 1rem 0 0.5rem 0;
+    font-weight: 600;
+}
+
+/* Párrafos */
+.page-content-wrapper p {
+    margin-bottom: 1.5rem;
+    color: var(--color-texto-principal);
+    text-align: justify;
+}
+
+.page-content-wrapper p:last-child {
+    margin-bottom: 0;
+}
+
+/* Enlaces */
+.page-content-wrapper a {
+    color: var(--color-primario);
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.page-content-wrapper a:hover {
+    color: var(--color-primario-hover);
+    text-decoration-color: var(--color-primario-hover);
+}
+
+/* Listas */
+.page-content-wrapper ul,
+.page-content-wrapper ol {
+    margin: 1.5rem 0;
+    padding-left: 2rem;
+    color: var(--color-texto-principal);
+    text-align: left;
+}
+
+.page-content-wrapper li {
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.page-content-wrapper ul ul,
+.page-content-wrapper ol ol,
+.page-content-wrapper ul ol,
+.page-content-wrapper ol ul {
+    margin: 0.5rem 0;
+}
+
+/* Checkboxes en listas */
+.page-content-wrapper li input[type="checkbox"] {
+    margin-right: 0.5rem;
+    pointer-events: none; /* Evita que se puedan hacer clic */
+}
+
+/* Texto en negrita y cursiva */
+.page-content-wrapper strong {
+    color: var(--color-texto-destacado);
+    font-weight: 700;
+}
+
+.page-content-wrapper em {
+    color: var(--color-texto-secundario);
+    font-style: italic;
+}
+
+/* Bloques de código */
+.page-content-wrapper code {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-primario);
+    padding: 0.2rem 0.4rem;
+    border-radius: 3px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+}
+
+.page-content-wrapper pre {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-principal);
+    padding: 1.5rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 2rem 0;
+    border-left: 4px solid var(--color-primario);
+    text-align: left;
+}
+
+.page-content-wrapper pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+}
+
+/* Citas */
+.page-content-wrapper blockquote {
+    border-left: 4px solid var(--color-primario);
+    margin: 2rem 0;
+    padding: 1rem 1.5rem;
+    background-color: var(--color-fondo-oscuro);
+    border-radius: 0 6px 6px 0;
+    font-style: italic;
+    color: var(--color-texto-secundario);
+    text-align: left; /* Alineación a la izquierda para citas */
+}
+
+.page-content-wrapper blockquote p {
+    margin-bottom: 0;
+    text-align: inherit; /* Heredar la alineación del blockquote */
+}
+
+/* Tablas */
+.page-content-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2rem 0;
+    background-color: var(--color-fondo-oscuro);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: var(--sombra-ligera);
+}
+
+.page-content-wrapper th,
+.page-content-wrapper td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-borde-oscuro);
+}
+
+.page-content-wrapper th {
+    background-color: var(--color-superficie-oscura);
+    color: var(--color-primario);
+    font-weight: 600;
+}
+
+.page-content-wrapper tr:last-child td {
+    border-bottom: none;
+}
+
+.page-content-wrapper tr:hover {
+    background-color: rgba(0, 188, 212, 0.05);
+}
+
+/* Separadores */
+.page-content-wrapper hr {
+    border: none;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-borde-oscuro), transparent);
+    margin: 3rem 0;
+}
+
+/* Imágenes */
+.page-content-wrapper img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    margin: 1.5rem 0;
+    box-shadow: var(--sombra-ligera);
+}
+
+/* --- Responsive para páginas --- */
+@media (max-width: 768px) {
+    .page-container {
+        padding: 0 15px;
+    }
+
+    .page-title {
+        font-size: 2em;
+    }
+
+    .page-content-wrapper {
+        padding: 2rem 1.5rem;
+    }
+
+    .page-content-wrapper h1 {
+        font-size: 1.8em;
+    }
+
+    .page-content-wrapper h2 {
+        font-size: 1.5em;
+    }
+
+    .page-content-wrapper h3 {
+        font-size: 1.3em;
+    }
+
+    .page-content-wrapper ul,
+    .page-content-wrapper ol {
+        padding-left: 1.5rem;
+    }
+
+    .page-content-wrapper table {
+        font-size: 0.9em;
+    }
+
+    .page-content-wrapper th,
+    .page-content-wrapper td {
+        padding: 0.8rem 0.6rem;
+    }
+
+    /* Scroll horizontal para tablas en móvil */
+    .page-content-wrapper table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-content-wrapper {
+        padding: 1.5rem 1rem;
+    }
+
+    .page-title {
+        font-size: 1.8em;
+    }
+
+    .page-content-wrapper pre {
+        padding: 1rem;
+        font-size: 0.85em;
+    }
+}
