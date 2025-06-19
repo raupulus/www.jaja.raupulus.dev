@@ -1,0 +1,311 @@
+/* projects.css - Estilos para la sección de proyectos */
+
+/* --- Contenedor Principal de Proyectos --- */
+.projects-container {
+    margin: 3rem 0;
+    padding: 0 1rem;
+}
+
+.projects-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.projects-header h2 {
+    font-size: 2.2em;
+    color: var(--color-primario);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+/* --- Grid de Proyectos --- */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* --- Tarjeta de Proyecto Horizontal --- */
+.project-item {
+    background-color: var(--color-superficie-oscura);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: var(--sombra-media);
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    grid-template-areas:
+        "image content action"
+        "image badges action"
+        "keywords keywords keywords";
+    gap: 1.5rem;
+    align-items: start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid var(--color-borde-oscuro);
+}
+
+.project-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Imagen del Proyecto --- */
+.project-item > div:first-child {
+    grid-area: image;
+    width: 200px;
+    height: 140px;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--color-fondo-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--color-borde-oscuro);
+}
+
+.project-item > div:first-child img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.project-item:hover > div:first-child img {
+    transform: scale(1.05);
+}
+
+/* Placeholder para imagen */
+.project-item > div:first-child > div {
+    color: var(--color-texto-secundario);
+    font-size: 0.9em;
+    text-align: center;
+    padding: 1rem;
+}
+
+/* --- Contenido Principal --- */
+.project-item > div:nth-child(2) {
+    grid-area: content;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+/* Título del proyecto */
+.project-item > div:nth-child(2) > div:first-child {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--color-primario);
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
+}
+
+/* Descripción del proyecto */
+.project-item > div:nth-child(2) > div:nth-child(2) {
+    color: var(--color-texto-principal);
+    line-height: 1.6;
+    font-size: 1em;
+    margin-bottom: 0.5rem;
+}
+
+/* URL del proyecto */
+.project-item > div:nth-child(2) > div:nth-child(3) {
+    color: var(--color-primario);
+    font-size: 0.9em;
+    font-weight: 500;
+}
+
+.project-item > div:nth-child(2) > div:nth-child(3):hover {
+    color: var(--color-primario-hover);
+    text-decoration: underline;
+}
+
+/* --- Badges de Metadatos --- */
+.project-item > div:nth-child(2) > div:nth-child(4), .badges-metadata {
+    grid-area: badges;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 0.5rem;
+}
+
+.project-item > div:nth-child(2) > div:nth-child(4) span, .badge-metadata > span {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-secundario);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 500;
+    border: 1px solid var(--color-borde-oscuro);
+    text-transform: capitalize;
+    transition: background-color 0.3s ease;
+}
+
+.project-item > div:nth-child(2) > div:nth-child(4) span:hover, .badge-metadata > span:hover {
+    background-color: var(--color-primario);
+    color: var(--color-superficie-oscura);
+}
+
+/* --- Keywords Container (nueva sección) --- */
+.keywords-container {
+    grid-area: keywords;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-borde-oscuro);
+}
+
+.keyword-badge {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-secundario);
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 500;
+    border: 1px solid var(--color-borde-oscuro);
+    text-transform: lowercase;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.keyword-badge:hover {
+    background-color: var(--color-primario);
+    color: var(--color-superficie-oscura);
+    transform: translateY(-1px);
+}
+
+/* --- Botón de Acción --- */
+.project-item > a {
+    grid-area: action;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-primario);
+    color: var(--color-superficie-oscura);
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700; /* Cambiado de 600 a 700 para más contraste */
+    font-size: 0.9em;
+    transition: all 0.3s ease;
+    box-shadow: var(--sombra-ligera);
+    white-space: nowrap;
+    height: fit-content;
+    align-self: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.project-item > a:hover {
+    background-color: var(--color-primario-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--sombra-media);
+    color: var(--color-superficie-oscura);
+}
+
+/* --- Estados Especiales --- */
+.project-item:not(:hover) {
+    opacity: 0.95;
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 968px) {
+    .project-item {
+        grid-template-columns: 160px 1fr auto;
+        grid-template-areas:
+            "image content action"
+            "image badges action"
+            "keywords keywords keywords";
+        gap: 1rem;
+    }
+
+    .project-item > div:first-child {
+        width: 160px;
+        height: 120px;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects-container {
+        padding: 0 0.5rem;
+    }
+
+    .project-item {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "image"
+            "content"
+            "badges"
+            "keywords"
+            "action";
+        gap: 1rem;
+        padding: 1.2rem;
+    }
+
+    .project-item > div:first-child {
+        width: 100%;
+        height: 180px;
+        justify-self: center;
+    }
+
+    .project-item > a {
+        justify-self: center;
+        width: 100%;
+        text-align: center;
+    }
+
+    .projects-header h2 {
+        font-size: 1.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .project-item {
+        padding: 1rem;
+        gap: 0.8rem;
+    }
+
+    .project-item > div:first-child {
+        height: 160px;
+    }
+
+    .project-item > div:nth-child(2) > div:first-child {
+        font-size: 1.2em;
+    }
+
+    .projects-grid {
+        gap: 1rem;
+    }
+
+    .keyword-badge {
+        font-size: 0.7em;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* --- Animaciones --- */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.project-item {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.project-item:nth-child(odd) {
+    animation-delay: 0.1s;
+}
+
+.project-item:nth-child(even) {
+    animation-delay: 0.2s;
+}

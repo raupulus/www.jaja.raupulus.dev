@@ -1,0 +1,309 @@
+/* ===============================================
+   COLABORADORES - DESARROLLADORES OPEN SOURCE
+   =============================================== */
+
+/* --- SECCIÓN DESARROLLADORES OPEN SOURCE --- */
+/* Contenedor principal de desarrolladores */
+.desarrolladores-section {
+    background: linear-gradient(135deg, var(--color-superficie-oscura) 0%, var(--color-fondo-oscuro) 100%);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    margin: 2rem 0;
+    border: 1px solid var(--color-borde-oscuro);
+    box-shadow: var(--sombra-media);
+}
+
+/* Título de desarrolladores */
+.desarrolladores-title {
+    font-size: 2.2em;
+    color: var(--color-primario);
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    position: relative;
+}
+
+/* Línea decorativa bajo el título */
+.desarrolladores-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-primario), var(--color-primario-hover));
+    border-radius: 2px;
+}
+
+/* Descripción introductoria */
+.desarrolladores-intro {
+    text-align: center;
+    color: var(--color-texto-secundario);
+    font-size: 1.1em;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+/* Contenedor de tarjetas de desarrolladores - Grid responsive */
+.desarrolladores-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    justify-items: center;
+}
+
+/* Tarjeta vertical de desarrollador */
+.desarrollador-card {
+    background: var(--color-superficie-oscura);
+    border: 2px solid var(--color-borde-oscuro);
+    border-radius: 20px;
+    padding: 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    max-width: 320px;
+    width: 100%;
+    min-height: 400px;
+}
+
+/* Efecto hover en tarjetas de desarrollador */
+.desarrollador-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--color-primario);
+    box-shadow: 0 15px 40px rgba(0, 188, 212, 0.3);
+}
+
+/* Efecto de borde animado en hover */
+.desarrollador-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 188, 212, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.desarrollador-card:hover::before {
+    left: 100%;
+}
+
+/* Avatar del desarrollador */
+.dev-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--color-primario);
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 20px rgba(0, 188, 212, 0.3);
+    flex-shrink: 0;
+}
+
+.dev-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.5);
+}
+
+.dev-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Nombre del desarrollador */
+.dev-name {
+    color: var(--color-texto-principal);
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0;
+    text-transform: capitalize;
+}
+
+/* Nick del desarrollador */
+.dev-nick {
+    color: var(--color-texto-destacado);
+    font-size: 1.1em;
+    margin: 0;
+    font-weight: 500;
+}
+
+.dev-nick::before {
+    content: '@';
+    color: var(--color-texto-secundario);
+}
+
+/* Enlaces del desarrollador */
+.dev-links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    align-items: center;
+    width: 100%;
+}
+
+.dev-link {
+    color: var(--color-primario);
+    font-size: 0.95em;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 10px;
+    border: 1px solid var(--color-primario);
+    width: 100%;
+    max-width: 200px;
+    background: transparent;
+}
+
+.dev-link:hover {
+    color: var(--color-superficie-oscura);
+    background-color: var(--color-primario);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+}
+
+/* Enlace a ver proyectos */
+.view-projects-link {
+    color: var(--color-superficie-oscura);
+    background-color: var(--color-primario);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.8rem 2rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 2px solid var(--color-primario);
+    width: 100%;
+    max-width: 200px;
+    margin-top: auto;
+}
+
+.view-projects-link:hover {
+    background-color: transparent;
+    color: var(--color-primario);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
+}
+
+/* --- RESPONSIVE PARA COLABORADORES --- */
+@media (max-width: 768px) {
+    .desarrolladores-section {
+        padding: 2rem 1rem;
+    }
+
+    .desarrolladores-title {
+        font-size: 1.8em;
+    }
+
+    .desarrolladores-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .desarrollador-card {
+        max-width: 100%;
+        min-height: auto;
+        padding: 1.5rem 1rem;
+    }
+
+    .dev-avatar {
+        width: 80px;
+        height: 80px;
+    }
+
+    .dev-name {
+        font-size: 1.2em;
+    }
+
+    .dev-nick {
+        font-size: 1em;
+    }
+
+    .dev-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .dev-link {
+        flex: 1;
+        min-width: 120px;
+        max-width: 140px;
+        padding: 0.5rem 0.8rem;
+        font-size: 0.85em;
+    }
+
+    .view-projects-link {
+        max-width: 100%;
+        padding: 0.7rem 1.5rem;
+        font-size: 0.9em;
+    }
+}
+
+@media (max-width: 480px) {
+    .desarrolladores-container {
+        padding: 0 0.5rem;
+    }
+
+    .desarrollador-card {
+        padding: 1.2rem 0.8rem;
+    }
+
+    .dev-links {
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+
+    .dev-link {
+        max-width: 180px;
+    }
+}
+
+/* Animación de entrada para las secciones de colaboradores */
+.desarrolladores-section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animación de entrada escalonada para las tarjetas */
+.desarrollador-card {
+    animation: fadeInScale 0.6s ease-out;
+    animation-fill-mode: both;
+}
+
+.desarrollador-card:nth-child(1) { animation-delay: 0.1s; }
+.desarrollador-card:nth-child(2) { animation-delay: 0.2s; }
+.desarrollador-card:nth-child(3) { animation-delay: 0.3s; }
+.desarrollador-card:nth-child(4) { animation-delay: 0.4s; }
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}

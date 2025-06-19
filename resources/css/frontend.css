@@ -153,6 +153,10 @@ img {
     text-align: center;
 }
 
+.text-left {
+    text-align: left;
+}
+
 .m-auto {
     margin: auto;
 }

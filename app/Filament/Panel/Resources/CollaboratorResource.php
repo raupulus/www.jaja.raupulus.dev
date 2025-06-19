@@ -74,7 +74,6 @@ class CollaboratorResource extends Resource
                     }),
                 Forms\Components\TextInput::make('name')
                     ->label('Nombre')
-                    ->columnSpanFull()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nick')
@@ -83,6 +82,11 @@ class CollaboratorResource extends Resource
                     ->maxLength(25),
                 Forms\Components\TextInput::make('website')
                     ->label('Sitio Web')
+                    ->rules(['url'])
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('url_repositories')
+                    ->label('Enlace a perfil de repositorios (Github, Gitlab, etc.)')
+                    ->rules(['url'])
                     ->maxLength(255),
                 Forms\Components\Hidden::make('user_id')
                     ->default(auth()->id()),
@@ -122,7 +126,7 @@ class CollaboratorResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                // Remover acciones en lote para usuarios normales
+                // Remuevo acciones en lote para usuarios normales
             ])
             ->emptyStateHeading('No tienes un perfil de colaborador')
             ->emptyStateDescription('Crea tu perfil para empezar a gestionar tus proyectos')

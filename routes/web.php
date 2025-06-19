@@ -1,9 +1,13 @@
 <?php
 
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\CollaboratorController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
 
+/*************************************************
+ * Autenticación
+ ************************************************/
 Route::get('/login', fn () => redirect()->route('filament.panel.auth.login'))->name('login');
 //Route::get('/login', fn () => abort(404))->name('login');
 
@@ -13,21 +17,21 @@ Route::get('/login', fn () => redirect()->route('filament.panel.auth.login'))->n
  ************************************************/
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
+/*************************************************
+ * Páginas dinámicas
+ ************************************************/
+//Route::get('/pages/index', [PageController::class, 'index'])->name('page.index');
 Route::get('/page/{page:slug}', [PageController::class, 'show'])->name('page.show');
-
-/*
-Route::get('/page/api', [IndexController::class, 'api'])->name('api');
-Route::get('/page/about', [IndexController::class, 'about'])->name('about');
-Route::get('/page/normas', [IndexController::class, 'normas'])->name('normas');
-Route::get('/page/politica-de-privacidad', [IndexController::class, 'privacity'])->name('privacity');
-Route::get('/page/politica-de-cookies', [IndexController::class, 'cookies'])->name('cookies');
-Route::get('/page/condiciones-de-uso', [IndexController::class, 'conditions'])->name('conditions');
-Route::get('/page/agradecimientos', [IndexController::class, 'agradecimientos'])->name('agradecimientos');
-*/
-
 
 /*************************************************
  * Solicitudes
  ************************************************/
 Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])->name('suggestion.send');
+
+/*************************************************
+ * Colaboradores
+ ************************************************/
+Route::get('/colaboradores', [CollaboratorController::class, 'index'])->name('collaborator.index');
+Route::get('/colaborador/{collaborator:nick}', [CollaboratorController::class, 'show'])->name('collaborator.show');
+Route::get('/colaborador/{collaborator:nick}/project/{project:slug}', [CollaboratorController::class, 'showProject'])->name('collaborator.project.show');
 

@@ -1,0 +1,183 @@
+/* Contenedor principal del reconocimiento especial */
+.reconocimiento-section {
+    background: linear-gradient(135deg, var(--color-fondo-oscuro) 0%, var(--color-superficie-oscura) 100%);
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    border: 1px solid var(--color-borde-oscuro);
+    box-shadow: var(--sombra-media);
+}
+
+/* Título del reconocimiento especial */
+.reconocimiento-title {
+    font-size: 2em;
+    color: var(--color-primario);
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Contenedor de usuarios destacados */
+.usuarios-destacados {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+/* Tarjeta de usuario individual */
+.usuario-card {
+    background: var(--color-superficie-oscura);
+    border: 2px solid var(--color-borde-oscuro);
+    border-radius: 20px;
+    padding: 1.5rem;
+    min-width: 200px;
+    position: relative;
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+/* Efecto hover en tarjetas de usuario */
+.usuario-card:hover {
+    transform: scale(1.05);
+    border-color: var(--color-primario);
+    box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+}
+
+/* Contenedor de iconos de app */
+.app-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Icono individual tipo app */
+.app-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-primario-hover));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 188, 212, 0.2);
+}
+
+/* Efecto hover en iconos */
+.app-icon:hover {
+    transform: translateY(-3px) rotate(5deg);
+    box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
+}
+
+/* Iconos SVG embebidos */
+.app-icon svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--color-superficie-oscura);
+}
+
+/* Icono de chistes (emoji sonriente) */
+.chistes-icon::after {
+    content: '😄';
+    font-size: 24px;
+}
+
+/* Icono de adivinanzas (signo de interrogación) */
+.adivinanzas-icon::after {
+    content: '❓';
+    font-size: 24px;
+}
+
+/* Icono de quiz (cerebro) */
+.quiz-icon::after {
+    content: '🧠';
+    font-size: 24px;
+}
+
+/* Valor debajo de cada icono */
+.icon-value {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8em;
+    color: var(--color-texto-destacado);
+    font-weight: bold;
+    white-space: nowrap;
+    animation: pulse 2s infinite ease-in-out;
+}
+
+/* Nickname del usuario */
+.usuario-nick {
+    color: var(--color-primario);
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 2rem;
+    text-transform: lowercase;
+}
+
+.usuario-nick::before {
+    content: '@';
+    color: var(--color-texto-secundario);
+}
+
+/* Animación de pulso para los valores */
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.7;
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.1);
+    }
+}
+
+/* --- RESPONSIVE PARA COMPONENTES --- */
+@media (max-width: 768px) {
+    /* Ajustes para sección de reconocimiento en móvil */
+    .reconocimiento-section {
+        padding: 2rem 1rem;
+    }
+
+    .usuarios-destacados {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .usuario-card {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .app-icons-container {
+        gap: 0.8rem;
+    }
+
+    .app-icon {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+/* Animación de entrada para las secciones */
+.reconocimiento-section {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

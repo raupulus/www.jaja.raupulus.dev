@@ -21,9 +21,10 @@ return new class extends Migration
             $table->string('name', 255)->comment('Nombre del colaborador');
             $table->string('nick', 50)->comment('Nick del colaborador');
             $table->string('website', 255)->comment('Sitio web')->nullable();
+            $table->string('url_repositories', 255)->comment('Enlace al perfil de repositorios Personal (Github, Gitlab...')->nullable();
             $table->string('image', 255)
                 ->nullable()
-                ->comment('Imagen del colaborador por ejemplo de su logo');
+                ->comment('Imagen del colaborador por ejemplo su logo');
             $table->string('description', 255)
                 ->comment('Un pequeño resumen de su biografía')
                 ->nullable();

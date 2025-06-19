@@ -31,4 +31,17 @@ class CollaboratorProject extends Model
     {
         return $this->image ? asset('storage/' . $this->image) : null;
     }
+
+    /**
+     * Parsea el contenido en markdown y lo devuelve en formato HTML
+     *
+     * @return string
+     */
+    public function getHtmlContent(): string
+    {
+        $parsedown = new \Parsedown();
+        $parsedown->setSafeMode(true);
+
+        return $parsedown->text($this->content);
+    }
 }

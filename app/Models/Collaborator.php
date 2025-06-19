@@ -11,7 +11,7 @@ class Collaborator extends Model
 {
     protected $table = 'collaborators';
 
-    protected $fillable = ['user_id', 'name', 'nick', 'website', 'image', 'description'];
+    protected $fillable = ['user_id', 'name', 'nick', 'website', 'image', 'description', 'url_repositories'];
 
     /**
      * Usuario asociado al colaborador.
@@ -36,10 +36,26 @@ class Collaborator extends Model
     /**
      * Devuelve la url hacia la imagen si la tuviera.
      *
-     * @return string|null
+     * @return string
      */
-    public function getUrlImageAttribute(): ?string
+    public function getUrlImageAttribute(): string
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        return $this->image ? asset('storage/' . $this->image) : asset('images/default/avatar.webp');
+    }
+
+
+    /**
+     * Devuelve los colaboradores con proyectos verificados.
+     *
+     * @return mixed
+     */
+    public static function getCollaboratorsVerified()
+    {
+        return self::select('collaborators.*', \DB::raw('COUNT(collaborator_projects.id) as projects_count'))
+            ->leftJoin('collaborator_projects', 'collaborators.id', '=', 'collaborator_projects.collaborator_id')
+            ->where('collaborator_projects.status', 'published')
+            ->groupBy('collaborators.id')
+            ->havingRaw('COUNT(collaborator_projects.id) > 0')
+            ->get();
     }
 }

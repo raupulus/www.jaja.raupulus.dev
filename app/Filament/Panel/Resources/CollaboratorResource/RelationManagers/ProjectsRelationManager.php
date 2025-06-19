@@ -42,7 +42,7 @@ class ProjectsRelationManager extends RelationManager
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
-                    ->imageResizeTargetHeight(600)
+                    ->imageResizeTargetHeight(500)
                     ->imageResizeTargetWidth(800)
                     ->imageResizeMode('crop')
                     ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
@@ -93,7 +93,18 @@ class ProjectsRelationManager extends RelationManager
                     ->columnSpanFull()
                     ->label('Contenido')
                     ->required()
-                    ->maxLength(2048),
+                    ->maxLength(10240)
+                    ->rules([
+                        function () {
+                            return function (string $attribute, $value, \Closure $fail) {
+                                if (preg_match('/^# /m', $value) || preg_match('/<h1[^>]*>/i', $value)) {
+                                    $fail('El contenido no puede contener títulos H1. Usa H2 (##) o inferiores.');
+                                }
+                            };
+                        },
+                    ])
+                    ->helperText('💡 Usa H2 (##) como título principal, H3 (###) para subtítulos, etc. No se permiten H1 (#).')
+                ,
                 Forms\Components\Select::make('type')
                     ->required()
                     ->label('Tipo')

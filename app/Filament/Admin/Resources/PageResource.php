@@ -97,7 +97,18 @@ class PageResource extends Resource
                                     'table',
                                     'undo',
                                 ])
-                                ->columnSpanFull(),
+                                ->columnSpanFull()
+                                ->rules([
+                                    function () {
+                                        return function (string $attribute, $value, \Closure $fail) {
+                                            if (preg_match('/^# /m', $value) || preg_match('/<h1[^>]*>/i', $value)) {
+                                                $fail('El contenido no puede contener títulos H1. Usa H2 (##) o inferiores.');
+                                            }
+                                        };
+                                    },
+                                ])
+                                ->helperText('💡 Usa H2 (##) como título principal, H3 (###) para subtítulos, etc. No se permiten H1 (#).')
+                            ,
                         ]),
                 ])
                     ->columnSpan(['lg' => 2]),
