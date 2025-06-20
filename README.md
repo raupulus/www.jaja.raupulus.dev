@@ -131,7 +131,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Crear página con listado de páginas "/pages/index"
 - [x] Revisar migraciones y validaciones para el campo "nick" que no debe permitir más de 50 carácteres
 - [x] Crear comando laravel para regenerar las estadísticas cada 30m y añadirlo al cron
-- Preparar generador de sitemap en cron de laravel
+- [x] Crear comando laravel para generar sitemap.xml y añadirlo a cron de laravel
 - Añadir recaptcha v3 en formulario de envío
 - Generar documentación de api phpdoc con automatización
 - Aceptación de cookies

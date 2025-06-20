@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 /*************************************************
  * Autenticación
  ************************************************/
-Route::get('/login', fn () => redirect()->route('filament.panel.auth.login'))->name('login');
+Route::get('/login', static fn () => redirect()->route('filament.panel.auth.login'))->name('login');
 //Route::get('/login', fn () => abort(404))->name('login');
 
 
