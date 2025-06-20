@@ -125,7 +125,7 @@ class PageResource extends Resource
                                 ->imageEditor()
                                 ->label('Imagen')
                                 ->default(null)
-                                ->imageResizeTargetHeight(768)
+                                ->imageResizeTargetHeight(600)
                                 ->imageResizeTargetWidth(1024)
                                 ->imageResizeMode('crop', )
                                 ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
