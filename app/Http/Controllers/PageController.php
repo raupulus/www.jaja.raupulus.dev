@@ -18,7 +18,7 @@ class PageController extends Controller
     }
     public function show(Page $page): View
     {
-        if (!$page || ($page->status !== 'published')) {
+        if (!$page->id || ($page->status !== 'published')) {
             abort(404);
         }
 

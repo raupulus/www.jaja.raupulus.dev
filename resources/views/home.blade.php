@@ -2,9 +2,37 @@
 
 @section('head')
     @vite(['resources/css/home.css', 'resources/css/components.css', 'resources/css/general_stats.css'])
+
+
+    @if(config('google.recaptcha.site_key'))
+        <script
+            src="https://www.google.com/recaptcha/api.js?render={{config('google.recaptcha.site_key')}}&onload=onRecaptchaLoad"
+            async defer></script>
+
+        <script>
+
+            function onRecaptchaLoad() {
+                grecaptcha.ready(function () {
+                    grecaptcha.execute("{{config('google.recaptcha.site_key')}}", {
+                        action: 'suggestion_send'
+                    }).then(function (token) {
+                        //console.log('Token generado:', token);
+                        if (token) {
+                            document.getElementById('g_recaptcha').value = token;
+                        }
+                    }).catch(function (error) {
+                        //console.error('Error generando token:', error);
+                    });
+                });
+            }
+
+        </script>
+    @endif
+
 @endsection
 
 @section('content')
+
     <section>
         <h1>Bienvenid@ a {{config('app.name')}}</h1>
 
@@ -141,7 +169,6 @@
                 </div>
 
 
-
                 <div class="form-group {{$errors->has('title') ? 'form-group-error' : ''}}">
                     <input type="text" name="title" placeholder="Título" class="form-control" required
                            value="{{old('title')}}">
@@ -210,6 +237,14 @@
                     </label>
 
                 </div>
+
+
+                {{-- Google Recaptcha --}}
+                @if(config('google.recaptcha.site_key'))
+                    <div>
+                        <input type="hidden" name="g_recaptcha" id="g_recaptcha">
+                    </div>
+                @endif
 
                 <button type="submit" class="btn">Enviar</button>
             </form>

@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
+            'recaptcha' => \App\Http\Middleware\VerifyRecaptcha::class,
         ]);
 
         //$middleware->statefulApi();

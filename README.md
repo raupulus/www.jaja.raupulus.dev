@@ -2,21 +2,12 @@
 
 Proyecto Laravel con backend Filament y api para gestionar chistes y adivinanzas que consumir externamente mediante bots.
 
-## Iniciar proyecto en desarrollo
+Repositorios del proyecto:
+- GitHub [https://github.com/raupulus/www.jaja.raupulus.dev](https://github.com/raupulus/www.jaja.raupulus.dev)
+- GitLab [https://gitlab.com/raupulus/www.jaja.raupulus.dev](https://gitlab.com/raupulus/www.jaja.raupulus.dev)
 
-### Preparar .env
+---
 
-Copiamos el .env y rellenamos los datos del entorno, nuestra base de datos y configuraciones necesarias.
-
-```bash
-cp .env.example .env
-```
-
-### Instalar dependencias
-
-```bash
-composer install
-```
 
 ### Generar clave de aplicación
 
@@ -65,9 +56,11 @@ php artisan db:seed
 Sitio Principal: /
 
 Panel Administrador: /admin
-Panel Usuarios: /panel
 
 Login Administrador: /admin/login
+
+Panel Usuarios: /panel
+
 Login Usuarios: /panel/login (También /login que redirige al anterior)
 
 
@@ -132,7 +125,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Revisar migraciones y validaciones para el campo "nick" que no debe permitir más de 50 carácteres
 - [x] Crear comando laravel para regenerar las estadísticas cada 30m y añadirlo al cron
 - [x] Crear comando laravel para generar sitemap.xml y añadirlo a cron de laravel
-- Añadir recaptcha v3 en formulario de envío
+- [x] Añadir recaptcha v3 en formulario de envío
 - Generar documentación de api phpdoc con automatización
 - Aceptación de cookies
 - Habilitar indexado en motores de búsqueda
@@ -149,3 +142,4 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
 - Añadir en el panel de admin botón para ejecutar comando artisan y refrescar todo el caché. Así tras modificar
 algo importante en el contenido puedo actualizar caché desde el propio panel.
+- Importar/exportar contenidos en excel+csv

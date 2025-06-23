@@ -26,7 +26,9 @@ Route::get('/pagina/{page:slug}', [PageController::class, 'show'])->name('page.s
 /*************************************************
  * Solicitudes
  ************************************************/
-Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])->name('suggestion.send');
+Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])
+    ->middleware('recaptcha:0.7')
+    ->name('suggestion.send');
 
 /*************************************************
  * Colaboradores
