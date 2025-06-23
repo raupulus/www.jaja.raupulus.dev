@@ -105,11 +105,6 @@ En **JaJa Project** respetamos tu privacidad y nos comprometemos a proteger tus 
 
 ## Servicios de Terceros
 
-### Google Analytics
-- Utilizamos Google Analytics para estadísticas básicas de uso
-- Esta herramienta puede utilizar cookies según su propia política
-- Puedes desactivar el seguimiento usando extensiones de navegador
-
 ### Google reCAPTCHA v3
 - Implementado para prevenir spam automatizado
 - Sujeto a la política de privacidad de Google
@@ -141,12 +136,12 @@ Esta política cumple con la normativa aplicable en materia de protección de da
 ---
 
 **Resumen**: En JaJa Project creemos en la privacidad por diseño. Recopilamos solo lo imprescindible para ofrecer nuestro servicio de forma segura.',
-                'keywords' => 'privacidad, datos personales, protección datos, RGPD, cookies, Google Analytics, reCAPTCHA, anonimato'
+                'keywords' => 'privacidad, datos personales, protección datos, RGPD, cookies, reCAPTCHA, anonimato'
             ],
             [
                 'title' => 'Política de Cookies',
                 'slug' => 'politica-de-cookies',
-                'excerpt' => 'Información sobre el uso de cookies en JaJa Project. Detalles sobre Google Analytics y Google reCAPTCHA v3.',
+                'excerpt' => 'Información sobre el uso de cookies en JaJa Project. Detalles sobre seguridad y Google reCAPTCHA v3.',
                 'content' => '*Última actualización: ' . date('d/m/Y') . '*
 
 ## ¿Qué son las Cookies?
@@ -159,17 +154,6 @@ Las cookies son pequeños archivos de texto que se almacenan en tu dispositivo c
 **JaJa Project no utiliza cookies propias** para el seguimiento o almacenamiento de información personal.
 
 ### Cookies de Terceros
-
-#### Google Analytics
-- **Finalidad**: Análisis estadístico de uso del sitio web
-- **Tipo**: Cookies de análisis
-- **Duración**: Variable según configuración de Google
-- **Datos recopilados**:
-  - Páginas visitadas
-  - Tiempo de permanencia
-  - Origen del tráfico
-  - Datos técnicos del navegador
-- **Base legal**: Interés legítimo para mejorar nuestros servicios
 
 #### Google reCAPTCHA v3
 - **Finalidad**: Protección contra spam y bots automatizados
@@ -195,12 +179,7 @@ Puedes gestionar las cookies a través de:
 - **Safari**: Preferencias > Privacidad > Cookies
 - **Edge**: Configuración > Cookies y permisos del sitio
 
-#### Herramientas Específicas
-- **Google Analytics**: Puedes desactivarlo usando el [complemento de exclusión](https://tools.google.com/dlpage/gaoptout)
-- **Extensiones de navegador**: Existen extensiones que bloquean cookies de seguimiento
-
 ### Consecuencias de Desactivar Cookies
-- **Google Analytics**: No afectará la funcionalidad del sitio
 - **Google reCAPTCHA**: Puede impedir el envío de formularios
 
 ## Cookies Técnicas
@@ -226,15 +205,14 @@ Esta política se actualiza cuando cambian nuestras prácticas de cookies. La fe
 ### Enlaces Útiles
 - [Política de Privacidad de Google](https://policies.google.com/privacy)
 - [Cómo gestionar cookies en tu navegador](https://www.aboutcookies.org/)
-- [Información sobre Google Analytics](https://policies.google.com/technologies/ads)
 
 ### Contacto
 Para preguntas específicas sobre cookies, contacta con nosotros a través de nuestros canales oficiales.
 
 ---
 
-**En resumen**: Utilizamos únicamente cookies de terceros esenciales (Google Analytics y reCAPTCHA) para ofrecer un servicio seguro y mejorado.',
-                'keywords' => 'cookies, Google Analytics, reCAPTCHA, navegador, privacidad, seguimiento, terceros, configuración'
+**En resumen**: Utilizamos únicamente cookies de terceros esenciales (reCAPTCHA) para ofrecer un servicio seguro y mejorado.',
+                'keywords' => 'cookies, reCAPTCHA, navegador, privacidad, seguimiento, terceros, configuración'
             ],
             [
                 'title' => 'Condiciones de Uso',
