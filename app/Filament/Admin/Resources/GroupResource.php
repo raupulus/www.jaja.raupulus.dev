@@ -21,9 +21,9 @@ class GroupResource extends Resource
     protected static ?string $label = 'Grupo';
     protected static ?string $navigationGroup = 'Contenidos';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     protected static ?string $recordTitleAttribute = 'title';
+
+    protected static ?string $navigationIcon = 'heroicon-o-folder';
 
     public static function form(Form $form): Form
     {

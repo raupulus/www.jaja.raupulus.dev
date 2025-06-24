@@ -27,11 +27,9 @@ class ContentResource extends Resource
 
     protected static ?string $navigationGroup = 'Contenidos';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     protected static ?string $recordTitleAttribute = 'title';
 
-
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-document';
 
     public static function form(Form $form): Form
     {

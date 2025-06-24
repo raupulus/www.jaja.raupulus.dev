@@ -33,9 +33,9 @@ class CollaboratorResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
     protected static ?string $recordTitleAttribute = 'title';
+
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     public static function form(Form $form): Form
     {

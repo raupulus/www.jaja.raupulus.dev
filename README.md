@@ -126,13 +126,13 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Crear comando laravel para regenerar las estadísticas cada 30m y añadirlo al cron
 - [x] Crear comando laravel para generar sitemap.xml y añadirlo a cron de laravel
 - [x] Añadir recaptcha v3 en formulario de envío
-- Generar documentación de api phpdoc con automatización
+- [x] Revisar todos los iconos de las secciones en menú lateral del backend y poner uno adecuado para cada CRUD
 - Aceptación de cookies
+- Generar documentación de api phpdoc con automatización
 - Habilitar indexado en motores de búsqueda
 
 ## TODO con menor prioridad
 
-- Revisar todos los iconos de las secciones en menú lateral y poner uno adecuado para cada CRUD
 - Gestión de tokens en panel de usuarios
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Revisar: Añadir gráficas en el backend con cantidad de peticiones api?

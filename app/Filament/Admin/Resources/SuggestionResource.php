@@ -23,7 +23,7 @@ class SuggestionResource extends Resource
     protected static ?string $pluralLabel = 'Sugerencias';
 
     protected static ?string $navigationLabel = 'Sugerencias';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-arrow-down-on-square-stack';
 
     public static function form(Form $form): Form
     {

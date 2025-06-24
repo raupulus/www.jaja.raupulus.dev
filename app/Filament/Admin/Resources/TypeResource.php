@@ -21,11 +21,12 @@ class TypeResource extends Resource
     protected static ?string $navigationLabel = 'Tipos';
 
     protected static ?string $label = 'Tipo';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationGroup = 'Contenidos';
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
 
     public static function form(Form $form): Form
