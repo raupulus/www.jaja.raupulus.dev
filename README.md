@@ -127,7 +127,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Crear comando laravel para generar sitemap.xml y añadirlo a cron de laravel
 - [x] Añadir recaptcha v3 en formulario de envío
 - [x] Revisar todos los iconos de las secciones en menú lateral del backend y poner uno adecuado para cada CRUD
-- Aceptación de cookies
+- [x] Aceptación de cookies
 - Generar documentación de api phpdoc con automatización
 - Habilitar indexado en motores de búsqueda
 
