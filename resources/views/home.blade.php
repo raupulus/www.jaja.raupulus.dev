@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('head')
-    @vite(['resources/css/home.css', 'resources/css/general_stats.css'])
+    @vite(['resources/css/home.css', 'resources/css/general_stats.css', 'resources/css/cookies.css', 'resources/js/cookies.js'])
 
 
     @if(config('google.recaptcha.site_key'))
@@ -291,6 +291,10 @@
             </div>
         @endforeach
     </section>
+
+
+    {{-- Cookies --}}
+    @include('partials._cookies')
 @endsection
 
 @section('js')
