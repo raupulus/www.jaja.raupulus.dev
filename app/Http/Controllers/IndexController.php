@@ -7,7 +7,7 @@ use App\Http\Requests\SuggestionRequest;
 use App\Models\Content;
 use App\Models\Suggestion;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -20,8 +20,12 @@ class IndexController extends Controller
      */
     public function index(): View
     {
+        $contents = Cache::remember('home_contents', 60, function () {
+            return Content::inRandomOrder()->take(10)->get()->sortByDesc('image');
+        });
+
         return view('home')->with([
-            'contents' => Content::inRandomOrder()->take(10)->get()->sortByDesc('image')
+            'contents' => $contents
         ]);
     }
 
