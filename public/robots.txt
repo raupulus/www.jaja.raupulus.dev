@@ -1,2 +1,8 @@
 User-agent: *
 Disallow:
+
+# Referencia al sitemap
+Sitemap: https://www.jaja.raupulus.dev/sitemap.xml
+
+# Retrasos para evitar sobrecarga del servidor
+Crawl-delay: 1

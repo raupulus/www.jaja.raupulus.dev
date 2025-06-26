@@ -1,0 +1,15 @@
+/* TEAM */
+    Developer: Raúl Caro Pastorino
+    Contact: public [at] raupulus.dev
+    Web: https://raupulus.dev
+    GitLab: https://gitlab.com/raupulus
+    GitHub: https://github.com/raupulus
+    Location: Chipiona, Spain
+
+/* SITE */
+    Last update: 2024/01/01
+    Language: Spanish
+    Doctype: HTML5
+    IDE: PhpStorm
+    Framework: Laravel 12.13.0
+    Frontend: CSS Vanilla

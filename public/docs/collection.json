@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "8a040aba-861c-4047-9227-a5d8bb082c4a",
+        "_postman_id": "48f43952-ac50-4a3b-b851-3b31744db1ef",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -43,7 +43,7 @@
                             "mode": "raw",
                             "raw": "{\"email\":\"user@example.com\",\"password\":\"mipasswordsupersegura123123123\",\"device_name\":\"Mi iPhone 13 Pro\"}"
                         },
-                        "description": "Lo usamos para obtener token de acceso api y de sesi\u00f3n (para SPA por ejemplo)\n\nEl Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticaci\u00f3n:\n\nBearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b",
+                        "description": "Limitado a 3 intentos por minuto\n\nLo usamos para obtener token de acceso api y de sesi\u00f3n (para SPA por ejemplo)\n\nEl Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticaci\u00f3n:\n\nBearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b",
                         "auth": {
                             "type": "noauth"
                         }
@@ -168,6 +168,14 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "19"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
@@ -236,6 +244,14 @@
                                 {
                                     "key": "content-type",
                                     "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "19"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
@@ -314,6 +330,14 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "19"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
@@ -376,7 +400,7 @@
                             }
                         ],
                         "body": null,
-                        "description": "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser p\u00fablico est\u00e1 limitado a m\u00e1ximo 5 elementos por petici\u00f3n y a 1 petici\u00f3n por IP cada 5 segundos.",
+                        "description": "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser p\u00fablico est\u00e1 limitado a m\u00e1ximo 5 elementos por petici\u00f3n y a 10 peticiones por minuto.",
                         "auth": {
                             "type": "noauth"
                         }
@@ -393,12 +417,20 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "10"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "9"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"gdfgh\",\"content\":\"dfghdfgh\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvieron 35 contenidos aleatorios\",\"meta\":{\"total_items\":35,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Git Blame\",\"content\":\"\\u00bfPor qu\\u00e9 los desarrolladores aman git blame? Porque es la \\u00fanica manera socialmente aceptable de se\\u00f1alar culpables.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvieron 35 contenidos aleatorios\",\"meta\":{\"total_items\":35,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -465,12 +497,20 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "19"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Backup importante\",\"content\":\"\\u00bfCu\\u00e1l es el mantra de un DBA? \\\"En BACKUP conf\\u00edo\\\".\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":33}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"El programador en el supermercado\",\"content\":\"Mi esposa me mand\\u00f3 al supermercado y me dijo: \\\"Compra una barra de pan, y si hay huevos, trae doce\\\". Volv\\u00ed con 12 barras de pan. Ella: \\\"\\u00bfPor qu\\u00e9 compraste 12 barras?\\\" Yo: \\\"\\u00a1Porque hab\\u00eda huevos!\\\"\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":33}}",
                             "name": ""
                         },
                         {
@@ -543,12 +583,20 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "19"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Arrays empiezan en 0\",\"content\":\"\\u00bfPor qu\\u00e9 los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 7 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":7}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"El programador en el supermercado\",\"content\":\"Mi esposa me mand\\u00f3 al supermercado y me dijo: \\\"Compra una barra de pan, y si hay huevos, trae doce\\\". Volv\\u00ed con 12 barras de pan. Ella: \\\"\\u00bfPor qu\\u00e9 compraste 12 barras?\\\" Yo: \\\"\\u00a1Porque hab\\u00eda huevos!\\\"\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 7 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":7}}",
                             "name": ""
                         },
                         {
@@ -621,12 +669,20 @@
                                     "value": "application\/json"
                                 },
                                 {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "20"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "19"
+                                },
+                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"CSS Life\",\"content\":\"\\u00bfPor qu\\u00e9 el CSS est\\u00e1 siempre triste? Porque tiene demasiados problemas de clase.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Frontend\",\"group_slug\":\"chistes-frontend\",\"total_items\":5}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Frontend vs Backend\",\"content\":\"\\u00bfPor qu\\u00e9 el frontend y el backend no se llevan bien? Porque tienen problemas de comunicaci\\u00f3n en su API.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Frontend\",\"group_slug\":\"chistes-frontend\",\"total_items\":5}}",
                             "name": ""
                         },
                         {

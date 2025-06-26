@@ -163,6 +163,7 @@
 <p>
 </p>
 
+<p>Limitado a 3 intentos por minuto</p>
 <p>Lo usamos para obtener token de acceso api y de sesión (para SPA por ejemplo)</p>
 <p>El Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticación:</p>
 <p>Bearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b</p>
@@ -971,6 +972,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 20
+x-ratelimit-remaining: 19
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -1273,6 +1276,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 20
+x-ratelimit-remaining: 19
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -1674,6 +1679,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 20
+x-ratelimit-remaining: 19
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -1999,7 +2006,7 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
 </p>
 
 <p>Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.</p>
-<p>Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 1 petición por IP cada 5 segundos.</p>
+<p>Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.</p>
 
 <span id="example-requests-GETapi-v1-random">
 <blockquote>Ejemplo de petición:</blockquote>
@@ -2081,6 +2088,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 10
+x-ratelimit-remaining: 9
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -2088,8 +2097,8 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;title&quot;: &quot;gdfgh&quot;,
-            &quot;content&quot;: &quot;dfghdfgh&quot;,
+            &quot;title&quot;: &quot;Git Blame&quot;,
+            &quot;content&quot;: &quot;&iquest;Por qu&eacute; los desarrolladores aman git blame? Porque es la &uacute;nica manera socialmente aceptable de se&ntilde;alar culpables.&quot;,
             &quot;urlImage&quot;: null,
             &quot;uploader&quot;: &quot;@raupulus&quot;
         }
@@ -2377,6 +2386,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 20
+x-ratelimit-remaining: 19
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -2384,8 +2395,8 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;title&quot;: &quot;Backup importante&quot;,
-            &quot;content&quot;: &quot;&iquest;Cu&aacute;l es el mantra de un DBA? \&quot;En BACKUP conf&iacute;o\&quot;.&quot;,
+            &quot;title&quot;: &quot;El programador en el supermercado&quot;,
+            &quot;content&quot;: &quot;Mi esposa me mand&oacute; al supermercado y me dijo: \&quot;Compra una barra de pan, y si hay huevos, trae doce\&quot;. Volv&iacute; con 12 barras de pan. Ella: \&quot;&iquest;Por qu&eacute; compraste 12 barras?\&quot; Yo: \&quot;&iexcl;Porque hab&iacute;a huevos!\&quot;&quot;,
             &quot;urlImage&quot;: null,
             &quot;uploader&quot;: &quot;@raupulus&quot;
         }
@@ -2704,6 +2715,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 20
+x-ratelimit-remaining: 19
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -2711,8 +2724,8 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;title&quot;: &quot;Arrays empiezan en 0&quot;,
-            &quot;content&quot;: &quot;&iquest;Por qu&eacute; los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25&quot;,
+            &quot;title&quot;: &quot;El programador en el supermercado&quot;,
+            &quot;content&quot;: &quot;Mi esposa me mand&oacute; al supermercado y me dijo: \&quot;Compra una barra de pan, y si hay huevos, trae doce\&quot;. Volv&iacute; con 12 barras de pan. Ella: \&quot;&iquest;Por qu&eacute; compraste 12 barras?\&quot; Yo: \&quot;&iexcl;Porque hab&iacute;a huevos!\&quot;&quot;,
             &quot;urlImage&quot;: null,
             &quot;uploader&quot;: &quot;@raupulus&quot;
         }
@@ -3068,6 +3081,8 @@ fetch(url, {
             </summary>
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
+x-ratelimit-limit: 20
+x-ratelimit-remaining: 19
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
@@ -3075,8 +3090,8 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;title&quot;: &quot;CSS Life&quot;,
-            &quot;content&quot;: &quot;&iquest;Por qu&eacute; el CSS est&aacute; siempre triste? Porque tiene demasiados problemas de clase.&quot;,
+            &quot;title&quot;: &quot;Frontend vs Backend&quot;,
+            &quot;content&quot;: &quot;&iquest;Por qu&eacute; el frontend y el backend no se llevan bien? Porque tienen problemas de comunicaci&oacute;n en su API.&quot;,
             &quot;urlImage&quot;: null,
             &quot;uploader&quot;: &quot;@raupulus&quot;
         }

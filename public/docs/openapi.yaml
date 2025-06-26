@@ -30,7 +30,7 @@ paths:
     post:
       summary: Login
       operationId: login
-      description: "Lo usamos para obtener token de acceso api y de sesión (para SPA por ejemplo)\n\nEl Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticación:\n\nBearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b"
+      description: "Limitado a 3 intentos por minuto\n\nLo usamos para obtener token de acceso api y de sesión (para SPA por ejemplo)\n\nEl Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticación:\n\nBearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b"
       parameters: []
       responses:
         200:
@@ -775,7 +775,7 @@ paths:
     get:
       summary: 'Contenido Aleatorio'
       operationId: contenidoAleatorio
-      description: "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser público está limitado a máximo 5 elementos por petición y a 1 petición por IP cada 5 segundos."
+      description: "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto."
       parameters:
         -
           in: query
@@ -799,8 +799,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: gdfgh
-                      content: dfghdfgh
+                      title: 'Git Blame'
+                      content: '¿Por qué los desarrolladores aman git blame? Porque es la única manera socialmente aceptable de señalar culpables.'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se obtuvieron 35 contenidos aleatorios'
@@ -817,8 +817,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: gdfgh
-                        content: dfghdfgh
+                        title: 'Git Blame'
+                        content: '¿Por qué los desarrolladores aman git blame? Porque es la única manera socialmente aceptable de señalar culpables.'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Colección de contenidos aleatorios'
@@ -828,10 +828,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: gdfgh
+                          example: 'Git Blame'
                         content:
                           type: string
-                          example: dfghdfgh
+                          example: '¿Por qué los desarrolladores aman git blame? Porque es la única manera socialmente aceptable de señalar culpables.'
                         urlImage:
                           type: string
                           example: null
@@ -928,8 +928,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'Backup importante'
-                      content: '¿Cuál es el mantra de un DBA? "En BACKUP confío".'
+                      title: 'El programador en el supermercado'
+                      content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.'
@@ -947,8 +947,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'Backup importante'
-                        content: '¿Cuál es el mantra de un DBA? "En BACKUP confío".'
+                        title: 'El programador en el supermercado'
+                        content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Lista con el contenido aleatorio solicitado'
@@ -958,10 +958,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'Backup importante'
+                          example: 'El programador en el supermercado'
                         content:
                           type: string
-                          example: '¿Cuál es el mantra de un DBA? "En BACKUP confío".'
+                          example: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
                         urlImage:
                           type: string
                           example: null
@@ -1071,8 +1071,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'Arrays empiezan en 0'
-                      content: '¿Por qué los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25'
+                      title: 'El programador en el supermercado'
+                      content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 7 contenidos totales.'
@@ -1092,8 +1092,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'Arrays empiezan en 0'
-                        content: '¿Por qué los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25'
+                        title: 'El programador en el supermercado'
+                        content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Lista con el contenido aleatorio solicitado'
@@ -1103,10 +1103,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'Arrays empiezan en 0'
+                          example: 'El programador en el supermercado'
                         content:
                           type: string
-                          example: '¿Por qué los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25'
+                          example: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
                         urlImage:
                           type: string
                           example: null
@@ -1254,8 +1254,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'CSS Life'
-                      content: '¿Por qué el CSS está siempre triste? Porque tiene demasiados problemas de clase.'
+                      title: 'Frontend vs Backend'
+                      content: '¿Por qué el frontend y el backend no se llevan bien? Porque tienen problemas de comunicación en su API.'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.'
@@ -1273,8 +1273,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'CSS Life'
-                        content: '¿Por qué el CSS está siempre triste? Porque tiene demasiados problemas de clase.'
+                        title: 'Frontend vs Backend'
+                        content: '¿Por qué el frontend y el backend no se llevan bien? Porque tienen problemas de comunicación en su API.'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Lista con el contenido aleatorio solicitado'
@@ -1284,10 +1284,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'CSS Life'
+                          example: 'Frontend vs Backend'
                         content:
                           type: string
-                          example: '¿Por qué el CSS está siempre triste? Porque tiene demasiados problemas de clase.'
+                          example: '¿Por qué el frontend y el backend no se llevan bien? Porque tienen problemas de comunicación en su API.'
                         urlImage:
                           type: string
                           example: null
