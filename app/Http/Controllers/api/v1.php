@@ -28,7 +28,7 @@ class v1 extends Controller
      *
      * Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.
      *
-     * Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 1 petición por IP cada 5 segundos.
+     * Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.
      *
      * @group 📚 Contenidos
      * @unauthenticated

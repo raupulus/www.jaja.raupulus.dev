@@ -19,6 +19,8 @@ class AuthController extends Controller
     /**
      * Login
      *
+     * Limitado a 3 intentos por minuto
+     *
      * Lo usamos para obtener token de acceso api y de sesión (para SPA por ejemplo)
      *
      * El Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticación:
