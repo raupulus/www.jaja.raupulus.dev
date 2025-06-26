@@ -8,8 +8,7 @@ use \App\Http\Controllers\Api\AuthController;
 Route::post('/auth/login', [AuthController::class, 'login'])->name('api.auth.login');
 
 ## Devolver un contenido aleatorio de entre todos (Público, 1 cada 5 segundos)
-Route::get('/random/get/{limit?}', [ApiController::class, 'random'])
-    ->where('limit', '[1-5]')
+Route::get('/random', [ApiController::class, 'random'])
     ->name('api.get.random');
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -29,14 +28,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/categories', [ApiController::class, 'categoriesIndex'])->name('api.categories.index');
 
     ## Contenido random en base a un tipo.
-    Route::get('/types/{type:slug}/content/random', [ApiController::class, 'getContentRandomFromType'])
+    Route::get('/type/{type:slug}/content/random', [ApiController::class, 'getContentRandomFromType'])
         ->name('api.types.content.random');
 
     ## Contenido mediante una categoría y un tipo.
-    Route::get('/types/{type:slug}/categories/{categorySlug}/content/random', [ApiController::class, 'getContentRandomFromCategory'])
+    Route::get('/type/{type:slug}/category/{categorySlug}/content/random', [ApiController::class, 'getContentRandomFromCategory'])
         ->name('api.types.categories.content.random');
 
     ## Contenido en base a un grupo
-    Route::get('/groups/{group:slug}/content/random', [ApiController::class, 'getContentRandomFromGroup'])
+    Route::get('/group/{group:slug}/content/random', [ApiController::class, 'getContentRandomFromGroup'])
         ->name('api.groups.content.random');
 });

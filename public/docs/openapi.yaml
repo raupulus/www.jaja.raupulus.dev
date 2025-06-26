@@ -1,0 +1,1371 @@
+openapi: 3.0.3
+info:
+  title: 'JaJa Project API Documentación Oficial'
+  description: 'JaJa Project - La mejor comunidad para entretenimiento y compartir el humor'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8000'
+tags:
+  -
+    name: '🔐 Autenticación'
+    description: ''
+  -
+    name: '🏷️ Categorías, Grupos y Tipos'
+    description: ''
+  -
+    name: '📚 Contenidos'
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'Para obtener tu token logueate con tu cuenta de usuario y lo recibirás en la respuesta. También puedes acceder al panel para <b>generar el API TOKEN desde tu perfil</b>.'
+security:
+  -
+    default: []
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      operationId: login
+      description: "Lo usamos para obtener token de acceso api y de sesión (para SPA por ejemplo)\n\nEl Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticación:\n\nBearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    token: 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b
+                    user:
+                      name: 'Juan Pérez'
+                      nick: juanito
+                      urlImage: 'https://ejemplo.com/storage/user-images/avatar.webp'
+                      email: juan@ejemplo.com
+                      email_verified_at: '2024-01-15T10:30:00.000000Z'
+                  message: 'Login exitoso'
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+                        example: 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b
+                        description: 'Token Bearer para autenticación en futuras peticiones'
+                        enum: []
+                      user:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                            example: 'Juan Pérez'
+                            description: 'Nombre completo del usuario'
+                            enum: []
+                          nick:
+                            type: string
+                            example: juanito
+                            description: 'Apodo único del usuario'
+                            enum: []
+                          urlImage:
+                            type: string
+                            example: 'https://ejemplo.com/storage/user-images/avatar.webp'
+                            description: 'URL completa de la imagen de perfil'
+                            enum: []
+                          email:
+                            type: string
+                            example: juan@ejemplo.com
+                            description: 'Email del usuario (incluido al ser el propio usuario)'
+                            enum: []
+                          email_verified_at:
+                            type: string
+                            example: '2024-01-15T10:30:00.000000Z'
+                            description: 'Fecha de verificación del email ISO 8601'
+                            enum: []
+                        description: 'Información del usuario autenticado'
+                    description: 'Datos de respuesta del login (solo si es exitoso)'
+                  message:
+                    type: string
+                    example: 'Login exitoso'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Las credenciales proporcionadas son incorrectas.'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Las credenciales proporcionadas son incorrectas.'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '🔐 Autenticación'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Email del usuario. El formato del value no es válido.'
+                  example: user@example.com
+                  nullable: false
+                password:
+                  type: string
+                  description: 'Contraseña del usuario. El campo value debe tener al menos 8 caracteres. El campo value debe ser menor que 100 caracteres.'
+                  example: mipasswordsupersegura123123123
+                  nullable: false
+                device_name:
+                  type: string
+                  description: 'Nombre del dispositivo para generar el token y asociarlo a este. El campo value debe ser menor que 100 caracteres.'
+                  example: 'Mi iPhone 13 Pro'
+                  nullable: false
+              required:
+                - email
+                - password
+                - device_name
+      security: []
+  /api/v1/auth/logout:
+    post:
+      summary: Logout
+      operationId: logout
+      description: 'Cierra la sesión de un usuario e invalida el token de acceso utilizado en ese momento'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data: null
+                  message: 'Sesión cerrada exitosamente'
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: string
+                    example: null
+                    description: 'null No se devuelven datos adicionales'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Sesión cerrada exitosamente'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '🔐 Autenticación'
+  /api/v1/auth/user:
+    get:
+      summary: 'Información de usuario'
+      operationId: informacinDeUsuario
+      description: 'Devuelve la información del usuario actualmente logueado en la plataforma'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    name: 'Juan Pérez'
+                    nick: juanito
+                    urlImage: 'https://ejemplo.com/storage/user-images/avatar.webp'
+                    email: juan@ejemplo.com
+                    email_verified_at: '2024-01-15T10:30:00.000000Z'
+                  message: 'Información del usuario obtenida'
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: 'Juan Pérez'
+                        description: 'Nombre completo del usuario'
+                        enum: []
+                      nick:
+                        type: string
+                        example: juanito
+                        description: 'Apodo único del usuario (máximo 25 caracteres)'
+                        enum: []
+                      urlImage:
+                        type: string
+                        example: 'https://ejemplo.com/storage/user-images/avatar.webp'
+                        description: 'URL completa de la imagen de perfil del usuario'
+                        enum: []
+                      email:
+                        type: string
+                        example: juan@ejemplo.com
+                        description: 'Email del usuario (solo si es el propio usuario autenticado)'
+                        enum: []
+                      email_verified_at:
+                        type: string
+                        example: '2024-01-15T10:30:00.000000Z'
+                        description: 'Fecha de verificación del email en formato ISO 8601 (solo si es el propio usuario autenticado)'
+                        enum: []
+                    description: 'Datos del usuario'
+                  message:
+                    type: string
+                    example: 'Información del usuario obtenida'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '🔐 Autenticación'
+  /api/v1/types:
+    get:
+      summary: 'Tipos de Contenido'
+      operationId: tiposDeContenido
+      description: "Devuelve la lista de tipos de contenido que existen.\n\nÚtil para utilizar el slug del tipo que necesites y filtrar en otros endpoints."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      name: Quiz
+                      slug: quiz
+                      description: 'Preguntas relacionados con tecnología y programación'
+                      urlImage: null
+                    -
+                      name: Chistes
+                      slug: chistes
+                      description: 'Chistes relacionados con tecnología y programación'
+                      urlImage: null
+                    -
+                      name: Adivinanzas
+                      slug: adivinanzas
+                      description: 'Adivinanzas sobre conceptos de programación'
+                      urlImage: null
+                  message: 'Se obtuvieron 3 tipos'
+                  meta:
+                    total_items: 3
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        name: Quiz
+                        slug: quiz
+                        description: 'Preguntas relacionados con tecnología y programación'
+                        urlImage: null
+                      -
+                        name: Chistes
+                        slug: chistes
+                        description: 'Chistes relacionados con tecnología y programación'
+                        urlImage: null
+                      -
+                        name: Adivinanzas
+                        slug: adivinanzas
+                        description: 'Adivinanzas sobre conceptos de programación'
+                        urlImage: null
+                    description: 'Lista de tipos de contenido disponibles'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Quiz
+                        slug:
+                          type: string
+                          example: quiz
+                        description:
+                          type: string
+                          example: 'Preguntas relacionados con tecnología y programación'
+                        urlImage:
+                          type: string
+                          example: null
+                  message:
+                    type: string
+                    example: 'Se obtuvieron 3 tipos'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      total_items:
+                        type: integer
+                        example: 3
+                        description: 'Número total de tipos disponibles'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron tipos de contenido'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'No se encontraron tipos de contenido'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener la lista de tipos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener la lista de tipos'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '🏷️ Categorías, Grupos y Tipos'
+  /api/v1/groups:
+    get:
+      summary: 'Grupos de Contenidos'
+      operationId: gruposDeContenidos
+      description: 'Devuelve la lista de grupos de contenido que existen paginados.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+            example: 1
+            nullable: false
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+          example: 2
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+            example: 2
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: 'Preguntas en General'
+                      slug: quiz-general
+                      urlImage: null
+                    -
+                      title: 'Preguntas Programación'
+                      slug: quiz-devs
+                      urlImage: null
+                  message: 'Se obtuvieron 2 grupos de contenido'
+                  meta:
+                    pagination:
+                      current_page: 1
+                      per_page: 2
+                      total: 17
+                      last_page: 9
+                      from: 1
+                      to: 2
+                      has_more_pages: true
+                      has_previous_page: false
+                      next_page_url: 'http://localhost:8000/api/v1/groups?groups_index=2'
+                      prev_page_url: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: 'Preguntas en General'
+                        slug: quiz-general
+                        urlImage: null
+                      -
+                        title: 'Preguntas Programación'
+                        slug: quiz-devs
+                        urlImage: null
+                    description: 'Lista de grupos de contenido paginados'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 'Preguntas en General'
+                        slug:
+                          type: string
+                          example: quiz-general
+                        urlImage:
+                          type: string
+                          example: null
+                  message:
+                    type: string
+                    example: 'Se obtuvieron 2 grupos de contenido'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        type: object
+                        properties:
+                          current_page:
+                            type: integer
+                            example: 1
+                          per_page:
+                            type: integer
+                            example: 2
+                          total:
+                            type: integer
+                            example: 17
+                          last_page:
+                            type: integer
+                            example: 9
+                          from:
+                            type: integer
+                            example: 1
+                          to:
+                            type: integer
+                            example: 2
+                          has_more_pages:
+                            type: boolean
+                            example: true
+                          has_previous_page:
+                            type: boolean
+                            example: false
+                          next_page_url:
+                            type: string
+                            example: 'http://localhost:8000/api/v1/groups?groups_index=2'
+                          prev_page_url:
+                            type: string
+                            example: null
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'La página solicitada no existe. Última página disponible: 2'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                        enum: []
+                      message:
+                        type: string
+                        example: 'La página solicitada no existe. Última página disponible: 2'
+                        description: 'Mensaje descriptivo de la operación'
+                        enum: []
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'No se encontraron grupos de contenido'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                        enum: []
+                      message:
+                        type: string
+                        example: 'No se encontraron grupos de contenido'
+                        description: 'Mensaje descriptivo de la operación'
+                        enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener la lista de grupos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener la lista de grupos'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '🏷️ Categorías, Grupos y Tipos'
+  /api/v1/categories:
+    get:
+      summary: Categorías
+      operationId: categoras
+      description: 'Devuelve la lista de categorías disponibles paginadas.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+            example: 1
+            nullable: false
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+          example: 2
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+            example: 2
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: iOS
+                      slug: ios
+                      description: 'Sistema operativo de Apple para dispositivos móviles'
+                      urlImage: null
+                    -
+                      title: Vue.js
+                      slug: vue-js
+                      description: 'Framework progresivo para la interfaz de usuario'
+                      urlImage: null
+                  message: 'Se obtuvieron 2 categorías de 98, página 1.'
+                  meta:
+                    pagination:
+                      current_page: 1
+                      per_page: 2
+                      total: 98
+                      last_page: 49
+                      from: 1
+                      to: 2
+                      has_more_pages: true
+                      has_previous_page: false
+                      next_page_url: 'http://localhost:8000/api/v1/categories?page=2'
+                      prev_page_url: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: iOS
+                        slug: ios
+                        description: 'Sistema operativo de Apple para dispositivos móviles'
+                        urlImage: null
+                      -
+                        title: Vue.js
+                        slug: vue-js
+                        description: 'Framework progresivo para la interfaz de usuario'
+                        urlImage: null
+                    description: 'Lista de categorías paginadas'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: iOS
+                        slug:
+                          type: string
+                          example: ios
+                        description:
+                          type: string
+                          example: 'Sistema operativo de Apple para dispositivos móviles'
+                        urlImage:
+                          type: string
+                          example: null
+                  message:
+                    type: string
+                    example: 'Se obtuvieron 2 categorías de 98, página 1.'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        type: object
+                        properties:
+                          current_page:
+                            type: integer
+                            example: 1
+                          per_page:
+                            type: integer
+                            example: 2
+                          total:
+                            type: integer
+                            example: 98
+                          last_page:
+                            type: integer
+                            example: 49
+                          from:
+                            type: integer
+                            example: 1
+                          to:
+                            type: integer
+                            example: 2
+                          has_more_pages:
+                            type: boolean
+                            example: true
+                          has_previous_page:
+                            type: boolean
+                            example: false
+                          next_page_url:
+                            type: string
+                            example: 'http://localhost:8000/api/v1/categories?page=2'
+                          prev_page_url:
+                            type: string
+                            example: null
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'No se han encontrado categorías'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                        enum: []
+                      message:
+                        type: string
+                        example: 'No se han encontrado categorías'
+                        description: 'Mensaje descriptivo de la operación'
+                        enum: []
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'La página solicitada no existe. Última página disponible: 5'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                        enum: []
+                      message:
+                        type: string
+                        example: 'La página solicitada no existe. Última página disponible: 5'
+                        description: 'Mensaje descriptivo de la operación'
+                        enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener la lista de categorías'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener la lista de categorías'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '🏷️ Categorías, Grupos y Tipos'
+  /api/v1/random:
+    get:
+      summary: 'Contenido Aleatorio'
+      operationId: contenidoAleatorio
+      description: "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser público está limitado a máximo 5 elementos por petición y a 1 petición por IP cada 5 segundos."
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: gdfgh
+                      content: dfghdfgh
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se obtuvieron 35 contenidos aleatorios'
+                  meta:
+                    total_items: 35
+                    limit: 1
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: gdfgh
+                        content: dfghdfgh
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Colección de contenidos aleatorios'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: gdfgh
+                        content:
+                          type: string
+                          example: dfghdfgh
+                        urlImage:
+                          type: string
+                          example: null
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se obtuvieron 35 contenidos aleatorios'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      total_items:
+                        type: integer
+                        example: 35
+                        description: 'Número total de contenidos disponibles'
+                        enum: []
+                      limit:
+                        type: integer
+                        example: 1
+                        description: 'Límite aplicado en esta consulta'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener chistes aleatorios'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener chistes aleatorios'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '📚 Contenidos'
+      security: []
+  '/api/v1/type/{type_slug}/content/random':
+    get:
+      summary: 'Contenido en base a un tipo'
+      operationId: contenidoEnBaseAUnTipo
+      description: 'Devuelve un contenido aleatorio de un tipo concreto recibido.'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: 'Backup importante'
+                      content: '¿Cuál es el mantra de un DBA? "En BACKUP confío".'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.'
+                  meta:
+                    type: Chistes
+                    type_slug: chistes
+                    total_items: 33
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: 'Backup importante'
+                        content: '¿Cuál es el mantra de un DBA? "En BACKUP confío".'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Lista con el contenido aleatorio solicitado'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 'Backup importante'
+                        content:
+                          type: string
+                          example: '¿Cuál es el mantra de un DBA? "En BACKUP confío".'
+                        urlImage:
+                          type: string
+                          example: null
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: Chistes
+                        description: 'Nombre del tipo de contenido'
+                        enum: []
+                      type_slug:
+                        type: string
+                        example: chistes
+                        description: 'Slug del tipo'
+                        enum: []
+                      total_items:
+                        type: integer
+                        example: 33
+                        description: 'Total de contenidos disponibles para este tipo'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos para el tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos para el tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: type_slug
+        description: 'El slug del tipo de contenido.'
+        example: chistes
+        required: true
+        schema:
+          type: string
+  '/api/v1/type/{type_slug}/category/{categorySlug}/content/random':
+    get:
+      summary: 'Contenido en base a un tipo y Categoría'
+      operationId: contenidoEnBaseAUnTipoYCategora
+      description: 'Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: 'Arrays empiezan en 0'
+                      content: '¿Por qué los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 7 contenidos totales.'
+                  meta:
+                    type: Chistes
+                    type_slug: chistes
+                    category: JavaScript
+                    category_slug: javascript
+                    total_items: 7
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: 'Arrays empiezan en 0'
+                        content: '¿Por qué los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Lista con el contenido aleatorio solicitado'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 'Arrays empiezan en 0'
+                        content:
+                          type: string
+                          example: '¿Por qué los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25'
+                        urlImage:
+                          type: string
+                          example: null
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 7 contenidos totales.'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: Chistes
+                        description: 'Nombre del tipo de contenido'
+                        enum: []
+                      type_slug:
+                        type: string
+                        example: chistes
+                        description: 'Slug del tipo'
+                        enum: []
+                      category:
+                        type: string
+                        example: JavaScript
+                        description: 'Título de la categoría'
+                        enum: []
+                      category_slug:
+                        type: string
+                        example: javascript
+                        description: 'Slug de la categoría'
+                        enum: []
+                      total_items:
+                        type: integer
+                        example: 7
+                        description: 'Total de contenidos disponibles para este tipo y categoría'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'Categoría no encontrada'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                        enum: []
+                      message:
+                        type: string
+                        example: 'Categoría no encontrada'
+                        description: 'Mensaje descriptivo de la operación'
+                        enum: []
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'No se encontraron contenidos para el tipo y categoría especificados'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                        enum: []
+                      message:
+                        type: string
+                        example: 'No se encontraron contenidos para el tipo y categoría especificados'
+                        description: 'Mensaje descriptivo de la operación'
+                        enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: type_slug
+        description: 'El slug del tipo de contenido.'
+        example: chistes
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: categorySlug
+        description: 'El slug de la categoría.'
+        example: javascript
+        required: true
+        schema:
+          type: string
+  '/api/v1/group/{group_slug}/content/random':
+    get:
+      summary: 'Contenido en base a un grupo'
+      operationId: contenidoEnBaseAUnGrupo
+      description: 'Contenido aleatorio que pertenecen al grupo recibido.'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: 'CSS Life'
+                      content: '¿Por qué el CSS está siempre triste? Porque tiene demasiados problemas de clase.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.'
+                  meta:
+                    group: 'Chistes de Frontend'
+                    group_slug: chistes-frontend
+                    total_items: 5
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: 'CSS Life'
+                        content: '¿Por qué el CSS está siempre triste? Porque tiene demasiados problemas de clase.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Lista con el contenido aleatorio solicitado'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 'CSS Life'
+                        content:
+                          type: string
+                          example: '¿Por qué el CSS está siempre triste? Porque tiene demasiados problemas de clase.'
+                        urlImage:
+                          type: string
+                          example: null
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      group:
+                        type: string
+                        example: 'Chistes de Frontend'
+                        description: 'Título del grupo'
+                        enum: []
+                      group_slug:
+                        type: string
+                        example: chistes-frontend
+                        description: 'Slug del grupo'
+                        enum: []
+                      total_items:
+                        type: integer
+                        example: 5
+                        description: 'Total de contenidos disponibles para este grupo'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos para el grupo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos para el grupo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: group_slug
+        description: 'El slug del grupo de contenido.'
+        example: chistes-frontend
+        required: true
+        schema:
+          type: string

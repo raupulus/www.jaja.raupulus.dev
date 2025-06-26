@@ -3,17 +3,16 @@
 namespace App\Http\Requests\Api;
 
 use App\Http\Traits\ApiResponseTrait;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
 
 /**
  * Paginación de resultados
  *
- * @param int $page Número de página que se desea obtener
  * @param int $limit Cantidad de resultados que se desea obtener
  */
-class PaginationRequest extends FormRequest
+class ContentRandomFromGroupRequest extends FormRequest
 {
     use ApiResponseTrait;
 
@@ -31,8 +30,7 @@ class PaginationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page' => 'sometimes|integer|min:1',
-            'limit' => 'sometimes|integer|min:1|max:50',
+            'limit' => 'sometimes|integer|min:1|max:5',
         ];
     }
 
@@ -42,11 +40,9 @@ class PaginationRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'page.integer' => 'La página debe ser un número entero.',
-            'page.min' => 'La página debe ser mayor a 0.',
             'limit.integer' => 'El límite debe ser un número entero.',
             'limit.min' => 'El límite debe ser mayor a 0.',
-            'limit.max' => 'El límite no puede ser mayor a 50.',
+            'limit.max' => 'El límite no puede ser mayor a 5.',
         ];
     }
 
@@ -56,8 +52,7 @@ class PaginationRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'page' => (int) $this->input('page', 1),
-            'limit' => (int) $this->input('limit', 20),
+            'limit' => (int) $this->input('limit', 1),
         ]);
     }
 
@@ -69,14 +64,6 @@ class PaginationRequest extends FormRequest
         throw new HttpResponseException(
             $this->errorResponse('Errores de validación', 422, $validator->errors())
         );
-    }
-
-    /**
-     * Get validated page number
-     */
-    public function getPage(): int
-    {
-        return $this->validated()['page'];
     }
 
     /**
@@ -93,13 +80,9 @@ class PaginationRequest extends FormRequest
     public function queryParameters(): array
     {
         return [
-            'page' => [
-                'description' => 'Número de página a obtener',
-                'example' => 1,
-            ],
             'limit' => [
-                'description' => 'Cantidad de elementos por página (máximo 50)',
-                'example' => 2,
+                'description' => 'Cantidad de elementos por página (máximo 5)',
+                'example' => 1,
             ],
         ];
     }

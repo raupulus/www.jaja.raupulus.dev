@@ -49,6 +49,22 @@ muy básicas y no llega a ser interesante aumentar la complejidad y querys.
 php artisan db:seed
 ```
 
+--- 
+
+## En desarrollo
+
+### Documentación API
+
+Ten en cuenta que tras modificar la documentación para los endpoints de la API necesitamos ejecutar el comando
+para generar la nueva versión actualizada:
+
+```bash
+php artisan scribe:generate
+```
+
+Es interesante revisar que en nuestro **.env** para desarrollo tengamos en la variable "SCRIBE_AUTH_KEY" el token
+de un usuario de pruebas para que se obtengan peticiones reales y aparezcan los ejemplos de peticiones correctas.
+
 ---
 
 ## Rutas web
@@ -82,7 +98,6 @@ Headers:
 - Accept: application/json
 - Content-type: application/json
 - Añadir Autenticación Bearer token
-
 
 
 ## TODO prioritario
@@ -128,7 +143,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir recaptcha v3 en formulario de envío
 - [x] Revisar todos los iconos de las secciones en menú lateral del backend y poner uno adecuado para cada CRUD
 - [x] Aceptación de cookies
-- Generar documentación de api phpdoc con automatización
+- [x] En la api, las respuestas de los contenidos/grupos/tipos/categorías no se adapta a plural/singular según la cantidad de los devueltos
+- [x] Generar documentación de api phpdoc con automatización
+- Ruta de api "/random" necesita límite a 1 petición cada 5 segundos. Implementar middleware para todas las rutas api
 - Habilitar indexado en motores de búsqueda
 
 ## TODO con menor prioridad

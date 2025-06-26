@@ -1,0 +1,658 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8000"
+        }
+    ],
+    "info": {
+        "name": "JaJa Project API Documentaci\u00f3n Oficial",
+        "_postman_id": "8a040aba-861c-4047-9227-a5d8bb082c4a",
+        "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "\ud83d\udd10 Autenticaci\u00f3n",
+            "description": "",
+            "item": [
+                {
+                    "name": "Login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"user@example.com\",\"password\":\"mipasswordsupersegura123123123\",\"device_name\":\"Mi iPhone 13 Pro\"}"
+                        },
+                        "description": "Lo usamos para obtener token de acceso api y de sesi\u00f3n (para SPA por ejemplo)\n\nEl Token Bearer devuelto lo usaremos en los headers para las peticiones que requieran autenticaci\u00f3n:\n\nBearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"token\": \"5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b\",\n    \"user\": {\n      \"name\": \"Juan P\u00e9rez\",\n      \"nick\": \"juanito\",\n      \"urlImage\": \"https:\/\/ejemplo.com\/storage\/user-images\/avatar.webp\",\n      \"email\": \"juan@ejemplo.com\",\n      \"email_verified_at\": \"2024-01-15T10:30:00.000000Z\"\n    }\n  },\n  \"message\": \"Login exitoso\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 401,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Las credenciales proporcionadas son incorrectas.\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Logout",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/logout",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/logout"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Cierra la sesi\u00f3n de un usuario e invalida el token de acceso utilizado en ese momento"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": null,\n  \"message\": \"Sesi\u00f3n cerrada exitosamente\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Informaci\u00f3n de usuario",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/auth\/user",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/auth\/user"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la informaci\u00f3n del usuario actualmente logueado en la plataforma"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": {\n    \"name\": \"Juan P\u00e9rez\",\n    \"nick\": \"juanito\",\n    \"urlImage\": \"https:\/\/ejemplo.com\/storage\/user-images\/avatar.webp\",\n    \"email\": \"juan@ejemplo.com\",\n    \"email_verified_at\": \"2024-01-15T10:30:00.000000Z\"\n  },\n  \"message\": \"Informaci\u00f3n del usuario obtenida\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\ud83c\udff7\ufe0f Categor\u00edas, Grupos y Tipos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Tipos de Contenido",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/types",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/types"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la lista de tipos de contenido que existen.\n\n\u00datil para utilizar el slug del tipo que necesites y filtrar en otros endpoints."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"name\":\"Quiz\",\"slug\":\"quiz\",\"description\":\"Preguntas relacionados con tecnolog\\u00eda y programaci\\u00f3n\",\"urlImage\":null},{\"name\":\"Chistes\",\"slug\":\"chistes\",\"description\":\"Chistes relacionados con tecnolog\\u00eda y programaci\\u00f3n\",\"urlImage\":null},{\"name\":\"Adivinanzas\",\"slug\":\"adivinanzas\",\"description\":\"Adivinanzas sobre conceptos de programaci\\u00f3n\",\"urlImage\":null}],\"message\":\"Se obtuvieron 3 tipos\",\"meta\":{\"total_items\":3}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron tipos de contenido\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener la lista de tipos\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Grupos de Contenidos",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/groups",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "N\u00famero de p\u00e1gina a obtener. El campo value debe tener al menos 1.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "2",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/groups?page=1&limit=2"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la lista de grupos de contenido que existen paginados."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Preguntas en General\",\"slug\":\"quiz-general\",\"urlImage\":null},{\"title\":\"Preguntas Programaci\\u00f3n\",\"slug\":\"quiz-devs\",\"urlImage\":null}],\"message\":\"Se obtuvieron 2 grupos de contenido\",\"meta\":{\"pagination\":{\"current_page\":1,\"per_page\":2,\"total\":17,\"last_page\":9,\"from\":1,\"to\":2,\"has_more_pages\":true,\"has_previous_page\":false,\"next_page_url\":\"http:\\\/\\\/localhost:8000\\\/api\\\/v1\\\/groups?groups_index=2\",\"prev_page_url\":null}}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"La p\u00e1gina solicitada no existe. \u00daltima p\u00e1gina disponible: 2\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron grupos de contenido\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener la lista de grupos\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Categor\u00edas",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/categories",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "N\u00famero de p\u00e1gina a obtener. El campo value debe tener al menos 1.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "2",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/categories?page=1&limit=2"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la lista de categor\u00edas disponibles paginadas."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"iOS\",\"slug\":\"ios\",\"description\":\"Sistema operativo de Apple para dispositivos m\\u00f3viles\",\"urlImage\":null},{\"title\":\"Vue.js\",\"slug\":\"vue-js\",\"description\":\"Framework progresivo para la interfaz de usuario\",\"urlImage\":null}],\"message\":\"Se obtuvieron 2 categor\\u00edas de 98, p\\u00e1gina 1.\",\"meta\":{\"pagination\":{\"current_page\":1,\"per_page\":2,\"total\":98,\"last_page\":49,\"from\":1,\"to\":2,\"has_more_pages\":true,\"has_previous_page\":false,\"next_page_url\":\"http:\\\/\\\/localhost:8000\\\/api\\\/v1\\\/categories?page=2\",\"prev_page_url\":null}}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se han encontrado categor\u00edas\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"La p\u00e1gina solicitada no existe. \u00daltima p\u00e1gina disponible: 5\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener la lista de categor\u00edas\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\ud83d\udcda Contenidos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Contenido Aleatorio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/random?limit=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser p\u00fablico est\u00e1 limitado a m\u00e1ximo 5 elementos por petici\u00f3n y a 1 petici\u00f3n por IP cada 5 segundos.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"gdfgh\",\"content\":\"dfghdfgh\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvieron 35 contenidos aleatorios\",\"meta\":{\"total_items\":35,\"limit\":1}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener chistes aleatorios\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un tipo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/type\/:type_slug\/content\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/type\/:type_slug\/content\/random?limit=1",
+                            "variable": [
+                                {
+                                    "id": "type_slug",
+                                    "key": "type_slug",
+                                    "value": "chistes",
+                                    "description": "El slug del tipo de contenido."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de un tipo concreto recibido."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Backup importante\",\"content\":\"\\u00bfCu\\u00e1l es el mantra de un DBA? \\\"En BACKUP conf\\u00edo\\\".\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":33}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos para el tipo especificado\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un tipo y Categor\u00eda",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/type\/:type_slug\/category\/:categorySlug\/content\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/type\/:type_slug\/category\/:categorySlug\/content\/random?limit=1",
+                            "variable": [
+                                {
+                                    "id": "type_slug",
+                                    "key": "type_slug",
+                                    "value": "chistes",
+                                    "description": "El slug del tipo de contenido."
+                                },
+                                {
+                                    "id": "categorySlug",
+                                    "key": "categorySlug",
+                                    "value": "javascript",
+                                    "description": "El slug de la categor\u00eda."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio que pertenezca al tipo y categor\u00eda recibido."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Arrays empiezan en 0\",\"content\":\"\\u00bfPor qu\\u00e9 los programadores confunden Halloween con Navidad? Porque Oct 31 = Dec 25\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 7 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":7}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Categor\u00eda no encontrada\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos para el tipo y categor\u00eda especificados\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un grupo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/group\/:group_slug\/content\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/group\/:group_slug\/content\/random?limit=1",
+                            "variable": [
+                                {
+                                    "id": "group_slug",
+                                    "key": "group_slug",
+                                    "value": "chistes-frontend",
+                                    "description": "El slug del grupo de contenido."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Contenido aleatorio que pertenecen al grupo recibido."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"CSS Life\",\"content\":\"\\u00bfPor qu\\u00e9 el CSS est\\u00e1 siempre triste? Porque tiene demasiados problemas de clase.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Frontend\",\"group_slug\":\"chistes-frontend\",\"total_items\":5}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos para el grupo especificado\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "key",
+                "type": "string"
+            }
+        ]
+    }
+}

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\ContentRandomFromGroupRequest;
+use App\Http\Requests\Api\ContentRandomFromTypeAndCategoryRequest;
+use App\Http\Requests\Api\ContentRandomFromTypeRequest;
+use App\Http\Requests\Api\ContentRandomRequest;
 use App\Http\Requests\Api\PaginationRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ContentResource;
@@ -13,27 +17,69 @@ use App\Models\Content;
 use App\Models\Group;
 use App\Models\Type;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class v1 extends Controller
 {
     use ApiResponseTrait;
 
     /**
-     * Devuelve un contenido aleatorio.
+     * Contenido Aleatorio
      *
-     * @param int|null $limit Cantidad de elementos a devolver, máximo 5 al ser ruta pública.
+     * Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.
+     *
+     * Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 1 petición por IP cada 5 segundos.
+     *
+     * @group 📚 Contenidos
+     * @unauthenticated
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Colección de contenidos aleatorios
+     * @responseField data[].title string Título del contenido (chiste, adivinanza, etc.)
+     * @responseField data[].content string Texto del contenido
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
+     * @responseField data[].uploader string Nombre del usuario que subió el contenido
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.total_items integer Número total de contenidos disponibles
+     * @responseField meta.limit integer Límite aplicado en esta consulta
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se encontraron contenidos"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener chistes aleatorios"
+     * }
+     *
+     * @param ContentRandomRequest $request
      * @return JsonResponse
      */
-    public function random(int|null $limit = 1): JsonResponse
+    public function random(ContentRandomRequest $request): JsonResponse
     {
+        $limit = $request->getLimit();
+
         try {
-            $contents = Content::inRandomOrder();
+            $contentsQuery = Content::inRandomOrder();
+            $count = $contentsQuery->count();
+
+            if (!$count) {
+                return $this->errorResponse('No se encontraron contenidos', 404);
+            }
+
+            if ($count > 1) {
+                $message = 'Se obtuvieron ' . $count . ' contenidos aleatorios';
+            } else {
+                $message = 'Se obtuvo ' . $count . ' contenido aleatorio';
+            }
 
             return $this->collectionResponse(
-                ContentResource::collection($contents->limit($limit)->get()),
-                'Se obtuvieron ' . $limit . ' contenidos aleatorios',
+                ContentResource::collection($contentsQuery->limit($limit)->get()),
+                $message,
                 [
-                    'total_items' => $contents->count(),
+                    'total_items' => $count,
                     'limit' => $limit,
                 ]
             );
@@ -43,16 +89,44 @@ class v1 extends Controller
     }
 
     /**
+     * Tipos de Contenido
+     *
      * Devuelve la lista de tipos de contenido que existen.
+     *
+     * Útil para utilizar el slug del tipo que necesites y filtrar en otros endpoints.
+     *
+     * @group 🏷️ Categorías, Grupos y Tipos
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Lista de tipos de contenido disponibles
+     * @responseField data[].name string Nombre del tipo de contenido
+     * @responseField data[].slug string Slug del tipo para URLs amigables
+     * @responseField data[].description string Descripción del tipo de contenido
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al tipo (null si no tiene imagen)
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.total_items integer Número total de tipos disponibles
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se encontraron tipos de contenido"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener la lista de tipos"
+     * }
      *
      * @return JsonResponse
      */
     public function typesIndex(): JsonResponse
     {
         try {
-            $types = Type::orderByDesc('name')->get();
+            $types = Type::select(['id', 'name', 'slug', 'description', 'image'])
+                ->orderByDesc('name')
+                ->get();
 
-            if ( ! $types->count() ) {
+            if (!$types->count()) {
                 return $this->errorResponse('No se encontraron tipos de contenido', 404);
             }
 
@@ -70,7 +144,45 @@ class v1 extends Controller
     }
 
     /**
+     * Grupos de Contenidos
+     *
      * Devuelve la lista de grupos de contenido que existen paginados.
+     *
+     * @group 🏷️ Categorías, Grupos y Tipos
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Lista de grupos de contenido paginados
+     * @responseField data[].title string Título del grupo
+     * @responseField data[].slug string Slug del grupo para URLs amigables
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al grupo (null si no tiene imagen)
+     * @responseField pagination object Información de paginación
+     * @responseField pagination.current_page integer Página actual
+     * @responseField pagination.first_page_url string URL de la primera página
+     * @responseField pagination.from integer Número del primer elemento en la página actual
+     * @responseField pagination.last_page integer Número de la última página
+     * @responseField pagination.last_page_url string URL de la última página
+     * @responseField pagination.next_page_url string|null URL de la siguiente página (null si es la última)
+     * @responseField pagination.path string URL base para la paginación
+     * @responseField pagination.per_page integer Elementos por página
+     * @responseField pagination.prev_page_url string|null URL de la página anterior (null si es la primera)
+     * @responseField pagination.to integer Número del último elemento en la página actual
+     * @responseField pagination.total integer Total de elementos disponibles
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "La página solicitada no existe. Última página disponible: 2"
+     * }
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se encontraron grupos de contenido"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener la lista de grupos"
+     * }
      *
      * @param PaginationRequest $request
      * @return JsonResponse
@@ -78,12 +190,36 @@ class v1 extends Controller
     public function groupsIndex(PaginationRequest $request): JsonResponse
     {
         try {
-            $groups = Group::orderByDesc('title')->paginate($request->getLimit(), ['*'], 'groups_index', $request->getPage());
+            $page = $request->getPage();
+            $limit = $request->getLimit();
+
+            $groups = Group::select(['id', 'title', 'slug', 'image'])
+                ->orderByDesc('title')
+                ->paginate($limit, ['*'], 'groups_index', $page);
+
+            if ($page > $groups->lastPage() && $groups->total() > 0) {
+                return $this->errorResponse(
+                    'La página solicitada no existe. Última página disponible: ' . $groups->lastPage(),
+                    404
+                );
+            }
+
+            $count = $groups->count();
+
+            if (!$count) {
+                return $this->errorResponse('No se encontraron grupos de contenido', 404);
+            }
+
+            if ($count > 1) {
+                $message = 'Se obtuvieron ' . $count . ' grupos de contenido';
+            } else {
+                $message = 'Se obtuvo ' . $count . ' grupo de contenido';
+            }
 
             return $this->collectionPaginatedResponse(
                 $groups,
                 GroupResource::collection($groups->items()),
-                'Se devuelven ' . $groups->count() . ' grupos',
+                $message
             );
         } catch (\Exception $e) {
             return $this->errorResponse('Error al obtener la lista de grupos', 500);
@@ -91,18 +227,58 @@ class v1 extends Controller
     }
 
     /**
-     * Devuelve la lista de categorías disponibles.
+     * Categorías
+     *
+     * Devuelve la lista de categorías disponibles paginadas.
+     *
+     * @group 🏷️ Categorías, Grupos y Tipos
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Lista de categorías paginadas
+     * @responseField data[].title string Título de la categoría
+     * @responseField data[].slug string Slug de la categoría para URLs amigables
+     * @responseField data[].description string Descripción de la categoría
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada a la categoría (null si no tiene imagen)
+     * @responseField pagination object Información de paginación
+     * @responseField pagination.current_page integer Página actual
+     * @responseField pagination.first_page_url string URL de la primera página
+     * @responseField pagination.from integer Número del primer elemento en la página actual
+     * @responseField pagination.last_page integer Número de la última página
+     * @responseField pagination.last_page_url string URL de la última página
+     * @responseField pagination.next_page_url string|null URL de la siguiente página (null si es la última)
+     * @responseField pagination.path string URL base para la paginación
+     * @responseField pagination.per_page integer Elementos por página
+     * @responseField pagination.prev_page_url string|null URL de la página anterior (null si es la primera)
+     * @responseField pagination.to integer Número del último elemento en la página actual
+     * @responseField pagination.total integer Total de elementos disponibles
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se han encontrado categorías"
+     * }
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "La página solicitada no existe. Última página disponible: 5"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener la lista de categorías"
+     * }
      *
      * @param PaginationRequest $request
      * @return JsonResponse
      */
     public function categoriesIndex(PaginationRequest $request): JsonResponse
     {
-        $page = $request->getPage();
-        $limit = $request->getLimit();
-
         try {
-            $categories = Category::orderByDesc('title')
+            $page = $request->getPage();
+            $limit = $request->getLimit();
+
+            $categories = Category::select(['id', 'title', 'slug', 'description', 'image'])
+                ->orderByDesc('title')
                 ->paginate($limit, ['*'], 'page', $page);
 
             if ($page > $categories->lastPage() && $categories->total() > 0) {
@@ -112,10 +288,22 @@ class v1 extends Controller
                 );
             }
 
+            $count = $categories->count();
+
+            if (!$count) {
+                return $this->errorResponse('No se han encontrado categorías', 404);
+            }
+
+            if ($count > 1) {
+                $message = 'Se obtuvieron ' . $count . ' categorías de ' . $categories->total() . ', página ' . $page . '.';
+            } else {
+                $message = 'Se obtuvo ' . $count . ' categoría de ' . $categories->total() . ', página ' . $page . '.';
+            }
+
             return $this->collectionPaginatedResponse(
                 $categories,
                 CategoryResource::collection($categories->items()),
-                'Se obtuvieron ' . $categories->count() . ' categorías de ' . $categories->total() . ', página ' . $page . '.'
+                $message
             );
         } catch (\Exception $e) {
             return $this->errorResponse('Error al obtener la lista de categorías', 500);
@@ -123,32 +311,73 @@ class v1 extends Controller
     }
 
     /**
-     * Devuelve un contenido aleatorio de un tipo.
+     * Contenido en base a un tipo
+     *
+     * Devuelve un contenido aleatorio de un tipo concreto recibido.
+     *
+     * @group 📚 Contenidos
+     * @urlParam type_slug string required El slug del tipo de contenido. Example: chistes
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Lista con el contenido aleatorio solicitado
+     * @responseField data[].title string Título del contenido
+     * @responseField data[].content string Texto del contenido (chiste, adivinanza, etc.)
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
+     * @responseField data[].uploader string Nick del usuario que subió el contenido (formato: @nick)
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.type string Nombre del tipo de contenido
+     * @responseField meta.type_slug string Slug del tipo
+     * @responseField meta.total_items integer Total de contenidos disponibles para este tipo
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se encontraron contenidos para el tipo especificado"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener contenidos del tipo especificado"
+     * }
      *
      * @param Type $type Tipo de contenido por el que se filtra.
-     * @param int $limit Cantidad de elementos a devolver.
      * @return JsonResponse
      */
-    public function getContentRandomFromType(Type $type, int $limit = 1): JsonResponse
+    public function getContentRandomFromType(ContentRandomFromTypeRequest $request, Type $type): JsonResponse
     {
         try {
-            $contents = Content::byType($type)->random();
-            $total = $contents->count();
+            $limit = $request->getLimit();
 
-            if ( ! $total ) {
+            $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id'])
+                ->byType($type)
+                ->random();
+
+            $count = $contents->count();
+
+            if (!$count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el tipo especificado',
                     404
                 );
             }
 
+            if ($count > 1 && $limit > 1) {
+                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' de ' . $count . ' contenidos totales para este tipo.';
+            } else if ($count > 1 && $limit == 1) {
+                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $count . ' contenidos totales para este tipo.';
+            } else if ($count == 1 && $limit > 1) {
+                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' de ' . $count . ' contenido total para este tipo.';
+            } else {
+                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $count . ' contenido total para este tipo.';
+            }
+
             return $this->collectionResponse(
                 ContentResource::collection($contents->limit($limit)->get()),
-                'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $total . ' contenidos totales para este tipo.',
+                $message,
                 [
                     'type' => $type->name,
                     'type_slug' => $type->slug,
-                    'total_items' => $total,
+                    'total_items' => $count,
                 ]
             );
         } catch (\Exception $e) {
@@ -157,14 +386,50 @@ class v1 extends Controller
     }
 
     /**
+     * Contenido en base a un tipo y Categoría
+     *
      * Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.
      *
+     * @group 📚 Contenidos
+     *
+     * @urlParam type_slug string required El slug del tipo de contenido. Example: chistes
+     * @urlParam categorySlug string required El slug de la categoría. Example: javascript
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Lista con el contenido aleatorio solicitado
+     * @responseField data[].title string Título del contenido
+     * @responseField data[].content string Texto del contenido (chiste, adivinanza, etc.)
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
+     * @responseField data[].uploader string Nick del usuario que subió el contenido (formato: @nick)
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.type string Nombre del tipo de contenido
+     * @responseField meta.type_slug string Slug del tipo
+     * @responseField meta.category string Título de la categoría
+     * @responseField meta.category_slug string Slug de la categoría
+     * @responseField meta.total_items integer Total de contenidos disponibles para este tipo y categoría
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "Categoría no encontrada"
+     * }
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se encontraron contenidos para el tipo y categoría especificados"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener contenidos del tipo especificado"
+     * }
+     *
+     * @param ContentRandomFromTypeAndCategoryRequest $request
      * @param Type $type Tipo de elemento por el que se filtra.
      * @param string $categorySlug Slug de la Categoría por la que se filtra.
-     * @param int $limit Cantidad de elementos a devolver.
      * @return JsonResponse
      */
-    public function getContentRandomFromCategory(Type $type, string $categorySlug, int $limit = 1): JsonResponse
+    public function getContentRandomFromCategory(ContentRandomFromTypeAndCategoryRequest $request, Type $type, string $categorySlug): JsonResponse
     {
         try {
             $category = Category::where('slug', $categorySlug)->first();
@@ -173,25 +438,40 @@ class v1 extends Controller
                 return $this->errorResponse('Categoría no encontrada', 404);
             }
 
-            $contents = Content::byTypeAndCategory($type, $category)->random();
-            $total = $contents->count();
+            $limit = $request->getLimit();
 
-            if ( ! $total ) {
+            $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
+                ->byTypeAndCategory($type, $category)
+                ->random();
+
+            $count = $contents->count();
+
+            if (!$count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el tipo y categoría especificados',
                     404
                 );
             }
 
+            if ($count > 1 && $limit > 1) {
+                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenidos totales.';
+            } else if ($count > 1 && $limit == 1) {
+                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenidos totales.';
+            } else if ($count == 1 && $limit > 1) {
+                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenido total.';
+            } else {
+                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenido total.';
+            }
+
             return $this->collectionResponse(
                 ContentResource::collection($contents->limit($limit)->get()),
-                'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $total . ' contenidos totales para estos.',
+                $message,
                 [
                     'type' => $type->name,
                     'type_slug' => $type->slug,
                     'category' => $category->title,
                     'category_slug' => $category->slug,
-                    'total_items' => $total,
+                    'total_items' => $count,
                 ]
             );
         } catch (\Exception $e) {
@@ -200,37 +480,79 @@ class v1 extends Controller
     }
 
     /**
+     * Contenido en base a un grupo
+     *
      * Contenido aleatorio que pertenecen al grupo recibido.
      *
-     * @param Group $group Grupo por el que se filtra.
-     * @param int $limit Cantidad de elementos a devolver.
+     * @group 📚 Contenidos
      *
+     * @urlParam group_slug string required El slug del grupo de contenido. Example: chistes-frontend
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Lista con el contenido aleatorio solicitado
+     * @responseField data[].title string Título del contenido
+     * @responseField data[].content string Texto del contenido (chiste, adivinanza, etc.)
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
+     * @responseField data[].uploader string Nick del usuario que subió el contenido (formato: @nick)
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.group string Título del grupo
+     * @responseField meta.group_slug string Slug del grupo
+     * @responseField meta.total_items integer Total de contenidos disponibles para este grupo
+     *
+     * @response 404 {
+     *   "success": false,
+     *   "message": "No se encontraron contenidos para el grupo especificado"
+     * }
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al obtener contenidos del tipo especificado"
+     * }
+     *
+     * @param ContentRandomFromGroupRequest $request
+     * @param Group $group Grupo por el que se filtra.
      * @return JsonResponse
      */
-    public function getContentRandomFromGroup(Group $group, int $limit = 1): JsonResponse
+    public function getContentRandomFromGroup(ContentRandomFromGroupRequest $request, Group $group): JsonResponse
     {
         try {
-            $contents = Content::byGroup($group)->random();
-            $total = $contents->count();
+            $limit = $request->getLimit();
 
-            if ( ! $total ) {
+            $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
+                ->byGroup($group)
+                ->random();
+
+            $count = $contents->count();
+
+            if (!$count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el grupo especificado',
                     404
                 );
             }
 
+            if ($count > 1 && $limit > 1) {
+                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el grupo ' . $group->title . ' de ' . $count . ' contenidos totales';
+            } else if ($count > 1 && $limit == 1) {
+                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $count . ' contenidos totales.';
+            } else if ($count == 1 && $limit > 1) {
+                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el grupo ' . $group->title . ' de ' . $count . ' contenido total.';
+            } else {
+                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $count . ' contenido total.';
+            }
+
             return $this->collectionResponse(
                 ContentResource::collection($contents->limit($limit)->get()),
-                'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $total . ' contenidos totales para este.',
+                $message,
                 [
                     'group' => $group->title,
                     'group_slug' => $group->slug,
-                    'total_items' => $total,
+                    'total_items' => $count,
                 ]
             );
         } catch (\Exception $e) {
-            return $this->errorResponse('Error al obtener contenidos del tipo especificado', 500);
+            return $this->errorResponse('Error al obtener contenidos del grupo especificado', 500);
         }
     }
 
