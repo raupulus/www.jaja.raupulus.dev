@@ -145,6 +145,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Aceptación de cookies
 - [x] En la api, las respuestas de los contenidos/grupos/tipos/categorías no se adapta a plural/singular según la cantidad de los devueltos
 - [x] Generar documentación de api phpdoc con automatización
+- [x] Enlazar documentación api en la página de API
 - Ruta de api "/random" necesita límite a 1 petición cada 5 segundos. Implementar middleware para todas las rutas api
 - Habilitar indexado en motores de búsqueda
 

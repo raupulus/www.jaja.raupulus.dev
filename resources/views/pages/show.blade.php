@@ -70,6 +70,49 @@
                 {!! $page->getHtmlContent() !!}
             </div>
         </section>
+
+        @if($page->slug === 'api')
+
+            <section class="page-content">
+                <div class="page-content-wrapper">
+                    <ul>
+                        <li>
+                            <a href="{{url('docs/collection.json')}}" download>
+                                Descargar colección de Postman
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('docs/openapi.yaml')}}" download>
+                                Descargar Especificación OpenAPI
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('docs')}}">
+                                Documentación API
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('docs#autenticacion-POSTapi-v1-auth-login')}}">
+                                Autenticación
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('docs#categorias-grupos-y-tipos-GETapi-v1-types')}}">
+                                Categorías, Grupos y Tipos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('docs#contenidos-GETapi-v1-random')}}">
+                                Contenidos
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+
+
+        @endif
     </div>
 
 @endsection

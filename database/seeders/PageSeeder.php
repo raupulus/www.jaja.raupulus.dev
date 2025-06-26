@@ -583,7 +583,7 @@ Somos un grupo diverso de **desarrolladores, diseñadores, community managers y 
 
 ---
 
-*Para acceder a la documentación completa con ejemplos, endpoints, autenticación y casos de uso, visita nuestra documentación técnica detallada.*',
+*Para acceder a la documentación completa con ejemplos, endpoints, autenticación y casos de uso, visita nuestra documentación técnica detallada en los enlaces más abajo.*',
                 'keywords' => 'API, documentación, endpoints, autenticación, integración, bots, desarrollo, aplicaciones'
             ],
             [
