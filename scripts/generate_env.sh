@@ -68,7 +68,9 @@ chmod ug+rw "${WORKSCRIPT}/.env"
 
 ## General
 
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'APP_ENV' "${APP_ENV}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'APP_NAME' "${APP_NAME}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'APP_AUTHOR' "${APP_AUTHOR}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'APP_DESCRIPTION' "${APP_DESCRIPTION}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'APP_URL' "${APP_URL}"
 
@@ -79,6 +81,7 @@ replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'DB_USERNAME' "${DB_USERNAME}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'DB_PASSWORD' "${DB_PASSWORD}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'DB_CONNECTION' "${DB_CONNECTION}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'DB_PORT' "${DB_PORT}"
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_SCHEME' "${MAIL_SCHEME}"
 
 ## Redis
 
@@ -87,38 +90,18 @@ replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'REDIS_PASSWORD' "${REDIS_PASSWO
 
 ## Google Captcha
 
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'GOOGLE_API_KEY' "${GOOGLE_API_KEY}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'GOOGLE_DEV_API_KEY' "${GOOGLE_DEV_API_KEY}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'GOOGLE_CAPTCHA_KEY' "${GOOGLE_CAPTCHA_KEY}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'GOOGLE_CAPTCHA_SECRET' "${GOOGLE_CAPTCHA_SECRET}"
 
 ## Mail
 
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_MAILER' "${MAIL_MAILER}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_HOST' "${MAIL_HOST}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_PORT' "${MAIL_PORT}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_USERNAME' "${MAIL_USERNAME}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_PASSWORD' "${MAIL_PASSWORD}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_ENCRYPTION' "${MAIL_ENCRYPTION}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_FROM_ADDRESS' "${MAIL_FROM_ADDRESS}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_FROM_NAME' "${MAIL_FROM_NAME}"
-
-## Pusher
-
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'PUSHER_APP_KEY' "${PUSHER_APP_KEY}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'PUSHER_APP_SECRET' "${PUSHER_APP_SECRET}"
-
-## Api
-
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'API_URL' "${API_URL}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'API_NAME' "${API_NAME}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'API_TOKEN' "${API_TOKEN}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'FRONTEND_URLS' "${FRONTEND_URLS}"
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'SANCTUM_STATEFUL_DOMAINS' "${SANCTUM_STATEFUL_DOMAINS}"
-
-## AEMET
-
-replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'AEMET_API_KEY' "${AEMET_API_KEY}"
-
 
 echo ""
 echo "Resultado del .env final:"
