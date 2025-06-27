@@ -1,5 +1,9 @@
 <?php
 
+if (in_array(env('APP_ENV'), ['prod', 'production'])) {
+    return [];
+}
+
 use Knuckles\Scribe\Extracting\Strategies;
 use Knuckles\Scribe\Config\Defaults;
 use Knuckles\Scribe\Config\AuthIn;
@@ -9,7 +13,7 @@ use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
 
 return [
     // The HTML <title> for the generated documentation.
-    'title' => config('app.name').' API Documentación Oficial',
+    'title' => config('app.name') . ' API Documentación Oficial',
 
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
     'description' => 'JaJa Project - La mejor comunidad para entretenimiento y compartir el humor',

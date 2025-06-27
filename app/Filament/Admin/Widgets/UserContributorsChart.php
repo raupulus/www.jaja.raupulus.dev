@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace App\Filament\Admin\Widgets;
 
 use App\Helpers\StatsHelper;
 use Filament\Widgets\ChartWidget;
