@@ -131,7 +131,27 @@ class ContentResource extends Resource
                     ->preload()
                     ->searchable()
                     ->required()
-                    ->columnSpanFull(),
+                    ->columnSpanFull()
+                    ->createOptionForm([
+                        Forms\Components\TextInput::make('title')
+                            ->columnSpanFull()
+                            ->label('Título')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('slug')
+                            ->columnSpanFull()
+                            ->label('Slug')
+                            ->required()
+                            ->unique('categories', 'slug', ignoreRecord: true)
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('description')
+                            ->columnSpanFull()
+                            ->required()
+                            ->label('Descripción')
+                            ->maxLength(255),
+
+                    ])
+                ,
             ]);
     }
 
