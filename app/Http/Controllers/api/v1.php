@@ -17,7 +17,6 @@ use App\Models\Content;
 use App\Models\Group;
 use App\Models\Type;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class v1 extends Controller
 {

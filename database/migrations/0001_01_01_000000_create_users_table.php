@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('role_id')->default(2);
             $table->string('name', 255);
-            $table->string('50', 255)->nullable();
+            $table->string('nick', 50)->nullable();
             $table->string('email')->unique();
             $table->string('avatar', 255)->default('images/default/avatar.webp')->nullable();
             $table->timestamp('email_verified_at')->nullable();
