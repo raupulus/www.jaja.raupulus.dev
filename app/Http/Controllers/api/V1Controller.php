@@ -18,7 +18,7 @@ use App\Models\Group;
 use App\Models\Type;
 use Illuminate\Http\JsonResponse;
 
-class v1 extends Controller
+class V1Controller extends Controller
 {
     use ApiResponseTrait;
 

@@ -5,12 +5,12 @@
             "key": "baseUrl",
             "type": "string",
             "name": "string",
-            "value": "http:\/\/localhost:8000"
+            "value": "https:\/\/jaja.raupulus.dev"
         }
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "48f43952-ac50-4a3b-b851-3b31744db1ef",
+        "_postman_id": "8d2181d9-395f-4bd8-bc07-aab2a163b66d",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -430,7 +430,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Git Blame\",\"content\":\"\\u00bfPor qu\\u00e9 los desarrolladores aman git blame? Porque es la \\u00fanica manera socialmente aceptable de se\\u00f1alar culpables.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvieron 35 contenidos aleatorios\",\"meta\":{\"total_items\":35,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"fghdfghdfgh\",\"content\":\"dfghdfgh\",\"urlImage\":null,\"uploader\":\"@test1\"}],\"message\":\"Se obtuvieron 35 contenidos aleatorios\",\"meta\":{\"total_items\":35,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -510,7 +510,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"El programador en el supermercado\",\"content\":\"Mi esposa me mand\\u00f3 al supermercado y me dijo: \\\"Compra una barra de pan, y si hay huevos, trae doce\\\". Volv\\u00ed con 12 barras de pan. Ella: \\\"\\u00bfPor qu\\u00e9 compraste 12 barras?\\\" Yo: \\\"\\u00a1Porque hab\\u00eda huevos!\\\"\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":33}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"NoSQL vs SQL\",\"content\":\"\\u00bfPor qu\\u00e9 las bases de datos NoSQL son tan relajadas? Porque no tienen relaciones.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":33}}",
                             "name": ""
                         },
                         {
@@ -596,7 +596,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"El programador en el supermercado\",\"content\":\"Mi esposa me mand\\u00f3 al supermercado y me dijo: \\\"Compra una barra de pan, y si hay huevos, trae doce\\\". Volv\\u00ed con 12 barras de pan. Ella: \\\"\\u00bfPor qu\\u00e9 compraste 12 barras?\\\" Yo: \\\"\\u00a1Porque hab\\u00eda huevos!\\\"\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 7 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":7}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Programador vs Cafetera\",\"content\":\"\\u00bfQu\\u00e9 tienen en com\\u00fan un programador y una cafetera? Los dos convierten recursos en c\\u00f3digo.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 7 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":7}}",
                             "name": ""
                         },
                         {
@@ -682,7 +682,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Frontend vs Backend\",\"content\":\"\\u00bfPor qu\\u00e9 el frontend y el backend no se llevan bien? Porque tienen problemas de comunicaci\\u00f3n en su API.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Frontend\",\"group_slug\":\"chistes-frontend\",\"total_items\":5}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Responsive Design\",\"content\":\"\\u00bfC\\u00f3mo llamas a un dise\\u00f1o web que no es responsive? Irresponsible design.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Frontend\",\"group_slug\":\"chistes-frontend\",\"total_items\":5}}",
                             "name": ""
                         },
                         {

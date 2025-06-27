@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://localhost:8000'
+    url: 'https://jaja.raupulus.dev'
 tags:
   -
     name: '🔐 Autenticación'
@@ -799,10 +799,10 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'Git Blame'
-                      content: '¿Por qué los desarrolladores aman git blame? Porque es la única manera socialmente aceptable de señalar culpables.'
+                      title: fghdfghdfgh
+                      content: dfghdfgh
                       urlImage: null
-                      uploader: '@raupulus'
+                      uploader: '@test1'
                   message: 'Se obtuvieron 35 contenidos aleatorios'
                   meta:
                     total_items: 35
@@ -817,10 +817,10 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'Git Blame'
-                        content: '¿Por qué los desarrolladores aman git blame? Porque es la única manera socialmente aceptable de señalar culpables.'
+                        title: fghdfghdfgh
+                        content: dfghdfgh
                         urlImage: null
-                        uploader: '@raupulus'
+                        uploader: '@test1'
                     description: 'Colección de contenidos aleatorios'
                     enum: []
                     items:
@@ -828,16 +828,16 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'Git Blame'
+                          example: fghdfghdfgh
                         content:
                           type: string
-                          example: '¿Por qué los desarrolladores aman git blame? Porque es la única manera socialmente aceptable de señalar culpables.'
+                          example: dfghdfgh
                         urlImage:
                           type: string
                           example: null
                         uploader:
                           type: string
-                          example: '@raupulus'
+                          example: '@test1'
                   message:
                     type: string
                     example: 'Se obtuvieron 35 contenidos aleatorios'
@@ -928,8 +928,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'El programador en el supermercado'
-                      content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
+                      title: 'NoSQL vs SQL'
+                      content: '¿Por qué las bases de datos NoSQL son tan relajadas? Porque no tienen relaciones.'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.'
@@ -947,8 +947,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'El programador en el supermercado'
-                        content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
+                        title: 'NoSQL vs SQL'
+                        content: '¿Por qué las bases de datos NoSQL son tan relajadas? Porque no tienen relaciones.'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Lista con el contenido aleatorio solicitado'
@@ -958,10 +958,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'El programador en el supermercado'
+                          example: 'NoSQL vs SQL'
                         content:
                           type: string
-                          example: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
+                          example: '¿Por qué las bases de datos NoSQL son tan relajadas? Porque no tienen relaciones.'
                         urlImage:
                           type: string
                           example: null
@@ -1071,8 +1071,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'El programador en el supermercado'
-                      content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
+                      title: 'Programador vs Cafetera'
+                      content: '¿Qué tienen en común un programador y una cafetera? Los dos convierten recursos en código.'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 7 contenidos totales.'
@@ -1092,8 +1092,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'El programador en el supermercado'
-                        content: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
+                        title: 'Programador vs Cafetera'
+                        content: '¿Qué tienen en común un programador y una cafetera? Los dos convierten recursos en código.'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Lista con el contenido aleatorio solicitado'
@@ -1103,10 +1103,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'El programador en el supermercado'
+                          example: 'Programador vs Cafetera'
                         content:
                           type: string
-                          example: 'Mi esposa me mandó al supermercado y me dijo: "Compra una barra de pan, y si hay huevos, trae doce". Volví con 12 barras de pan. Ella: "¿Por qué compraste 12 barras?" Yo: "¡Porque había huevos!"'
+                          example: '¿Qué tienen en común un programador y una cafetera? Los dos convierten recursos en código.'
                         urlImage:
                           type: string
                           example: null
@@ -1254,8 +1254,8 @@ paths:
                   success: true
                   data:
                     -
-                      title: 'Frontend vs Backend'
-                      content: '¿Por qué el frontend y el backend no se llevan bien? Porque tienen problemas de comunicación en su API.'
+                      title: 'Responsive Design'
+                      content: '¿Cómo llamas a un diseño web que no es responsive? Irresponsible design.'
                       urlImage: null
                       uploader: '@raupulus'
                   message: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.'
@@ -1273,8 +1273,8 @@ paths:
                     type: array
                     example:
                       -
-                        title: 'Frontend vs Backend'
-                        content: '¿Por qué el frontend y el backend no se llevan bien? Porque tienen problemas de comunicación en su API.'
+                        title: 'Responsive Design'
+                        content: '¿Cómo llamas a un diseño web que no es responsive? Irresponsible design.'
                         urlImage: null
                         uploader: '@raupulus'
                     description: 'Lista con el contenido aleatorio solicitado'
@@ -1284,10 +1284,10 @@ paths:
                       properties:
                         title:
                           type: string
-                          example: 'Frontend vs Backend'
+                          example: 'Responsive Design'
                         content:
                           type: string
-                          example: '¿Por qué el frontend y el backend no se llevan bien? Porque tienen problemas de comunicación en su API.'
+                          example: '¿Cómo llamas a un diseño web que no es responsive? Irresponsible design.'
                         urlImage:
                           type: string
                           example: null
