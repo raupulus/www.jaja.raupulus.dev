@@ -55,7 +55,7 @@ class SitemapGeneratorCommand extends Command
     {
         $sitemap = Sitemap::create();
 
-        // URLs estáticas con prioridades y frecuencias
+        ## URLs estáticas con prioridades y frecuencia de actualización
         $staticUrls = [
             ['url' => route('index'), 'priority' => 1.0, 'changefreq' => 'daily'],
             ['url' => route('page.index'), 'priority' => 0.8, 'changefreq' => 'weekly'],
@@ -108,7 +108,7 @@ class SitemapGeneratorCommand extends Command
         $collaborators = Collaborator::getCollaboratorsVerified();
 
         foreach ($collaborators as $collaborator) {
-            // Agregar perfil del colaborador
+            ## Agregar perfil del colaborador
             $sitemap->add(
                 Url::create(route('collaborator.show', $collaborator->nick))
                     ->setPriority(0.8)
@@ -117,7 +117,7 @@ class SitemapGeneratorCommand extends Command
             );
             $collaboratorCount++;
 
-            // Agregar proyectos del colaborador
+            ## Agrego proyectos del colaborador
             $projects = $collaborator->projects()
                 ->where('status', 'published')
                 ->get();
@@ -144,7 +144,7 @@ class SitemapGeneratorCommand extends Command
         $sitemapPath = public_path('sitemap.xml');
         $backupPath = public_path('sitemap_backup.xml');
 
-        // Crear backup del sitemap anterior si existe
+        ## Creo backup del sitemap anterior si existe
         if (file_exists($sitemapPath)) {
             copy($sitemapPath, $backupPath);
         }
@@ -152,12 +152,12 @@ class SitemapGeneratorCommand extends Command
         try {
             $sitemap->writeToFile($sitemapPath);
 
-            // Verificar que el archivo se escribió correctamente
+            ## Verifico que el archivo se escribió correctamente
             if (!file_exists($sitemapPath) || filesize($sitemapPath) === 0) {
                 throw new \Exception('El archivo sitemap.xml está vacío o no se pudo crear');
             }
 
-            // Eliminar backup si todo salió bien
+            ## Elimino backup si todo salió bien
             if (file_exists($backupPath)) {
                 unlink($backupPath);
             }
@@ -165,7 +165,7 @@ class SitemapGeneratorCommand extends Command
             $this->info('   ✓ Sitemap escrito correctamente');
 
         } catch (\Exception $e) {
-            // Restaurar backup si algo salió mal
+            ## Restaura backup si algo sale mal
             if (file_exists($backupPath)) {
                 copy($backupPath, $sitemapPath);
                 unlink($backupPath);

@@ -21,6 +21,14 @@ php artisan key:generate
 php artisan storage:link
 ```
 
+### Crear base de datos
+
+Ejemplo para postgresql
+
+```bash
+sudo -u postgres createdb -O web -T template1 jaja_raupulus
+```
+
 ### Ejecutar migraciones para generar la base de datos
 
 ```bash
@@ -34,7 +42,7 @@ php artisan make:filament-user
 ```
 
 Actualmente, no vemos interesante un sistema de roles más fuerte y por defecto todos los usuarios se crean sin acceso
-al *panel* de administración.
+al *panel* de administración en */admin*.
 
 Para garantizar el acceso (declarar un usuario como administrador) deberás actualizar manualmente el role de ese usuario
 en la base de datos (role_id=1) que por defecto será 2.
@@ -51,9 +59,9 @@ php artisan db:seed
 
 --- 
 
-## En desarrollo
+## Modo Desarrollo
 
-### Documentación API
+### Generar Documentación API
 
 Ten en cuenta que tras modificar la documentación para los endpoints de la API necesitamos ejecutar el comando
 para generar la nueva versión actualizada:
@@ -67,7 +75,7 @@ de un usuario de pruebas para que se obtengan peticiones reales y aparezcan los 
 
 ---
 
-## Rutas web
+## Principales Rutas web
 
 Sitio Principal: /
 
@@ -87,7 +95,7 @@ Documentación: https://filamentphp.com/docs/
 ### Crear nuevo Recurso con formulario y tabla
 
 ```bash
-php artisan make:filament-resource Customer --generate
+php artisan make:filament-resource Content --generate
 ```
 
 
@@ -99,6 +107,9 @@ Headers:
 - Content-type: application/json
 - Añadir Autenticación Bearer token
 
+Documentación:
+
+- /docs
 
 ## TODO prioritario
 
