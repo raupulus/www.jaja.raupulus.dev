@@ -162,6 +162,8 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 
 ## TODO con menor prioridad
 
+- [x] En estadísticas de aportaciones por usuarios, descartar eliminados del filtro (bloque con carita, quiz, brain suma eliminados)
+- El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
 - Gestión de tokens en panel de usuarios
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Revisar: Añadir gráficas en el backend con cantidad de peticiones api?
