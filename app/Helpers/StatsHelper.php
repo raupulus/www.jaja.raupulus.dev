@@ -16,7 +16,7 @@ class StatsHelper
     public static function getSuggestionsPending():int
     {
         return cache()->remember('suggestions_pending_count', 60*60, function () {
-            return Suggestion::whereNull('approved_at')->count();
+            return Suggestion::whereNull('approved_at')->whereNull('deleted_at')->count();
         });
     }
 
@@ -40,7 +40,7 @@ class StatsHelper
     public static function getContentsTotal(): int
     {
         return cache()->remember('contents_count', 60*60, function () {
-            return Content::count();
+            return Content::whereNull('deleted_at')->count();
         });
     }
 

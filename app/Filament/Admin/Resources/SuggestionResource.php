@@ -211,6 +211,11 @@ class SuggestionResource extends Resource
         ];
     }
 
+    public static function getNavigationBadge(): ?string
+    {
+        return Suggestion::whereNull('deleted_at')->count();
+    }
+
     public static function getPages(): array
     {
         return [

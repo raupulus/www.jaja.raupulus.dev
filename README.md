@@ -163,10 +163,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 ## TODO con menor prioridad
 
 - [x] En estadísticas de aportaciones por usuarios, descartar eliminados del filtro (bloque con carita, quiz, brain suma eliminados)
-- El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
+- [x] El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
 - Gestión de tokens en panel de usuarios
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
-- Revisar: Añadir gráficas en el backend con cantidad de peticiones api?
 - Implementar gestión de preguntas tipo quiz con respuestas en el backend
 - Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones (máximo) requeridas 2 (mínimo) para las respuestas
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
