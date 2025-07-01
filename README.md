@@ -164,12 +164,12 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 
 - [x] En estadísticas de aportaciones por usuarios, descartar eliminados del filtro (bloque con carita, quiz, brain suma eliminados)
 - [x] El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
+- [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap. 
+  Así tras modificar algo importante en el contenido puedo actualizar caché desde el propio panel.
 - Gestión de tokens en panel de usuarios
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Implementar gestión de preguntas tipo quiz con respuestas en el backend
 - Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones (máximo) requeridas 2 (mínimo) para las respuestas
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
-- Añadir en el panel de admin botón para ejecutar comando artisan y refrescar todo el caché. Así tras modificar
-algo importante en el contenido puedo actualizar caché desde el propio panel.
 - Importar/exportar contenidos en excel+csv

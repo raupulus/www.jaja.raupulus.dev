@@ -73,6 +73,21 @@ class AdminPanelProvider extends PanelProvider
                     //->icon('heroicon-o-pencil')
                     ->collapsible(false),
             ])
+            ->navigationItems([
+                NavigationItem::make('Generar Sitemap')
+                ->url(fn() => route('admin.action.generate.sitemap'))
+                ->icon('heroicon-o-star')
+                ->group('Acciones')
+                ->sort(4)
+                ,
+                NavigationItem::make('Limpiar Stats')
+                    ->url(fn() => route('admin.action.generate.stats'))
+                    ->icon('heroicon-o-play')
+                    ->group('Acciones')
+                    ->sort(5)
+                    //->openUrlInNewTab()
+                ,
+            ])
             ->login()
             //->registration()
             ->passwordReset()
