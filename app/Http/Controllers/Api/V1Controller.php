@@ -68,14 +68,16 @@ class V1Controller extends Controller
                 return $this->errorResponse('No se encontraron contenidos', 404);
             }
 
-            if ($count > 1) {
-                $message = 'Se obtuvieron ' . $count . ' contenidos aleatorios';
+            $contents = $contentsQuery->limit($limit)->get();
+
+            if ($contents->count() > 1) {
+                $message = 'Se obtuvieron ' . $contents->count() . ' contenidos aleatorios';
             } else {
-                $message = 'Se obtuvo ' . $count . ' contenido aleatorio';
+                $message = 'Se obtuvo ' . $contents->count() . ' contenido aleatorio';
             }
 
             return $this->collectionResponse(
-                ContentResource::collection($contentsQuery->limit($limit)->get()),
+                ContentResource::collection($contents),
                 $message,
                 [
                     'total_items' => $count,
