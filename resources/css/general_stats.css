@@ -121,6 +121,18 @@
 }
 
 /* --- RESPONSIVE PARA ESTADÍSTICAS GENERALES --- */
+@media (min-width: 769px) and (max-width: 976px) {
+    .stats-cards-container {
+        grid-template-columns: 1fr 1fr;
+    }
+    .stats-cards-container .stats-card {
+        aspect-ratio: 1.2;
+        justify-self: center;
+    }
+    .stats-cards-container > .stats-card:nth-last-child(1) {
+        grid-column: span 2;
+    }
+}
 @media (max-width: 768px) {
     /* Ajustes para sección de estadísticas en móvil */
     .agradecimientos-section {
