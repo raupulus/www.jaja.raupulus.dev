@@ -194,7 +194,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Enlazar documentación api en la página de API
 - [x] Implementar middleware limitando peticiones para todas las rutas api
 - [x] Habilitar indexado en motores de búsqueda
-- Mirar para quitar indexado en motores de búsqueda las rutas que comiencen por /api
+- [x] Mirar para quitar indexado en motores de búsqueda las rutas que comiencen por /api
 
 ## TODO con menor prioridad
 
