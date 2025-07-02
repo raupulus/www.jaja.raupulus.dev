@@ -1,5 +1,12 @@
 User-agent: *
-Disallow:
+Disallow: /api/
+Disallow: /sanctum/
+Disallow: /admin/
+Disallow: /admin
+Disallow: /panel/
+Disallow: /panel
+Disallow: /login
+Disallow: /suggestion/send
 
 # Referencia al sitemap
 Sitemap: https://www.jaja.raupulus.dev/sitemap.xml

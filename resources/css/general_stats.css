@@ -64,7 +64,7 @@
 }
 
 /* Título de cada tarjeta */
-.stats-card h3 {
+.stats-card h2 {
     color: var(--color-primario);
     font-size: 1.2em;
     margin-bottom: 0.5rem;

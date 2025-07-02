@@ -90,7 +90,7 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->login()
             //->registration()
-            ->passwordReset()
+            //->passwordReset()
             ->emailVerification()
             ->profile()
             ;

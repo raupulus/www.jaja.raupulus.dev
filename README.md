@@ -1,12 +1,45 @@
 # jaja.raupulus.dev
 
-Proyecto Laravel con backend Filament y api para gestionar chistes y adivinanzas que consumir externamente mediante bots.
+Proyecto WEB en Laravel con backend Filament y api sanctum para gestionar chistes, preguntas y adivinanzas que se pueden 
+consumir externamente mediante bots, pwa o spa
 
 Repositorios del proyecto:
 - GitHub [https://github.com/raupulus/www.jaja.raupulus.dev](https://github.com/raupulus/www.jaja.raupulus.dev)
 - GitLab [https://gitlab.com/raupulus/www.jaja.raupulus.dev](https://gitlab.com/raupulus/www.jaja.raupulus.dev)
 
+## Objetivos
+
+El objetivo principal de este proyecto es tener una web y API de código abierto dónde pueda colaborar la comunidad
+en su desarrollo y además tener un repositorio de contenido (chistes, preguntas, adivinanzas) comunitario en la web
+[https://jaja.raupulus.dev](https://jaja.raupulus.dev) dónde cualquiera puede subir sugerencias de contenidos.
+
+## API
+
+Hemos desarrollado una api para que puedas utilizar los recursos aportados por la comunidad.
+
+Puedes entrar a la documentación en [https://jaja.raupulus.dev/doc](https://jaja.raupulus.dev/doc).
+
+Esta api dispone de un endpoint público sin necesidad de registro o cuenta de usuario que devuelve un contenido 
+aleatorio de entre todos los disponibles.
+
+También dispone de más endpoints para poder filtrar por tipo de contenido, categorías y grupos de contenidos los
+cuales si necesitan una cuenta de colaborador que solo se puede conseguir contactándonos.
+
 ---
+
+## Desplegar Proyecto
+
+Instalar dependencias para desarrollo:
+
+```bash
+composer install
+```
+
+Instalar dependencias para producción:
+
+```bash
+composer install --no-dev
+```
 
 
 ### Generar clave de aplicación
@@ -48,7 +81,7 @@ Para garantizar el acceso (declarar un usuario como administrador) deberás actu
 en la base de datos (role_id=1) que por defecto será 2.
 
 Esto queda así para que en el futuro si escala el sistema de roles (nuevo role como editor, gestión de roles en el panel...)
-podamos actualizar manteniendo la misma enumeración de roles, pero actualmente las necesidades de gestionar roles son 
+podamos actualizar manteniendo la misma enumeración de roles, pero actualmente las necesidades son 
 muy básicas y no llega a ser interesante aumentar la complejidad y querys.
 
 ### Ejecutar seeders para añadir datos de ejemplo a la base de datos
@@ -78,6 +111,8 @@ de un usuario de pruebas para que se obtengan peticiones reales y aparezcan los 
 ## Principales Rutas web
 
 Sitio Principal: /
+
+Documentación api: /docs
 
 Panel Administrador: /admin
 
@@ -159,6 +194,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Enlazar documentación api en la página de API
 - [x] Implementar middleware limitando peticiones para todas las rutas api
 - [x] Habilitar indexado en motores de búsqueda
+- Mirar para quitar indexado en motores de búsqueda las rutas que comiencen por /api
 
 ## TODO con menor prioridad
 

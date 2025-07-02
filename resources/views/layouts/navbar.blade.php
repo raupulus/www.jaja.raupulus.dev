@@ -1,7 +1,8 @@
 <nav class="navbar">
     <div class="nav-wrapper">
         <a href="{{ route('index') }}" class="brand-logo">
-            <img src="{{ asset('images/logos/jaja-project-logo-square-small.webp') }}" alt="{{config('app.name')}}">
+            <img src="{{ asset('images/logos/jaja-project-logo-square-small.webp') }}"
+                 alt="Logotipo de {{config('app.name')}}">
             {{config('app.name')}}
         </a>
 
