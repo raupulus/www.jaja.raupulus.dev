@@ -22,6 +22,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/cookies.js',
                 'resources/js/navbar.js',
+                'resources/js/suggestions_forms.js',
             ],
             refresh: true,
         }),
