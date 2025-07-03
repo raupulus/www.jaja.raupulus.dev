@@ -17,6 +17,7 @@ export default defineConfig({
                 'resources/css/page.css',
                 'resources/css/pages.css',
                 'resources/css/projects.css',
+                'resources/css/suggestions_form.css',
                 'resources/js/alerts.js',
                 'resources/js/app.js',
                 'resources/js/cookies.js',

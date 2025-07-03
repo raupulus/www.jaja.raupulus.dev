@@ -20,8 +20,7 @@ class ContentsRelationManager extends RelationManager
     protected static ?string $label = 'Entrada';
     protected static ?string $pluralLabel = 'Entradas';
     protected static ?string $recordTitleAttribute = 'title';
-    protected static ?string $recordIcon = 'heroicon-o-document-text';
-    protected static ?string $recordActions = 'actions';
+    protected static ?string $icon = 'heroicon-o-document-text';
 
 
     public function form(Form $form): Form

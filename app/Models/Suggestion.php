@@ -6,6 +6,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,6 +47,16 @@ class Suggestion extends Model
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
+
+    /**
+     * Relación con las opciones asociadas al contenido.
+     *
+     * @return HasMany
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(SuggestionOption::class, 'suggestion_id', 'id');
     }
 
     protected static function boot()

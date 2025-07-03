@@ -3,8 +3,8 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Actions\ConvertImageToWebp;
+use App\Filament\Admin\Resources\SuggestionResource\RelationManagers\OptionsRelationManager;
 use App\Filament\Admin\Resources\SuggestionResource\Pages;
-use App\Filament\Admin\Resources\SuggestionResource\RelationManagers;
 use App\Models\Group;
 use App\Models\Suggestion;
 use Filament\Forms;
@@ -207,7 +207,7 @@ class SuggestionResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OptionsRelationManager::class,
         ];
     }
 

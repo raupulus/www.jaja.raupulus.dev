@@ -195,6 +195,11 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Implementar middleware limitando peticiones para todas las rutas api
 - [x] Habilitar indexado en motores de búsqueda
 - [x] Mirar para quitar indexado en motores de búsqueda las rutas que comiencen por /api
+- [x] Implementar gestión de preguntas tipo quiz con respuestas en el frontend
+- [x] Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones (máximo) requeridas 2 (mínimo) para las respuestas
+- [x] Implementar y mostrar las opciones adicionales en contenido cuando sea de tipo quiz
+- Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
+- Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
 
 ## TODO con menor prioridad
 
@@ -204,8 +209,6 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
   Así tras modificar algo importante en el contenido puedo actualizar caché desde el propio panel.
 - Gestión de tokens en panel de usuarios
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
-- Implementar gestión de preguntas tipo quiz con respuestas en el backend
-- Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones (máximo) requeridas 2 (mínimo) para las respuestas
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
 - Importar/exportar contenidos en excel+csv

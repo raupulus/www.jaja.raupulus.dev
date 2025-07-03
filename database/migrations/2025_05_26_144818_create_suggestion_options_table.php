@@ -8,10 +8,10 @@ return new class extends Migration
 {
     public function up()
     {
-        Schema::create('content_options', function (Blueprint $table) {
+        Schema::create('suggestion_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('content_id')
-                ->constrained('contents')
+            $table->foreignId('suggestion_id')
+                ->constrained('suggestions')
                 ->onDelete('CASCADE')
                 ->onUpdate('CASCADE');
             $table->string('value', 255)->comment('Contenido de esta opción');
@@ -25,6 +25,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('content_options');
+        Schema::dropIfExists('suggestion_options');
     }
 };

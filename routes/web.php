@@ -29,6 +29,7 @@ Route::get('/pagina/{page:slug}', [PageController::class, 'show'])->name('page.s
  ************************************************/
 Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])
     ->middleware('recaptcha:0.7')
+    ->middleware('throttle:10,1')
     ->name('suggestion.send');
 
 /*************************************************
