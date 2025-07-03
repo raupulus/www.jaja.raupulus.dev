@@ -40,7 +40,13 @@ class IndexController extends Controller
         $validated = $request->validated();
         unset($validated['image']);
 
+        $options = isset($validated['options']) ? $validated['options'] : [];
+
+        unset($validated['options']);
+
         $suggestion = Suggestion::create($validated);
+
+        $suggestion->options()->createMany($options);
 
         if ($request->hasFile('image')) {
             $tempPath = $request->file('image')?->store('suggestion-images', 'public');

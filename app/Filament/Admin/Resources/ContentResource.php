@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\ContentResource\Pages;
 use App\Filament\Admin\Resources\ContentResource\RelationManagers;
 use App\Models\Content;
 use App\Models\File;
+use App\Models\Suggestion;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Infolists\Components\ImageEntry;
@@ -216,8 +217,13 @@ class ContentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\OptionsRelationManager::class,
         ];
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return Content::whereNull('deleted_at')->count();
     }
 
     public static function getPages(): array

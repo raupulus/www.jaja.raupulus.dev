@@ -16,7 +16,7 @@ class StatsHelper
     public static function getSuggestionsPending():int
     {
         return cache()->remember('suggestions_pending_count', 60*60, function () {
-            return Suggestion::whereNull('approved_at')->count();
+            return Suggestion::whereNull('approved_at')->whereNull('deleted_at')->count();
         });
     }
 
@@ -40,7 +40,7 @@ class StatsHelper
     public static function getContentsTotal(): int
     {
         return cache()->remember('contents_count', 60*60, function () {
-            return Content::count();
+            return Content::whereNull('deleted_at')->count();
         });
     }
 
@@ -82,6 +82,7 @@ class StatsHelper
             $usuariosAnonimos = \DB::table('contents as c')
                 ->join('groups as g', 'c.group_id', '=', 'g.id')
                 ->join('types as t', 'g.type_id', '=', 't.id')
+                ->whereNull('c.deleted_at')
                 ->whereNotNull('c.uploaded_by')
                 ->whereIn('t.slug', ['chistes', 'quiz', 'adivinanzas'])
                 ->select([
@@ -101,6 +102,7 @@ class StatsHelper
                 ->join('groups as g', 'c.group_id', '=', 'g.id')
                 ->join('types as t', 'g.type_id', '=', 't.id')
                 ->join('users as u', 'c.user_id', '=', 'u.id')
+                ->whereNull('c.deleted_at')
                 ->whereNull('c.uploaded_by')
                 ->whereNotNull('c.user_id')
                 ->whereIn('t.slug', ['chistes', 'quiz', 'adivinanzas'])

@@ -59,8 +59,10 @@ class SitemapGeneratorCommand extends Command
         $staticUrls = [
             ['url' => route('index'), 'priority' => 1.0, 'changefreq' => 'daily'],
             ['url' => route('page.index'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => url('docs'), 'priority' => 0.7, 'changefreq' => 'monthly'],
             ['url' => route('collaborator.index'), 'priority' => 0.9, 'changefreq' => 'daily'],
+            ['url' => url('docs'), 'priority' => 0.7, 'changefreq' => 'monthly'],
+            ['url' => url('docs/collection.json'), 'priority' => 0.6, 'changefreq' => 'monthly'],
+            ['url' => url('docs/openapi.yaml'), 'priority' => 0.6, 'changefreq' => 'monthly'],
         ];
 
         foreach ($staticUrls as $urlData) {

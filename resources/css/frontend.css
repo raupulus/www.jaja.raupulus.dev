@@ -209,7 +209,7 @@ img {
     justify-self: start;
 }
 
-/* --- Formulario Materializado --- */
+/* --- Formulario Genérico --- */
 form {
     display: flex;
     flex-direction: column;
@@ -360,7 +360,7 @@ form button.btn {
     color: var(--color-superficie-oscura);
 }
 
-/* --- Formularios --- */
+/* --- Alertas Genéricas --- */
 .alert {
     position: relative;
     padding: 16px 20px;
@@ -425,14 +425,16 @@ form button.btn {
     color: rgba(255, 255, 255, 1);
 }
 
+.hidden {
+    display: none;
+}
+
 .form-group-error {
     border: #f5515f 2px solid !important;
     animation: errorFadeIn 0.3s ease forwards;
 }
 
-
 /* --- Iconos --- */
-
 .timer-icon {
     vertical-align: middle;
     animation: pulse 2s infinite ease-in-out;
@@ -481,7 +483,6 @@ form button.btn {
 .mobile-menu-toggle.active span:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
 }
-
 
 /* --- Responsive --- */
 @media (max-width: 768px) {

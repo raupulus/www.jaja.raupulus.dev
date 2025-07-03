@@ -6,6 +6,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
@@ -46,6 +47,16 @@ class Suggestion extends Model
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'group_id', 'id');
+    }
+
+    /**
+     * Relación con las opciones asociadas al contenido.
+     *
+     * @return HasMany
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(SuggestionOption::class, 'suggestion_id', 'id');
     }
 
     protected static function boot()
@@ -116,6 +127,40 @@ class Suggestion extends Model
         $categories = $this->categories()->pluck('categories.id')->toArray();
         $content->categories()->attach($categories);
 
+        ## Copio las opciones solo si es tipo quiz
+        if ($this->type->slug === 'quiz') {
+            $suggestionOptions = $this->options()->orderBy('order')->get();
+
+            foreach ($suggestionOptions as $suggestionOption) {
+                $contentOption = ContentOption::create([
+                    'content_id' => $content->id,
+                    'value' => $suggestionOption->value,
+                    'is_correct' => $suggestionOption->is_correct,
+                    'order' => $suggestionOption->order,
+                ]);
+
+                ## Copio la imagen de la opción si existe
+                if ($suggestionOption->image_path) {
+                    $optionFilename = basename($suggestionOption->image_path);
+                    $contentOptionImagePath = 'content-option-images/' . $contentOption->id . '_' . $optionFilename;
+
+                    ## Por si no existe el directorio
+                    Storage::disk('public')->makeDirectory('content-option-images');
+
+                    if (Storage::disk('public')->exists($suggestionOption->image_path)) {
+                        Storage::disk('public')->copy($suggestionOption->image_path, $contentOptionImagePath);
+
+                        $contentOption->image_path = $contentOptionImagePath;
+                        $contentOption->save();
+
+                        ## Elimino imagen original de sugerencia
+                        Storage::disk('public')->delete($suggestionOption->image_path);
+                        $suggestionOption->update(['image_path' => null]);
+                    }
+                }
+            }
+        }
+
         if ($this->image_path) {
             $filename = basename($this->image_path);
             $contentImagePath = 'content-images/' . $content->id . '_' . $filename;
@@ -131,7 +176,6 @@ class Suggestion extends Model
 
                 Storage::disk('public')->delete($this->image_path);
             }
-
         }
 
         $this->image_path = null;
@@ -139,7 +183,7 @@ class Suggestion extends Model
         $this->save();
         $this->runSoftDelete();
 
-        return false;
+        return true; // Cambiado a true para indicar éxito
     }
 
     /**

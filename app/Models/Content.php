@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -31,7 +32,6 @@ class Content extends Model
             }
         });
     }
-
 
     /**
      * Relación con el Propietario del contenido.
@@ -64,13 +64,22 @@ class Content extends Model
     }
 
     /**
+     * Relación con las opciones asociadas al contenido.
+     *
+     * @return HasMany
+     */
+    public function options(): HasMany
+    {
+        return $this->hasMany(ContentOption::class, 'content_id', 'id');
+    }
+
+    /**
      * Scope para filtrar contenidos por grupo
      */
     public function scopeByGroup(Builder $query, Group $group): Builder
     {
         return $query->where('group_id', $group->id);
     }
-
 
     /**
      * Scope para filtrar contenidos por tipo

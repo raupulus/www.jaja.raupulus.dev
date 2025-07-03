@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
             'recaptcha' => \App\Http\Middleware\VerifyRecaptcha::class,
+            'isAdmin' => \App\Http\Middleware\IsAdminMiddleware::class,
         ]);
 
         //$middleware->statefulApi();

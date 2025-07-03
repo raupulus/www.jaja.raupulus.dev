@@ -5,20 +5,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class ContentOption extends Model
+class SuggestionOption extends Model
 {
-    protected $table = 'content_options';
+    protected $table = 'suggestion_options';
 
-    protected $fillable = ['content_id', 'value', 'is_correct', 'image_path', 'order'];
+    protected $fillable = ['suggestion_id', 'value', 'is_correct', 'image_path', 'order'];
 
     /**
      * Relación con el contenido asociado.
      *
      * @return BelongsTo
      */
-    public function content(): BelongsTo
+    public function suggestion(): BelongsTo
     {
-        return $this->belongsTo(Content::class, 'content_id', 'id');
+        return $this->belongsTo(Content::class, 'suggestion_id', 'id');
     }
 
     /**

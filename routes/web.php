@@ -4,6 +4,7 @@ use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CollaboratorController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AdminController;
 
 /*************************************************
  * Autenticación
@@ -28,6 +29,7 @@ Route::get('/pagina/{page:slug}', [PageController::class, 'show'])->name('page.s
  ************************************************/
 Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])
     ->middleware('recaptcha:0.7')
+    ->middleware('throttle:10,1')
     ->name('suggestion.send');
 
 /*************************************************
@@ -37,3 +39,14 @@ Route::get('/colaboradores', [CollaboratorController::class, 'index'])->name('co
 Route::get('/colaborador/{collaborator:nick}', [CollaboratorController::class, 'show'])->name('collaborator.show');
 Route::get('/colaborador/{collaborator:nick}/project/{project:slug}', [CollaboratorController::class, 'showProject'])->name('collaborator.project.show');
 
+
+/*************************************************
+ * Páginas principales
+ ************************************************/
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], function () {
+    Route::get('/action/generate/sitemap', [AdminController::class, 'generateSitemap'])
+        ->name('admin.action.generate.sitemap');
+
+    Route::get('/action/generate/stats', [AdminController::class, 'generateStats'])
+        ->name('admin.action.generate.stats');
+});
