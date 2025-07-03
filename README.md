@@ -198,8 +198,8 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Implementar gestión de preguntas tipo quiz con respuestas en el frontend
 - [x] Frontend: Si seleccionan pregunta tipo quiz, debería mostrar 4 opciones (máximo) requeridas 2 (mínimo) para las respuestas
 - [x] Implementar y mostrar las opciones adicionales en contenido cuando sea de tipo quiz
-- Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
-- Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
+- [x] Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
+- [x] Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
 
 ## TODO con menor prioridad
 

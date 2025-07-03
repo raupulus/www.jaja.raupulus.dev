@@ -54,6 +54,7 @@
     <div class="form-group {{$errors->has('content') ? 'form-group-error' : ''}}">
         <textarea name="content" class="form-control" placeholder="Escribe aquí el contenido"
                   maxlength="1024"
+                  style="field-sizing: content;"
                   required>{{old('content')}}</textarea>
     </div>
 
