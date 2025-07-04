@@ -146,6 +146,16 @@ class Content extends Model
         return $query->inRandomOrder();
     }
 
+    /**
+     * Devuelve el contenido en HTML con saltos de línea convertidos a <br />
+     *
+     * @return string
+     */
+    public function getFormattedHtmlContentAttribute(): string
+    {
+        return nl2br(e($this->content));
+    }
+
 
     /**
      * Devuelve el nick del usuario que ha subido el contenido
