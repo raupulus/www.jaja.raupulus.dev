@@ -213,11 +213,10 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap.
 - [x] Al forzar delete en contenidos, poner evento para eliminar la imagen del hdd
 - [x] Al forzar delete en sugerencias, poner evento para eliminar la imagen del hdd
-- Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
+- [x] Añadir imágenes a todos los grupos
+- [x] Añadir imágenes a todos los tipos
 - Crear listado de chistes/adivinanzas filtrando por grupos en el frontend
 - Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
-- Añadir imágenes a todos los grupos
-- Añadir imágenes a todos los tipos
 - Hacer bot para discord
 - Hacer bot para twitch
 
@@ -233,5 +232,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 
 ## Plantear si a futuro realmente lo queremos tener
 
+- Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Importar/exportar contenidos en excel+csv
+- Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
