@@ -200,6 +200,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Implementar y mostrar las opciones adicionales en contenido cuando sea de tipo quiz
 - [x] Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
 - [x] Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
+- Obtener dirección ip real cuando viene de un proxy/cdn (por la abstracción que hace cloudflare)
+- Ocultar Opciones para tipos que no son "quiz"
+- Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
 
 ## TODO con menor prioridad
 
@@ -207,8 +210,27 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
 - [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap. 
   Así tras modificar algo importante en el contenido puedo actualizar caché desde el propio panel.
-- Gestión de tokens en panel de usuarios
-- Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
+- [x] Al forzar delete en contenidos, poner evento para eliminar la imagen del hdd
+- [x] Al forzar delete en sugerencias, poner evento para eliminar la imagen del hdd
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
+- Crear listado de chistes/adivinanzas filtrando por grupos en el frontend
+- Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
+- Añadir imágenes a todos los grupos
+- Añadir imágenes a todos los tipos
+- Hacer bot para discord
+- Hacer bot para twitch
+
+## TODO para vídeotutorial
+
+- Gestión de tokens en panel de usuarios
+- Implementar ordenar en relaciones
+
+## TODO Mejoras interesantes pero no afectan a funcionalidad
+
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
+
+
+## Plantear si a futuro realmente lo queremos tener
+
+- Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Importar/exportar contenidos en excel+csv

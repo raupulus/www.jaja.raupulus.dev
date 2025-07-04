@@ -31,6 +31,20 @@ class Content extends Model
                 $content->user_id = auth()->id();
             }
         });
+
+        // Evento que se ejecuta antes de hacer un forceDelete (eliminación definitiva)
+        static::forceDeleting(function ($content) {
+            // Si el contenido tiene una imagen y no es la imagen por defecto
+            if ($content->image && $content->image !== 'images/default/content.webp') {
+                $imagePath = storage_path('app/public/' . $content->image);
+
+                // Verificar si el archivo existe antes de eliminarlo
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        });
+
     }
 
     /**
