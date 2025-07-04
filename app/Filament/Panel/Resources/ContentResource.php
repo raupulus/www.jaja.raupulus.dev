@@ -4,6 +4,7 @@ namespace App\Filament\Panel\Resources;
 
 use App\Actions\ConvertImageToWebp;
 use App\Filament\Panel\Resources\ContentResource\Pages;
+use App\Filament\Panel\Resources\ContentResource\RelationManagers\OptionsRelationManager;
 use App\Models\Content;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -157,7 +158,7 @@ class ContentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            OptionsRelationManager::class,
         ];
     }
 

@@ -201,8 +201,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
 - [x] Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
 - [x] Obtener dirección ip real cuando viene de un proxy/cdn (por la abstracción que hace cloudflare)
-- Ocultar Opciones para tipos que no son "quiz"
+- [x] Ocultar Opciones para tipos que no son "quiz"
 - Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
+- Añadir opciones para quiz en panel de usuarios, solo lo tengo en el de admin actualmente
 
 ## TODO con menor prioridad
 
