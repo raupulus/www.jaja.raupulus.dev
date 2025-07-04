@@ -24,6 +24,21 @@ class Content extends Model
     {
         parent::boot();
 
+        // Evento que se ejecuta después de crear un contenido
+        static::created(function ($content) {
+            if ($content->categories()->count() === 0) {
+                $content->categories()->attach(1); // ID 1 = General
+            }
+        });
+
+        // Evento que se ejecuta después de actualizar un contenido
+        static::updated(function ($content) {
+            if ($content->categories()->count() === 0) {
+                $content->categories()->attach(1); // ID 1 = General
+            }
+        });
+
+
         // Evento que se ejecuta antes de crear un nuevo registro
         static::creating(function ($content) {
             // Si no se ha asignado un user_id, asignar el del usuario logueado

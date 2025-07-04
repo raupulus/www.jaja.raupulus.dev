@@ -66,14 +66,29 @@ class ContentsRelationManager extends RelationManager
                     ->columnSpanFull()
                     ->maxLength(1024),
 
-                Forms\Components\Select::make('category_id')
-                    ->label('Categories')
+                Forms\Components\Select::make('categories')
+                    ->label('Categorías')
                     ->multiple()
                     ->relationship('categories', 'title')
                     ->preload()
                     ->searchable()
-                    ->required()
-                    ->columnSpanFull(),
+                    ->default([1])
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        // Si no hay categorías seleccionadas, asignar la categoría "General" con id 1
+                        if (empty($state)) {
+                            $set('categories', [1]);
+                        }
+                    })
+                    ->dehydrateStateUsing(function ($state) {
+                        // Si no hay categorías seleccionadas, asignar la categoría "General" por defecto
+                        if (empty($state)) {
+                            return [1];
+                        }
+                        return $state;
+                    })
+                    ->columnSpanFull()
+                    ,
+
             ]);
     }
 

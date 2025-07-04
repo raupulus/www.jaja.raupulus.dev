@@ -141,8 +141,15 @@ class SuggestionResource extends Resource
                     ->relationship('categories', 'title')
                     ->preload()
                     ->searchable()
-                    ->required()
+                    ->default([1])
+                    ->afterStateUpdated(function ($state, Forms\Set $set) {
+                        ## Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
+                        if (empty($state)) {
+                            $set('categories', [1]);
+                        }
+                    })
                 ,
+
 
 
                 Forms\Components\TextInput::make('ip_address')
