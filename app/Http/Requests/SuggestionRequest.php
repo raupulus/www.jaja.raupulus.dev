@@ -30,12 +30,45 @@ class SuggestionRequest extends FormRequest
     }
 
     /**
+     * Obtiene la IP real del usuario considerando Cloudflare
+     */
+    protected function getRealIpAddress(): string
+    {
+        // Headers que Cloudflare puede usar para enviar la IP real
+        $headers = [
+            'CF-Connecting-IP',      // Header principal de Cloudflare
+            'HTTP_CF_CONNECTING_IP', // Variante del header de Cloudflare
+            'X-Forwarded-For',       // Header estándar para proxies
+            'X-Real-IP',             // Header alternativo
+            'HTTP_X_FORWARDED_FOR',  // Variante del X-Forwarded-For
+            'HTTP_X_REAL_IP',        // Variante del X-Real-IP
+        ];
+
+        foreach ($headers as $header) {
+            $ip = $this->header($header) ?? $_SERVER[$header] ?? null;
+
+            if ($ip) {
+                // Si hay múltiples IPs separadas por comas, toma la primera
+                $ip = trim(explode(',', $ip)[0]);
+
+                // Valida que sea una IP válida
+                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
+                    return $ip;
+                }
+            }
+        }
+
+        // Si no se encuentra ninguna IP válida, usa la IP por defecto
+        return $this->ip();
+    }
+
+    /**
      * Configure the validator instance.
      */
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator) {
-            $ip = $this->ip();
+            $ip = $this->getRealIpAddress();
             $throttleKey = 'suggestions:' . $ip;
 
             // Si hay demasiados intentos, añado un error de validación
@@ -99,7 +132,7 @@ class SuggestionRequest extends FormRequest
 
     protected function passedValidation()
     {
-        $ip = $this->ip();
+        $ip = $this->getRealIpAddress();
         $throttleKey = 'suggestions:' . $ip;
         RateLimiter::clear($throttleKey);
 
@@ -138,11 +171,10 @@ class SuggestionRequest extends FormRequest
         $this->merge([
             'nick' => $nick,
             'options' => $options,
-            'ip_address' => $this->ip(),
+            'ip_address' => $this->getRealIpAddress(),
             'user_agent' => $this->userAgent(),
         ]);
     }
-
 
     /**
      * Get the validation rules that apply to the request.

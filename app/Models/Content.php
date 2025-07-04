@@ -24,6 +24,21 @@ class Content extends Model
     {
         parent::boot();
 
+        // Evento que se ejecuta después de crear un contenido
+        static::created(function ($content) {
+            if ($content->categories()->count() === 0) {
+                $content->categories()->attach(1); // ID 1 = General
+            }
+        });
+
+        // Evento que se ejecuta después de actualizar un contenido
+        static::updated(function ($content) {
+            if ($content->categories()->count() === 0) {
+                $content->categories()->attach(1); // ID 1 = General
+            }
+        });
+
+
         // Evento que se ejecuta antes de crear un nuevo registro
         static::creating(function ($content) {
             // Si no se ha asignado un user_id, asignar el del usuario logueado
@@ -31,6 +46,20 @@ class Content extends Model
                 $content->user_id = auth()->id();
             }
         });
+
+        // Evento que se ejecuta antes de hacer un forceDelete (eliminación definitiva)
+        static::forceDeleting(function ($content) {
+            // Si el contenido tiene una imagen y no es la imagen por defecto
+            if ($content->image && $content->image !== 'images/default/content.webp') {
+                $imagePath = storage_path('app/public/' . $content->image);
+
+                // Verificar si el archivo existe antes de eliminarlo
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            }
+        });
+
     }
 
     /**
@@ -144,6 +173,16 @@ class Content extends Model
     public function scopeRandom(Builder $query): Builder
     {
         return $query->inRandomOrder();
+    }
+
+    /**
+     * Devuelve el contenido en HTML con saltos de línea convertidos a <br />
+     *
+     * @return string
+     */
+    public function getFormattedHtmlContentAttribute(): string
+    {
+        return nl2br(e($this->content));
     }
 
 

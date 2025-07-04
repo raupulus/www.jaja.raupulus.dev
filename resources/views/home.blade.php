@@ -156,7 +156,7 @@
                     <h3>{{$content->title}}</h3>
 
                     <p>
-                        {{$content->content}}
+                        {!! $content->formattedHtmlContent !!}
                     </p>
                 </div>
 

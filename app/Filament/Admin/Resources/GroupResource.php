@@ -110,6 +110,20 @@ class GroupResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('contents_count')
+                    ->label('Contenidos')
+                    ->getStateUsing(function ($record) {
+                        return $record->contents()->whereNull('deleted_at')->count();
+                    })
+                    ->badge()
+                    ->color(fn ($state) => match (true) {
+                        $state === 0 => 'gray',
+                        $state <= 5 => 'warning',
+                        $state <= 20 => 'success',
+                        default => 'primary'
+                    })
+                    ->icon('heroicon-o-document-text')
+                    ->sortable(false),
                 Tables\Columns\TextColumn::make('title')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type.name')
@@ -133,6 +147,7 @@ class GroupResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])

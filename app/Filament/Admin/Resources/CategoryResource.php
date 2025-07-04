@@ -114,6 +114,7 @@ class CategoryResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('slug')
             ->filters([
                 Tables\Filters\TrashedFilter::make(),
             ])

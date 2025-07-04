@@ -200,15 +200,39 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Implementar y mostrar las opciones adicionales en contenido cuando sea de tipo quiz
 - [x] Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
 - [x] Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
+- [x] Obtener dirección ip real cuando viene de un proxy/cdn (por la abstracción que hace cloudflare)
+- [x] Ocultar Opciones para tipos que no son "quiz"
+- [x] Añadir opciones para quiz en panel de usuarios, solo lo tengo en el de admin actualmente
+- [x] Poner las categorías en sugerencias y contenidos opcionales, si no hay ninguna añadir internamente "General"
+- [x] Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
 
 ## TODO con menor prioridad
 
 - [x] En estadísticas de aportaciones por usuarios, descartar eliminados del filtro (bloque con carita, quiz, brain suma eliminados)
 - [x] El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
-- [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap. 
-  Así tras modificar algo importante en el contenido puedo actualizar caché desde el propio panel.
+- [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap.
+- [x] Al forzar delete en contenidos, poner evento para eliminar la imagen del hdd
+- [x] Al forzar delete en sugerencias, poner evento para eliminar la imagen del hdd
+- [x] Añadir imágenes a todos los grupos
+- [x] Añadir imágenes a todos los tipos
+- Crear listado de chistes/adivinanzas filtrando por grupos en el frontend
+- Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
+- Hacer bot para discord
+- Hacer bot para twitch
+
+## TODO para vídeotutorial
+
 - Gestión de tokens en panel de usuarios
-- Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
-- Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
+- Implementar ordenar en relaciones
+
+## TODO Mejoras interesantes pero no afectan a funcionalidad
+
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
+
+
+## Plantear si a futuro realmente lo queremos tener
+
+- Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
+- Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Importar/exportar contenidos en excel+csv
+- Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad

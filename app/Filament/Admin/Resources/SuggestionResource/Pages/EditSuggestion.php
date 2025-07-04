@@ -19,7 +19,12 @@ class EditSuggestion extends EditRecord
             Actions\Action::make('Aprobar')
                 ->action(fn () => $this->record->approve())
                 ->color('success')
-                ->icon('heroicon-o-check'),
+                ->icon('heroicon-o-check')
+                ->visible(function () {
+                    return $this->record->deleted_at === null &&
+                        !$this->record->is_approved; // Si tienes un campo de estado de aprobación
+                }),
+
         ];
     }
 

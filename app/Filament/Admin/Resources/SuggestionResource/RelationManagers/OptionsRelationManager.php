@@ -25,6 +25,11 @@ class OptionsRelationManager extends RelationManager
 
     protected static ?string $icon = 'heroicon-o-check-circle';
 
+    public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
+    {
+        return $ownerRecord->type && $ownerRecord->type->slug === 'quiz';
+    }
+
     public function form(Form $form): Form
     {
         return $form
