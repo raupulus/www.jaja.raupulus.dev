@@ -200,7 +200,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Implementar y mostrar las opciones adicionales en contenido cuando sea de tipo quiz
 - [x] Implementar y mostrar las opciones adicionales en sugerencias cuando sea de tipo quiz
 - [x] Implementar que al aprobar sugerencias, también se pasen sus opciones en caso de ser de tipo quiz
-- Obtener dirección ip real cuando viene de un proxy/cdn (por la abstracción que hace cloudflare)
+- [x] Obtener dirección ip real cuando viene de un proxy/cdn (por la abstracción que hace cloudflare)
 - Ocultar Opciones para tipos que no son "quiz"
 - Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
 
@@ -208,8 +208,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 
 - [x] En estadísticas de aportaciones por usuarios, descartar eliminados del filtro (bloque con carita, quiz, brain suma eliminados)
 - [x] El bloque de resumen en la home en pantallas medianas con zoom muestra la tercera tarjeta debajo a la izquierda, centrar
-- [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap. 
-  Así tras modificar algo importante en el contenido puedo actualizar caché desde el propio panel.
+- [x] Añadir en el panel de admin botón para ejecutar comando artisan y refrescar tanto el caché como el sitemap.
 - [x] Al forzar delete en contenidos, poner evento para eliminar la imagen del hdd
 - [x] Al forzar delete en sugerencias, poner evento para eliminar la imagen del hdd
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad

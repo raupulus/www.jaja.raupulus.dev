@@ -22,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'ability' => CheckForAnyAbility::class,
             'recaptcha' => \App\Http\Middleware\VerifyRecaptcha::class,
             'isAdmin' => \App\Http\Middleware\IsAdminMiddleware::class,
+            'throttle.real.ip' => \App\Http\Middleware\ThrottleWithRealIp::class,
         ]);
 
         //$middleware->statefulApi();
