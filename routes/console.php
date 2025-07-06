@@ -9,3 +9,4 @@ Artisan::command('inspire', function () {
 
 Schedule::command('stats:update')->everyThirtyMinutes();
 Schedule::command('sitemap:generate')->daily()->at('02:00');
+Schedule::command('sitemap:content:publish-social')->everyFourHours();
