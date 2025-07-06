@@ -29,6 +29,11 @@ class PublishContentToSocialCommand extends Command
     private const API_URL = 'http://localhost:8080/publish';
 
     /**
+     * Hashtags predefinidos que siempre se envían
+     */
+    private const DEFAULT_HASHTAGS = ['Chiste', 'Humor', 'Meme'];
+
+    /**
      * Execute the console command.
      */
     public function handle()
@@ -74,59 +79,74 @@ class PublishContentToSocialCommand extends Command
             'project' => 'jajaproject',
         ];
 
-        // Agregar hashtags si existen categorías (usando 'title' en lugar de 'name')
+        ## Preparo hashtags
+        $hashtags = collect(self::DEFAULT_HASHTAGS);
+
+        ## Agrego categorías del contenido (excluyendo "General")
         if ($content->categories->isNotEmpty()) {
-            $hashtags = $content->categories->pluck('title')->filter()->toArray();
-            if (!empty($hashtags)) {
-                $payload['hashtags'] = $hashtags;
-            }
+            $categoryHashtags = $content->categories
+                ->pluck('title')
+                ->filter(function ($title) {
+                    return !empty($title) && strtolower($title) !== 'general';
+                })
+                ->values()
+                ->toArray();
+
+            $hashtags = $hashtags->merge($categoryHashtags);
         }
 
-        // Agregar imágenes si existe (campo plural "images")
+        ## Elimino duplicados y convierto en array
+        $payload['hashtags'] = $hashtags->unique()->values()->toArray();
+
+        ## Agrego imágenes si existe
         if ($content->image) {
             $payload['images'] = [$content->urlImage];
         }
 
-        // Log del payload para debugging
+        /*
         Log::info('Enviando payload a la API', [
             'content_id' => $content->id,
             'payload' => $payload,
             'url' => self::API_URL,
         ]);
+        */
 
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
         ])->post(self::API_URL, $payload);
 
-        // Log de la respuesta completa para debugging
+        /*
         Log::info('Respuesta de la API', [
             'content_id' => $content->id,
             'status' => $response->status(),
             'body' => $response->body(),
         ]);
+        */
 
-        // Verificar si la respuesta HTTP fue exitosa
+        ## Verifico si la respuesta HTTP fue exitosa
         if (!$response->successful()) {
             throw new \Exception("Error HTTP en la API: {$response->status()} - {$response->body()}");
         }
 
-        // Verificar si la respuesta JSON contiene success: true
+        ## Verifico si la respuesta JSON contiene success: true
         $responseData = $response->json();
         if (!isset($responseData['success']) || $responseData['success'] !== true) {
             throw new \Exception("La API devolvió success: false - " . ($responseData['message'] ?? $responseData['error'] ?? 'Sin mensaje'));
         }
 
-        // Actualizar la fecha de publicación en redes sociales solo si fue exitoso
+        ## Actualizo la fecha de publicación en redes sociales solo si fue exitoso
         $content->update([
             'last_social_published' => now(),
         ]);
 
+        /*
         Log::info('Contenido publicado exitosamente en redes sociales', [
             'content_id' => $content->id,
             'title' => $content->title,
             'response_status' => $response->status(),
             'api_response' => $responseData,
         ]);
+        */
     }
 }
