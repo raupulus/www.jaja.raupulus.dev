@@ -42,13 +42,14 @@ class PublishContentToSocialCommand extends Command
 
         // Buscar el contenido con menor fecha o null en last_social_published
         $content = Content::with('categories')
+            ->whereNotIn('group_id', [4, 14])
             ->orderByRaw('last_social_published IS NULL DESC')
             ->orderBy('last_social_published', 'asc')
             ->first();
 
         if (!$content) {
             $this->warn('No se encontró contenido para publicar.');
-            return Command::SUCCESS;
+            return self::SUCCESS;
         }
 
         $this->info("Contenido encontrado: {$content->title}");
@@ -62,10 +63,10 @@ class PublishContentToSocialCommand extends Command
                 'content_id' => $content->id,
                 'error' => $e->getMessage(),
             ]);
-            return Command::FAILURE;
+            return self::FAILURE;
         }
 
-        return Command::SUCCESS;
+        return self::SUCCESS;
     }
 
     /**
