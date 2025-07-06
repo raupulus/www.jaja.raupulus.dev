@@ -65,12 +65,6 @@
 
         @endif
 
-        <section class="page-content">
-            <div class="page-content-wrapper">
-                {!! $page->getHtmlContent() !!}
-            </div>
-        </section>
-
         @if($page->slug === 'api')
 
             <section class="page-content">
@@ -109,10 +103,15 @@
                     </ul>
                 </div>
             </section>
-
-
-
         @endif
+
+        <section class="page-content">
+            <div class="page-content-wrapper">
+                {!! $page->getHtmlContent() !!}
+            </div>
+        </section>
+
+
     </div>
 
     {{-- Iconos de redes sociales --}}
