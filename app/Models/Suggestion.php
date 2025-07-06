@@ -63,6 +63,13 @@ class Suggestion extends Model
     {
         parent::boot();
 
+        static::saving(function ($suggestion) {
+            ## Aseguro que siempre tenga la categoría General si no hay categorías
+            if ($suggestion->categories()->count() === 0) {
+                $suggestion->categories()->attach(1);
+            }
+        });
+
         ## Evento ejecutado antes de hacer un softDelete
         static::deleting(function ($suggestion) {
             if ($suggestion->image_path) {

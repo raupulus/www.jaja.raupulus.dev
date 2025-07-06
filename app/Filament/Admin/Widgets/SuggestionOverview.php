@@ -16,13 +16,16 @@ class SuggestionOverview extends BaseWidget
         $pending = Suggestion::whereNull('approved_at')->count();
         $approved = Suggestion::whereNotNull('approved_at')->count();
 
-        $thisMonth = Suggestion::where('created_at', '>=', (Carbon::now())->subDays(30))
+        $thisMonth = Suggestion::withTrashed()
+            ->where('created_at', '>=', (Carbon::now())->subDays(30))
             ->count();
 
-        $thisWeek = Suggestion::where('created_at', '>=', (Carbon::now())->subDays(7))
+        $thisWeek = Suggestion::withTrashed()
+            ->where('created_at', '>=', (Carbon::now())->subDays(7))
             ->count();
 
-        $today = Suggestion::where('created_at', '>=', (Carbon::now())->startOfDay())
+        $today = Suggestion::withTrashed()
+            ->where('created_at', '>=', (Carbon::now())->startOfDay())
             ->count();
 
         return [

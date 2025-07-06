@@ -207,10 +207,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
 - [x] Prevenir sitemap error al generar en server por permisos. Contemplar rellenar datos en lugar de eliminar completamente.
 - [x] Del endpoint/random descartar contenido del grupo de chistes para adultos
-- Al publicar en redes sociales, descartar contenido del grupo de chistes para adultos
-- Revisar categorías en backend -> editar sugerencias, debería tomar "General" por defecto y no toma ninguna ahora
-- En panel de admin > Escritorio, cambiar consultas para estadísticas de sugerencias y contar las eliminadas
-- Añadir botón en panel admin para publicar en el momento en todas las redes sociales
+- [x] Al publicar en redes sociales, descartar contenido del grupo de chistes para adultos
+- [x] Revisar categorías en backend -> editar sugerencias, debería tomar "General" por defecto y no toma ninguna ahora
+- [x] En panel de admin > Escritorio, cambiar consultas para estadísticas de sugerencias y contar las eliminadas
 
 ## TODO con menor prioridad
 
@@ -221,23 +220,24 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Al forzar delete en sugerencias, poner evento para eliminar la imagen del hdd
 - [x] Añadir imágenes a todos los grupos
 - [x] Añadir imágenes a todos los tipos
+- [x] Hacer bot para discord
 - Crear listado de chistes/adivinanzas filtrando por grupos en el frontend
 - Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
-- Hacer bot para discord
 - Hacer bot para twitch
+- Vigilar captcha, da la sensación que alguna vez falla la carga pero no estoy seguro si es timeout por tardar (caducado)
 
 ## TODO para vídeotutorial
 
 - Gestión de tokens en panel de usuarios
-- Implementar ordenar en relaciones
+- [x] Implementar ordenar en relaciones
 
 ## TODO Mejoras interesantes pero no afectan a funcionalidad
 
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
 
-
 ## Plantear si a futuro realmente lo queremos tener
 
+- Añadir botón en panel admin para publicar en el momento en todas las redes sociales
 - Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Importar/exportar contenidos en excel+csv
