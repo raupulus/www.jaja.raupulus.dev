@@ -10,7 +10,7 @@
 @endif
 
 @section('css')
-    @vite(['resources/css/page.css'])
+    @vite(['resources/css/page.css', 'resources/css/social_icons.css'])
 
     @if($page->slug === 'agradecimientos')
         @vite(['resources/css/contributors.css', 'resources/css/collaborators.css', 'resources/css/general_stats.css'])
@@ -114,5 +114,10 @@
 
         @endif
     </div>
+
+    {{-- Iconos de redes sociales --}}
+    <section class="mt-3 mb-3">
+        @include('partials._social_icons')
+    </section>
 
 @endsection

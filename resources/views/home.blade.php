@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('head')
-    @vite(['resources/css/home.css', 'resources/css/general_stats.css', 'resources/css/cookies.css', 'resources/css/suggestions_form.css', 'resources/js/cookies.js', 'resources/js/suggestions_forms.js'])
+    @vite(['resources/css/home.css', 'resources/css/general_stats.css', 'resources/css/social_icons.css', 'resources/css/cookies.css', 'resources/css/suggestions_form.css', 'resources/js/cookies.js', 'resources/js/suggestions_forms.js'])
 
 
     @if(config('google.recaptcha.site_key'))
@@ -70,46 +70,7 @@
     </section>
 
     <section class="card">
-        <h2 class="card-title">Documentación API</h2>
-
-        <p>
-            Tenemos una api documentada para que puedas crear tus propios bots o aplicaciones. Puedes utilizar un
-            endpoint sin ningún tipo de registro para obtener contenido aleatorio o solicitar unirte a nuestra comunidad
-            para acceder a más contenido, más ratio de consultas y obtener contenido filtrado.
-        </p>
-
-        <a href="{{route('page.show', 'api')}}" title="Enlace a la documentación de la api en {{config('app.name')}}"
-           class="btn">A happy Api Docs</a>
-    </section>
-
-    <section class="card">
-        <h2 class="card-title">Bot para Twitch</h2>
-
-        <p>
-            WIP - En desarrollo. Estamos creando un bot para que puedas añadirlo a tu canal de Twitch y disfrutar del
-            contenido directamente en el chat de tu canal utilizando el comando !chiste y !adivina con tu propio bot
-            bajo tu control.
-        </p>
-
-        <a href="{{route('page.show', 'bot-twitch')}}" title="Enlace a la información sobre el bot de twitch"
-           class="btn">Quiero mi BotHijo</a>
-    </section>
-
-    <section class="card">
-        <h2 class="card-title">Buena Gente</h2>
-
-        <p>
-            La comunidad de jajajeros os agradece la colaboración y apoyo de todas esas personas que ayudan a que esto
-            sea posible
-        </p>
-
-        <a href="{{route('page.show', 'agradecimientos')}}"
-           title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}"
-           class="btn">JAgradece A...</a>
-    </section>
-
-    <section class="card">
-        <h2 class="card-title">¡Envía el tuyo!</h2>
+        <h2 class="card-title">😜 ¡Envía el tuyo!</h2>
 
         <p>
             ¿Se te ha ocurrido algún chiste, pregunta tipo quiz o adivinanza?
@@ -128,17 +89,77 @@
         </div>
     </section>
 
+    {{-- Iconos de redes sociales --}}
+    <section class="mt-3 mb-3">
+        @include('partials._social_icons')
+    </section>
+
     <section class="card">
-        <h2 class="card-title">Listado de Páginas</h2>
+        <h2 class="card-title">📚 Documentación API</h2>
 
         <p>
-            Aquí tienes un listado de todas las páginas del sitio de comunidad para que puedas navegar sin problemas.
-            Puedes encontrar documentación legal, normas, información del sitio y contribuidores.
+            Tenemos una api documentada para que puedas crear tus propios bots o aplicaciones. Puedes utilizar un
+            endpoint sin ningún tipo de registro para obtener contenido aleatorio o solicitar unirte a nuestra comunidad
+            para acceder a más contenido, más ratio de consultas y obtener contenido filtrado.
+        </p>
+
+        <a href="{{route('page.show', 'api')}}" title="Enlace a la documentación de la api en {{config('app.name')}}"
+           class="btn">📚 A happy Api Docs</a>
+    </section>
+
+    <section class="card">
+        <h2 class="card-title">🤖 Bots</h2>
+
+        <p>
+            Los colaboradores de la comunidad crean bots para que puedas disfrutar del contenido de la comunidad
+            directamente en tu canal de Twitch, discord, etc...
+
+            Adopta desde hoy mismo el comando !chiste y !adivina en tu canal/servidor/chat
+        </p>
+
+        <a href="{{route('page.show', 'bots-para-la-api-de-jaja-project')}}" title="Enlace a la información sobre los bots de {{config('app.name')}}"
+           class="btn">🤖 Quiero mi BotHijo</a>
+    </section>
+
+    <section class="card">
+        <h2 class="card-title">❤️ Buena Gente</h2>
+
+        <p>
+            La comunidad de jajajeros os agradece la colaboración y apoyo de todas esas personas que ayudan a que esto
+            sea posible
+        </p>
+
+        <a href="{{route('page.show', 'agradecimientos')}}"
+           title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}"
+           class="btn">❤️ JAgradece A...</a>
+    </section>
+
+
+    <section class="card">
+        <h2 class="card-title">🧑‍💻 Colaboradores</h2>
+
+        <p>
+            Estos son nuestros colaboradores secuestrados por la comunidad.
+            Se encargan de mantener los servicios, la distribución de contenido, moderación, crear software...
+        </p>
+
+        <a href="{{route('collaborator.index')}}"
+           title="Enlace a los colaboradores y susproyectos de comunidad"
+           class="btn">🧑‍💻 Ver Colaboradores</a>
+    </section>
+
+    <section class="card">
+        <h2 class="card-title">📄 Listado de Páginas</h2>
+
+        <p>
+            Aquí tienes un listado de todas las páginas del sitio de comunidad para que puedas tener toda la información
+            en tu mano.
+            Puedes encontrar documentación legal, normas, información del sitio, contribuidores...
         </p>
 
         <a href="{{route('page.index')}}"
            title="Enlace a todo el listado de páginas de {{config('app.name')}}"
-           class="btn">Legalisasion</a>
+           class="btn">📄 Páginas para la comunidad</a>
     </section>
 
     <section class="box-card-content">
@@ -169,6 +190,11 @@
         @endforeach
     </section>
 
+    {{-- Iconos de redes sociales --}}
+    <section class="mt-3 mb-3">
+        @include('partials._social_icons')
+    </section>
+
 
     {{-- Cookies --}}
     @include('partials._cookies')
@@ -179,7 +205,6 @@
         @if($errors->any())
             document.addEventListener('DOMContentLoaded', function () {
                 goToForm();
-
             });
         @endif
     </script>
