@@ -205,6 +205,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir opciones para quiz en panel de usuarios, solo lo tengo en el de admin actualmente
 - [x] Poner las categorías en sugerencias y contenidos opcionales, si no hay ninguna añadir internamente "General"
 - [x] Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
+- Revisar categorías en backend -> editar sugerencias, debería tomar "General" por defecto y no toma ninguna ahora
+- En panel de admin > Escritorio, cambiar consultas para estadísticas de sugerencias y contar las eliminadas
+- Del endpoint /random descartar contenido del grupo de chistes para adultos
 
 ## TODO con menor prioridad
 
