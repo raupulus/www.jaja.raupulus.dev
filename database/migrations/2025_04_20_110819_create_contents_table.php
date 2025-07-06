@@ -28,6 +28,7 @@ return new class extends Migration
             $table->string('uploaded_by', 255)
                 ->index()
                 ->nullable();
+            $table->timestamp('last_social_published')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

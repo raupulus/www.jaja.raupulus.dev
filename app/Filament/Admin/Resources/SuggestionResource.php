@@ -142,9 +142,16 @@ class SuggestionResource extends Resource
                     ->preload()
                     ->searchable()
                     ->default([1])
+                    ->dehydrateStateUsing(function ($state) {
+                        // Siempre asegurar que hay al menos la categoría General
+                        if (empty($state) || $state === null || (is_array($state) && count($state) === 0)) {
+                            return [1];
+                        }
+                        return $state;
+                    })
                     ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        ## Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
-                        if (empty($state)) {
+                        // Si el usuario borra todas las categorías, automáticamente asignar General
+                        if (empty($state) || $state === null) {
                             $set('categories', [1]);
                         }
                     })

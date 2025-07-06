@@ -21,7 +21,7 @@ class IndexController extends Controller
     public function index(): View
     {
         $contents = Cache::remember('home_contents', 30, function () {
-            return Content::inRandomOrder()->take(10)->get()->sortByDesc('image');
+            return Content::whereNotIn('group_id', [4, 14])->inRandomOrder()->take(10)->get()->sortByDesc('image');
         });
 
         return view('home')->with([

@@ -1,0 +1,78 @@
+
+.social-box-center {
+    display: inline-block;
+    margin: auto;
+}
+
+/** Components **/
+
+.social-box-center > div {
+    display: inline-block;
+    margin: 15px;
+}
+
+.social-box-icon {
+    display: block;
+    width: 80px;
+    height: 80px;
+    padding: 17%;
+    border-radius: 17%;
+    box-sizing: border-box;
+    box-shadow: 9px 9px 8px 2px rgba(0, 0, 0, 0.4);
+}
+
+.social-box-icon > a {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 20%;
+    background-color: #f3f3f3;
+    border-radius: 25%;
+    box-sizing: border-box;
+    box-shadow: 8px 8px 8px 2px rgba(0, 0, 0, 0.25);
+}
+
+.social-box-icon > a > img {
+    width: 100%;
+}
+
+/** COLORS **/
+.social-color-youtube {
+    background-color: #ff0000;
+}
+
+.social-color-linkedin {
+    background-color: #0276b7;
+}
+
+.social-color-telegram {
+    background-color: #297eb4;
+}
+
+.social-color-x {
+    background-color: #ffffff;
+}
+
+.social-color-twitch {
+    background-color: #9147ff;
+}
+
+.social-color-gitlab {
+    background-color: #FCA326;
+}
+
+.social-color-github {
+    background-color: #ffffff;
+}
+
+.social-color-bluesky {
+    background-color: #1185fe;
+}
+
+.social-color-mastodon {
+    background-color: #6b21a8;
+}
+
+.social-color-twitter {
+    background-color: #00ACEE;
+}
