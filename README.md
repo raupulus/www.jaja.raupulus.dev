@@ -206,7 +206,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Poner las categorías en sugerencias y contenidos opcionales, si no hay ninguna añadir internamente "General"
 - [x] Tras aprobar sugerencia, debería desaparecer el botón de aprobar para no añadir duplicados
 - [x] Prevenir sitemap error al generar en server por permisos. Contemplar rellenar datos en lugar de eliminar completamente.
-- Del endpoint /random descartar contenido del grupo de chistes para adultos
+- [x] Del endpoint/random descartar contenido del grupo de chistes para adultos
 - Al publicar en redes sociales, descartar contenido del grupo de chistes para adultos
 - Revisar categorías en backend -> editar sugerencias, debería tomar "General" por defecto y no toma ninguna ahora
 - En panel de admin > Escritorio, cambiar consultas para estadísticas de sugerencias y contar las eliminadas
