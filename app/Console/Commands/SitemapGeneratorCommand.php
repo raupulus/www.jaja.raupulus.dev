@@ -146,12 +146,33 @@ class SitemapGeneratorCommand extends Command
         $sitemapPath = public_path('sitemap.xml');
         $backupPath = public_path('sitemap_backup.xml');
 
-        ## Creo backup del sitemap anterior si existe
+        // Creo backup del sitemap anterior si existe
         if (file_exists($sitemapPath)) {
-            copy($sitemapPath, $backupPath);
+            try {
+                copy($sitemapPath, $backupPath);
+                $this->info('   ✓ Backup del sitemap anterior creado');
+            } catch (\Exception $e) {
+                $this->warn('   ⚠️ No se pudo crear el backup: ' . $e->getMessage());
+                Log::warning('SitemapGeneratorCommand: No se pudo crear backup del sitemap', [
+                    'error' => $e->getMessage(),
+                    'sitemap_path' => $sitemapPath,
+                    'backup_path' => $backupPath,
+                ]);
+            }
         }
 
         try {
+            ## Si el sitemap existe, vacío su contenido en lugar de eliminarlo
+            if (file_exists($sitemapPath)) {
+                if (!is_writable($sitemapPath)) {
+                    throw new \Exception('El archivo sitemap.xml no tiene permisos de escritura');
+                }
+
+                ## Vacío el contenido del archivo existente
+                file_put_contents($sitemapPath, '');
+                $this->info('   ✓ Contenido del sitemap anterior vaciado');
+            }
+
             $sitemap->writeToFile($sitemapPath);
 
             ## Verifico que el archivo se escribió correctamente
@@ -161,17 +182,44 @@ class SitemapGeneratorCommand extends Command
 
             ## Elimino backup si todo salió bien
             if (file_exists($backupPath)) {
-                unlink($backupPath);
+                try {
+                    unlink($backupPath);
+                    $this->info('   ✓ Backup temporal eliminado');
+                } catch (\Exception $e) {
+                    $this->warn('   ⚠️ No se pudo eliminar el backup temporal: ' . $e->getMessage());
+                    Log::warning('SitemapGeneratorCommand: No se pudo eliminar backup temporal', [
+                        'error' => $e->getMessage(),
+                        'backup_path' => $backupPath,
+                    ]);
+                }
             }
 
             $this->info('   ✓ Sitemap escrito correctamente');
 
         } catch (\Exception $e) {
-            ## Restaura backup si algo sale mal
+            ## Restauro backup si algo sale mal y si existe
             if (file_exists($backupPath)) {
-                copy($backupPath, $sitemapPath);
-                unlink($backupPath);
+                try {
+                    copy($backupPath, $sitemapPath);
+                    $this->info('   ✓ Sitemap restaurado desde backup');
+
+                    ## Intento eliminar el backup después de restaurar
+                    try {
+                        unlink($backupPath);
+                    } catch (\Exception $unlinkError) {
+                        $this->warn('   ⚠️ No se pudo eliminar el backup después de restaurar: ' . $unlinkError->getMessage());
+                    }
+                } catch (\Exception $restoreError) {
+                    $this->error('   ❌ No se pudo restaurar el backup: ' . $restoreError->getMessage());
+                    Log::error('SitemapGeneratorCommand: Error al restaurar backup', [
+                        'restore_error' => $restoreError->getMessage(),
+                        'original_error' => $e->getMessage(),
+                        'backup_path' => $backupPath,
+                        'sitemap_path' => $sitemapPath,
+                    ]);
+                }
             }
+
             throw $e;
         }
     }
