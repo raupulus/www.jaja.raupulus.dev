@@ -24,6 +24,8 @@
 
         @yield('content')
 
+        @include('partials._beta')
+
     </div>
 </main>
 
