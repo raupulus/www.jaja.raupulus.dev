@@ -19,7 +19,7 @@ class SendSuggestionRequest extends FormRequest
     /**
      * Obtiene la IP real del usuario considerando Cloudflare
      */
-    protected function getRealIpAddress(): string
+    public function getRealIpAddress(): string
     {
         // Headers que Cloudflare puede usar para enviar la IP real
         $headers = [
@@ -63,6 +63,7 @@ class SendSuggestionRequest extends FormRequest
         $this->merge([
             'type_id' => $type->id,
             'nick' => $nick,
+            'title' => trim($this->title) ?? 'Sugerencia',
             'ip_address' => $this->getRealIpAddress(),
             'user_agent' => $this->userAgent(),
         ]);
@@ -76,12 +77,12 @@ class SendSuggestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type_id' => 'required|exists:types,id',
-            'nick' => 'nullable|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
-            'title' => 'nullable|string|max:255',
+            //'type_id' => 'required|exists:types,id',
+            'nick' => 'sometimes|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
+            'title' => 'sometimes|string|max:255',
             'content' => 'required|string|max:1024',
-            'ip_address' => 'nullable|ip',
-            'user_agent' => 'nullable|string|max:255',
+            //'ip_address' => 'nullable|ip',
+            //'user_agent' => 'nullable|string|max:255',
         ];
     }
 
@@ -96,7 +97,34 @@ class SendSuggestionRequest extends FormRequest
             'content.max' => 'El contenido no debe superar los :max caracteres',
             'nick.max' => 'El nick no debe superar los :max caracteres',
             'nick.regex' => 'El nick solo puede contener letras, números y guiones bajos sin @',
+            'nick.required' => 'El nick es obligatorio',
+            'nick.string' => 'El nick debe ser una cadena de texto',
             'throttle' => 'Has enviado demasiadas sugerencias recientemente. Por favor, espera un momento antes de enviar otra.',
+        ];
+    }
+
+    /**
+     * Especifica los parámetros del cuerpo para la documentación de Scribe
+     * Solo se mostrarán estos campos en la documentación de la API
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'nick' => [
+                'description' => 'Nombre de usuario o nick del autor de la sugerencia (máximo 25 caracteres, solo letras, números y guiones bajos)',
+                'example' => 'mi_usuario_123',
+                'required' => false,
+            ],
+            'title' => [
+                'description' => 'Título de la sugerencia (máximo 255 caracteres)',
+                'example' => 'Pájaros caminantes',
+                'required' => false,
+            ],
+            'content' => [
+                'description' => 'Contenido principal de la sugerencia (chiste, adivinanza, etc.) - máximo 1024 caracteres',
+                'example' => '¿Por qué los pájaros vuelan hacia el sur? Porque caminando tardarían mucho.',
+                'required' => true,
+            ],
         ];
     }
 }

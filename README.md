@@ -229,6 +229,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
 - Hacer bot para twitch
 - Vigilar captcha, da la sensación que alguna vez falla la carga pero no estoy seguro si es timeout por tardar (caducado)
+- Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)
 
 ## TODO para vídeotutorial
 

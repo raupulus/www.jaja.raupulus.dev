@@ -39,7 +39,7 @@ class VerifyRecaptcha
 
         if (!$result || !isset($result['success']) || !$result['success'] || $result['score'] < $score) {
             throw ValidationException::withMessages([
-                'g_recaptcha' => 'Verificación del reCAPTCHA fallida.',
+                'g_recaptcha' => 'Verificación del reCAPTCHA fallida. A veces es por tiempo de espera agotado y funciona si vuelves a intentarlo.',
             ]);
         }
 

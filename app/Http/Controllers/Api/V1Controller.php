@@ -489,7 +489,7 @@ class V1Controller extends Controller
      *
      * @group 📚 Contenidos
      *
-     * @urlParam group_slug string required El slug del grupo de contenido. Example: chistes-frontend
+     * @urlParam group_slug string required El slug del grupo de contenido. Example: chistes-devs
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
@@ -562,10 +562,18 @@ class V1Controller extends Controller
     /**
      * Envía una sugerencia de chiste a la plataforma
      *
+     * Se permiten máximo 10 sugerencias en 1 minuto.
+     *
      * @group 💡 Sugerencias
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
+     *
+     * @response 201 {
+     *     "success": true,
+     *     "data": null,
+     *     "message": "La sugerencia ha sido enviada correctamente."
+     *   }
      *
      * @response 500 {
      *   "success": false,
@@ -580,18 +588,31 @@ class V1Controller extends Controller
         try {
             $data = $request->validated();
 
-            Suggestion::create($data);
-
-            return $this->successResponse(
-                null,
-                'La sugerencia ha sido enviada correctamente.',
-                201,
+            $suggestion = Suggestion::create(array_merge([
+                'type_id' => $request->type_id,
+                'ip_address' => $request->ip_address,
+                'user_agent' => $request->user_agent,
+            ], $data)
             );
+
+            if ($suggestion) {
+                return $this->successResponse(
+                    [
+                        'title' => $suggestion->title,
+                        'content' => $suggestion->content,
+                        'type' => $suggestion->type?->name,
+                        'nick' => $suggestion->nick,
+                    ],
+                    'La sugerencia ha sido enviada correctamente.',
+                    201,
+                );
+            }
+
+            return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
+
         } catch (\Exception $e) {
             return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
         }
-
-
     }
 
 }

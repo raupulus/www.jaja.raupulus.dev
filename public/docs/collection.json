@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "8d2181d9-395f-4bd8-bc07-aab2a163b66d",
+        "_postman_id": "e5577f48-6cc4-41d3-ac0a-bf7832005af8",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -168,20 +168,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "20"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "19"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"name\":\"Quiz\",\"slug\":\"quiz\",\"description\":\"Preguntas relacionados con tecnolog\\u00eda y programaci\\u00f3n\",\"urlImage\":null},{\"name\":\"Chistes\",\"slug\":\"chistes\",\"description\":\"Chistes relacionados con tecnolog\\u00eda y programaci\\u00f3n\",\"urlImage\":null},{\"name\":\"Adivinanzas\",\"slug\":\"adivinanzas\",\"description\":\"Adivinanzas sobre conceptos de programaci\\u00f3n\",\"urlImage\":null}],\"message\":\"Se obtuvieron 3 tipos\",\"meta\":{\"total_items\":3}}",
+                            "body": "{\"success\":true,\"data\":[{\"name\":\"Quiz\",\"slug\":\"quiz\",\"description\":\"Preguntas tipo quiz\",\"urlImage\":null},{\"name\":\"Chistes\",\"slug\":\"chistes\",\"description\":\"Chistes, bromas y situaciones de humor\",\"urlImage\":null},{\"name\":\"Adivinanzas\",\"slug\":\"adivinanzas\",\"description\":\"Adivinanzas para reflexionar\",\"urlImage\":null}],\"message\":\"Se obtuvieron 3 tipos\",\"meta\":{\"total_items\":3}}",
                             "name": ""
                         },
                         {
@@ -246,20 +238,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "20"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "19"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Preguntas en General\",\"slug\":\"quiz-general\",\"urlImage\":null},{\"title\":\"Preguntas Programaci\\u00f3n\",\"slug\":\"quiz-devs\",\"urlImage\":null}],\"message\":\"Se obtuvieron 2 grupos de contenido\",\"meta\":{\"pagination\":{\"current_page\":1,\"per_page\":2,\"total\":17,\"last_page\":9,\"from\":1,\"to\":2,\"has_more_pages\":true,\"has_previous_page\":false,\"next_page_url\":\"http:\\\/\\\/localhost:8000\\\/api\\\/v1\\\/groups?groups_index=2\",\"prev_page_url\":null}}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Preguntas en General\",\"slug\":\"quiz-general\",\"urlImage\":null},{\"title\":\"Preguntas Programaci\\u00f3n\",\"slug\":\"quiz-devs\",\"urlImage\":null}],\"message\":\"Se obtuvieron 2 grupos de contenido\",\"meta\":{\"pagination\":{\"current_page\":1,\"per_page\":2,\"total\":12,\"last_page\":6,\"from\":1,\"to\":2,\"has_more_pages\":true,\"has_previous_page\":false,\"next_page_url\":\"http:\\\/\\\/localhost:8000\\\/api\\\/v1\\\/groups?groups_index=2\",\"prev_page_url\":null}}}",
                             "name": ""
                         },
                         {
@@ -330,20 +314,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "20"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "19"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"iOS\",\"slug\":\"ios\",\"description\":\"Sistema operativo de Apple para dispositivos m\\u00f3viles\",\"urlImage\":null},{\"title\":\"Vue.js\",\"slug\":\"vue-js\",\"description\":\"Framework progresivo para la interfaz de usuario\",\"urlImage\":null}],\"message\":\"Se obtuvieron 2 categor\\u00edas de 98, p\\u00e1gina 1.\",\"meta\":{\"pagination\":{\"current_page\":1,\"per_page\":2,\"total\":98,\"last_page\":49,\"from\":1,\"to\":2,\"has_more_pages\":true,\"has_previous_page\":false,\"next_page_url\":\"http:\\\/\\\/localhost:8000\\\/api\\\/v1\\\/categories?page=2\",\"prev_page_url\":null}}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"iOS\",\"slug\":\"ios\",\"description\":\"Sistema operativo de Apple para dispositivos m\\u00f3viles\",\"urlImage\":null},{\"title\":\"Vue.js\",\"slug\":\"vue-js\",\"description\":\"Framework progresivo para la interfaz de usuario\",\"urlImage\":null}],\"message\":\"Se obtuvieron 2 categor\\u00edas de 105, p\\u00e1gina 1.\",\"meta\":{\"pagination\":{\"current_page\":1,\"per_page\":2,\"total\":105,\"last_page\":53,\"from\":1,\"to\":2,\"has_more_pages\":true,\"has_previous_page\":false,\"next_page_url\":\"http:\\\/\\\/localhost:8000\\\/api\\\/v1\\\/categories?page=2\",\"prev_page_url\":null}}}",
                             "name": ""
                         },
                         {
@@ -417,20 +393,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "10"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "9"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"fghdfghdfgh\",\"content\":\"dfghdfgh\",\"urlImage\":null,\"uploader\":\"@test1\"}],\"message\":\"Se obtuvieron 35 contenidos aleatorios\",\"meta\":{\"total_items\":35,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Escopeta como prism\\u00e1ticos\",\"content\":\"Esto que van 2 de Lepe paseando por el campo y uno de ellos se encuentra una escopeta... -Mira mira esto que es?? -Pues no lo se, mira aqu\\u00ed hay dos agujeros parecen unos prism\\u00e1ticos -P\\u00f3ntelos a ver si ves algo... -Uf aqu\\u00ed no se ve nada, esta oscuro.. -Espera que aqu\\u00ed hay un bot\\u00f3n voy a darle a ver.. Y se escucha BOOOOM!!!! Y le dice uno a otro: -T\\u00edo no me mires as\\u00ed!! Que yo tambi\\u00e9n me he asustao!!!!\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":263,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -497,20 +465,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "20"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "19"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"NoSQL vs SQL\",\"content\":\"\\u00bfPor qu\\u00e9 las bases de datos NoSQL son tan relajadas? Porque no tienen relaciones.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 33 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":33}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"El programador en la oscuridad: nunca conoci\\u00f3 la luz\",\"content\":\"\\u00bfPor qu\\u00e9 el programador nunca teme a la oscuridad?\\nPorque nunca conoci\\u00f3 la luz.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 260 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":260}}",
                             "name": ""
                         },
                         {
@@ -583,20 +543,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "20"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "19"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Programador vs Cafetera\",\"content\":\"\\u00bfQu\\u00e9 tienen en com\\u00fan un programador y una cafetera? Los dos convierten recursos en c\\u00f3digo.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 7 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":7}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Frontend VS Framework\",\"content\":\"\\u00bfQu\\u00e9 le dijo un frontend de javascript a otro en el gimnasio? \\u00bfYa probaste el nuevo \\\"framework\\\" de levantamiento de pesas? Que va, no me cabe m\\u00e1s basura en la mochila.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 2 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":2}}",
                             "name": ""
                         },
                         {
@@ -638,7 +590,7 @@
                                 {
                                     "id": "group_slug",
                                     "key": "group_slug",
-                                    "value": "chistes-frontend",
+                                    "value": "chistes-devs",
                                     "description": "El slug del grupo de contenido."
                                 }
                             ]
@@ -669,20 +621,12 @@
                                     "value": "application\/json"
                                 },
                                 {
-                                    "key": "x-ratelimit-limit",
-                                    "value": "20"
-                                },
-                                {
-                                    "key": "x-ratelimit-remaining",
-                                    "value": "19"
-                                },
-                                {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Responsive Design\",\"content\":\"\\u00bfC\\u00f3mo llamas a un dise\\u00f1o web que no es responsive? Irresponsible design.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Frontend de 5 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Frontend\",\"group_slug\":\"chistes-frontend\",\"total_items\":5}}",
+                            "body": "{\"success\":true,\"data\":[{\"title\":\"Sysadmin ganador\",\"content\":\"\\u00bfQu\\u00e9 hace un sysadmin despu\\u00e9s de ganar la loter\\u00eda? Cambiar el servidor comprando uno mucho m\\u00e1s grande que nunca utilizar\\u00e1 al 100%\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 124 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":124}}",
                             "name": ""
                         },
                         {
@@ -695,6 +639,53 @@
                             "header": [],
                             "code": 500,
                             "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\ud83d\udca1 Sugerencias",
+            "description": "",
+            "item": [
+                {
+                    "name": "Env\u00eda una sugerencia de chiste a la plataforma",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/suggestion\/send",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/suggestion\/send"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"nick\":\"mi_usuario_123\",\"title\":\"P\u00e1jaros caminantes\",\"content\":\"\u00bfPor qu\u00e9 los p\u00e1jaros vuelan hacia el sur? Porque caminando tardar\u00edan mucho.\"}"
+                        },
+                        "description": "Se permiten m\u00e1ximo 10 sugerencias en 1 minuto."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n    \"success\": true,\n    \"data\": null,\n    \"message\": \"La sugerencia ha sido enviada correctamente.\"\n  }",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al a\u00f1adir sugerencia, si persiste contacta con el administrador\"\n}",
                             "name": ""
                         }
                     ]
