@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Helpers\StatsHelper;
-use http\Exception\RuntimeException;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
@@ -49,10 +48,15 @@ class StatsCommand extends Command
             $this->info('✓ Caché de total de usuarios activos actualizado');
 
             Cache::forget('users_more_active_10');
-            Cache::forget('users_more_active_20');
             StatsHelper::getUsersMoreActive(10);
+
+            Cache::forget('users_more_active_20');
             StatsHelper::getUsersMoreActive(20);
             $this->info('✓ Caché de usuarios más activos actualizado');
+
+            Cache::forget('types_and_groups_and_categories_count');
+            StatsHelper::typesAndGroupsAndCategoriesCount();
+            $this->info('✓ Caché del contador de grupos, tipos y categorías actualizado');
 
             return self::SUCCESS;
 
