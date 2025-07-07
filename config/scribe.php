@@ -185,6 +185,7 @@ INTRO,
             '🔐 Autenticación',
             '🏷️ Categorías, Grupos y Tipos',
             '📚 Contenidos',
+            '💡 Sugerencias',
         ],
     ],
 

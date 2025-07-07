@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ContentRandomFromTypeAndCategoryRequest;
 use App\Http\Requests\Api\ContentRandomFromTypeRequest;
 use App\Http\Requests\Api\ContentRandomRequest;
 use App\Http\Requests\Api\PaginationRequest;
+use App\Http\Requests\Api\SendSuggestionRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ContentResource;
 use App\Http\Resources\GroupResource;
@@ -15,6 +16,7 @@ use App\Http\Traits\ApiResponseTrait;
 use App\Models\Category;
 use App\Models\Content;
 use App\Models\Group;
+use App\Models\Suggestion;
 use App\Models\Type;
 use Illuminate\Http\JsonResponse;
 
@@ -555,6 +557,41 @@ class V1Controller extends Controller
         } catch (\Exception $e) {
             return $this->errorResponse('Error al obtener contenidos del grupo especificado', 500);
         }
+    }
+
+    /**
+     * Envía una sugerencia de chiste a la plataforma
+     *
+     * @group 💡 Sugerencias
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     *
+     * @response 500 {
+     *   "success": false,
+     *   "message": "Error al añadir sugerencia, si persiste contacta con el administrador"
+     * }
+     *
+     * @param SendSuggestionRequest $request
+     * @return JsonResponse
+     */
+    public function sendSuggestion(SendSuggestionRequest $request): JsonResponse
+    {
+        try {
+            $data = $request->validated();
+
+            Suggestion::create($data);
+
+            return $this->successResponse(
+                null,
+                'La sugerencia ha sido enviada correctamente.',
+                201,
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
+        }
+
+
     }
 
 }

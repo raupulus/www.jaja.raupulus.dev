@@ -211,6 +211,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Revisar categorías en backend -> editar sugerencias, debería tomar "General" por defecto y no toma ninguna ahora
 - [x] En panel de admin > Escritorio, cambiar consultas para estadísticas de sugerencias y contar las eliminadas
 - [x] Mejorar página principal y enlazar a redes sociales
+- Añadir endpoint para poder subir sugerencias de chistes
 
 ## TODO con menor prioridad
 
