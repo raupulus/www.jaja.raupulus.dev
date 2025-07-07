@@ -43,6 +43,7 @@ class PublishContentToSocialCommand extends Command
         // Buscar el contenido con menor fecha o null en last_social_published
         $content = Content::with('categories')
             ->whereNotIn('group_id', [4, 14])
+            ->whereNot('is_adult')
             ->orderByRaw('last_social_published IS NULL DESC')
             ->orderBy('last_social_published', 'asc')
             ->first();

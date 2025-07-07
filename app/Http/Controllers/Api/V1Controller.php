@@ -63,7 +63,9 @@ class V1Controller extends Controller
         $limit = $request->getLimit();
 
         try {
-            $contentsQuery = Content::whereNotIn('group_id', [4, 14])->inRandomOrder();
+            $contentsQuery = Content::whereNotIn('group_id', [4, 14])
+                ->whereNot('is_adult')
+                ->inRandomOrder();
             $count = $contentsQuery->count();
 
             if (!$count) {
@@ -351,7 +353,9 @@ class V1Controller extends Controller
         try {
             $limit = $request->getLimit();
 
-            $contents = Content::whereNotIn('group_id', [4, 14])->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id'])
+            $contents = Content::whereNotIn('group_id', [4, 14])
+                ->whereNot('is_adult')
+                ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id'])
                 ->byType($type)
                 ->random();
 
@@ -443,7 +447,9 @@ class V1Controller extends Controller
 
             $limit = $request->getLimit();
 
-            $contents = Content::whereNotIn('group_id', [4, 14])->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
+            $contents = Content::whereNotIn('group_id', [4, 14])
+                ->whereNot('is_adult')
+                ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
                 ->byTypeAndCategory($type, $category)
                 ->random();
 

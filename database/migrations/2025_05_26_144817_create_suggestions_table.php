@@ -29,6 +29,8 @@ return new class extends Migration
             $table->string('image_path', 255)->nullable();
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 255)->nullable();
+            $table->boolean('is_adult')->default(false);
+            $table->boolean('is_ai')->default(false);
             $table->timestamp('approved_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

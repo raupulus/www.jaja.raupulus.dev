@@ -15,7 +15,7 @@ class Content extends Model
 
     protected $table = 'contents';
 
-    protected $fillable = ['user_id', 'group_id', 'title', 'content', 'image', 'uploaded_by', 'last_social_published'];
+    protected $fillable = ['user_id', 'group_id', 'title', 'content', 'image', 'uploaded_by', 'last_social_published', 'is_adult', 'is_ai'];
 
     /**
      * El boot del modelo registra los eventos

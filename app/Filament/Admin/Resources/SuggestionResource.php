@@ -3,8 +3,8 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Actions\ConvertImageToWebp;
-use App\Filament\Admin\Resources\SuggestionResource\RelationManagers\OptionsRelationManager;
 use App\Filament\Admin\Resources\SuggestionResource\Pages;
+use App\Filament\Admin\Resources\SuggestionResource\RelationManagers\OptionsRelationManager;
 use App\Models\Group;
 use App\Models\Suggestion;
 use Filament\Forms;
@@ -75,6 +75,24 @@ class SuggestionResource extends Resource
                     ->label('Contenido')
                     ->required()
                     ->columnSpanFull(),
+
+                Forms\Components\Checkbox::make('is_adult')
+                    ->label('Contenido Adulto')
+                    ->default(false)
+                    ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
+                    ->extraAttributes([
+                        'class' => 'border-red-500'
+                    ]),
+
+                Forms\Components\Checkbox::make('is_ai')
+                    ->label('Generado con AI')
+                    ->default(false)
+                    ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
+                    ->extraAttributes([
+                        'class' => 'border-orange-500'
+                    ]),
+
+
                 Forms\Components\TextInput::make('nick')
                     ->label('Nick')
                     ->maxLength(25),
@@ -107,33 +125,31 @@ class SuggestionResource extends Resource
                             ->toArray();
                     })
                     ->required()
-                    ->disabled(fn (Forms\Get $get) => !$get('type_id'))
+                    ->disabled(fn(Forms\Get $get) => !$get('type_id'))
 
-                    /*
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->maxLength(255)
-                            ->label('Título'),
-                        Forms\Components\TextInput::make('slug')
-                            ->columnSpanFull()
-                            ->label('Slug')
-                            ->required()
-                            ->unique('groups', 'slug', ignoreRecord: true)
-                            ->maxLength(255),
-                        Forms\Components\Select::make('type_id')
-                            ->relationship('type', 'name')
-                            ->searchable()
-                            ->preload()
-                            ->required()
-                            ->label('Tipo')
-                            ->placeholder('Seleccione un tipo')
+                /*
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('title')
+                        ->required()
+                        ->maxLength(255)
+                        ->label('Título'),
+                    Forms\Components\TextInput::make('slug')
+                        ->columnSpanFull()
+                        ->label('Slug')
+                        ->required()
+                        ->unique('groups', 'slug', ignoreRecord: true)
+                        ->maxLength(255),
+                    Forms\Components\Select::make('type_id')
+                        ->relationship('type', 'name')
+                        ->searchable()
+                        ->preload()
+                        ->required()
+                        ->label('Tipo')
+                        ->placeholder('Seleccione un tipo')
 
-                    ])
-                    */
+                ])
+                */
                 ,
-
-
 
                 Forms\Components\Select::make('categories')
                     ->label('Categorías')
@@ -156,8 +172,6 @@ class SuggestionResource extends Resource
                         }
                     })
                 ,
-
-
 
                 Forms\Components\TextInput::make('ip_address')
                     ->label('IP')

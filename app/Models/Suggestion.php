@@ -16,7 +16,7 @@ class Suggestion extends Model
 
     protected $table = 'suggestions';
 
-    protected $fillable = ['type_id', 'nick', 'title', 'content', 'image_path', 'ip_address', 'user_agent', 'approved_at',  'group_id',];
+    protected $fillable = ['type_id', 'nick', 'title', 'content', 'image_path', 'ip_address', 'user_agent', 'approved_at',  'group_id', 'is_adult', 'is_ai'];
 
 
     /**
@@ -129,6 +129,8 @@ class Suggestion extends Model
             'title' => $this->title,
             'content' => $this->content,
             'uploaded_by' => $this->nick ?? null,
+            'is_adult' => $this->is_adult ?? false,
+            'is_ai' => $this->is_ai ?? false,
         ]);
 
         $categories = $this->categories()->pluck('categories.id')->toArray();

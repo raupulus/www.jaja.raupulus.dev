@@ -75,6 +75,22 @@ class ContentResource extends Resource
                     ->columnSpanFull()
                     ->maxLength(1024),
 
+                Forms\Components\Checkbox::make('is_adult')
+                    ->label('Contenido Adulto')
+                    ->default(false)
+                    ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
+                    ->extraAttributes([
+                        'class' => 'border-red-500'
+                    ]),
+
+                Forms\Components\Checkbox::make('is_ai')
+                    ->label('Generado con AI')
+                    ->default(false)
+                    ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
+                    ->extraAttributes([
+                        'class' => 'border-orange-500'
+                    ]),
+
                 Forms\Components\Select::make('user_id')
                     ->relationship('user', 'name')
                     ->searchable()
