@@ -2,9 +2,13 @@
 
 namespace App\Helpers;
 
+use App\Models\Category;
 use App\Models\Content;
+use App\Models\Group;
 use App\Models\Suggestion;
+use App\Models\Type;
 use App\Models\User;
+use Illuminate\Support\Facades\Cache;
 
 class StatsHelper
 {
@@ -136,6 +140,22 @@ class StatsHelper
                 ->toArray();
 
             return $todosLosUsuarios;
+        });
+    }
+
+    /**
+     * Devuelve el contador de elementos para tipos, grupos y categorías.
+     *
+     * @return array
+     */
+    public static function typesAndGroupsAndCategoriesCount(): array
+    {
+        return Cache::remember('types_and_groups_and_categories_count', 60*60, function () {
+            return [
+                'typesCount' => Type::count(),
+                'groupsCount' => Group::count(),
+                'categoriesCount' => Category::count(),
+            ];
         });
     }
 }

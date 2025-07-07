@@ -7,6 +7,7 @@ use App\Filament\Admin\Resources\GroupResource\Pages;
 use App\Filament\Admin\Resources\GroupResource\RelationManagers;
 use App\Models\Group;
 use Filament\Forms;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -79,20 +80,20 @@ class GroupResource extends Resource
                     ->label('Tipo')
                     ->placeholder('Seleccione un tipo')
 
-                    // No me interesa crear tipos
-                    /*
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('name')
-                            ->required()
-                            ->maxLength(255)
-                            ->label('Nombre'),
-                        Forms\Components\Textarea::make('description')
-                            ->required()
-                            ->maxLength(1024)
-                            ->label('Descripción')
+                // No me interesa crear tipos
+                /*
+                ->createOptionForm([
+                    Forms\Components\TextInput::make('name')
+                        ->required()
+                        ->maxLength(255)
+                        ->label('Nombre'),
+                    Forms\Components\Textarea::make('description')
+                        ->required()
+                        ->maxLength(1024)
+                        ->label('Descripción')
 
-                    ])
-                    */
+                ])
+                */
                 ,
 
                 Forms\Components\TextInput::make('slug')
@@ -101,6 +102,12 @@ class GroupResource extends Resource
                     ->required()
                     ->unique('groups', 'slug', ignoreRecord: true)
                     ->maxLength(255),
+
+                TextArea::make('description')
+                    ->columnSpanFull()
+                    ->label('Descripción')
+                    ->maxLength(255)
+                ,
 
             ]);
     }
@@ -116,7 +123,7 @@ class GroupResource extends Resource
                         return $record->contents()->whereNull('deleted_at')->count();
                     })
                     ->badge()
-                    ->color(fn ($state) => match (true) {
+                    ->color(fn($state) => match (true) {
                         $state === 0 => 'gray',
                         $state <= 5 => 'warning',
                         $state <= 20 => 'success',

@@ -3,9 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Actions\ConvertImageToWebp;
+use App\Helpers\StatsHelper;
 use App\Http\Requests\SuggestionRequest;
+use App\Models\Category;
 use App\Models\Content;
+use App\Models\Group;
 use App\Models\Suggestion;
+use App\Models\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
@@ -29,8 +33,13 @@ class IndexController extends Controller
                 ->sortByDesc('image');
         });
 
+        $counts = StatsHelper::typesAndGroupsAndCategoriesCount();
+
         return view('home')->with([
-            'contents' => $contents
+            'contents' => $contents,
+            'typesCount' => $counts['typesCount'],
+            'groupsCount' => $counts['groupsCount'],
+            'categoriesCount' => $counts['categoriesCount'],
         ]);
     }
 

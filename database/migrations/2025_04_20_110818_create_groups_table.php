@@ -18,6 +18,7 @@ return new class extends Migration
                 ->onUpdate('CASCADE');
             $table->string('title', 255);
             $table->string('slug', 255)->unique()->index();
+            $table->string('description', 255)->index();
             $table->string('image', 255)->nullable();
             $table->timestamps();
             $table->softDeletes();

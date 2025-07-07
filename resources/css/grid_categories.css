@@ -1,0 +1,281 @@
+/* Contenedor principal del grid */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+}
+
+/* Tarjeta individual */
+.category-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border: 1px solid #374151;
+    border-radius: 12px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    position: relative;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
+    border-color: #3b82f6;
+}
+
+.category-card:hover::before {
+    opacity: 1;
+}
+
+/* Contenido interno de la tarjeta */
+.category-card-content {
+    display: flex;
+    align-items: center;
+    padding: 1.25rem;
+    height: 100%;
+    min-height: 80px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Imagen de la categoría */
+.category-card-image {
+    flex-shrink: 0;
+    width: 60px;
+    height: 60px;
+    margin-right: 1rem;
+    border-radius: 8px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #4b5563;
+    transition: all 0.3s ease;
+}
+
+.category-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.category-card:hover .category-card-image {
+    border-color: #3b82f6;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+}
+
+.category-card:hover .category-card-image img {
+    transform: scale(1.05);
+}
+
+/* Icono por defecto cuando no hay imagen */
+.category-card-image-placeholder {
+    color: #9ca3af;
+    font-size: 1.5rem;
+}
+
+/* Texto de la tarjeta */
+.category-card-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 60px;
+}
+
+/* Título de la categoría */
+.category-card-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #f9fafb;
+    margin: 0 0 0.5rem 0;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    transition: color 0.3s ease;
+}
+
+/* Descripción de la categoría */
+.category-card-description {
+    font-size: 0.875rem;
+    color: #d1d5db;
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+/* Tarjeta sin imagen - ajustar diseño */
+.category-card-content.no-image {
+    padding: 1.5rem;
+    justify-content: center;
+}
+
+.category-card-content.no-image .category-card-text {
+    text-align: center;
+}
+
+/* Estados de hover específicos */
+.category-card:hover .category-card-title {
+    color: #60a5fa;
+}
+
+.category-card:hover .category-card-description {
+    color: #e5e7eb;
+}
+
+/* Efecto de brillo sutil */
+.category-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.category-card:hover::after {
+    left: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+        padding: 1rem 0;
+    }
+
+    .category-card-content {
+        padding: 1rem;
+        min-height: 70px;
+    }
+
+    .category-card-image {
+        width: 50px;
+        height: 50px;
+        margin-right: 0.75rem;
+    }
+
+    .category-card-text {
+        min-height: 50px;
+    }
+
+    .category-card-title {
+        font-size: 1rem;
+    }
+
+    .category-card-description {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .category-card-content {
+        padding: 0.875rem;
+        min-height: 60px;
+    }
+
+    .category-card-image {
+        width: 45px;
+        height: 45px;
+        margin-right: 0.625rem;
+    }
+
+    .category-card-text {
+        min-height: 45px;
+    }
+}
+
+/* Animación de entrada */
+.category-card {
+    animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Delay escalonado para las tarjetas */
+.category-card:nth-child(1) { animation-delay: 0.1s; }
+.category-card:nth-child(2) { animation-delay: 0.2s; }
+.category-card:nth-child(3) { animation-delay: 0.3s; }
+.category-card:nth-child(4) { animation-delay: 0.4s; }
+.category-card:nth-child(5) { animation-delay: 0.5s; }
+.category-card:nth-child(6) { animation-delay: 0.6s; }
+.category-card:nth-child(7) { animation-delay: 0.7s; }
+.category-card:nth-child(8) { animation-delay: 0.8s; }
+
+/* Modo de alto contraste para accesibilidad */
+@media (prefers-contrast: high) {
+    .category-card {
+        border: 2px solid #60a5fa;
+        background: #000000;
+    }
+
+    .category-card-title {
+        color: #ffffff;
+    }
+
+    .category-card-description {
+        color: #e5e7eb;
+    }
+}
+
+/* Reducir movimiento para usuarios que lo prefieren */
+@media (prefers-reduced-motion: reduce) {
+    .category-card {
+        transition: none;
+        animation: none;
+    }
+
+    .category-card:hover {
+        transform: none;
+    }
+
+    .category-card-image img {
+        transition: none;
+    }
+
+    .category-card:hover .category-card-image img {
+        transform: none;
+    }
+}

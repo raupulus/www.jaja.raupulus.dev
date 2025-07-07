@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('head')
-    @vite(['resources/css/home.css', 'resources/css/general_stats.css', 'resources/css/social_icons.css', 'resources/css/cookies.css', 'resources/css/suggestions_form.css', 'resources/js/cookies.js', 'resources/js/suggestions_forms.js'])
+    @vite(['resources/css/home.css', 'resources/css/general_stats.css', 'resources/css/social_icons.css', 'resources/css/cookies.css', 'resources/css/suggestions_form.css', 'resources/js/cookies.js', 'resources/js/suggestions_forms.js', 'resources/css/groups_links.css'])
 
 
     @if(config('google.recaptcha.site_key'))
@@ -57,13 +57,13 @@
 
     <section>
         <p class="mw-800 m-auto text-center text-secondary">
-            Aquí puedes disfrutar del contenido más esporádico y subir tus propias invenciones.
+            Tenemos una
+            <a href="{{route('page.show', 'api')}}">API</a>
+            de comunidad para llevar el humor a tus bots, apps o proyectos.
         </p>
+    </section>
 
-        <p class="mw-800 m-auto text-center text-secondary">
-            Además tenemos una API para llevar el humor a tus bots, apps o proyectos.
-        </p>
-
+    <section>
         <p class="mw-800 m-auto text-center text-destacado">
             ¿Contará tu <strong>bot</strong> mejores chistes que tú?
         </p>
@@ -117,7 +117,8 @@
             Adopta desde hoy mismo el comando !chiste y !adivina en tu canal/servidor/chat
         </p>
 
-        <a href="{{route('page.show', 'bots-para-la-api-de-jaja-project')}}" title="Enlace a la información sobre los bots de {{config('app.name')}}"
+        <a href="{{route('page.show', 'bots-para-la-api-de-jaja-project')}}"
+           title="Enlace a la información sobre los bots de {{config('app.name')}}"
            class="btn">🤖 Quiero mi BotHijo</a>
     </section>
 
@@ -162,6 +163,9 @@
            class="btn">📄 Páginas para la comunidad</a>
     </section>
 
+    {{-- Botones enlazando a listado de contenidos --}}
+    @include('partials._groups_links')
+
     <section class="box-card-content">
         <h2>Algunos contenidos</h2>
 
@@ -203,9 +207,9 @@
 @section('js')
     <script>
         @if($errors->any())
-            document.addEventListener('DOMContentLoaded', function () {
-                goToForm();
-            });
+        document.addEventListener('DOMContentLoaded', function () {
+            goToForm();
+        });
         @endif
     </script>
 @endsection

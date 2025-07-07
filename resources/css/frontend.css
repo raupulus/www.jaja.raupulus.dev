@@ -177,6 +177,9 @@ img {
     margin-bottom: 3rem;
 }
 
+.max-w-200 {
+    max-width: 200px;
+}
 
 /* --- Texto --- */
 .text-primary {

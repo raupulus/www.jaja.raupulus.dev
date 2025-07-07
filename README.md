@@ -214,11 +214,22 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir endpoint para poder subir sugerencias de chistes
 - [x] Mejor control de contenido poco apropiado para todos los públicos
 - [x] Mejorar filtros de contenido en endpoints de rutas aleatorias
-- Implementar gestión de reportes
-- Añadir gestión de reportes en el backend
-- Añadir endpoint para reportar contenido
+- [x] Implementar gestión de reportes
+- [x] Añadir gestión de reportes en el backend
+- [x] Añadir endpoint para reportar contenido
+- [x] Crear listado de chistes/adivinanzas filtrando por grupos en el frontend
+- [x] Crear listado de chistes/adivinanzas filtrando por tipos en el frontend
+- [x] Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
+- [x] Añadir al sitemap generator las nuevas vistas para listar grupos/tipos/categorías
+- [x] Plantear cacheado para listado de categorías/tipos/grupos al cargar las páginas, reduciendo consultas
+- [x] Enlazar listado de tipos, categorías y grupos en el home con 3 tarjetas en una fila
 - Diseñar imágenes para todas las páginas
+- Mejorar la descripción de todos los tipos
+- Añadir imágenes y descripciones a los grupos
+- Añadir imágenes y descripciones a los tipos
 - Revisar todas las páginas para asegurar que tienen metadatos y descripciones bien formadas
+- Revisar consultas api para tener en SELECT solo valores que se devuelven en la respuestas
+- Crear listado y filtros de contenidos al entrar en un grupo o categoría, crear vista para solo mostrar 1 y paginación para ir refrescando contenido
 
 ## TODO con menor prioridad
 
@@ -230,8 +241,6 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir imágenes a todos los grupos
 - [x] Añadir imágenes a todos los tipos
 - [x] Hacer bot para discord
-- Crear listado de chistes/adivinanzas filtrando por grupos en el frontend
-- Crear listado de chistes/adivinanzas filtrando por categorías en el frontend
 - Hacer bot para twitch
 - Vigilar captcha, da la sensación que alguna vez falla la carga pero no estoy seguro si es timeout por tardar (caducado)
 - Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)

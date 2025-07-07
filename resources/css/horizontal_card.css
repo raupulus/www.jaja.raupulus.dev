@@ -1,0 +1,380 @@
+/* Contenedor principal de la tarjeta horizontal */
+.card-resume-horizontal {
+    background-color: var(--color-superficie-oscura);
+    border-radius: 8px;
+    box-shadow: var(--sombra-media);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    align-items: start;
+    gap: 1.2rem;
+    padding: 1.5rem;
+    width: 100%;
+}
+
+.card-resume-horizontal:hover {
+    box-shadow: var(--sombra-media);
+    transform: translateY(-2px);
+}
+
+/* Sección izquierda - Título e imagen */
+.card-resume-left {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 180px;
+    max-width: 220px;
+}
+
+.card-resume-title {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: var(--color-primario);
+    margin: 0;
+    line-height: 1.3;
+    word-wrap: break-word;
+}
+
+.card-resume-image {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    border-radius: 6px;
+    background-color: var(--color-fondo-oscuro);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-resume-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.card-resume-horizontal:hover .card-resume-image img {
+    transform: scale(1.05);
+}
+
+/* Placeholder para cuando no hay imagen */
+.card-resume-image-placeholder {
+    color: var(--color-texto-secundario);
+    font-size: 0.9em;
+    text-align: center;
+    padding: 0.5rem;
+}
+
+/* Sección central - Contenido principal */
+.card-resume-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    flex: 1;
+    min-width: 0; /* Para permitir text-overflow */
+}
+
+.card-resume-description {
+    color: var(--color-texto-principal);
+    line-height: 1.5;
+    margin: 0;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+.card-resume-meta {
+    color: var(--color-texto-secundario);
+    font-size: 0.9em;
+    margin-top: auto;
+}
+
+/* Sección derecha - Badge y botón */
+.card-resume-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    min-width: 120px;
+}
+
+.card-resume-badge {
+    background-color: #22558E;
+    color: var(--color-blue-50);
+    padding: 0.4rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.85em;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: var(--sombra-ligera);
+}
+
+.card-resume-badge.secondary {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-secundario);
+}
+
+.card-resume-badge.success {
+    background-color: #4caf50;
+    color: white;
+}
+
+.card-resume-badge.warning {
+    background-color: #ff9800;
+    color: white;
+}
+
+.card-resume-button {
+    background-color: var(--color-primario);
+    color: var(--color-superficie-oscura);
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: var(--sombra-ligera);
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.card-resume-button:hover {
+    background-color: var(--color-primario-hover);
+    box-shadow: var(--sombra-media);
+    color: var(--color-superficie-oscura);
+}
+
+.card-resume-button.secondary {
+    background-color: var(--color-fondo-oscuro);
+    color: var(--color-texto-principal);
+    border: 1px solid var(--color-borde-oscuro);
+}
+
+.card-resume-button.secondary:hover {
+    background-color: var(--color-borde-oscuro);
+    color: var(--color-texto-principal);
+}
+
+/* Variante sin imagen */
+.card-resume-horizontal.no-image {
+    grid-template-columns: auto 1fr auto;
+}
+
+.card-resume-horizontal.no-image .card-resume-left {
+    min-width: 140px;
+    max-width: 180px;
+}
+
+.card-resume-horizontal.no-image .card-resume-image {
+    display: none;
+}
+
+/* Variante sin badge */
+.card-resume-horizontal.no-badge .card-resume-badge {
+    display: none;
+}
+
+/* Variante compacta */
+.card-resume-horizontal.compact {
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.card-resume-horizontal.compact .card-resume-left {
+    min-width: 140px;
+    max-width: 160px;
+}
+
+.card-resume-horizontal.compact .card-resume-image {
+    height: 80px;
+}
+
+.card-resume-horizontal.compact .card-resume-title {
+    font-size: 1.2em;
+}
+
+.card-resume-horizontal.compact .card-resume-description {
+    -webkit-line-clamp: 2;
+}
+
+/* Tablets */
+@media (max-width: 1024px) {
+    .card-resume-horizontal {
+        gap: 1rem;
+        padding: 1.2rem;
+    }
+
+    .card-resume-left {
+        min-width: 160px;
+        max-width: 180px;
+    }
+
+    .card-resume-image {
+        height: 100px;
+    }
+
+    .card-resume-right {
+        min-width: 100px;
+    }
+}
+
+/* Móviles */
+@media (max-width: 768px) {
+    .card-resume-horizontal {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .card-resume-left {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1rem;
+        align-items: center;
+        min-width: unset;
+        max-width: unset;
+    }
+
+    .card-resume-image {
+        width: 80px;
+        height: 80px;
+        order: 1;
+    }
+
+    .card-resume-title {
+        order: 2;
+        font-size: 1.3em;
+    }
+
+    .card-resume-content {
+        order: 3;
+    }
+
+    .card-resume-right {
+        order: 4;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        min-width: unset;
+    }
+
+    .card-resume-badge {
+        order: 1;
+    }
+
+    .card-resume-button {
+        order: 2;
+        padding: 0.5rem 1rem;
+        font-size: 0.85em;
+    }
+}
+
+/* Móviles pequeños */
+@media (max-width: 480px) {
+    .card-resume-horizontal {
+        padding: 0.8rem;
+    }
+
+    .card-resume-left {
+        grid-template-columns: 60px 1fr;
+        gap: 0.8rem;
+    }
+
+    .card-resume-image {
+        width: 60px;
+        height: 60px;
+    }
+
+    .card-resume-title {
+        font-size: 1.1em;
+    }
+
+    .card-resume-description {
+        font-size: 0.9em;
+        -webkit-line-clamp: 2;
+    }
+
+    .card-resume-right {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: stretch;
+    }
+
+    .card-resume-button {
+        width: 100%;
+        padding: 0.6rem;
+    }
+}
+
+/* Tarjeta deshabilitada */
+.card-resume-horizontal.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+/* Tarjeta destacada */
+.card-resume-horizontal.featured {
+    border: 2px solid var(--color-primario);
+    background: linear-gradient(135deg, var(--color-superficie-oscura) 0%, rgba(0, 188, 212, 0.05) 100%);
+}
+
+/* Tarjeta con bordes redondeados extra */
+.card-resume-horizontal.rounded {
+    border-radius: 12px;
+}
+
+.card-resume-horizontal.rounded .card-resume-image {
+    border-radius: 8px;
+}
+
+/*  Animaciones  */
+@keyframes slideInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.card-resume-horizontal.animate-in {
+    animation: slideInFromLeft 0.3s ease-out;
+}
+
+/* Efecto loading */
+.card-resume-horizontal.loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-resume-horizontal.loading::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}

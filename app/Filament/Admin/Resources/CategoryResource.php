@@ -78,7 +78,7 @@ class CategoryResource extends Resource
                     ->columnSpanFull()
                     ->required()
                     ->label('Descripción')
-                    ->maxLength(255),
+                    ->maxLength(100),
             ]);
     }
 
