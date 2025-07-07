@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "e5577f48-6cc4-41d3-ac0a-bf7832005af8",
+        "_postman_id": "da2e5066-24d9-4d27-a067-2e650c6d813a",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -398,7 +398,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Escopeta como prism\\u00e1ticos\",\"content\":\"Esto que van 2 de Lepe paseando por el campo y uno de ellos se encuentra una escopeta... -Mira mira esto que es?? -Pues no lo se, mira aqu\\u00ed hay dos agujeros parecen unos prism\\u00e1ticos -P\\u00f3ntelos a ver si ves algo... -Uf aqu\\u00ed no se ve nada, esta oscuro.. -Espera que aqu\\u00ed hay un bot\\u00f3n voy a darle a ver.. Y se escucha BOOOOM!!!! Y le dice uno a otro: -T\\u00edo no me mires as\\u00ed!! Que yo tambi\\u00e9n me he asustao!!!!\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":263,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":73,\"title\":\"Python: el lenguaje m\\u00e1s perezoso del mundo\",\"content\":\"\\u00bfCu\\u00e1l es el lenguaje de programaci\\u00f3n m\\u00e1s vago?\\nPython, siempre llega arrastr\\u00e1ndose.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":267,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -470,7 +470,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"El programador en la oscuridad: nunca conoci\\u00f3 la luz\",\"content\":\"\\u00bfPor qu\\u00e9 el programador nunca teme a la oscuridad?\\nPorque nunca conoci\\u00f3 la luz.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 260 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":260}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":72,\"title\":\"El sysadmin y las citas: conexi\\u00f3n garantizada\",\"content\":\"\\u00bfC\\u00f3mo describir\\u00edas a un sysadmin en una cita?\\nExperto en conexiones, pero solo en la red.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 263 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":263}}",
                             "name": ""
                         },
                         {
@@ -548,7 +548,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Frontend VS Framework\",\"content\":\"\\u00bfQu\\u00e9 le dijo un frontend de javascript a otro en el gimnasio? \\u00bfYa probaste el nuevo \\\"framework\\\" de levantamiento de pesas? Que va, no me cabe m\\u00e1s basura en la mochila.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 2 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":2}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":93,\"title\":\"JavaScript: el lenguaje universal de los aliens\",\"content\":\"\\u00bfCu\\u00e1l es el lenguaje de programaci\\u00f3n favorito de los extraterrestres?\\nJavaScript, porque es universal.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 2 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":2}}",
                             "name": ""
                         },
                         {
@@ -626,7 +626,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"title\":\"Sysadmin ganador\",\"content\":\"\\u00bfQu\\u00e9 hace un sysadmin despu\\u00e9s de ganar la loter\\u00eda? Cambiar el servidor comprando uno mucho m\\u00e1s grande que nunca utilizar\\u00e1 al 100%\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 124 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":124}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":35,\"title\":\"IA al ukelele\",\"content\":\"\\u00bfPara qu\\u00e9 va el sysadmin al CPD con un ukelele? Por si a la IA se pone agresiva (para amansarla)\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 125 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":125}}",
                             "name": ""
                         },
                         {
@@ -686,6 +686,59 @@
                             "header": [],
                             "code": 500,
                             "body": "{\n  \"success\": false,\n  \"message\": \"Error al a\u00f1adir sugerencia, si persiste contacta con el administrador\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\ud83d\udea8 Reportes",
+            "description": "",
+            "item": [
+                {
+                    "name": "Env\u00eda un reporte sobre contenido de la plataforma",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/report\/send",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/report\/send"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"content_id\":123,\"title\":\"Contenido inapropiado\",\"type\":\"inappropriate_content\",\"description\":\"Este contenido contiene lenguaje ofensivo\",\"additional_info\":\"Reportado por m\u00faltiples usuarios\",\"reporter_name\":\"Juan P\u00e9rez\",\"reporter_email\":\"juan@example.com\"}"
+                        },
+                        "description": "Se permiten m\u00e1ximo 10 reportes en 1 minuto por usuario."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 201,
+                            "body": "{\n    \"success\": true,\n    \"data\": {\n        \"id\": 1,\n        \"title\": \"Contenido inapropiado\",\n        \"type\": \"inappropriate_content\",\n        \"status\": \"pending\",\n        \"content_id\": 123,\n        \"reporter_name\": \"Juan P\u00e9rez\"\n    },\n    \"message\": \"El reporte ha sido enviado correctamente y ser\u00e1 revisado por nuestro equipo.\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\n    \"success\": false,\n    \"message\": \"Error de validaci\u00f3n\",\n    \"errors\": {\n        \"content_id\": [\"El ID del contenido es requerido.\"],\n        \"title\": [\"El t\u00edtulo del reporte es requerido.\"]\n    }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n    \"success\": false,\n    \"message\": \"Error al enviar el reporte, si persiste contacta con el administrador\"\n}",
                             "name": ""
                         }
                     ]

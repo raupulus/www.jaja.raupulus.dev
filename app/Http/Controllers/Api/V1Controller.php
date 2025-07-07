@@ -7,6 +7,7 @@ use App\Http\Requests\Api\ContentRandomFromTypeAndCategoryRequest;
 use App\Http\Requests\Api\ContentRandomFromTypeRequest;
 use App\Http\Requests\Api\ContentRandomRequest;
 use App\Http\Requests\Api\PaginationRequest;
+use App\Http\Requests\Api\SendReportRequest;
 use App\Http\Requests\Api\SendSuggestionRequest;
 use App\Http\Resources\CategoryResource;
 use App\Http\Resources\ContentResource;
@@ -16,6 +17,7 @@ use App\Http\Traits\ApiResponseTrait;
 use App\Models\Category;
 use App\Models\Content;
 use App\Models\Group;
+use App\Models\Report;
 use App\Models\Suggestion;
 use App\Models\Type;
 use Illuminate\Http\JsonResponse;
@@ -618,6 +620,106 @@ class V1Controller extends Controller
 
         } catch (\Exception $e) {
             return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
+        }
+    }
+
+
+    /**
+     * Envía un reporte sobre contenido de la plataforma
+     *
+     * Se permiten máximo 10 reportes en 1 minuto por usuario.
+     *
+     * @group 🚨 Reportes
+     *
+     * @bodyParam content_id integer required ID del contenido a reportar. Example: 123
+     * @bodyParam title string required Título del reporte (máximo 255 caracteres). Example: Contenido inapropiado
+     * @bodyParam type string optional Tipo de reporte. Example: inappropriate_content
+     * @bodyParam description string optional Descripción detallada del reporte (máximo 1024 caracteres). Example: Este contenido contiene lenguaje ofensivo
+     * @bodyParam additional_info string optional Información adicional sobre el reporte (máximo 1024 caracteres). Example: Reportado por múltiples usuarios
+     * @bodyParam reporter_name string optional Nombre del reporter (si difiere del usuario autenticado). Example: Juan Pérez
+     * @bodyParam reporter_email string optional Email del reporter (si difiere del usuario autenticado). Example: juan@example.com
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data object Datos del reporte creado
+     *
+     * @response 201 {
+     *     "success": true,
+     *     "data": {
+     *         "id": 1,
+     *         "title": "Contenido inapropiado",
+     *         "type": "inappropriate_content",
+     *         "status": "pending",
+     *         "content_id": 123,
+     *         "reporter_name": "Juan Pérez"
+     *     },
+     *     "message": "El reporte ha sido enviado correctamente y será revisado por nuestro equipo."
+     * }
+     *
+     * @response 422 {
+     *     "success": false,
+     *     "message": "Error de validación",
+     *     "errors": {
+     *         "content_id": ["El ID del contenido es requerido."],
+     *         "title": ["El título del reporte es requerido."]
+     *     }
+     * }
+     *
+     * @response 500 {
+     *     "success": false,
+     *     "message": "Error al enviar el reporte, si persiste contacta con el administrador"
+     * }
+     *
+     * @param SendReportRequest $request
+     * @return JsonResponse
+     */
+    public function sendReport(SendReportRequest $request): JsonResponse
+    {
+        try {
+            $data = $request->validated();
+
+            $report = Report::create([
+                'user_id' => $data['user_id'],
+                'reporter_name' => $data['reporter_name'] ?? null,
+                'reporter_email' => $data['reporter_email'] ?? null,
+                'reporter_ip' => $data['reporter_ip'],
+                'reportable_type' => $data['reportable_type'],
+                'reportable_id' => $data['reportable_id'],
+                'title' => $data['title'],
+                'type' => $data['type'] ?? 'other',
+                'description' => $data['description'] ?? null,
+                'additional_info' => $data['additional_info'] ?? null,
+                'status' => 'pending',
+                'priority' => 'medium',
+                'assigned_to' => $data['assigned_to'],
+            ]);
+
+            if ($report) {
+                return $this->successResponse(
+                    [
+                        'id' => $report->id,
+                        'title' => $report->title,
+                        'type' => $report->type,
+                        'status' => $report->status,
+                        'content_id' => $report->reportable_id,
+                        'reporter_name' => $report->reporter_name,
+                        'created_at' => $report->created_at->format('Y-m-d H:i:s'),
+                    ],
+                    'El reporte ha sido enviado correctamente y será revisado por nuestro equipo.',
+                    201
+                );
+            }
+
+            return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
+
+        } catch (\Exception $e) {
+            \Log::error('Error al crear reporte: ' . $e->getMessage(), [
+                'user_id' => Auth::id(),
+                'request_data' => $request->all(),
+                'exception' => $e->getTraceAsString()
+            ]);
+
+            return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
         }
     }
 

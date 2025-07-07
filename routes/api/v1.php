@@ -30,6 +30,11 @@ Route::middleware('auth:sanctum')->group(function () {
         ->middleware('throttle.real.ip:10,1')
         ->name('api.suggestion.send');
 
+    ## Enviar Reporte
+    Route::post('/report/send', [ApiController::class, 'sendReport'])
+        ->middleware('throttle.real.ip:10,1')
+        ->name('api.report.send');
+
     ## Tipos de contenido.
     Route::get('/types', [ApiController::class, 'typesIndex'])
         ->middleware('throttle.real.ip:20,1')
