@@ -212,6 +212,8 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] En panel de admin > Escritorio, cambiar consultas para estadísticas de sugerencias y contar las eliminadas
 - [x] Mejorar página principal y enlazar a redes sociales
 - Añadir endpoint para poder subir sugerencias de chistes
+- Diseñar imágenes para todas las páginas
+- Revisar todas las páginas para asegurar que tienen metadatos y descripciones bien formadas
 
 ## TODO con menor prioridad
 

@@ -63,7 +63,7 @@ class Suggestion extends Model
     {
         parent::boot();
 
-        static::saving(function ($suggestion) {
+        static::created(function ($suggestion) {
             ## Aseguro que siempre tenga la categoría General si no hay categorías
             if ($suggestion->categories()->count() === 0) {
                 $suggestion->categories()->attach(1);
