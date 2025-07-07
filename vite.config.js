@@ -14,7 +14,7 @@ export default defineConfig({
                 'resources/css/frontend.css',
                 'resources/css/general_stats.css',
                 'resources/css/grid_categories.css',
-                'resources/css/groups_links.css.css',
+                'resources/css/groups_links.css',
                 'resources/css/home.css',
                 'resources/css/page.css',
                 'resources/css/horizontal_card.css',
