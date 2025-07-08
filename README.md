@@ -229,9 +229,10 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Crear enlace para obtener bot de discord en el home con un icono muy visual
 - [x] Diseñar imágenes para todas las páginas
 - [x] Revisar todas las páginas para asegurar que tienen metadatos y descripciones bien formadas
-- Añadir selector de grupos en formulario de subida
+- [x] Añadir selector de grupos en formulario de subida
 - Crear listado y filtros de contenidos al entrar en un grupo o categoría, crear vista para solo mostrar 1 y paginación para ir refrescando contenido
-- En las tarjetas de contenido total, colaboradores y risas generadas... enlazar a secciones
+- En las tarjetas (frontend) de contenido total, colaboradores y risas generadas... enlazar a secciones
+- Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
 
 ## TODO con menor prioridad
 

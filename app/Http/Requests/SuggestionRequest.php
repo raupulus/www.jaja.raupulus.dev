@@ -183,6 +183,7 @@ class SuggestionRequest extends FormRequest
     {
         $rules = [
             'type_id' => 'required|exists:types,id',
+            'group_id' => 'nullable|exists:groups,id',
             'nick' => 'nullable|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:1024',
@@ -224,6 +225,7 @@ class SuggestionRequest extends FormRequest
             'type_id.exists' => 'El tipo seleccionado no es válido',
             'title.required' => 'El título es obligatorio',
             'title.max' => 'El título no debe superar los :max caracteres',
+            'group_id.exists' => 'El Grupo debe existir',
             'content.required' => 'El contenido es obligatorio',
             'content.max' => 'El contenido no debe superar los :max caracteres',
             'image.image' => 'El archivo debe ser una imagen, preferiblemente webp, jpg o png',

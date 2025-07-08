@@ -1,4 +1,3 @@
-
 /**
  * Funcionalidad del formulario de sugerencias
  */
@@ -10,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function initSuggestionsForm() {
     // Inicializar funcionalidades
     initTypeSelector();
+    initGroupSelector();
     initAnswerCheckers();
     initImagePreview();
     initThrottleCounter();
@@ -69,6 +69,65 @@ function initTypeSelector() {
 
     // Ejecutar cuando cambie la selección
     typeSelect.addEventListener('change', toggleQuizAnswers);
+}
+
+/**
+ * Maneja el filtrado de grupos según el tipo seleccionado
+ */
+function initGroupSelector() {
+    const typeSelect = document.querySelector('select[name="type_id"]');
+    const groupSelect = document.querySelector('select[name="group_id"]');
+
+    if (!typeSelect || !groupSelect) return;
+
+    // Función para filtrar grupos según el tipo
+    function filterGroups() {
+        const selectedTypeId = typeSelect.value;
+        const groupOptions = groupSelect.querySelectorAll('option');
+
+        // Resetear selección de grupo
+        groupSelect.value = '';
+
+        // Filtrar opciones de grupo
+        groupOptions.forEach(option => {
+            if (option.value === '') {
+                // Mantener la opción por defecto "Grupo"
+                option.style.display = 'block';
+                return;
+            }
+
+            const optionTypeId = option.getAttribute('data-type_id');
+
+            if (selectedTypeId === optionTypeId) {
+                option.style.display = 'block';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+    }
+
+    // Función para manejar el tipo seleccionado al cargar
+    function handleInitialType() {
+        let selectedTypeId = typeSelect.value;
+
+        // Si no hay tipo seleccionado, seleccionar el primero
+        if (!selectedTypeId) {
+            const firstOption = typeSelect.querySelector('option[value]:not([value=""])');
+            if (firstOption) {
+                selectedTypeId = firstOption.value;
+                typeSelect.value = selectedTypeId;
+            }
+        }
+
+        // Aplicar filtro de grupos
+        filterGroups();
+    }
+
+    // Ejecutar al cargar la página
+    handleInitialType();
+
+    // Ejecutar cuando cambie el tipo
+    typeSelect.addEventListener('change', filterGroups);
 }
 
 /**

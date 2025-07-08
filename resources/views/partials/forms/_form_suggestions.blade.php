@@ -4,16 +4,34 @@
     @csrf
 
     <div class="form-group">
+        {{-- Nicck --}}
         <input type="text" name="nick" placeholder="Tu Nick (Sin @)"
                class="form-control {{$errors->has('nick') ? 'form-group-error' : ''}}"
                maxlength="25"
                value="{{old('nick')}}">
 
-        <select name="type_id" class="form-control {{$errors->has('type_id') ? 'form-group-error' : ''}}">
+        {{-- Selector de Tipo --}}
+        <select name="type_id"
+                required
+                class="form-control {{$errors->has('type_id') ? 'form-group-error' : ''}}">
             @foreach(\App\Models\Type::select(['id', 'slug', 'name'])->orderBy('id')->get() as $type)
                 <option value="{{$type->id}}" {{(old('type_id', 1) == $type->id) ? 'selected' : ''}}
                         data-slug="{{$type->slug}}">
                     {{$type->name}}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    {{-- Selector de grupos --}}
+    <div class="form-group">
+        <select name="group_id" class="form-control {{$errors->has('group_id') ? 'form-group-error' : ''}}">
+            <option value="">Grupo</option>
+            @foreach(\App\Models\Group::select(['id', 'type_id', 'slug', 'title'])->orderBy('title')->get() as $group)
+                <option value="{{$group->id}}" {{(old('type_id') == $group->id) ? 'selected' : ''}}
+                data-type_id="{{$group->type_id}}"
+                data-slug="{{$group->slug}}">
+                    {{$group->title}}
                 </option>
             @endforeach
         </select>
