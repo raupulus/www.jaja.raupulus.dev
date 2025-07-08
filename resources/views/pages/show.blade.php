@@ -27,6 +27,13 @@
             @endif
         </div>
 
+        @if($page->slug === 'bots-para-la-api-de-jaja-project')
+            {{-- Call to action - Añadir bot de discord a servidor --}}
+            <div class="btn-dc-bot-container">
+                @include('partials.buttons._dc_bot')
+            </div>
+        @endif
+
         @if($page->slug === 'agradecimientos')
 
             {{-- Reconocimiento a usuarios que más han compartido --}}
@@ -111,7 +118,11 @@
             </div>
         </section>
 
+    </div>
 
+    {{-- Call to action - Añadir bot de discord a servidor --}}
+    <div class="btn-dc-bot-container">
+        @include('partials.buttons._dc_bot')
     </div>
 
     {{-- Iconos de redes sociales --}}

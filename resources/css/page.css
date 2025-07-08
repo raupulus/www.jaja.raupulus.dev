@@ -237,7 +237,8 @@
 /* --- Responsive para páginas --- */
 @media (max-width: 768px) {
     .page-container {
-        padding: 0 15px;
+        margin: 0;
+        padding: 0;
     }
 
     .page-title {

@@ -129,7 +129,7 @@ img {
 .container {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 1.3rem;
     text-align: center;
 }
 
@@ -184,14 +184,17 @@ img {
 /* --- Texto --- */
 .text-primary {
     color: var(--color-texto-principal);
+    word-break: break-all;
 }
 
 .text-secondary {
     color: var(--color-texto-secundario);
+    word-break: break-all;
 }
 
 .text-destacado {
     color: var(--color-texto-destacado);
+    word-break: break-all;
 }
 
 /* --- Cards --- */
@@ -552,8 +555,16 @@ form button.btn {
         padding: 0.8rem;
     }
 
+    .container {
+        padding: 0 0.3rem;
+    }
+
     .container h1 {
-        font-size: 2em;
+        font-size: 1.8em;
+    }
+
+    .container h2 {
+        font-size: 1.3em;
     }
 
     .card {

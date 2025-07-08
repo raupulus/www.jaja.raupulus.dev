@@ -223,13 +223,15 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir al sitemap generator las nuevas vistas para listar grupos/tipos/categorías
 - [x] Plantear cacheado para listado de categorías/tipos/grupos al cargar las páginas, reduciendo consultas
 - [x] Enlazar listado de tipos, categorías y grupos en el home con 3 tarjetas en una fila
+- [x] Mejorar la descripción de todos los tipos
+- [x] Añadir imágenes y descripciones a los grupos
+- [x] Añadir imágenes y descripciones a los tipos
 - Diseñar imágenes para todas las páginas
-- Mejorar la descripción de todos los tipos
-- Añadir imágenes y descripciones a los grupos
-- Añadir imágenes y descripciones a los tipos
 - Revisar todas las páginas para asegurar que tienen metadatos y descripciones bien formadas
 - Revisar consultas api para tener en SELECT solo valores que se devuelven en la respuestas
 - Crear listado y filtros de contenidos al entrar en un grupo o categoría, crear vista para solo mostrar 1 y paginación para ir refrescando contenido
+- Añadir selector de grupos en formulario de subida
+- Crear enlace para obtener bot en el home con un icono muy visual
 
 ## TODO con menor prioridad
 
@@ -241,9 +243,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir imágenes a todos los grupos
 - [x] Añadir imágenes a todos los tipos
 - [x] Hacer bot para discord
-- Hacer bot para twitch
 - Vigilar captcha, da la sensación que alguna vez falla la carga pero no estoy seguro si es timeout por tardar (caducado)
-- Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)
 
 ## TODO para vídeotutorial
 
@@ -256,8 +256,10 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 
 ## Plantear si a futuro realmente lo queremos tener
 
-- Añadir botón en panel admin para publicar en el momento en todas las redes sociales
+- Añadir botón en panel admin para publicar en el momento en todas las redes sociales un contenido concreto o una entrada manual
 - Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Importar/exportar contenidos en excel+csv
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
+- Crear contador de visita a endpoint bloqueando contador por día u hora restringiendo ip+domain
+- Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)

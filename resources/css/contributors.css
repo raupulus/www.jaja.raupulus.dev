@@ -16,6 +16,7 @@
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+    word-break: break-all;
 }
 
 /* Contenedor de usuarios destacados */

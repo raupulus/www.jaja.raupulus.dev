@@ -55,7 +55,7 @@
     {{-- Estadísticas generales del contenido en la plataforma --}}
     @include('partials._general_stats')
 
-    <section>
+    <section class="mt-3 mb-3">
         <p class="mw-800 m-auto text-center text-secondary">
             Tenemos una
             <a href="{{route('page.show', 'api')}}">API</a>
@@ -63,7 +63,9 @@
         </p>
     </section>
 
-    <section>
+    <hr>
+
+    <section class="mt-3 mb-3">
         <p class="mw-800 m-auto text-center text-destacado">
             ¿Contará tu <strong>bot</strong> mejores chistes que tú?
         </p>
@@ -121,6 +123,11 @@
            title="Enlace a la información sobre los bots de {{config('app.name')}}"
            class="btn">🤖 Quiero mi BotHijo</a>
     </section>
+
+    {{-- Call to action - Añadir bot de discord a servidor --}}
+    <div class="btn-dc-bot-container">
+        @include('partials.buttons._dc_bot')
+    </div>
 
     <section class="card">
         <h2 class="card-title">❤️ Buena Gente</h2>
@@ -193,6 +200,11 @@
             </div>
         @endforeach
     </section>
+
+    {{-- Call to action - Añadir bot de discord a servidor --}}
+    <div class="btn-dc-bot-container">
+        @include('partials.buttons._dc_bot')
+    </div>
 
     {{-- Iconos de redes sociales --}}
     <section class="mt-3 mb-3">

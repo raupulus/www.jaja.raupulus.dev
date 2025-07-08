@@ -1,5 +1,5 @@
 {{-- Enlaces rápidos a secciones principales --}}
-<section class="groups-links">
+<section class="groups-links mt-3 mb-3">
     <a href="{{ route('content.types.index') }}" class="groups-link-card tipos">
         <div class="groups-link-content">
             <div class="groups-link-indicator"></div>

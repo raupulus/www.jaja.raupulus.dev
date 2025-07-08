@@ -79,7 +79,7 @@ class TypeResource extends Resource
                     ->required()
                     ->unique('types', 'slug', ignoreRecord: true)
                     ->maxLength(255),
-                Forms\Components\RichEditor::make('description')
+                Forms\Components\Textarea::make('description')
                     ->label('Descripción')
                     ->columnSpanFull()
                     ->required()
@@ -98,6 +98,7 @@ class TypeResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
+                    ->limit(60)
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('slug')

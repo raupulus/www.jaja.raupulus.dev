@@ -40,6 +40,11 @@
 
     @endforeach
 
+    {{-- Call to action - Añadir bot de discord a servidor --}}
+    <div class="btn-dc-bot-container">
+        @include('partials.buttons._dc_bot')
+    </div>
+
     {{-- Iconos de redes sociales --}}
     <section class="mt-3 mb-3">
         @include('partials._social_icons')

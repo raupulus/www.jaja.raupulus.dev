@@ -89,7 +89,7 @@
     <link rel="stylesheet" href="{{ asset('fonts/inter/inter.css') }}">
 
     {{-- CSS Assets --}}
-    @vite(['resources/css/frontend.css', 'resources/css/footer.css'])
+    @vite(['resources/css/frontend.css', 'resources/css/buttons.css', 'resources/css/footer.css'])
 
     {{-- Additional Head Content --}}
     @yield('head')
