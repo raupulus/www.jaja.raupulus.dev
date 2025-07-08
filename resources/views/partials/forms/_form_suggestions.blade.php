@@ -10,8 +10,8 @@
                value="{{old('nick')}}">
 
         <select name="type_id" class="form-control {{$errors->has('type_id') ? 'form-group-error' : ''}}">
-            @foreach(\App\Models\Type::all() as $type)
-                <option value="{{$type->id}}" {{(old('type_id') == $type->id) ? 'selected' : ''}}
+            @foreach(\App\Models\Type::select(['id', 'slug', 'name'])->orderBy('id')->get() as $type)
+                <option value="{{$type->id}}" {{(old('type_id', 1) == $type->id) ? 'selected' : ''}}
                         data-slug="{{$type->slug}}">
                     {{$type->name}}
                 </option>

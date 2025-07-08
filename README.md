@@ -231,6 +231,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Revisar todas las páginas para asegurar que tienen metadatos y descripciones bien formadas
 - Añadir selector de grupos en formulario de subida
 - Crear listado y filtros de contenidos al entrar en un grupo o categoría, crear vista para solo mostrar 1 y paginación para ir refrescando contenido
+- En las tarjetas de contenido total, colaboradores y risas generadas... enlazar a secciones
 
 ## TODO con menor prioridad
 
