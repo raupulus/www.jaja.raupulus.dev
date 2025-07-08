@@ -37,7 +37,7 @@ class ContentController extends Controller
         $groups = Cache::remember('groups_index', 60*60, function () {
             return Group::select(['id', 'title', 'slug', 'image', 'description'])
                 ->withCount('contents')
-                ->orderBy('title')
+                ->orderBy('contents_count', 'desc')
                 ->get();
         });
 
@@ -62,7 +62,7 @@ class ContentController extends Controller
             return $type->groups()
                 ->select(['id', 'title', 'slug', 'image', 'description'])
                 ->withCount('contents')
-                ->orderBy('title')
+                ->orderBy('contents_count', 'desc')
                 ->get();
         });
 
