@@ -26,7 +26,7 @@ class IndexController extends Controller
     {
         $contents = Cache::remember('home_contents', 30, function () {
             return Content::whereNotIn('group_id', [4, 14])
-                ->whereNot('is_adult')
+                ->where('is_adult', false)
                 ->inRandomOrder()
                 ->take(10)
                 ->get()

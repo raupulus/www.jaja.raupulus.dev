@@ -234,9 +234,8 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir ruta "content.group.content.random" a sitemap
 - [x] Añadir ruta "content.categoria.content.random" a sitemap
 - [x] En estadísticas del backend, sugerencias total, pendientes y aprobadas no se calculan bien
-- Al editar adivinanzas desde el grupos->modal de contenido, no tengo la selección de preguntas correctas -> añadir
+- [x] Añadir botón en panel admin para publicar en el momento en todas las redes sociales un contenido concreto o una entrada manual
 - Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
-- Añadir botón en panel admin para publicar en el momento en todas las redes sociales un contenido concreto o una entrada manual
 - Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
 
@@ -271,3 +270,4 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - Crear contador de visita a endpoint bloqueando contador por día u hora restringiendo ip+domain
 - Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)
 - En las tarjetas (frontend) de contenido total, colaboradores y risas generadas... enlazar a secciones?
+- Al editar adivinanzas desde el grupos->modal de contenido, no tengo la selección de preguntas correctas. Plantear viabilidad.

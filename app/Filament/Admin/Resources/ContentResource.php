@@ -5,18 +5,14 @@ namespace App\Filament\Admin\Resources;
 use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\ContentResource\Pages;
 use App\Filament\Admin\Resources\ContentResource\RelationManagers;
+use App\Helpers\PublishToSocialHelper;
 use App\Models\Content;
-use App\Models\File;
-use App\Models\Suggestion;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\ImageEntry;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Illuminate\Validation\Rules\ImageFile;
 
 class ContentResource extends Resource
 {
@@ -125,19 +121,19 @@ class ContentResource extends Resource
                             ->required()
                             ->label('Tipo')
                             ->placeholder('Seleccione un tipo')
-                            /*
-                            ->createOptionForm([
-                                Forms\Components\TextInput::make('name')
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->label('Nombre'),
-                                Forms\Components\Textarea::make('description')
-                                    ->required()
-                                    ->maxLength(1024)
-                                    ->label('Descripción')
+                        /*
+                        ->createOptionForm([
+                            Forms\Components\TextInput::make('name')
+                                ->required()
+                                ->maxLength(255)
+                                ->label('Nombre'),
+                            Forms\Components\Textarea::make('description')
+                                ->required()
+                                ->maxLength(1024)
+                                ->label('Descripción')
 
-                            ]),
-                            */
+                        ]),
+                        */
 
                     ]),
 
@@ -149,13 +145,13 @@ class ContentResource extends Resource
                     ->searchable()
                     ->default([1])
                     ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        // Si no hay categorías seleccionadas, asignar la categoría "General" con id 1
+                        ## Si no hay categorías seleccionadas, asignaro la categoría "General" con id 1
                         if (empty($state)) {
                             $set('categories', [1]);
                         }
                     })
                     ->dehydrateStateUsing(function ($state) {
-                        // Si no hay categorías seleccionadas, asignar la categoría "General" por defecto
+                        ## Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
                         if (empty($state)) {
                             return [1];
                         }
@@ -232,6 +228,43 @@ class ContentResource extends Resource
             ->actions([
                 Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('publish_social')
+                    ->label('Publicar')
+                    ->icon('heroicon-o-share')
+                    ->color('success')
+                    ->requiresConfirmation()
+                    ->modalHeading('Confirmar publicación en redes sociales')
+                    ->modalDescription(function (Content $record) {
+                        $lastPublished = $record->last_social_published
+                            ? $record->last_social_published->diffForHumans()
+                            : 'Nunca';
+
+                        return "¿Estás seguro de que quieres publicar este contenido en redes sociales?\n\nÚltima publicación: {$lastPublished}";
+                    })
+
+                    ->modalSubmitActionLabel('Publicar')
+                    ->action(function (Content $record) {
+                        try {
+                            PublishToSocialHelper::publishContent($record);
+
+                            Notification::make()
+                                ->title('Contenido publicado')
+                                ->body('El contenido se ha publicado exitosamente en redes sociales.')
+                                ->success()
+                                ->send();
+
+                        } catch (\Exception $e) {
+                            Notification::make()
+                                ->title('Error al publicar')
+                                ->body('Error: ' . $e->getMessage())
+                                ->danger()
+                                ->send();
+                        }
+                    })
+                    ->visible(function (Content $record) {
+                        ## Solo muestro contenido que no es para adultos
+                        return !in_array($record->group_id, [4, 14]) && !$record->is_adult;
+                    }),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -260,6 +293,7 @@ class ContentResource extends Resource
             'index' => Pages\ListContents::route('/'),
             'create' => Pages\CreateContent::route('/create'),
             'edit' => Pages\EditContent::route('/{record}/edit'),
+            //'view' => Pages\ViewContent::route('/{record}'),
         ];
     }
 }

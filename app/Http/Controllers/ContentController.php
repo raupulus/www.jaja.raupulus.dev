@@ -100,7 +100,7 @@ class ContentController extends Controller
     {
         $contents = $group->contents()
             ->whereNotIn('group_id', [4, 14])
-            ->whereNot('is_adult')
+            ->where('is_adult', false)
             ->inRandomOrder()
             ->limit(3)
             ->get();
@@ -121,7 +121,7 @@ class ContentController extends Controller
     {
         $contents = $category->contents()
             ->whereNotIn('group_id', [4, 14])
-            ->whereNot('is_adult')
+            ->where('is_adult', false)
             ->inRandomOrder()
             ->limit(3)
             ->get();

@@ -74,13 +74,13 @@ class ContentsRelationManager extends RelationManager
                     ->searchable()
                     ->default([1])
                     ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        // Si no hay categorías seleccionadas, asignar la categoría "General" con id 1
+                        ## Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
                         if (empty($state)) {
                             $set('categories', [1]);
                         }
                     })
                     ->dehydrateStateUsing(function ($state) {
-                        // Si no hay categorías seleccionadas, asignar la categoría "General" por defecto
+                        ## Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
                         if (empty($state)) {
                             return [1];
                         }

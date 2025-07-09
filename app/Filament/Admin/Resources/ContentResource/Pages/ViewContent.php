@@ -6,17 +6,16 @@ use App\Filament\Admin\Resources\ContentResource;
 use App\Helpers\PublishToSocialHelper;
 use Filament\Actions;
 use Filament\Notifications\Notification;
-use Filament\Resources\Pages\EditRecord;
+use Filament\Resources\Pages\ViewRecord;
 
-class EditContent extends EditRecord
+class ViewContent extends ViewRecord
 {
     protected static string $resource = ContentResource::class;
 
     protected function getHeaderActions(): array
     {
         return [
-            Actions\ViewAction::make(),
-            Actions\DeleteAction::make(),
+            Actions\EditAction::make(),
             Actions\Action::make('publish_social')
                 ->label('Publicar')
                 ->icon('heroicon-o-share')
