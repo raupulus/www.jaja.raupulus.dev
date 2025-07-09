@@ -238,9 +238,9 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - [x] Aumentar límites de peticiones en los endpoints de la api para usuarios autenticados
 - [x] Añadir "options" al devolver contenido de tipo quiz
+- [x] Implementar lista de exclusión de ips al validar límites de peticiones
 - Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
 - Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
-- Implementar lista de exclusión de ips al validar límites de peticiones
 
 ## TODO con menor prioridad
 

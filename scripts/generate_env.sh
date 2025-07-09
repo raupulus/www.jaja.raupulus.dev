@@ -103,6 +103,11 @@ replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_PASSWORD' "${MAIL_PASSWORD
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_FROM_ADDRESS' "${MAIL_FROM_ADDRESS}"
 replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'MAIL_FROM_NAME' "${MAIL_FROM_NAME}"
 
+## Exclusión de ip
+
+replace_or_add_var_in_file "${WORKSCRIPT}/.env" 'RATE_LIMIT_EXCLUDED_IPS' "${RATE_LIMIT_EXCLUDED_IPS}"
+
+
 echo ""
 echo "Resultado del .env final:"
 cat "${WORKSCRIPT}/.env"

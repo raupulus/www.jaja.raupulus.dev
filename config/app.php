@@ -124,4 +124,9 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    ## Configuración para filtros por límite de consultas en base a IP
+    'rate_limit' => [
+        'excluded_ips' => array_filter(array_map('trim', explode(',', env('RATE_LIMIT_EXCLUDED_IPS', '')))),
+    ],
+
 ];

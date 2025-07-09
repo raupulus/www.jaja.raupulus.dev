@@ -13,12 +13,18 @@ class ThrottleWithRealIp
     public function handle(Request $request, Closure $next, $maxAttempts = 60, $decayMinutes = 1)
     {
         $ip = $this->getRealIpAddress($request);
+
+        ## Verifico si la IP está en la lista de exclusión
+        if ($this->isIpExcluded($ip)) {
+            return $next($request);
+        }
+
         $key = 'throttle:' . $ip;
 
         if (!RateLimiter::attempt($key, $maxAttempts, fn() => true, $decayMinutes * 60)) {
             $seconds = RateLimiter::availableIn($key);
 
-            // Si es una petición JSON/API, devolver respuesta con ApiResponse
+            ## Si es una petición JSON/API, devuelvo respuesta con ApiResponse
             if ($request->expectsJson()) {
                 return ApiResponse::error(
                     message: "Demasiadas solicitudes. Espera {$seconds} segundos.",
@@ -33,11 +39,72 @@ class ThrottleWithRealIp
                 );
             }
 
-            // Para peticiones web, comportamiento similar al middleware throttle original
+            ## Para peticiones web, comportamiento similar al middleware throttle original
             return $this->buildWebResponse($request, $seconds);
         }
 
         return $next($request);
+    }
+
+    /**
+     * Verifica si una IP está en la lista de exclusión del rate limit
+     */
+    private function isIpExcluded(string $ip): bool
+    {
+        $excludedIps = $this->getExcludedIps();
+
+        ## Verifico coincidencia exacta
+        if (in_array($ip, $excludedIps)) {
+            return true;
+        }
+
+        ## Verifico rangos CIDR
+        /*
+        foreach ($excludedIps as $excludedIp) {
+            if ($this->ipInRange($ip, $excludedIp)) {
+                return true;
+            }
+        }
+        */
+
+        return false;
+    }
+
+    /**
+     * Obtiene la lista de IPs excluidas desde la configuración
+     */
+    private function getExcludedIps(): array
+    {
+        return config('app.rate_limit.excluded_ips', []);
+    }
+
+    /**
+     * Verifica si una IP está dentro de un rango CIDR
+     */
+    private function ipInRange(string $ip, string $range): bool
+    {
+        ## Si no es un rango CIDR, solo comparar exactamente
+        if (!str_contains($range, '/')) {
+            return $ip === $range;
+        }
+
+        list($subnet, $mask) = explode('/', $range);
+
+        ## Convierto a formato binario para IPv4
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
+            $ip_long = ip2long($ip);
+            $subnet_long = ip2long($subnet);
+            $mask_long = -1 << (32 - (int)$mask);
+
+            return ($ip_long & $mask_long) === ($subnet_long & $mask_long);
+        }
+
+        ## Para IPv6 (implementación básica)
+        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
+            return false;
+        }
+
+        return false;
     }
 
     /**
