@@ -282,8 +282,8 @@ paths:
                     -
                       name: Adivinanzas
                       slug: adivinanzas
-                      description: 'Adivinanzas para reflexionar'
-                      urlImage: null
+                      description: 'Adivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionar'
+                      urlImage: 'http://jaja.raupulus.dev/storage/general/1751920088_oHVOUYtCWj.webp'
                   message: 'Se obtuvieron 3 tipos'
                   meta:
                     total_items: 3
@@ -309,8 +309,8 @@ paths:
                       -
                         name: Adivinanzas
                         slug: adivinanzas
-                        description: 'Adivinanzas para reflexionar'
-                        urlImage: null
+                        description: 'Adivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionar'
+                        urlImage: 'http://jaja.raupulus.dev/storage/general/1751920088_oHVOUYtCWj.webp'
                     description: 'Lista de tipos de contenido disponibles'
                     enum: []
                     items:
@@ -805,14 +805,15 @@ paths:
                   success: true
                   data:
                     -
-                      id: 73
-                      title: 'Python: el lenguaje más perezoso del mundo'
-                      content: "¿Cuál es el lenguaje de programación más vago?\nPython, siempre llega arrastrándose."
+                      id: 280
+                      title: 'Niño al circo'
+                      content: 'Un niño de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa'
                       urlImage: null
                       uploader: '@raupulus'
+                      options: []
                   message: 'Se obtuvo 1 contenido aleatorio'
                   meta:
-                    total_items: 267
+                    total_items: 268
                     limit: 1
                 properties:
                   success:
@@ -824,11 +825,12 @@ paths:
                     type: array
                     example:
                       -
-                        id: 73
-                        title: 'Python: el lenguaje más perezoso del mundo'
-                        content: "¿Cuál es el lenguaje de programación más vago?\nPython, siempre llega arrastrándose."
+                        id: 280
+                        title: 'Niño al circo'
+                        content: 'Un niño de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa'
                         urlImage: null
                         uploader: '@raupulus'
+                        options: []
                     description: 'Colección de contenidos aleatorios'
                     enum: []
                     items:
@@ -836,19 +838,22 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 73
+                          example: 280
                         title:
                           type: string
-                          example: 'Python: el lenguaje más perezoso del mundo'
+                          example: 'Niño al circo'
                         content:
                           type: string
-                          example: "¿Cuál es el lenguaje de programación más vago?\nPython, siempre llega arrastrándose."
+                          example: 'Un niño de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa'
                         urlImage:
                           type: string
                           example: null
                         uploader:
                           type: string
                           example: '@raupulus'
+                        options:
+                          type: array
+                          example: []
                   message:
                     type: string
                     example: 'Se obtuvo 1 contenido aleatorio'
@@ -859,7 +864,7 @@ paths:
                     properties:
                       total_items:
                         type: integer
-                        example: 267
+                        example: 268
                         description: 'Número total de contenidos disponibles'
                         enum: []
                       limit:
@@ -911,6 +916,154 @@ paths:
       tags:
         - '📚 Contenidos'
       security: []
+  '/api/v1/random/{type_slug}':
+    get:
+      summary: 'Contenido Aleatorio'
+      operationId: contenidoAleatorio
+      description: "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo\n[chistes|adivinanzas|quiz].\n\nEste endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto."
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+            nullable: false
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 87
+                      title: 'El deporte favorito del diseñador: atletismo textual'
+                      content: "¿Cuál es el deporte favorito de un diseñador?\nEl salto de líneas"
+                      urlImage: null
+                      uploader: '@raupulus'
+                      options: []
+                  message: 'Se obtuvo 1 contenido aleatorio'
+                  meta:
+                    total_items: 265
+                    limit: 1
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 87
+                        title: 'El deporte favorito del diseñador: atletismo textual'
+                        content: "¿Cuál es el deporte favorito de un diseñador?\nEl salto de líneas"
+                        urlImage: null
+                        uploader: '@raupulus'
+                        options: []
+                    description: 'Colección de contenidos aleatorios'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 87
+                        title:
+                          type: string
+                          example: 'El deporte favorito del diseñador: atletismo textual'
+                        content:
+                          type: string
+                          example: "¿Cuál es el deporte favorito de un diseñador?\nEl salto de líneas"
+                        urlImage:
+                          type: string
+                          example: null
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                        options:
+                          type: array
+                          example: []
+                  message:
+                    type: string
+                    example: 'Se obtuvo 1 contenido aleatorio'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      total_items:
+                        type: integer
+                        example: 265
+                        description: 'Número total de contenidos disponibles'
+                        enum: []
+                      limit:
+                        type: integer
+                        example: 1
+                        description: 'Límite aplicado en esta consulta'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener chistes aleatorios'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener chistes aleatorios'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '📚 Contenidos'
+      security: []
+    parameters:
+      -
+        in: path
+        name: type_slug
+        description: 'El slug del tipo de contenido [chistes|adivinanzas|quiz].'
+        example: chistes
+        required: true
+        schema:
+          type: string
   '/api/v1/type/{type_slug}/content/random':
     get:
       summary: 'Contenido en base a un tipo'
@@ -939,16 +1092,17 @@ paths:
                   success: true
                   data:
                     -
-                      id: 72
-                      title: 'El sysadmin y las citas: conexión garantizada'
-                      content: "¿Cómo describirías a un sysadmin en una cita?\nExperto en conexiones, pero solo en la red."
+                      id: 62
+                      title: 'Project Manager Iluminado'
+                      content: '¿Cuántos project managers se necesitan para cambiar una bombilla? Ninguno, eso está fuera del alcance del proyecto.'
                       urlImage: null
                       uploader: '@raupulus'
-                  message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 263 contenidos totales para este tipo.'
+                      options: []
+                  message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 265 contenidos totales para este tipo.'
                   meta:
                     type: Chistes
                     type_slug: chistes
-                    total_items: 263
+                    total_items: 265
                 properties:
                   success:
                     type: boolean
@@ -959,11 +1113,12 @@ paths:
                     type: array
                     example:
                       -
-                        id: 72
-                        title: 'El sysadmin y las citas: conexión garantizada'
-                        content: "¿Cómo describirías a un sysadmin en una cita?\nExperto en conexiones, pero solo en la red."
+                        id: 62
+                        title: 'Project Manager Iluminado'
+                        content: '¿Cuántos project managers se necesitan para cambiar una bombilla? Ninguno, eso está fuera del alcance del proyecto.'
                         urlImage: null
                         uploader: '@raupulus'
+                        options: []
                     description: 'Lista con el contenido aleatorio solicitado'
                     enum: []
                     items:
@@ -971,22 +1126,25 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 72
+                          example: 62
                         title:
                           type: string
-                          example: 'El sysadmin y las citas: conexión garantizada'
+                          example: 'Project Manager Iluminado'
                         content:
                           type: string
-                          example: "¿Cómo describirías a un sysadmin en una cita?\nExperto en conexiones, pero solo en la red."
+                          example: '¿Cuántos project managers se necesitan para cambiar una bombilla? Ninguno, eso está fuera del alcance del proyecto.'
                         urlImage:
                           type: string
                           example: null
                         uploader:
                           type: string
                           example: '@raupulus'
+                        options:
+                          type: array
+                          example: []
                   message:
                     type: string
-                    example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 263 contenidos totales para este tipo.'
+                    example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 265 contenidos totales para este tipo.'
                     description: 'Mensaje descriptivo de la operación'
                     enum: []
                   meta:
@@ -1004,7 +1162,7 @@ paths:
                         enum: []
                       total_items:
                         type: integer
-                        example: 263
+                        example: 265
                         description: 'Total de contenidos disponibles para este tipo'
                         enum: []
                     description: 'Metadatos adicionales de la respuesta'
@@ -1054,7 +1212,7 @@ paths:
       -
         in: path
         name: type_slug
-        description: 'El slug del tipo de contenido.'
+        description: 'El slug del tipo de contenido [chistes|adivinanzas|quiz].'
         example: chistes
         required: true
         schema:
@@ -1092,6 +1250,7 @@ paths:
                       content: "¿Cuál es el lenguaje de programación favorito de los extraterrestres?\nJavaScript, porque es universal."
                       urlImage: null
                       uploader: '@raupulus'
+                      options: []
                   message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 2 contenidos totales.'
                   meta:
                     type: Chistes
@@ -1114,6 +1273,7 @@ paths:
                         content: "¿Cuál es el lenguaje de programación favorito de los extraterrestres?\nJavaScript, porque es universal."
                         urlImage: null
                         uploader: '@raupulus'
+                        options: []
                     description: 'Lista con el contenido aleatorio solicitado'
                     enum: []
                     items:
@@ -1134,6 +1294,9 @@ paths:
                         uploader:
                           type: string
                           example: '@raupulus'
+                        options:
+                          type: array
+                          example: []
                   message:
                     type: string
                     example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 2 contenidos totales.'
@@ -1234,7 +1397,7 @@ paths:
       -
         in: path
         name: type_slug
-        description: 'El slug del tipo de contenido.'
+        description: 'El slug del tipo de contenido [chistes|adivinanzas|quiz].'
         example: chistes
         required: true
         schema:
@@ -1275,16 +1438,17 @@ paths:
                   success: true
                   data:
                     -
-                      id: 35
-                      title: 'IA al ukelele'
-                      content: '¿Para qué va el sysadmin al CPD con un ukelele? Por si a la IA se pone agresiva (para amansarla)'
+                      id: 80
+                      title: 'El sprint: deporte olímpico de las oficinas tech'
+                      content: "¿Cuál es el deporte más practicado en oficinas informáticas?\nEl \"sprint\", siempre corriendo para cumplir los plazos."
                       urlImage: null
                       uploader: '@raupulus'
-                  message: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Programación de 125 contenidos totales.'
+                      options: []
+                  message: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Programación de 126 contenidos totales.'
                   meta:
                     group: 'Chistes de Programación'
                     group_slug: chistes-devs
-                    total_items: 125
+                    total_items: 126
                 properties:
                   success:
                     type: boolean
@@ -1295,11 +1459,12 @@ paths:
                     type: array
                     example:
                       -
-                        id: 35
-                        title: 'IA al ukelele'
-                        content: '¿Para qué va el sysadmin al CPD con un ukelele? Por si a la IA se pone agresiva (para amansarla)'
+                        id: 80
+                        title: 'El sprint: deporte olímpico de las oficinas tech'
+                        content: "¿Cuál es el deporte más practicado en oficinas informáticas?\nEl \"sprint\", siempre corriendo para cumplir los plazos."
                         urlImage: null
                         uploader: '@raupulus'
+                        options: []
                     description: 'Lista con el contenido aleatorio solicitado'
                     enum: []
                     items:
@@ -1307,22 +1472,25 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 35
+                          example: 80
                         title:
                           type: string
-                          example: 'IA al ukelele'
+                          example: 'El sprint: deporte olímpico de las oficinas tech'
                         content:
                           type: string
-                          example: '¿Para qué va el sysadmin al CPD con un ukelele? Por si a la IA se pone agresiva (para amansarla)'
+                          example: "¿Cuál es el deporte más practicado en oficinas informáticas?\nEl \"sprint\", siempre corriendo para cumplir los plazos."
                         urlImage:
                           type: string
                           example: null
                         uploader:
                           type: string
                           example: '@raupulus'
+                        options:
+                          type: array
+                          example: []
                   message:
                     type: string
-                    example: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Programación de 125 contenidos totales.'
+                    example: 'Se devuelve 1 contenido aleatorio para el grupo Chistes de Programación de 126 contenidos totales.'
                     description: 'Mensaje descriptivo de la operación'
                     enum: []
                   meta:
@@ -1340,7 +1508,7 @@ paths:
                         enum: []
                       total_items:
                         type: integer
-                        example: 125
+                        example: 126
                         description: 'Total de contenidos disponibles para este grupo'
                         enum: []
                     description: 'Metadatos adicionales de la respuesta'

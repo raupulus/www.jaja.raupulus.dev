@@ -235,9 +235,12 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir ruta "content.categoria.content.random" a sitemap
 - [x] En estadísticas del backend, sugerencias total, pendientes y aprobadas no se calculan bien
 - [x] Añadir botón en panel admin para publicar en el momento en todas las redes sociales un contenido concreto o una entrada manual
+- [x] Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
+- [x] Aumentar límites de peticiones en los endpoints de la api para usuarios autenticados
+- [x] Añadir "options" al devolver contenido de tipo quiz
 - Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
-- Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
+- Implementar lista de exclusión de ips al validar límites de peticiones
 
 ## TODO con menor prioridad
 
@@ -271,3 +274,4 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)
 - En las tarjetas (frontend) de contenido total, colaboradores y risas generadas... enlazar a secciones?
 - Al editar adivinanzas desde el grupos->modal de contenido, no tengo la selección de preguntas correctas. Plantear viabilidad.
+- Bajar timeout de envío para fomularios y tras enviar la primera vez enviar timeout para que no sorprenda a la gente cuando intenta enviar por segunda vez

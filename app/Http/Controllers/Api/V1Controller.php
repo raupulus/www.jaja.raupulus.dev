@@ -62,11 +62,12 @@ class V1Controller extends Controller
      */
     public function random(ContentRandomRequest $request): JsonResponse
     {
-        $limit = $request->getLimit();
-
         try {
+            $limit = $request->getLimit();
+
             $contentsQuery = Content::whereNotIn('group_id', [4, 14])
                 ->where('is_adult', false)
+                ->with('options')
                 ->inRandomOrder();
             $count = $contentsQuery->count();
 
@@ -91,7 +92,82 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
-            return $this->errorResponse('Error al obtener chistes aleatorios', 500);
+            return $this->errorResponse('Error al obtener contenidos aleatorios', 500);
+        }
+    }
+
+    /**
+     * Contenido Aleatorio
+     *
+     * Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo
+     * [chistes|adivinanzas|quiz].
+     *
+     * Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.
+     *
+     * @group 📚 Contenidos
+     * @unauthenticated
+     *
+     * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Colección de contenidos aleatorios
+     * @responseField data[].title string Título del contenido (chiste, adivinanza, etc.)
+     * @responseField data[].content string Texto del contenido
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
+     * @responseField data[].uploader string Nombre del usuario que subió el contenido
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.total_items integer Número total de contenidos disponibles
+     * @responseField meta.limit integer Límite aplicado en esta consulta
+     *
+     * @response 404 {
+     * "success": false,
+     * "message": "No se encontraron contenidos"
+     * }
+     *
+     * @response 500 {
+     * "success": false,
+     * "message": "Error al obtener chistes aleatorios"
+     * }
+     *
+     * @param ContentRandomRequest $request
+     * @param Type $type
+     * @return JsonResponse
+     */
+    public function randomFromType(ContentRandomRequest $request, Type $type): JsonResponse
+    {
+        try {
+            $limit = $request->getLimit();
+
+            $contentsQuery = $type->contents()->whereNotIn('group_id', [4, 14])
+                ->where('is_adult', false)
+                ->with('options')
+                ->inRandomOrder();
+
+            $count = $contentsQuery->count();
+
+            if (!$count) {
+                return $this->errorResponse('No se encontraron contenidos', 404);
+            }
+
+            $contents = $contentsQuery->limit($limit)->get();
+
+            if ($contents->count() > 1) {
+                $message = 'Se obtuvieron ' . $contents->count() . ' contenidos aleatorios';
+            } else {
+                $message = 'Se obtuvo ' . $contents->count() . ' contenido aleatorio';
+            }
+
+            return $this->collectionResponse(
+                ContentResource::collection($contents),
+                $message,
+                [
+                    'total_items' => $count,
+                    'limit' => $limit,
+                ]
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse('Error al obtener contenidos aleatorios', 500);
         }
     }
 
@@ -323,7 +399,7 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio de un tipo concreto recibido.
      *
      * @group 📚 Contenidos
-     * @urlParam type_slug string required El slug del tipo de contenido. Example: chistes
+     * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
@@ -359,6 +435,7 @@ class V1Controller extends Controller
                 ->where('is_adult', false)
                 ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id'])
                 ->byType($type)
+                ->with('options')
                 ->random();
 
             $count = $contents->count();
@@ -401,7 +478,7 @@ class V1Controller extends Controller
      *
      * @group 📚 Contenidos
      *
-     * @urlParam type_slug string required El slug del tipo de contenido. Example: chistes
+     * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
      * @urlParam categorySlug string required El slug de la categoría. Example: javascript
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -453,6 +530,7 @@ class V1Controller extends Controller
                 ->where('is_adult', false)
                 ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
                 ->byTypeAndCategory($type, $category)
+                ->with('options')
                 ->random();
 
             $count = $contents->count();
@@ -532,6 +610,7 @@ class V1Controller extends Controller
 
             $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
                 ->byGroup($group)
+                ->with('options')
                 ->random();
 
             $count = $contents->count();

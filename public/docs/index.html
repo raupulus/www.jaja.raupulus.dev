@@ -111,6 +111,9 @@
                                                     <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-random">
                                 <a href="#contenidos-GETapi-v1-random">Contenido Aleatorio</a>
                             </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-random--type_slug-">
+                                <a href="#contenidos-GETapi-v1-random--type_slug-">Contenido Aleatorio</a>
+                            </li>
                                                                                 <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-type--type_slug--content-random">
                                 <a href="#contenidos-GETapi-v1-type--type_slug--content-random">Contenido en base a un tipo</a>
                             </li>
@@ -151,7 +154,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Última actualización: July 7, 2025</li>
+        <li>Última actualización: July 9, 2025</li>
     </ul>
 </div>
 
@@ -1013,8 +1016,8 @@ access-control-allow-origin: *
         {
             &quot;name&quot;: &quot;Adivinanzas&quot;,
             &quot;slug&quot;: &quot;adivinanzas&quot;,
-            &quot;description&quot;: &quot;Adivinanzas para reflexionar&quot;,
-            &quot;urlImage&quot;: null
+            &quot;description&quot;: &quot;Adivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionar&quot;,
+            &quot;urlImage&quot;: &quot;http://jaja.raupulus.dev/storage/general/1751920088_oHVOUYtCWj.webp&quot;
         }
     ],
     &quot;message&quot;: &quot;Se obtuvieron 3 tipos&quot;,
@@ -2109,16 +2112,17 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 73,
-            &quot;title&quot;: &quot;Python: el lenguaje m&aacute;s perezoso del mundo&quot;,
-            &quot;content&quot;: &quot;&iquest;Cu&aacute;l es el lenguaje de programaci&oacute;n m&aacute;s vago?\nPython, siempre llega arrastr&aacute;ndose.&quot;,
+            &quot;id&quot;: 280,
+            &quot;title&quot;: &quot;Ni&ntilde;o al circo&quot;,
+            &quot;content&quot;: &quot;Un ni&ntilde;o de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa&quot;,
             &quot;urlImage&quot;: null,
-            &quot;uploader&quot;: &quot;@raupulus&quot;
+            &quot;uploader&quot;: &quot;@raupulus&quot;,
+            &quot;options&quot;: []
         }
     ],
     &quot;message&quot;: &quot;Se obtuvo 1 contenido aleatorio&quot;,
     &quot;meta&quot;: {
-        &quot;total_items&quot;: 267,
+        &quot;total_items&quot;: 268,
         &quot;limit&quot;: 1
     }
 }</code>
@@ -2307,6 +2311,313 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
                     </div>
                                     </details>
         </div>
+                        <h2 id="contenidos-GETapi-v1-random--type_slug-">Contenido Aleatorio</h2>
+
+<p>
+</p>
+
+<p>Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo
+[chistes|adivinanzas|quiz].</p>
+<p>Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.</p>
+
+<span id="example-requests-GETapi-v1-random--type_slug-">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/random/chistes?limit=1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/random/chistes';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'limit' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/random/chistes'
+params = {
+  'limit': '1',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/random/chistes"
+);
+
+const params = {
+    "limit": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-random--type_slug-">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <details class="annotation">
+            <summary style="cursor: pointer;">
+                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
+            </summary>
+            <pre><code class="language-http">cache-control: no-cache, private
+content-type: application/json
+access-control-allow-origin: *
+ </code></pre></details>         <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 87,
+            &quot;title&quot;: &quot;El deporte favorito del dise&ntilde;ador: atletismo textual&quot;,
+            &quot;content&quot;: &quot;&iquest;Cu&aacute;l es el deporte favorito de un dise&ntilde;ador?\nEl salto de l&iacute;neas&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;,
+            &quot;options&quot;: []
+        }
+    ],
+    &quot;message&quot;: &quot;Se obtuvo 1 contenido aleatorio&quot;,
+    &quot;meta&quot;: {
+        &quot;total_items&quot;: 265,
+        &quot;limit&quot;: 1
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener chistes aleatorios&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-random--type_slug-" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-random--type_slug-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-random--type_slug-"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-random--type_slug-" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-random--type_slug-">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-random--type_slug-" data-method="GET"
+      data-path="api/v1/random/{type_slug}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-random--type_slug-', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-random--type_slug-"
+                    onclick="tryItOut('GETapi-v1-random--type_slug-');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-random--type_slug-"
+                    onclick="cancelTryOut('GETapi-v1-random--type_slug-');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-random--type_slug-"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/random/{type_slug}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de URL</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>type_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type_slug"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="chistes"
+               data-component="url">
+    <br>
+<p>El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: <code>chistes</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="1"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+<br>
+<p>Colección de contenidos aleatorios</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+<br>
+<p>Nombre del usuario que subió el contenido</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>Número total de contenidos disponibles</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+<br>
+<p>Límite aplicado en esta consulta</p>
+                    </div>
+                                    </details>
+        </div>
                         <h2 id="contenidos-GETapi-v1-type--type_slug--content-random">Contenido en base a un tipo</h2>
 
 <p>
@@ -2406,18 +2717,19 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 72,
-            &quot;title&quot;: &quot;El sysadmin y las citas: conexi&oacute;n garantizada&quot;,
-            &quot;content&quot;: &quot;&iquest;C&oacute;mo describir&iacute;as a un sysadmin en una cita?\nExperto en conexiones, pero solo en la red.&quot;,
+            &quot;id&quot;: 62,
+            &quot;title&quot;: &quot;Project Manager Iluminado&quot;,
+            &quot;content&quot;: &quot;&iquest;Cu&aacute;ntos project managers se necesitan para cambiar una bombilla? Ninguno, eso est&aacute; fuera del alcance del proyecto.&quot;,
             &quot;urlImage&quot;: null,
-            &quot;uploader&quot;: &quot;@raupulus&quot;
+            &quot;uploader&quot;: &quot;@raupulus&quot;,
+            &quot;options&quot;: []
         }
     ],
-    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el tipo Chistes de 263 contenidos totales para este tipo.&quot;,
+    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el tipo Chistes de 265 contenidos totales para este tipo.&quot;,
     &quot;meta&quot;: {
         &quot;type&quot;: &quot;Chistes&quot;,
         &quot;type_slug&quot;: &quot;chistes&quot;,
-        &quot;total_items&quot;: 263
+        &quot;total_items&quot;: 265
     }
 }</code>
  </pre>
@@ -2532,7 +2844,7 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
                value="chistes"
                data-component="url">
     <br>
-<p>El slug del tipo de contenido. Example: <code>chistes</code></p>
+<p>El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: <code>chistes</code></p>
             </div>
                         <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
                                     <div style="padding-left: 28px; clear: unset;">
@@ -2738,7 +3050,8 @@ access-control-allow-origin: *
             &quot;title&quot;: &quot;JavaScript: el lenguaje universal de los aliens&quot;,
             &quot;content&quot;: &quot;&iquest;Cu&aacute;l es el lenguaje de programaci&oacute;n favorito de los extraterrestres?\nJavaScript, porque es universal.&quot;,
             &quot;urlImage&quot;: null,
-            &quot;uploader&quot;: &quot;@raupulus&quot;
+            &quot;uploader&quot;: &quot;@raupulus&quot;,
+            &quot;options&quot;: []
         }
     ],
     &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor&iacute;a JavaScript de 2 contenidos totales.&quot;,
@@ -2872,7 +3185,7 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
                value="chistes"
                data-component="url">
     <br>
-<p>El slug del tipo de contenido. Example: <code>chistes</code></p>
+<p>El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: <code>chistes</code></p>
             </div>
                     <div style="padding-left: 28px; clear: unset;">
                 <b style="line-height: 2;"><code>categorySlug</code></b>&nbsp;&nbsp;
@@ -3099,18 +3412,19 @@ access-control-allow-origin: *
     &quot;success&quot;: true,
     &quot;data&quot;: [
         {
-            &quot;id&quot;: 35,
-            &quot;title&quot;: &quot;IA al ukelele&quot;,
-            &quot;content&quot;: &quot;&iquest;Para qu&eacute; va el sysadmin al CPD con un ukelele? Por si a la IA se pone agresiva (para amansarla)&quot;,
+            &quot;id&quot;: 80,
+            &quot;title&quot;: &quot;El sprint: deporte ol&iacute;mpico de las oficinas tech&quot;,
+            &quot;content&quot;: &quot;&iquest;Cu&aacute;l es el deporte m&aacute;s practicado en oficinas inform&aacute;ticas?\nEl \&quot;sprint\&quot;, siempre corriendo para cumplir los plazos.&quot;,
             &quot;urlImage&quot;: null,
-            &quot;uploader&quot;: &quot;@raupulus&quot;
+            &quot;uploader&quot;: &quot;@raupulus&quot;,
+            &quot;options&quot;: []
         }
     ],
-    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci&oacute;n de 125 contenidos totales.&quot;,
+    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci&oacute;n de 126 contenidos totales.&quot;,
     &quot;meta&quot;: {
         &quot;group&quot;: &quot;Chistes de Programaci&oacute;n&quot;,
         &quot;group_slug&quot;: &quot;chistes-devs&quot;,
-        &quot;total_items&quot;: 125
+        &quot;total_items&quot;: 126
     }
 }</code>
  </pre>

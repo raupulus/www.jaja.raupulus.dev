@@ -14,6 +14,11 @@ Route::get('/random', [ApiController::class, 'random'])
     ->middleware('throttle.real.ip:10,1')
     ->name('api.get.random');
 
+## Devolver un contenido aleatorio de entre todos
+Route::get('/random/{type:slug}', [ApiController::class, 'randomFromType'])
+    ->middleware('throttle.real.ip:10,1')
+    ->name('api.get.random.from.type');
+
 Route::middleware('auth:sanctum')->group(function () {
     ## Cerrar sesión y caducar token.
     Route::post('/auth/logout', [AuthController::class, 'logout'])
@@ -52,16 +57,16 @@ Route::middleware('auth:sanctum')->group(function () {
 
     ## Contenido random en base a un tipo.
     Route::get('/type/{type:slug}/content/random', [ApiController::class, 'getContentRandomFromType'])
-        ->middleware('throttle.real.ip:20,1')
+        ->middleware('throttle.real.ip:50,1')
         ->name('api.types.content.random');
 
     ## Contenido mediante una categoría y un tipo.
     Route::get('/type/{type:slug}/category/{categorySlug}/content/random', [ApiController::class, 'getContentRandomFromCategory'])
-        ->middleware('throttle.real.ip:20,1')
+        ->middleware('throttle.real.ip:50,1')
         ->name('api.types.categories.content.random');
 
     ## Contenido en base a un grupo
     Route::get('/group/{group:slug}/content/random', [ApiController::class, 'getContentRandomFromGroup'])
-        ->middleware('throttle.real.ip:20,1')
+        ->middleware('throttle.real.ip:50,1')
         ->name('api.groups.content.random');
 });

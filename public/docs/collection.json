@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "da2e5066-24d9-4d27-a067-2e650c6d813a",
+        "_postman_id": "4a0bf6e8-a5c9-4c49-92c0-d155932f5e10",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -173,7 +173,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"name\":\"Quiz\",\"slug\":\"quiz\",\"description\":\"Preguntas tipo quiz\",\"urlImage\":null},{\"name\":\"Chistes\",\"slug\":\"chistes\",\"description\":\"Chistes, bromas y situaciones de humor\",\"urlImage\":null},{\"name\":\"Adivinanzas\",\"slug\":\"adivinanzas\",\"description\":\"Adivinanzas para reflexionar\",\"urlImage\":null}],\"message\":\"Se obtuvieron 3 tipos\",\"meta\":{\"total_items\":3}}",
+                            "body": "{\"success\":true,\"data\":[{\"name\":\"Quiz\",\"slug\":\"quiz\",\"description\":\"Preguntas tipo quiz\",\"urlImage\":null},{\"name\":\"Chistes\",\"slug\":\"chistes\",\"description\":\"Chistes, bromas y situaciones de humor\",\"urlImage\":null},{\"name\":\"Adivinanzas\",\"slug\":\"adivinanzas\",\"description\":\"Adivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionarAdivinanzas para reflexionar\",\"urlImage\":\"http:\\\/\\\/jaja.raupulus.dev\\\/storage\\\/general\\\/1751920088_oHVOUYtCWj.webp\"}],\"message\":\"Se obtuvieron 3 tipos\",\"meta\":{\"total_items\":3}}",
                             "name": ""
                         },
                         {
@@ -398,7 +398,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":73,\"title\":\"Python: el lenguaje m\\u00e1s perezoso del mundo\",\"content\":\"\\u00bfCu\\u00e1l es el lenguaje de programaci\\u00f3n m\\u00e1s vago?\\nPython, siempre llega arrastr\\u00e1ndose.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":267,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":280,\"title\":\"Ni\\u00f1o al circo\",\"content\":\"Un ni\\u00f1o de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":268,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -411,6 +411,81 @@
                             "header": [],
                             "code": 500,
                             "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener chistes aleatorios\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido Aleatorio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/random\/:type_slug",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/random\/:type_slug?limit=1",
+                            "variable": [
+                                {
+                                    "id": "type_slug",
+                                    "key": "type_slug",
+                                    "value": "chistes",
+                                    "description": "El slug del tipo de contenido [chistes|adivinanzas|quiz]."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo\n[chistes|adivinanzas|quiz].\n\nEste endpoint al ser p\u00fablico est\u00e1 limitado a m\u00e1ximo 5 elementos por petici\u00f3n y a 10 peticiones por minuto.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"id\":87,\"title\":\"El deporte favorito del dise\\u00f1ador: atletismo textual\",\"content\":\"\\u00bfCu\\u00e1l es el deporte favorito de un dise\\u00f1ador?\\nEl salto de l\\u00edneas\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":265,\"limit\":1}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"success\": false,\n\"message\": \"No se encontraron contenidos\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"success\": false,\n\"message\": \"Error al obtener chistes aleatorios\"\n}",
                             "name": ""
                         }
                     ]
@@ -435,7 +510,7 @@
                                     "id": "type_slug",
                                     "key": "type_slug",
                                     "value": "chistes",
-                                    "description": "El slug del tipo de contenido."
+                                    "description": "El slug del tipo de contenido [chistes|adivinanzas|quiz]."
                                 }
                             ]
                         },
@@ -470,7 +545,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":72,\"title\":\"El sysadmin y las citas: conexi\\u00f3n garantizada\",\"content\":\"\\u00bfC\\u00f3mo describir\\u00edas a un sysadmin en una cita?\\nExperto en conexiones, pero solo en la red.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 263 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":263}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":62,\"title\":\"Project Manager Iluminado\",\"content\":\"\\u00bfCu\\u00e1ntos project managers se necesitan para cambiar una bombilla? Ninguno, eso est\\u00e1 fuera del alcance del proyecto.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 265 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":265}}",
                             "name": ""
                         },
                         {
@@ -507,7 +582,7 @@
                                     "id": "type_slug",
                                     "key": "type_slug",
                                     "value": "chistes",
-                                    "description": "El slug del tipo de contenido."
+                                    "description": "El slug del tipo de contenido [chistes|adivinanzas|quiz]."
                                 },
                                 {
                                     "id": "categorySlug",
@@ -548,7 +623,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":93,\"title\":\"JavaScript: el lenguaje universal de los aliens\",\"content\":\"\\u00bfCu\\u00e1l es el lenguaje de programaci\\u00f3n favorito de los extraterrestres?\\nJavaScript, porque es universal.\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 2 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":2}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":93,\"title\":\"JavaScript: el lenguaje universal de los aliens\",\"content\":\"\\u00bfCu\\u00e1l es el lenguaje de programaci\\u00f3n favorito de los extraterrestres?\\nJavaScript, porque es universal.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\\u00eda JavaScript de 2 contenidos totales.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"category\":\"JavaScript\",\"category_slug\":\"javascript\",\"total_items\":2}}",
                             "name": ""
                         },
                         {
@@ -626,7 +701,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":35,\"title\":\"IA al ukelele\",\"content\":\"\\u00bfPara qu\\u00e9 va el sysadmin al CPD con un ukelele? Por si a la IA se pone agresiva (para amansarla)\",\"urlImage\":null,\"uploader\":\"@raupulus\"}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 125 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":125}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":80,\"title\":\"El sprint: deporte ol\\u00edmpico de las oficinas tech\",\"content\":\"\\u00bfCu\\u00e1l es el deporte m\\u00e1s practicado en oficinas inform\\u00e1ticas?\\nEl \\\"sprint\\\", siempre corriendo para cumplir los plazos.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 126 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":126}}",
                             "name": ""
                         },
                         {
