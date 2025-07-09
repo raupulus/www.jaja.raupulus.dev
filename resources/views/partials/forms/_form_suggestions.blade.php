@@ -109,7 +109,7 @@
                 </div>
 
                 <input class="answer-checkbox hidden" type="checkbox" name="answer{{$pos}}_correct">
-                <input type="text" name="answer{{$pos}}" maxlength="255">
+                <input type="text" name="answer{{$pos}}" maxlength="255" value="{{old('answer' . $pos)}}">
             </div>
         @endforeach
     </div>

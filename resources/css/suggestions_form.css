@@ -172,6 +172,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0; /* Evita que el icono se redimensione */
 }
 
 .throttle-message {
@@ -191,6 +192,35 @@
 #throttleCounter {
     font-weight: bold;
     color: #f5a623;
+}
+
+/* Animación específica para el icono del timer */
+.timer-icon {
+    animation: rotate 2s linear infinite;
+    transform-origin: center;
+}
+
+/* Keyframe para la rotación del icono */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Evito que las animaciones del formulario afecten el throttle alert */
+.throttle-alert * {
+    animation-duration: 0s !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Restablezco la animación solo para el icono del timer */
+.throttle-alert .timer-icon {
+    animation: rotate 2s linear infinite !important;
+    transform-origin: center !important;
 }
 
 /* Responsive para el formulario de sugerencias */
