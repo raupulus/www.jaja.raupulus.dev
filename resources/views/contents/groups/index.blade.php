@@ -32,9 +32,11 @@
             <div class="card-resume-right">
                 <span class="card-resume-badge">{{$group->contents_count}}</span>
 
-                {{--
-                <a href="#" class="card-resume-button">Ir a descubrirlos</a>
-                --}}
+                @if($group->contents()->count())
+                    <a href="{{route('content.group.content.random', $group->slug)}}" class="card-resume-button">
+                        Ver Algunos
+                    </a>
+                @endif
             </div>
         </div>
 

@@ -14,7 +14,7 @@ class SuggestionOverview extends BaseWidget
     protected function getStats(): array
     {
         $pending = Suggestion::whereNull('approved_at')->count();
-        $approved = Suggestion::whereNotNull('approved_at')->count();
+        $approved = Suggestion::withTrashed()->whereNotNull('approved_at')->count();
 
         $thisMonth = Suggestion::withTrashed()
             ->where('created_at', '>=', (Carbon::now())->subDays(30))

@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Category;
 use App\Models\Collaborator;
+use App\Models\Group;
 use App\Models\Page;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -37,6 +39,7 @@ class SitemapGeneratorCommand extends Command
             $sitemap = $this->createBaseSitemap();
             $this->addPagesToSitemap($sitemap);
             $this->addCollaboratorsToSitemap($sitemap);
+            $this->addContentToSitemap($sitemap);
 
             $this->writeSitemapToFile($sitemap);
 
@@ -81,6 +84,55 @@ class SitemapGeneratorCommand extends Command
         }
 
         return $sitemap;
+    }
+
+    private function addContentToSitemap(Sitemap $sitemap): void
+    {
+        $this->info('Agregando páginas de grupos al sitemap...');
+
+        $chunkSize = $this->option('chunk');
+        $groupCount = 0;
+
+        Group::chunk($chunkSize, function ($groups) use ($sitemap, &$groupCount) {
+            foreach ($groups as $group) {
+
+                $lastModContent = $group->contents()->orderBy('updated_at', 'desc')->first();
+                $lastModContent = $lastModContent ? $lastModContent->updated_at : $group->created_at;
+
+                $sitemap->add(
+                    Url::create(route('content.group.content.random', $group->slug))
+                        ->setPriority(0.7)
+                        ->setChangeFrequency('weekly')
+                        ->setLastModificationDate($lastModContent)
+                );
+
+                $groupCount++;
+            }
+        });
+
+        $this->info("   ✓ {$groupCount} enlaces a páginas de grupos creados");
+
+        $categoryCount = 0;
+
+        Category::chunk($chunkSize, function ($categories) use ($sitemap, &$categoryCount) {
+            foreach ($categories as $category) {
+
+                $lastModContent = $category->contents()->orderBy('updated_at', 'desc')->first();
+                $lastModContent = $lastModContent ? $lastModContent->updated_at : $category->created_at;
+
+                $sitemap->add(
+                    Url::create(route('content.categoria.content.random', $category->slug))
+                        ->setPriority(0.7)
+                        ->setChangeFrequency('weekly')
+                        ->setLastModificationDate($lastModContent)
+                );
+
+                $categoryCount++;
+            }
+        });
+
+        $this->info("   ✓ {$categoryCount} enlaces a páginas de categorías creados");
+
     }
 
     private function addPagesToSitemap(Sitemap $sitemap): void

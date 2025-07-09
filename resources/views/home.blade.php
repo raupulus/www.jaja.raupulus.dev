@@ -173,33 +173,10 @@
     {{-- Botones enlazando a listado de contenidos --}}
     @include('partials._groups_links')
 
-    <section class="box-card-content">
-        <h2>Algunos contenidos</h2>
 
-        @foreach($contents as $content)
-            <div class="card card-content">
-                @if ($content->image)
-                    <div class="card-content-image">
-                        <img src="{{$content->urlImage}}" title="{{$content->title}}" alt="{{$content->title}}"/>
-                    </div>
-                @endif
+    {{-- Listado de contenidos aleatorios --}}
+    @include('contents.partials._contents', ['contents' => $contents, 'contents_title' => 'Algunos contenidos'])
 
-                <div class="card-content-body">
-                    <h3>{{$content->title}}</h3>
-
-                    <p>
-                        {!! $content->formattedHtmlContent !!}
-                    </p>
-                </div>
-
-                <div class="card-content-meta">
-                    <span>{{$content->group?->title}}</span>
-                    <span>Por: {{$content->uploader}}</span>
-                </div>
-
-            </div>
-        @endforeach
-    </section>
 
     {{-- Call to action - Añadir bot de discord a servidor --}}
     <div class="btn-dc-bot-container">

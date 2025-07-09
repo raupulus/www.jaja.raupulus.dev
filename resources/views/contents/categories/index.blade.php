@@ -9,29 +9,29 @@
 
     <section class="category-grid">
         @foreach($categories as $category)
-            {{--<a href="#" class="category-card">--}}
-            <div class="category-card">
-                <div class="category-card-content {{ $category->image ? '' : 'no-image' }}">
-                    @if($category->image)
-                        <div class="category-card-image">
-                            <img src="{{$category->urlImage}}" alt="{{$category->title}}">
-                        </div>
-                    @endif
-
-                    <div class="category-card-text">
-                        <h3 class="category-card-title">
-                            {{ Str::limit($category->title, 80) }}
-                        </h3>
-
-                        @if($category->description)
-                            <p class="category-card-description">
-                                {{ $category->description }}
-                            </p>
+            <a href="{{route('content.categoria.content.random', $category->slug)}}" class="category-card">
+                <div class="category-card">
+                    <div class="category-card-content {{ $category->image ? '' : 'no-image' }}">
+                        @if($category->image)
+                            <div class="category-card-image">
+                                <img src="{{$category->urlImage}}" alt="{{$category->title}}">
+                            </div>
                         @endif
+
+                        <div class="category-card-text">
+                            <h3 class="category-card-title">
+                                {{ Str::limit($category->title, 80) }}
+                            </h3>
+
+                            @if($category->description)
+                                <p class="category-card-description">
+                                    {{ $category->description }}
+                                </p>
+                            @endif
+                        </div>
                     </div>
                 </div>
-            </div>
-            {{--</a>--}}
+            </a>
         @endforeach
     </section>
 

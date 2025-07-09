@@ -230,9 +230,15 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Diseñar imágenes para todas las páginas
 - [x] Revisar todas las páginas para asegurar que tienen metadatos y descripciones bien formadas
 - [x] Añadir selector de grupos en formulario de subida
-- Crear listado y filtros de contenidos al entrar en un grupo o categoría, crear vista para solo mostrar 1 y paginación para ir refrescando contenido
-- En las tarjetas (frontend) de contenido total, colaboradores y risas generadas... enlazar a secciones
+- [x] Crear listado y filtros de contenidos al entrar en un grupo o categoría, crear vista para solo mostrar 3 y botón para ir refrescando contenido
+- [x] Añadir ruta "content.group.content.random" a sitemap
+- [x] Añadir ruta "content.categoria.content.random" a sitemap
+- [x] En estadísticas del backend, sugerencias total, pendientes y aprobadas no se calculan bien
+- Al editar adivinanzas desde el grupos->modal de contenido, no tengo la selección de preguntas correctas -> añadir
 - Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
+- Añadir botón en panel admin para publicar en el momento en todas las redes sociales un contenido concreto o una entrada manual
+- Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
+- Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
 
 ## TODO con menor prioridad
 
@@ -255,13 +261,13 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 ## TODO Mejoras interesantes pero no afectan a funcionalidad
 
 - Unificar subidas de imágenes a un método que pueda reutilizar en todos lados en lugar de duplicar tanto código ahí
+- Al mostrar preguntas de tipo quiz, el formato de las posibles respuestas es una lista ordenada sin estilos...
 
 ## Plantear si a futuro realmente lo queremos tener
 
-- Añadir botón en panel admin para publicar en el momento en todas las redes sociales un contenido concreto o una entrada manual
-- Mover a endpoint público obtener contenido filtrando tipo: chiste/adivinanza/quiz
 - Generar thumbnails de todas las imágenes a 120px, 300px y 600px?
 - Importar/exportar contenidos en excel+csv
 - Frontend: Crear efecto de jajas cayendo por el fondo de la web con distintas longitudes "ja" "jaja" "aj"... y opacidad
 - Crear contador de visita a endpoint bloqueando contador por día u hora restringiendo ip+domain
 - Crear página de mantenimiento para cuando se esté actualizando (para php artisan down)
+- En las tarjetas (frontend) de contenido total, colaboradores y risas generadas... enlazar a secciones?

@@ -41,9 +41,18 @@ Route::get('/grupos', [ContentController::class, 'groupsIndex'])
 Route::get('/{type:slug}/grupos', [ContentController::class, 'gruposByTypeIndex'])
     ->name('content.type.group.index');
 
+## Muestra un contenido aleatorio en base a un grupo
+Route::get('/grupo/{group:slug}/random', [ContentController::class, 'contentRandomFromGroup'])
+    ->name('content.group.content.random');
+
 ## Listado de todas las categorías
-Route::get('/categories', [ContentController::class, 'categoriesIndex'])
+Route::get('/categorias', [ContentController::class, 'categoriesIndex'])
     ->name('content.categories.index');
+
+## Muestra un contenido aleatorio en base a una categoría
+Route::get('/categoria/{category:slug}/random', [ContentController::class, 'contentRandomFromcategory'])
+    ->name('content.categoria.content.random');
+
 
 /*************************************************
  * Solicitudes
