@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "4a0bf6e8-a5c9-4c49-92c0-d155932f5e10",
+        "_postman_id": "3597d727-1af5-4915-9ffb-70d3cb6d1fd2",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -398,7 +398,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":280,\"title\":\"Ni\\u00f1o al circo\",\"content\":\"Un ni\\u00f1o de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":268,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":237,\"title\":\"Patrulla con sirenas\",\"content\":\"Por qu\\u00e9 en Lepe los coches patrulla llevan encima una ba\\u00f1era? Para llevar las sirenas!\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":268,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -473,7 +473,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":87,\"title\":\"El deporte favorito del dise\\u00f1ador: atletismo textual\",\"content\":\"\\u00bfCu\\u00e1l es el deporte favorito de un dise\\u00f1ador?\\nEl salto de l\\u00edneas\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":265,\"limit\":1}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":188,\"title\":\"Ketchup en la oreja\",\"content\":\"Que hace uno de lepe con un sobre de ketchup en la oreja? Escuchar salsa\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se obtuvo 1 contenido aleatorio\",\"meta\":{\"total_items\":265,\"limit\":1}}",
                             "name": ""
                         },
                         {
@@ -545,7 +545,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":62,\"title\":\"Project Manager Iluminado\",\"content\":\"\\u00bfCu\\u00e1ntos project managers se necesitan para cambiar una bombilla? Ninguno, eso est\\u00e1 fuera del alcance del proyecto.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 265 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":265}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":204,\"title\":\"Llamada telef\\u00f3nica\",\"content\":\"Llama un lepero por tel\\u00e9fono y le contestan: - \\u00bfSi.....d\\u00edgame? - Doctor, doctor, mi mujer est\\u00e1 a punto de dar a luz. - \\u00bfEs su primer hijo? - No, soy su marido.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el tipo Chistes de 265 contenidos totales para este tipo.\",\"meta\":{\"type\":\"Chistes\",\"type_slug\":\"chistes\",\"total_items\":265}}",
                             "name": ""
                         },
                         {
@@ -701,7 +701,7 @@
                                 }
                             ],
                             "code": 200,
-                            "body": "{\"success\":true,\"data\":[{\"id\":80,\"title\":\"El sprint: deporte ol\\u00edmpico de las oficinas tech\",\"content\":\"\\u00bfCu\\u00e1l es el deporte m\\u00e1s practicado en oficinas inform\\u00e1ticas?\\nEl \\\"sprint\\\", siempre corriendo para cumplir los plazos.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 126 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":126}}",
+                            "body": "{\"success\":true,\"data\":[{\"id\":121,\"title\":\"El project manager en el laberinto: siempre con plan B\",\"content\":\"\\u00bfPor qu\\u00e9 el project manager nunca se asusta en un laberinto?\\nPorque siempre tiene un \\\"plan de salida\\\".\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelve 1 contenido aleatorio para el grupo Chistes de Programaci\\u00f3n de 126 contenidos totales.\",\"meta\":{\"group\":\"Chistes de Programaci\\u00f3n\",\"group_slug\":\"chistes-devs\",\"total_items\":126}}",
                             "name": ""
                         },
                         {
@@ -714,6 +714,71 @@
                             "header": [],
                             "code": 500,
                             "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un usuario",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/user\/:nick\/content\/random",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/user\/:nick\/content\/random",
+                            "variable": [
+                                {
+                                    "id": "nick",
+                                    "key": "nick",
+                                    "value": "raupulus",
+                                    "description": "El nick del usuario para filtrar por su contenido."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario."
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"success\":true,\"data\":[{\"id\":78,\"title\":\"El lince: mascota oficial del backend\",\"content\":\"\\u00bfCu\\u00e1l es el animal favorito de un programador backend?\\nEl lince, siempre acechando en los servidores.\",\"urlImage\":null,\"uploader\":\"@raupulus\",\"options\":[]}],\"message\":\"Se devuelven 271 contenidos aleatorios para el usuario @raupulus\",\"meta\":{\"user\":\"raupulus\",\"total_items\":271}}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"success\": false,\n\"message\": \"No se encontraron contenidos para el usuario especificado\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"success\": false,\n\"message\": \"Error al obtener contenidos del usuario especificado\"\n}",
                             "name": ""
                         }
                     ]

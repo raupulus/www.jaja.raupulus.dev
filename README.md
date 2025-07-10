@@ -239,7 +239,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Aumentar límites de peticiones en los endpoints de la api para usuarios autenticados
 - [x] Añadir "options" al devolver contenido de tipo quiz
 - [x] Implementar lista de exclusión de ips al validar límites de peticiones
-- Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
+- [x] Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
 - Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
 
 ## TODO con menor prioridad
@@ -275,3 +275,4 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - En las tarjetas (frontend) de contenido total, colaboradores y risas generadas... enlazar a secciones?
 - Al editar adivinanzas desde el grupos->modal de contenido, no tengo la selección de preguntas correctas. Plantear viabilidad.
 - Bajar timeout de envío para fomularios y tras enviar la primera vez enviar timeout para que no sorprenda a la gente cuando intenta enviar por segunda vez
+- Reportar contenido desde la web

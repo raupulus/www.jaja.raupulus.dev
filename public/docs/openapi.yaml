@@ -805,9 +805,9 @@ paths:
                   success: true
                   data:
                     -
-                      id: 280
-                      title: 'Niño al circo'
-                      content: 'Un niño de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa'
+                      id: 237
+                      title: 'Patrulla con sirenas'
+                      content: 'Por qué en Lepe los coches patrulla llevan encima una bañera? Para llevar las sirenas!'
                       urlImage: null
                       uploader: '@raupulus'
                       options: []
@@ -825,9 +825,9 @@ paths:
                     type: array
                     example:
                       -
-                        id: 280
-                        title: 'Niño al circo'
-                        content: 'Un niño de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa'
+                        id: 237
+                        title: 'Patrulla con sirenas'
+                        content: 'Por qué en Lepe los coches patrulla llevan encima una bañera? Para llevar las sirenas!'
                         urlImage: null
                         uploader: '@raupulus'
                         options: []
@@ -838,13 +838,13 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 280
+                          example: 237
                         title:
                           type: string
-                          example: 'Niño al circo'
+                          example: 'Patrulla con sirenas'
                         content:
                           type: string
-                          example: 'Un niño de lepe que le dice a la madre: -Mama, mama, mama llevame al circo, llevame al circo. A esto que le contesta la madre: -Quien te quiera ver que venga a la casa'
+                          example: 'Por qué en Lepe los coches patrulla llevan encima una bañera? Para llevar las sirenas!'
                         urlImage:
                           type: string
                           example: null
@@ -944,9 +944,9 @@ paths:
                   success: true
                   data:
                     -
-                      id: 87
-                      title: 'El deporte favorito del diseñador: atletismo textual'
-                      content: "¿Cuál es el deporte favorito de un diseñador?\nEl salto de líneas"
+                      id: 188
+                      title: 'Ketchup en la oreja'
+                      content: 'Que hace uno de lepe con un sobre de ketchup en la oreja? Escuchar salsa'
                       urlImage: null
                       uploader: '@raupulus'
                       options: []
@@ -964,9 +964,9 @@ paths:
                     type: array
                     example:
                       -
-                        id: 87
-                        title: 'El deporte favorito del diseñador: atletismo textual'
-                        content: "¿Cuál es el deporte favorito de un diseñador?\nEl salto de líneas"
+                        id: 188
+                        title: 'Ketchup en la oreja'
+                        content: 'Que hace uno de lepe con un sobre de ketchup en la oreja? Escuchar salsa'
                         urlImage: null
                         uploader: '@raupulus'
                         options: []
@@ -977,13 +977,13 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 87
+                          example: 188
                         title:
                           type: string
-                          example: 'El deporte favorito del diseñador: atletismo textual'
+                          example: 'Ketchup en la oreja'
                         content:
                           type: string
-                          example: "¿Cuál es el deporte favorito de un diseñador?\nEl salto de líneas"
+                          example: 'Que hace uno de lepe con un sobre de ketchup en la oreja? Escuchar salsa'
                         urlImage:
                           type: string
                           example: null
@@ -1092,9 +1092,9 @@ paths:
                   success: true
                   data:
                     -
-                      id: 62
-                      title: 'Project Manager Iluminado'
-                      content: '¿Cuántos project managers se necesitan para cambiar una bombilla? Ninguno, eso está fuera del alcance del proyecto.'
+                      id: 204
+                      title: 'Llamada telefónica'
+                      content: 'Llama un lepero por teléfono y le contestan: - ¿Si.....dígame? - Doctor, doctor, mi mujer está a punto de dar a luz. - ¿Es su primer hijo? - No, soy su marido.'
                       urlImage: null
                       uploader: '@raupulus'
                       options: []
@@ -1113,9 +1113,9 @@ paths:
                     type: array
                     example:
                       -
-                        id: 62
-                        title: 'Project Manager Iluminado'
-                        content: '¿Cuántos project managers se necesitan para cambiar una bombilla? Ninguno, eso está fuera del alcance del proyecto.'
+                        id: 204
+                        title: 'Llamada telefónica'
+                        content: 'Llama un lepero por teléfono y le contestan: - ¿Si.....dígame? - Doctor, doctor, mi mujer está a punto de dar a luz. - ¿Es su primer hijo? - No, soy su marido.'
                         urlImage: null
                         uploader: '@raupulus'
                         options: []
@@ -1126,13 +1126,13 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 62
+                          example: 204
                         title:
                           type: string
-                          example: 'Project Manager Iluminado'
+                          example: 'Llamada telefónica'
                         content:
                           type: string
-                          example: '¿Cuántos project managers se necesitan para cambiar una bombilla? Ninguno, eso está fuera del alcance del proyecto.'
+                          example: 'Llama un lepero por teléfono y le contestan: - ¿Si.....dígame? - Doctor, doctor, mi mujer está a punto de dar a luz. - ¿Es su primer hijo? - No, soy su marido.'
                         urlImage:
                           type: string
                           example: null
@@ -1438,9 +1438,9 @@ paths:
                   success: true
                   data:
                     -
-                      id: 80
-                      title: 'El sprint: deporte olímpico de las oficinas tech'
-                      content: "¿Cuál es el deporte más practicado en oficinas informáticas?\nEl \"sprint\", siempre corriendo para cumplir los plazos."
+                      id: 121
+                      title: 'El project manager en el laberinto: siempre con plan B'
+                      content: "¿Por qué el project manager nunca se asusta en un laberinto?\nPorque siempre tiene un \"plan de salida\"."
                       urlImage: null
                       uploader: '@raupulus'
                       options: []
@@ -1459,9 +1459,9 @@ paths:
                     type: array
                     example:
                       -
-                        id: 80
-                        title: 'El sprint: deporte olímpico de las oficinas tech'
-                        content: "¿Cuál es el deporte más practicado en oficinas informáticas?\nEl \"sprint\", siempre corriendo para cumplir los plazos."
+                        id: 121
+                        title: 'El project manager en el laberinto: siempre con plan B'
+                        content: "¿Por qué el project manager nunca se asusta en un laberinto?\nPorque siempre tiene un \"plan de salida\"."
                         urlImage: null
                         uploader: '@raupulus'
                         options: []
@@ -1472,13 +1472,13 @@ paths:
                       properties:
                         id:
                           type: integer
-                          example: 80
+                          example: 121
                         title:
                           type: string
-                          example: 'El sprint: deporte olímpico de las oficinas tech'
+                          example: 'El project manager en el laberinto: siempre con plan B'
                         content:
                           type: string
-                          example: "¿Cuál es el deporte más practicado en oficinas informáticas?\nEl \"sprint\", siempre corriendo para cumplir los plazos."
+                          example: "¿Por qué el project manager nunca se asusta en un laberinto?\nPorque siempre tiene un \"plan de salida\"."
                         urlImage:
                           type: string
                           example: null
@@ -1560,6 +1560,142 @@ paths:
         name: group_slug
         description: 'El slug del grupo de contenido.'
         example: chistes-devs
+        required: true
+        schema:
+          type: string
+  '/api/v1/user/{nick}/content/random':
+    get:
+      summary: 'Contenido en base a un usuario'
+      operationId: contenidoEnBaseAUnUsuario
+      description: 'Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 78
+                      title: 'El lince: mascota oficial del backend'
+                      content: "¿Cuál es el animal favorito de un programador backend?\nEl lince, siempre acechando en los servidores."
+                      urlImage: null
+                      uploader: '@raupulus'
+                      options: []
+                  message: 'Se devuelven 271 contenidos aleatorios para el usuario @raupulus'
+                  meta:
+                    user: raupulus
+                    total_items: 271
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 78
+                        title: 'El lince: mascota oficial del backend'
+                        content: "¿Cuál es el animal favorito de un programador backend?\nEl lince, siempre acechando en los servidores."
+                        urlImage: null
+                        uploader: '@raupulus'
+                        options: []
+                    description: 'Colección de contenidos aleatorios'
+                    enum: []
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 78
+                        title:
+                          type: string
+                          example: 'El lince: mascota oficial del backend'
+                        content:
+                          type: string
+                          example: "¿Cuál es el animal favorito de un programador backend?\nEl lince, siempre acechando en los servidores."
+                        urlImage:
+                          type: string
+                          example: null
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                        options:
+                          type: array
+                          example: []
+                  message:
+                    type: string
+                    example: 'Se devuelven 271 contenidos aleatorios para el usuario @raupulus'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+                  meta:
+                    type: object
+                    properties:
+                      user:
+                        type: string
+                        example: raupulus
+                        description: 'Nick del usuario sobre el que se filtran los contenidos'
+                        enum: []
+                      total_items:
+                        type: integer
+                        example: 271
+                        description: 'Número total de contenidos disponibles'
+                        enum: []
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos para el usuario especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos para el usuario especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del usuario especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                    enum: []
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del usuario especificado'
+                    description: 'Mensaje descriptivo de la operación'
+                    enum: []
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: nick
+        description: 'El nick del usuario para filtrar por su contenido.'
+        example: raupulus
         required: true
         schema:
           type: string
@@ -1777,27 +1913,27 @@ paths:
                   nullable: false
                 type:
                   type: string
-                  description: 'optional Tipo de reporte.'
+                  description: 'Tipo de reporte. Valores aceptados: spam|inappropriate_content|adult_content|hate_speech|harassment.'
                   example: inappropriate_content
                   nullable: true
                 description:
                   type: string
-                  description: 'optional Descripción detallada del reporte (máximo 1024 caracteres).'
+                  description: 'Descripción detallada del reporte (máximo 1024 caracteres).'
                   example: 'Este contenido contiene lenguaje ofensivo'
                   nullable: true
                 additional_info:
                   type: string
-                  description: 'optional Información adicional sobre el reporte (máximo 1024 caracteres).'
+                  description: 'Información adicional sobre el reporte (máximo 1024 caracteres).'
                   example: 'Reportado por múltiples usuarios'
                   nullable: true
                 reporter_name:
                   type: string
-                  description: 'optional Nombre del reporter (si difiere del usuario autenticado).'
+                  description: 'Nombre del reportador (si difiere del usuario autenticado).'
                   example: 'Juan Pérez'
                   nullable: true
                 reporter_email:
                   type: string
-                  description: 'optional Email del reporter (si difiere del usuario autenticado).'
+                  description: 'Email del reportador (si difiere del usuario autenticado).'
                   example: juan@example.com
                   nullable: true
               required:

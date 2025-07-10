@@ -20,6 +20,7 @@ use App\Models\Group;
 use App\Models\Report;
 use App\Models\Suggestion;
 use App\Models\Type;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
 class V1Controller extends Controller
@@ -39,6 +40,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Colección de contenidos aleatorios
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del contenido (chiste, adivinanza, etc.)
      * @responseField data[].content string Texto del contenido
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
@@ -112,6 +114,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Colección de contenidos aleatorios
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del contenido (chiste, adivinanza, etc.)
      * @responseField data[].content string Texto del contenido
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
@@ -236,6 +239,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista de grupos de contenido paginados
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del grupo
      * @responseField data[].slug string Slug del grupo para URLs amigables
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al grupo (null si no tiene imagen)
@@ -319,6 +323,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista de categorías paginadas
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título de la categoría
      * @responseField data[].slug string Slug de la categoría para URLs amigables
      * @responseField data[].description string Descripción de la categoría
@@ -404,6 +409,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista con el contenido aleatorio solicitado
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del contenido
      * @responseField data[].content string Texto del contenido (chiste, adivinanza, etc.)
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
@@ -484,6 +490,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista con el contenido aleatorio solicitado
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del contenido
      * @responseField data[].content string Texto del contenido (chiste, adivinanza, etc.)
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
@@ -580,6 +587,7 @@ class V1Controller extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista con el contenido aleatorio solicitado
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del contenido
      * @responseField data[].content string Texto del contenido (chiste, adivinanza, etc.)
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
@@ -712,11 +720,11 @@ class V1Controller extends Controller
      *
      * @bodyParam content_id integer required ID del contenido a reportar. Example: 123
      * @bodyParam title string required Título del reporte (máximo 255 caracteres). Example: Contenido inapropiado
-     * @bodyParam type string optional Tipo de reporte. Example: inappropriate_content
-     * @bodyParam description string optional Descripción detallada del reporte (máximo 1024 caracteres). Example: Este contenido contiene lenguaje ofensivo
-     * @bodyParam additional_info string optional Información adicional sobre el reporte (máximo 1024 caracteres). Example: Reportado por múltiples usuarios
-     * @bodyParam reporter_name string optional Nombre del reporter (si difiere del usuario autenticado). Example: Juan Pérez
-     * @bodyParam reporter_email string optional Email del reporter (si difiere del usuario autenticado). Example: juan@example.com
+     * @bodyParam type string Tipo de reporte. Valores aceptados: spam|inappropriate_content|adult_content|hate_speech|harassment. Example: inappropriate_content
+     * @bodyParam description string Descripción detallada del reporte (máximo 1024 caracteres). Example: Este contenido contiene lenguaje ofensivo
+     * @bodyParam additional_info string Información adicional sobre el reporte (máximo 1024 caracteres). Example: Reportado por múltiples usuarios
+     * @bodyParam reporter_name string Nombre del reportador (si difiere del usuario autenticado). Example: Juan Pérez
+     * @bodyParam reporter_email string Email del reportador (si difiere del usuario autenticado). Example: juan@example.com
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
@@ -800,6 +808,86 @@ class V1Controller extends Controller
 
             return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
         }
+    }
+
+    /**
+     * Contenido en base a un usuario
+     *
+     * Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario.
+     *
+     * @group 📚 Contenidos
+     *
+     * @urlParam nick string required El nick del usuario para filtrar por su contenido. Example: raupulus
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Colección de contenidos aleatorios
+     * @responseField data[].id int Identificador del contenido, principalmente para reportes
+     * @responseField data[].title string Título del contenido (chiste, adivinanza, etc.)
+     * @responseField data[].content string Texto del contenido
+     * @responseField data[].urlImage string|null URL completa de la imagen asociada al contenido (null si no tiene imagen)
+     * @responseField data[].uploader string Nombre del usuario que subió el contenido
+     * @responseField meta object Metadatos adicionales de la respuesta
+     * @responseField meta.user string Nick del usuario sobre el que se filtran los contenidos
+     * @responseField meta.total_items integer Número total de contenidos disponibles
+     *
+     * @response 404 {
+     * "success": false,
+     * "message": "No se encontraron contenidos para el usuario especificado"
+     * }
+     *
+     * @response 500 {
+     * "success": false,
+     * "message": "Error al obtener contenidos del usuario especificado"
+     * }
+     *
+     * @param string $nick Nick del usuario para filtrar el contenido
+     * @return JsonResponse
+     */
+    public function getContentRandomFromUser(string $nick): JsonResponse
+    {
+        try {
+            $user_id = User::where('nick', $nick)->first()?->id;
+
+            $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
+                ->with('options')
+                ->where(function ($query) use ($user_id, $nick) {
+                    if ($user_id) {
+                        return $query->where('uploaded_by', 'like', '%' . $nick . '%')
+                            ->orWhere('user_id', $user_id);
+                    }
+
+                    return $query->where('uploaded_by', $nick);
+                })
+                ->random();
+
+            $count = $contents->count();
+
+            if (!$count) {
+                return $this->errorResponse(
+                    'No se encontraron contenidos para el usuario especificado',
+                    404
+                );
+            }
+
+            if ($count > 1) {
+                $message = 'Se devuelven ' . $count . ' contenidos aleatorios para el usuario @' . $nick;
+            } else {
+                $message = 'Se devuelve ' . $count . ' contenidos aleatorios para el usuario @' . $nick;
+            }
+
+            return $this->collectionResponse(
+                ContentResource::collection($contents->limit(1)->get()),
+                $message,
+                [
+                    'user' => $nick,
+                    'total_items' => $count,
+                ]
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse('Error al obtener contenidos del usuario especificado', 500);
+        }
+
     }
 
 }
