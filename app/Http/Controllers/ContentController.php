@@ -37,6 +37,7 @@ class ContentController extends Controller
         $groups = Cache::remember('groups_index', 60 * 60, function () {
             return Group::select(['id', 'title', 'slug', 'image', 'description'])
                 ->withCount('contents')
+                ->whereNotIn('id', [4, 14])
                 ->orderBy('contents_count', 'desc')
                 ->get();
         });
@@ -62,6 +63,7 @@ class ContentController extends Controller
             return $type->groups()
                 ->select(['id', 'title', 'slug', 'image', 'description'])
                 ->withCount('contents')
+                ->whereNotIn('groups.id', [4, 14])
                 ->orderBy('contents_count', 'desc')
                 ->get();
         });

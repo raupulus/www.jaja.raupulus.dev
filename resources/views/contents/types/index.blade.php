@@ -1,6 +1,10 @@
 @extends('layouts.master')
 
-@section('head')
+@section('title', 'Tipos de contenidos en la comunidad')
+@section('description', 'Listado con los tipos de contenidos disponibles')
+@section('keywords', implode(',', $types->pluck('name')->toArray()))
+
+@section('css')
     @vite(['resources/css/social_icons.css', 'resources/css/horizontal_card.css'])
 @endsection
 

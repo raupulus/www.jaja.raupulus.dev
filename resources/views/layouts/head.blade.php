@@ -1,7 +1,7 @@
 
 @php
     ## Valores por defecto
-    $pageTitle = trim($__env->yieldContent('title')) ?: config('app.name');
+    $pageTitle = trim($__env->yieldContent('title')) ?: config('app.name') . ' - Comunidad de Chistes, Adivinanzas y Preguntas Quiz';
     $pageDescription = trim($__env->yieldContent('description')) ?: 'JaJa Project - La mejor comunidad para entretenimiento y compartir el humor';
     $pageKeywords = trim($__env->yieldContent('keywords')) ?: 'jaja project, entretenimiento, contenido, diversión, chistes, humor, adivinanzas, comunidad';
     $pageAuthor = trim($__env->yieldContent('author')) ?: config('app.author');

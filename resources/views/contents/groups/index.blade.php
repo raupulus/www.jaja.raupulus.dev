@@ -1,6 +1,10 @@
 @extends('layouts.master')
 
-@section('head')
+@section('title', 'Grupos de contenidos en la comunidad')
+@section('description', 'Listado con los grupos de contenidos disponibles')
+@section('keywords', implode(',', $groups->pluck('title')->toArray()))
+
+@section('css')
     @vite(['resources/css/social_icons.css', 'resources/css/horizontal_card.css'])
 @endsection
 
@@ -15,7 +19,7 @@
 
                 @if($group->image)
                     <div class="card-resume-image">
-                        <img src="{{$group->urlImage}}" alt="{{$group->name}}">
+                        <img src="{{$group->urlImage}}" alt="{{$group->title}}">
                     </div>
                 @endif
             </div>

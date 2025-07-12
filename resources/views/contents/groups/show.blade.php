@@ -1,6 +1,12 @@
 @extends('layouts.master')
 
-@vite(['resources/css/social_icons.css'])
+@section('title', 'Contenidos aleatorios del grupo ' . $group->title)
+@section('description', $group->description)
+@section('keywords', $group->title . ', chistes, adivinanzas, preguntas, contenido aleatorio')
+
+@section('css')
+    @vite(['resources/css/social_icons.css'])
+@endsection
 
 @section('content')
     <div class="text-left">

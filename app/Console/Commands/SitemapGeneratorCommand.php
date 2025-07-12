@@ -62,10 +62,10 @@ class SitemapGeneratorCommand extends Command
         $staticUrls = [
             ['url' => route('index'), 'priority' => 1.0, 'changefreq' => 'daily'],
             ['url' => route('page.index'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => route('collaborator.index'), 'priority' => 0.9, 'changefreq' => 'daily'],
+            ['url' => route('collaborator.index'), 'priority' => 0.9, 'changefreq' => 'weekly'],
             ['url' => route('content.types.index'), 'priority' => 0.7, 'changefreq' => 'monthly'],
             ['url' => route('content.categories.index'), 'priority' => 0.8, 'changefreq' => 'monthly'],
-            ['url' => route('content.groups.index', 'chistes'), 'priority' => 0.8, 'changefreq' => 'weekly'],
+            ['url' => route('content.groups.index'), 'priority' => 0.8, 'changefreq' => 'weekly'],
             ['url' => route('content.type.group.index', 'chistes'), 'priority' => 0.8, 'changefreq' => 'weekly'],
             ['url' => route('content.type.group.index', 'quiz'), 'priority' => 0.8, 'changefreq' => 'weekly'],
             ['url' => route('content.type.group.index', 'adivinanzas'), 'priority' => 0.8, 'changefreq' => 'weekly'],
@@ -93,10 +93,14 @@ class SitemapGeneratorCommand extends Command
         $chunkSize = $this->option('chunk');
         $groupCount = 0;
 
-        Group::chunk($chunkSize, function ($groups) use ($sitemap, &$groupCount) {
+        Group::whereNotIn('groups.id', [4, 14])->chunk($chunkSize, function ($groups) use ($sitemap, &$groupCount) {
             foreach ($groups as $group) {
 
-                $lastModContent = $group->contents()->orderBy('updated_at', 'desc')->first();
+                $lastModContent = $group->contents()
+                    ->whereNotIn('group_id', [4, 14])
+                    ->where('is_adult', false)
+                    ->orderBy('updated_at', 'desc')
+                    ->first();
                 $lastModContent = $lastModContent ? $lastModContent->updated_at : $group->created_at;
 
                 $sitemap->add(
@@ -117,7 +121,11 @@ class SitemapGeneratorCommand extends Command
         Category::chunk($chunkSize, function ($categories) use ($sitemap, &$categoryCount) {
             foreach ($categories as $category) {
 
-                $lastModContent = $category->contents()->orderBy('updated_at', 'desc')->first();
+                $lastModContent = $category->contents()
+                    ->whereNotIn('group_id', [4, 14])
+                    ->where('is_adult', false)
+                    ->orderBy('updated_at', 'desc')
+                    ->first();
                 $lastModContent = $lastModContent ? $lastModContent->updated_at : $category->created_at;
 
                 $sitemap->add(

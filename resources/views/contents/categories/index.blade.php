@@ -1,6 +1,10 @@
 @extends('layouts.master')
 
-@section('head')
+@section('title', 'Listados de Categorías')
+@section('description', 'Categorías disponibles en la comunidad de chistes/adivinanzas/quiz')
+@section('keywords', 'categorías, categoría, comunidad, lista de categorías, listado de categorías')
+
+@section('css')
     @vite(['resources/css/social_icons.css', 'resources/css/grid_categories.css'])
 @endsection
 
