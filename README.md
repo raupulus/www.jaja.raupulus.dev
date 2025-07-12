@@ -7,11 +7,29 @@ Repositorios del proyecto:
 - GitHub [https://github.com/raupulus/www.jaja.raupulus.dev](https://github.com/raupulus/www.jaja.raupulus.dev)
 - GitLab [https://gitlab.com/raupulus/www.jaja.raupulus.dev](https://gitlab.com/raupulus/www.jaja.raupulus.dev)
 
+## Presentación del Proyecto
+
+[![Ver vídeo de presentación](https://img.youtube.com/vi/UnC0jZFXrak/hqdefault.jpg)](https://youtu.be/UnC0jZFXrak "Presentación del JaJa Project")
+
+**[📺 Ver vídeo de presentación completo](https://youtu.be/UnC0jZFXrak)**
+
 ## Objetivos
 
 El objetivo principal de este proyecto es tener una web y API de código abierto dónde pueda colaborar la comunidad
 en su desarrollo y además tener un repositorio de contenido (chistes, preguntas, adivinanzas) comunitario en la web
 [https://jaja.raupulus.dev](https://jaja.raupulus.dev) dónde cualquiera puede subir sugerencias de contenidos.
+
+## Redes Sociales del proyecto
+
+🤖 **Bot de Discord**: [Invitar a tu servidor](https://discord.com/oauth2/authorize?client_id=1391159444490158202&permissions=274877908992&integration_type=0&scope=bot)
+
+🌐 **Síguenos en nuestras redes sociales**:
+- **Bluesky**: [https://bsky.app/profile/jajupulus.bsky.social](https://bsky.app/profile/jajupulus.bsky.social)
+- **Telegram**: [https://t.me/jajaproject](https://t.me/jajaproject)
+- **Mastodon**: [https://mas.to/@jajupulus](https://mas.to/@jajupulus)
+- **Twitter/X**: [https://x.com/jajupulus](https://x.com/jajupulus)
+
+¡Únete a nuestra comunidad y mantente al día con las últimas actualizaciones del proyecto!
 
 ## API
 
@@ -240,6 +258,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir "options" al devolver contenido de tipo quiz
 - [x] Implementar lista de exclusión de ips al validar límites de peticiones
 - [x] Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
+- Cuando se apruebe una sugerencia y el nick de usuario exista, se debe asociar al usuario para no tener uploaders duplicados. Mirar raupulus https://jaja.raupulus.dev/pagina/agradecimientos 
 - Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
 
 ## TODO con menor prioridad
