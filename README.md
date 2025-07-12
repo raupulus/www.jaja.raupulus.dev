@@ -258,7 +258,7 @@ tarjetas para enlazar a ver colaborador con su listado de proyectos y cada proye
 - [x] Añadir "options" al devolver contenido de tipo quiz
 - [x] Implementar lista de exclusión de ips al validar límites de peticiones
 - [x] Crear endpoint para recibir un nick de un usuario y devolver un contenido random de él
-- Cuando se apruebe una sugerencia y el nick de usuario exista, se debe asociar al usuario para no tener uploaders duplicados. Mirar raupulus https://jaja.raupulus.dev/pagina/agradecimientos 
+- [x] Cuando se apruebe una sugerencia y el nick de usuario exista, se debe asociar al usuario para no tener uploaders duplicados. Mirar raupulus https://jaja.raupulus.dev/pagina/agradecimientos 
 - Revisar lista de categorías, creo que hay demasiadas y resulta incómodo... reducir lista y ser más genérico al etiquetar
 
 ## TODO con menor prioridad

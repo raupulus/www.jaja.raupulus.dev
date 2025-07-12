@@ -123,12 +123,14 @@ class Suggestion extends Model
             return false;
         }
 
+        $userExist = $this->nick ? User::where('nick', $this->nick)->first() : null;
+
         $content = Content::create([
-            'user_id' => auth()->id(),
+            'user_id' => $userExist?->id ?? auth()->id(),
             'group_id' => $this->group_id,
             'title' => $this->title,
             'content' => $this->content,
-            'uploaded_by' => $this->nick ?? null,
+            'uploaded_by' => $userExist ? null : ($this->nick ?? null),
             'is_adult' => $this->is_adult ?? false,
             'is_ai' => $this->is_ai ?? false,
         ]);
