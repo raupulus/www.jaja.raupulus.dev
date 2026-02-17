@@ -187,7 +187,14 @@ class SuggestionRequest extends FormRequest
             'nick' => 'nullable|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:1024',
-            'image' => 'nullable|image|max:2048',
+            'image' => [
+                'nullable',
+                'file',
+                'image',
+                'mimes:webp,jpeg,jpg,png,gif',
+                'mimetypes:image/webp,image/jpeg,image/png,image/gif',
+                'max:2048'
+            ],
             'ip_address' => 'nullable|ip',
             'user_agent' => 'nullable|string|max:255',
         ];
