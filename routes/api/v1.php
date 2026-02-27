@@ -74,4 +74,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user/{nick}/content/random', [ApiController::class, 'getContentRandomFromUser'])
         ->middleware('throttle.real.ip:50,1')
         ->name('api.user.content.random');
+
+    ## Listado de contenidos (chistes) paginado
+    Route::get('/contents/list', [ApiController::class, 'list'])
+        ->middleware('throttle.real.ip:50,1')
+        ->name('api.contents.list');
 });

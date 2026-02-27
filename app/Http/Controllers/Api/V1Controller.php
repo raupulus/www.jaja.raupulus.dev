@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\ContentListRequest;
 use App\Http\Requests\Api\ContentRandomFromGroupRequest;
 use App\Http\Requests\Api\ContentRandomFromTypeAndCategoryRequest;
 use App\Http\Requests\Api\ContentRandomFromTypeRequest;
@@ -10,6 +11,7 @@ use App\Http\Requests\Api\PaginationRequest;
 use App\Http\Requests\Api\SendReportRequest;
 use App\Http\Requests\Api\SendSuggestionRequest;
 use App\Http\Resources\CategoryResource;
+use App\Http\Resources\ContentListResource;
 use App\Http\Resources\ContentResource;
 use App\Http\Resources\GroupResource;
 use App\Http\Resources\TypeResource;
@@ -26,6 +28,56 @@ use Illuminate\Http\JsonResponse;
 class V1Controller extends Controller
 {
     use ApiResponseTrait;
+
+    /**
+     * Listado de Contenidos (Chistes)
+     *
+     * Devuelve un listado paginado de chistes que no son para adultos.
+     * Se puede filtrar para obtener chistes a partir de un ID específico.
+     *
+     * @group 📚 Contenidos
+     * @authenticated
+     *
+     * @queryParam after_id integer ID a partir del cual se desean obtener los chistes. Example: 0
+     * @queryParam limit integer Cantidad de chistes por página (por defecto 25, máximo 100). Example: 25
+     *
+     * @responseField success boolean Indica si la operación fue exitosa
+     * @responseField message string Mensaje descriptivo de la operación
+     * @responseField data array Colección de chistes
+     * @responseField data[].id int Identificador del chiste
+     * @responseField data[].content string Texto del chiste
+     * @responseField data[].uploaded_by string|null Nombre del usuario que subió el chiste
+     *
+     * @param ContentListRequest $request
+     * @return JsonResponse
+     */
+    public function list(ContentListRequest $request): JsonResponse
+    {
+        try {
+            $afterId = $request->getAfterId();
+            $limit = $request->getLimit();
+
+            $query = Content::where('is_adult', false)
+                ->whereHas('group.type', function ($query) {
+                    $query->where('slug', 'chistes');
+                })
+                ->orderBy('id', 'asc');
+
+            if ($afterId !== null) {
+                $query->where('id', '>', $afterId);
+            }
+
+            $paginator = $query->paginate($limit);
+
+            return $this->collectionPaginatedResponse(
+                $paginator,
+                ContentListResource::collection($paginator->getCollection()),
+                'Listado de chistes obtenido correctamente'
+            );
+        } catch (\Exception $e) {
+            return $this->errorResponse('Error al obtener el listado de chistes', 500);
+        }
+    }
 
     /**
      * Contenido Aleatorio
