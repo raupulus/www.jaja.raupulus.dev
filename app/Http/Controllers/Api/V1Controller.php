@@ -25,6 +25,11 @@ use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 
+/**
+ * Controlador V1Controller
+ *
+ * Gestiona todos los endpoints de la versión 1 de la API pública y privada para consulta, envío y reporte de contenido.
+ */
 class V1Controller extends Controller
 {
     use ApiResponseTrait;

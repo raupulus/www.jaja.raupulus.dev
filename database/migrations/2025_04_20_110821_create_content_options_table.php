@@ -9,7 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('content_options', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Opciones de respuesta para contenidos tipo Quiz.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('content_id')
                 ->constrained('contents')
                 ->onDelete('CASCADE')

@@ -13,6 +13,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ * Modelo User
+ *
+ * Representa un usuario registrado, administrador o colaborador de la plataforma.
+ */
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     use HasFactory, Notifiable, SoftDeletes, HasApiTokens;
@@ -95,6 +100,11 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         return $this->urlImage;
     }
 
+    /**
+     * Método canAccessPanel.
+     *
+     * @return bool
+     */
     public function canAccessPanel(Panel $panel): bool
     {
         return true;

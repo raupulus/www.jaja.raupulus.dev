@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 
+/**
+ * Modelo Type
+ *
+ * Representa el tipo o formato estructural del contenido (ej. Chiste, Quiz, Adivinanza).
+ */
 class Type extends Model
 {
     use softDeletes;

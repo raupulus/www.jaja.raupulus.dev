@@ -8,6 +8,11 @@ use App\Models\Type;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
+/**
+ * Controlador ContentController
+ *
+ * Gestiona la visualización de los contenidos (chistes, adivinanzas) clasificados por grupos, tipos y categorías en el frontend.
+ */
 class ContentController extends Controller
 {
     /**
@@ -32,6 +37,11 @@ class ContentController extends Controller
         ]);
     }
 
+    /**
+     * Método groupsIndex.
+     *
+     * @return View
+     */
     public function groupsIndex(): View
     {
         $groups = Cache::remember('groups_index', 60 * 60, function () {

@@ -9,7 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('suggestion_categories', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Tabla pivot entre sugerencias y categorías.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('category_id')
                 ->constrained('categories')
                 ->onDelete('CASCADE')

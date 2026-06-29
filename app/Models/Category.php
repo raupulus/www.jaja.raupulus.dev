@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * Modelo Category
+ *
+ * Representa una categoría temática para clasificar contenidos y sugerencias.
+ */
 class Category extends Model
 {
     use softDeletes;

@@ -12,11 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reports', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete();
+            $table->comment('Reportes de contenido inapropiado o erróneo creados por usuarios.');
+            $table->id()->comment('Identificador único');
+            $table->foreignId('user_id')->nullable()->constrained()->nullOnDelete()->comment('ID del usuario asociado');
             $table->string('reporter_name')->nullable(); // Para reportes anónimos
             $table->string('reporter_email')->nullable(); // Para reportes anónimos
-            $table->string('reporter_ip')->nullable();
+            $table->string('reporter_ip')->nullable()->comment('IP del reportador');
 
             // Contenido reportado - polimórfico
             $table->morphs('reportable'); // Esto ya crea el índice automáticamente
@@ -33,8 +34,8 @@ return new class extends Migration
                 'other'
             ])->default('other');
 
-            $table->string('title')->nullable();
-            $table->text('description');
+            $table->string('title')->nullable()->comment('Título');
+            $table->text('description')->comment('Descripción o texto explicativo');
             $table->text('additional_info')->nullable();
 
             $table->enum('status', [
@@ -52,14 +53,14 @@ return new class extends Migration
                 'critical'
             ])->default('medium');
 
-            $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete();
-            $table->text('admin_notes')->nullable();
-            $table->timestamp('resolved_at')->nullable();
+            $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete()->comment('ID del admin asignado');
+            $table->text('admin_notes')->nullable()->comment('Notas internas del administrador');
+            $table->timestamp('resolved_at')->nullable()->comment('Fecha de resolución del reporte');
             $table->timestamps();
 
             // Solo añadir los índices que NO se crean automáticamente
             $table->index(['status', 'priority']);
-            $table->index('created_at');
+            $table->index('created_at')->comment('Fecha de creación');
         });
     }
 

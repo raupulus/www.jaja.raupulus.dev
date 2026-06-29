@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use SebastianBergmann\CodeCoverage\Report\Xml\Project;
 
+/**
+ * Modelo Collaborator
+ *
+ * Representa un colaborador de software o creador de contenido que aporta al proyecto.
+ */
 class Collaborator extends Model
 {
     protected $table = 'collaborators';

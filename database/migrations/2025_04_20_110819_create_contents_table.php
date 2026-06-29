@@ -9,7 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('contents', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Tabla principal de contenidos aprobados de la plataforma.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('user_id')
                 ->nullable()
                 ->index()
@@ -22,9 +23,9 @@ return new class extends Migration
                 ->constrained('groups')
                 ->onDelete('SET NULL')
                 ->onUpdate('CASCADE');
-            $table->string('title', 255);
-            $table->text('content');
-            $table->string('image', 255)->nullable();
+            $table->string('title', 255)->comment('Título');
+            $table->text('content')->comment('Contenido principal');
+            $table->string('image', 255)->nullable()->comment('Ruta o nombre de la imagen');
             $table->string('uploaded_by', 255)
                 ->index()
                 ->nullable();

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('suggestions', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Sugerencias aportadas por la comunidad pendientes de revisión.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('type_id')
                 ->nullable()
                 ->constrained('types')
@@ -23,9 +24,9 @@ return new class extends Migration
                 ->constrained('groups')
                 ->onDelete('SET NULL')
                 ->onUpdate('SET NULL');
-            $table->string('nick', 50)->nullable();
-            $table->string('title', 255);
-            $table->text('content');
+            $table->string('nick', 50)->nullable()->comment('Alias del creador');
+            $table->string('title', 255)->comment('Título');
+            $table->text('content')->comment('Contenido principal');
             $table->string('image_path', 255)->nullable();
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 255)->nullable();

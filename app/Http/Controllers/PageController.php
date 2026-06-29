@@ -6,6 +6,11 @@ use App\Models\Page;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
+/**
+ * Controlador PageController
+ *
+ * Gestiona la visualización de las páginas estáticas y legales creadas en el CMS.
+ */
 class PageController extends Controller
 {
     /**

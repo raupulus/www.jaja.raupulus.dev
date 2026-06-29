@@ -9,7 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('content_categories', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Tabla pivot entre contenidos y categorías.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('category_id')
                 ->constrained('categories')
                 ->onDelete('CASCADE')

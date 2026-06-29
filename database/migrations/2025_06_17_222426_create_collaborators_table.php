@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('collaborators', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Directorio de perfiles de colaboradores de software.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('user_id')
                 ->nullable()
                 ->constrained('users')

@@ -12,15 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cache', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->mediumText('value');
-            $table->integer('expiration');
+            $table->comment('Tabla de caché manejada por Laravel.');
+            $table->string('key')->primary()->comment('Clave de caché');
+            $table->mediumText('value')->comment('Valor almacenado');
+            $table->integer('expiration')->comment('Expiración de caché');
         });
 
         Schema::create('cache_locks', function (Blueprint $table) {
-            $table->string('key')->primary();
-            $table->string('owner');
-            $table->integer('expiration');
+            $table->comment('Manejo de bloqueos de caché de Laravel.');
+            $table->string('key')->primary()->comment('Clave de caché');
+            $table->string('owner')->comment('Propietario del bloqueo');
+            $table->integer('expiration')->comment('Expiración de caché');
         });
     }
 

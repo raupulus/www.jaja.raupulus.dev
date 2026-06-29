@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * Modelo Group
+ *
+ * Representa un grupo demográfico o público objetivo (ej. Adultos, General).
+ */
 class Group extends Model
 {
     protected $table = 'groups';

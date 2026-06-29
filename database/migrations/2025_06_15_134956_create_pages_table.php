@@ -12,14 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('pages', function (Blueprint $table) {
-            $table->id();
-            $table->string('title', 255);
-            $table->string('slug', 255)->unique()->index();
-            $table->string('excerpt', 255);
-            $table->text('content');
-            $table->string('image', 255)->nullable();
-            $table->string('keywords', 255)->nullable();
-            $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->comment('Páginas estáticas y legales del CMS integrado.');
+            $table->id()->comment('Identificador único');
+            $table->string('title', 255)->comment('Título');
+            $table->string('slug', 255)->unique()->index()->comment('Slug URL-friendly');
+            $table->string('excerpt', 255)->comment('Resumen');
+            $table->text('content')->comment('Contenido principal');
+            $table->string('image', 255)->nullable()->comment('Ruta o nombre de la imagen');
+            $table->string('keywords', 255)->nullable()->comment('Palabras clave para SEO');
+            $table->enum('status', ['draft', 'published'])->default('draft')->comment('Estado del registro');
 
             $table->timestamps();
             $table->softDeletes();

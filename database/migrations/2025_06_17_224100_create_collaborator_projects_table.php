@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('collaborator_projects', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Proyectos de código abierto aportados por los colaboradores.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('collaborator_id')
                 ->comment('Colaborador al que pertenece el proyecto')
                 ->constrained('collaborators')
@@ -22,7 +23,7 @@ return new class extends Migration
             $table->string('title', 255)->comment('Título del proyecto');
             $table->string('slug', 255)->comment('Slug para url')->unique()->index();
             $table->string('url', 255)->comment('URL del proyecto')->nullable();
-            $table->string('image', 255)->nullable();
+            $table->string('image', 255)->nullable()->comment('Ruta o nombre de la imagen');
             $table->string('excerpt', 255)->comment('Resumen del proyecto');
             $table->text('content')->comment('Contenido del proyecto');
             $table->enum('type', ['web', 'mobile', 'desktop', 'bot', 'marketing', 'other'])

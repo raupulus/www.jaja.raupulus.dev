@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Modelo Content
+ *
+ * Representa el contenido principal aprobado (chistes, adivinanzas, quiz) en la plataforma.
+ */
 class Content extends Model
 {
     use softDeletes;
@@ -18,6 +23,11 @@ class Content extends Model
 
     protected $fillable = ['user_id', 'group_id', 'title', 'content', 'image', 'uploaded_by', 'last_social_published', 'is_adult', 'is_ai'];
 
+    /**
+     * Método casts.
+     *
+     * @return array
+     */
     protected function casts(): array
     {
         return [

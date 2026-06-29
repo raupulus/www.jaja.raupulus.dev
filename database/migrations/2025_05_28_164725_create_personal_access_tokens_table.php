@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Tokens de acceso de Laravel Sanctum para la API.');
+            $table->id()->comment('Identificador único');
             $table->morphs('tokenable');
-            $table->string('name');
-            $table->string('token', 64)->unique();
-            $table->text('abilities')->nullable();
-            $table->timestamp('last_used_at')->nullable();
-            $table->timestamp('expires_at')->nullable();
+            $table->string('name')->comment('Nombre');
+            $table->string('token', 64)->unique()->comment('Cadena del token');
+            $table->text('abilities')->nullable()->comment('Permisos o habilidades del token');
+            $table->timestamp('last_used_at')->nullable()->comment('Fecha del último uso');
+            $table->timestamp('expires_at')->nullable()->comment('Fecha de expiración');
             $table->timestamps();
         });
     }

@@ -12,6 +12,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
+/**
+ * Controlador AuthController
+ *
+ * Gestiona la autenticación de la API mediante Sanctum (login, logout, perfil y subida de contenido de usuario).
+ */
 class AuthController extends Controller
 {
     use ApiResponseTrait;

@@ -9,7 +9,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('suggestion_options', function (Blueprint $table) {
-            $table->id();
+            $table->comment('Opciones de respuesta para sugerencias tipo Quiz.');
+            $table->id()->comment('Identificador único');
             $table->foreignId('suggestion_id')
                 ->constrained('suggestions')
                 ->onDelete('CASCADE')

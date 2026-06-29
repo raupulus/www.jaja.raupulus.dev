@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Modelo SuggestionOption
+ *
+ * Representa las opciones de respuesta sugeridas para un contenido tipo Quiz.
+ */
 class SuggestionOption extends Model
 {
     protected $table = 'suggestion_options';

@@ -10,6 +10,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
+/**
+ * Modelo Suggestion
+ *
+ * Representa una sugerencia de contenido aportada por un usuario y pendiente de moderación.
+ */
 class Suggestion extends Model
 {
     use softDeletes;
@@ -59,6 +64,9 @@ class Suggestion extends Model
         return $this->hasMany(SuggestionOption::class, 'suggestion_id', 'id');
     }
 
+    /**
+     * Método boot.
+     */
     protected static function boot()
     {
         parent::boot();

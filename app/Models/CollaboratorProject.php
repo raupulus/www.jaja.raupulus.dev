@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Modelo CollaboratorProject
+ *
+ * Representa un proyecto o repositorio creado por un colaborador.
+ */
 class CollaboratorProject extends Model
 {
     protected $table = 'collaborator_projects';

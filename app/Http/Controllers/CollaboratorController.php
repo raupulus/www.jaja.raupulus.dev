@@ -7,6 +7,11 @@ use App\Models\CollaboratorProject;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
+/**
+ * Controlador CollaboratorController
+ *
+ * Gestiona la visualización pública de perfiles de colaboradores y sus proyectos.
+ */
 class CollaboratorController extends Controller
 {
     /**

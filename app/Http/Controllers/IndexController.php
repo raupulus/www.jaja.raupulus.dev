@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
+/**
+ * Controlador IndexController
+ *
+ * Gestiona la página principal (Home) de la web, resúmenes, estadísticas públicas y redirecciones básicas.
+ */
 class IndexController extends Controller
 {
     /**

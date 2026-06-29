@@ -5,6 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Modelo ContentOption
+ *
+ * Representa las opciones de respuesta para un contenido de tipo Quiz.
+ */
 class ContentOption extends Model
 {
     protected $table = 'content_options';

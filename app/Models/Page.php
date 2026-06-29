@@ -4,6 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Modelo Page
+ *
+ * Representa una página estática o legal del mini-CMS integrado.
+ */
 class Page extends Model
 {
     protected $table = 'pages';
@@ -31,6 +36,11 @@ class Page extends Model
     }
 
     //TODO: Adaptar cuando implemente generar thumbnails
+    /**
+     * Método getUrlImageThumbnailAttribute.
+     *
+     * @return ?string
+     */
     public function getUrlImageThumbnailAttribute(): ?string
     {
         return $this->urlImage;

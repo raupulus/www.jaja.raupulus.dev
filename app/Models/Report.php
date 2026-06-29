@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * Modelo Report
+ *
+ * Representa un reporte de contenido inapropiado o spam realizado por un usuario.
+ */
 class Report extends Model
 {
     use HasFactory;
@@ -67,11 +72,17 @@ class Report extends Model
         return $query->where('status', 'pending');
     }
 
+    /**
+     * Método scopeHighPriority.
+     */
     public function scopeHighPriority($query)
     {
         return $query->where('priority', 'high');
     }
 
+    /**
+     * Método scopeCritical.
+     */
     public function scopeCritical($query)
     {
         return $query->where('priority', 'critical');
@@ -85,6 +96,9 @@ class Report extends Model
         return $value ?? ($this->user ? $this->user->name : 'Anónimo');
     }
 
+    /**
+     * Método getReporterEmailAttribute.
+     */
     public function getReporterEmailAttribute($value)
     {
         return $value ?? ($this->user ? $this->user->email : 'No disponible');
@@ -102,6 +116,9 @@ class Report extends Model
         ]);
     }
 
+    /**
+     * Método markAsRejected.
+     */
     public function markAsRejected($adminNotes = null)
     {
         $this->update([
@@ -129,6 +146,11 @@ class Report extends Model
         ];
     }
 
+    /**
+     * Método getStatuses.
+     *
+     * @return array
+     */
     public static function getStatuses(): array
     {
         return [
@@ -140,6 +162,11 @@ class Report extends Model
         ];
     }
 
+    /**
+     * Método getPriorities.
+     *
+     * @return array
+     */
     public static function getPriorities(): array
     {
         return [

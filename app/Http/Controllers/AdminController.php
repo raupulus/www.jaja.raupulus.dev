@@ -7,6 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 
+/**
+ * Controlador AdminController
+ *
+ * Gestiona la lógica principal y métricas del panel de administración (Dashboard).
+ */
 class AdminController extends Controller
 {
 
