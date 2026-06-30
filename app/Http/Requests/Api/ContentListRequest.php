@@ -21,6 +21,8 @@ class ContentListRequest extends FormRequest
         return [
             'after_id' => 'sometimes|integer|min:0',
             'limit' => 'sometimes|integer|min:1|max:100',
+            'exclude_groups' => 'sometimes|array',
+            'exclude_groups.*' => 'integer|exists:groups,id',
         ];
     }
 
@@ -32,6 +34,9 @@ class ContentListRequest extends FormRequest
             'limit.integer' => 'El límite debe ser un número entero.',
             'limit.min' => 'El límite debe ser mayor a 0.',
             'limit.max' => 'El límite no puede ser mayor a 100.',
+            'exclude_groups.array' => 'El campo exclude_groups debe ser un arreglo.',
+            'exclude_groups.*.integer' => 'Los grupos a excluir deben ser números enteros.',
+            'exclude_groups.*.exists' => 'Uno de los grupos a excluir no existe.',
         ];
     }
 
@@ -58,5 +63,10 @@ class ContentListRequest extends FormRequest
     public function getLimit(): int
     {
         return $this->validated()['limit'] ?? 25;
+    }
+
+    public function getExcludedGroups(): array
+    {
+        return $this->validated()['exclude_groups'] ?? [];
     }
 }

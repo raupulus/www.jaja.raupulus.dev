@@ -53,6 +53,8 @@ class V1Controller extends Controller
      * @responseField data[].content string Texto del chiste
      * @responseField data[].uploaded_by string|null Nombre del usuario que subió el chiste
      *
+     * @bodyParam exclude_groups int[] Opcional. Array de IDs numéricos de grupos a descartar. Ejemplo: [5, 12]
+     *
      * @param ContentListRequest $request
      * @return JsonResponse
      */
@@ -70,6 +72,11 @@ class V1Controller extends Controller
 
             if ($afterId !== null) {
                 $query->where('id', '>', $afterId);
+            }
+
+            $excludedGroups = $request->getExcludedGroups();
+            if (!empty($excludedGroups)) {
+                $query->whereNotIn('group_id', $excludedGroups);
             }
 
             $paginator = $query->paginate($limit);
