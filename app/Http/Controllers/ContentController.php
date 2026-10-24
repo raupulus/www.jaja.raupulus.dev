@@ -46,8 +46,12 @@ class ContentController extends Controller
     {
         $groups = Cache::remember('groups_index', 60 * 60, function () {
             return Group::select(['id', 'title', 'slug', 'image', 'description'])
-                ->withCount('contents')
                 ->whereNotIn('id', [4, 14])
+                ->hasAvailableContent()
+                ->withCount(['contents' => function ($query) {
+                    $query->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false);
+                }])
                 ->orderBy('contents_count', 'desc')
                 ->get();
         });
@@ -72,8 +76,12 @@ class ContentController extends Controller
         $groups = Cache::remember('groups_index_by_type_' . $type->id, 60 * 60, function () use ($type) {
             return $type->groups()
                 ->select(['id', 'title', 'slug', 'image', 'description'])
-                ->withCount('contents')
                 ->whereNotIn('groups.id', [4, 14])
+                ->hasAvailableContent()
+                ->withCount(['contents' => function ($query) {
+                    $query->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false);
+                }])
                 ->orderBy('contents_count', 'desc')
                 ->get();
         });
@@ -92,7 +100,11 @@ class ContentController extends Controller
     {
         $categories = Cache::remember('categories_index', 60 * 60, function () {
             return Category::select(['id', 'title', 'slug', 'description', 'image'])
-                ->withCount('contents')
+                ->hasAvailableContent()
+                ->withCount(['contents' => function ($query) {
+                    $query->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false);
+                }])
                 ->orderBy('title')
                 ->get();
         });
@@ -117,6 +129,10 @@ class ContentController extends Controller
             ->limit(3)
             ->get();
 
+        if ($contents->isEmpty()) {
+            abort(404);
+        }
+
         return view('contents.groups.show')->with([
             'group' => $group,
             'contents' => $contents,
@@ -137,6 +153,10 @@ class ContentController extends Controller
             ->inRandomOrder()
             ->limit(3)
             ->get();
+
+        if ($contents->isEmpty()) {
+            abort(404);
+        }
 
         return view('contents.categories.show')->with([
             'category' => $category,

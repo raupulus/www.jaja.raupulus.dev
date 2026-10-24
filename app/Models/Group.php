@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -100,5 +101,16 @@ class Group extends Model
         }
 
         return asset('storage/' . $this->image);
+    }
+
+    /**
+     * Scope para filtrar grupos que tienen contenidos disponibles públicamente.
+     */
+    public function scopeHasAvailableContent(Builder $query): Builder
+    {
+        return $query->whereHas('contents', function ($q) {
+            $q->whereNotIn('group_id', [4, 14])
+                ->where('is_adult', false);
+        });
     }
 }

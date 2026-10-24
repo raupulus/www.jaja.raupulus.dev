@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -52,5 +53,16 @@ class Category extends Model
         }
 
         return asset('storage/' . $this->image);
+    }
+
+    /**
+     * Scope para filtrar categorías que tienen contenidos disponibles públicamente.
+     */
+    public function scopeHasAvailableContent(Builder $query): Builder
+    {
+        return $query->whereHas('contents', function ($q) {
+            $q->whereNotIn('group_id', [4, 14])
+                ->where('is_adult', false);
+        });
     }
 }

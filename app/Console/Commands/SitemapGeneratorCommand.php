@@ -93,51 +93,54 @@ class SitemapGeneratorCommand extends Command
         $chunkSize = $this->option('chunk');
         $groupCount = 0;
 
-        Group::whereNotIn('groups.id', [4, 14])->chunk($chunkSize, function ($groups) use ($sitemap, &$groupCount) {
-            foreach ($groups as $group) {
+        Group::whereNotIn('groups.id', [4, 14])
+            ->hasAvailableContent()
+            ->chunk($chunkSize, function ($groups) use ($sitemap, &$groupCount) {
+                foreach ($groups as $group) {
 
-                $lastModContent = $group->contents()
-                    ->whereNotIn('group_id', [4, 14])
-                    ->where('is_adult', false)
-                    ->orderBy('updated_at', 'desc')
-                    ->first();
-                $lastModContent = $lastModContent ? $lastModContent->updated_at : $group->created_at;
+                    $lastModContent = $group->contents()
+                        ->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false)
+                        ->orderBy('updated_at', 'desc')
+                        ->first();
+                    $lastModContent = $lastModContent ? $lastModContent->updated_at : $group->created_at;
 
-                $sitemap->add(
-                    Url::create(route('content.group.content.random', $group->slug))
-                        ->setPriority(0.7)
-                        ->setChangeFrequency('weekly')
-                        ->setLastModificationDate($lastModContent)
-                );
+                    $sitemap->add(
+                        Url::create(route('content.group.content.random', $group->slug))
+                            ->setPriority(0.7)
+                            ->setChangeFrequency('weekly')
+                            ->setLastModificationDate($lastModContent)
+                    );
 
-                $groupCount++;
-            }
-        });
+                    $groupCount++;
+                }
+            });
 
         $this->info("   ✓ {$groupCount} enlaces a páginas de grupos creados");
 
         $categoryCount = 0;
 
-        Category::chunk($chunkSize, function ($categories) use ($sitemap, &$categoryCount) {
-            foreach ($categories as $category) {
+        Category::hasAvailableContent()
+            ->chunk($chunkSize, function ($categories) use ($sitemap, &$categoryCount) {
+                foreach ($categories as $category) {
 
-                $lastModContent = $category->contents()
-                    ->whereNotIn('group_id', [4, 14])
-                    ->where('is_adult', false)
-                    ->orderBy('updated_at', 'desc')
-                    ->first();
-                $lastModContent = $lastModContent ? $lastModContent->updated_at : $category->created_at;
+                    $lastModContent = $category->contents()
+                        ->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false)
+                        ->orderBy('updated_at', 'desc')
+                        ->first();
+                    $lastModContent = $lastModContent ? $lastModContent->updated_at : $category->created_at;
 
-                $sitemap->add(
-                    Url::create(route('content.categoria.content.random', $category->slug))
-                        ->setPriority(0.7)
-                        ->setChangeFrequency('weekly')
-                        ->setLastModificationDate($lastModContent)
-                );
+                    $sitemap->add(
+                        Url::create(route('content.categoria.content.random', $category->slug))
+                            ->setPriority(0.7)
+                            ->setChangeFrequency('weekly')
+                            ->setLastModificationDate($lastModContent)
+                    );
 
-                $categoryCount++;
-            }
-        });
+                    $categoryCount++;
+                }
+            });
 
         $this->info("   ✓ {$categoryCount} enlaces a páginas de categorías creados");
 
