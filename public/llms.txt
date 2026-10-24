@@ -9,8 +9,8 @@
 
 ## Tecnologías Principales
 
-- **Backend**: Laravel 12.19.3 (PHP 8.2)
-- **Panel Admin**: Filament 3.3.29
+- **Backend**: Laravel 13 (PHP 8.4+)
+- **Panel Admin**: Filament 3.3.57
 - **Base de datos**: PostgreSQL
 - **Colas**: Database queue connection
 - **Autenticación API**: Laravel Sanctum
