@@ -13,13 +13,18 @@ Este módulo engloba la forma en la que se clasifica todo el contenido y sugeren
    - Define el segmento demográfico o tono del contenido. (Ej: Adultos, Infantil, General).
    - Contiene imágenes y descripciones.
    - Tiene lógica de negocio importante ligada a la moderación. Por ejemplo, en los endpoints públicos y redes sociales, el contenido del grupo para "adultos" está excluido por defecto.
+   - **Scope `hasAvailableContent`**: Filtra grupos que posean contenidos aprobados disponibles públicamente (no adultos y fuera de los grupos internos `[4, 14]`).
 
 3. **Category (Categoría)**:
    - Define etiquetas de clasificación temática más específicas. (Ej: Informáticos, Cortos, Absurdos).
    - Las categorías pueden ser asociadas múltiplemente a un solo contenido mediante la tabla pivot (muchos a muchos).
-   - Si no se especifica ninguna en una sugerencia, por defecto se asigna la categoría "General".
+   - Si no se especifica ninguna en una sugerencia, por defecto se asigna la categoría "General" (ID 1).
+   - **Scope `hasAvailableContent`**: Filtra categorías que cuenten con contenidos públicos y disponibles (no adultos y fuera de los grupos internos `[4, 14]`).
 
 ## Funcionalidad Técnica
 - **Caché**: Se plantea un uso intensivo de caché al cargar listados de categorías, tipos y grupos en las vistas frontend para minimizar las consultas a la base de datos, dado que raramente cambian.
+- **Filtrado de Taxonomías Vacías (SEO & UX)**:
+  - En los listados `/categorias` y `/grupos`, únicamente se listan elementos que tengan contenidos públicos activos mediante `hasAvailableContent()`.
+  - En las rutas de contenido aleatorio por categoría (`/categoria/{slug}/random`) o por grupo (`/grupo/{slug}/random`), si el elemento no dispone de contenidos aptos para mostrar, el controlador devuelve `404 Not Found` en lugar de una página 200 vacía para evitar penalizaciones por *Soft 404* y *Thin Content* en Google Search Console.
 - **Rutas y SEO**: Existen rutas específicas en el sitemap para listados y cruces (por ejemplo, contenido aleatorio de un grupo o categoría).
 - **Relaciones**: Son modelos maestros utilizados extensamente en `Content` y `Suggestion` bajo relaciones `belongsTo` (para Type y Group) y `belongsToMany` (para Category).
