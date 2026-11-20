@@ -5,7 +5,7 @@ Los paneles de administración (`/admin`) y usuario (`/panel`) utilizan los esti
 
 ## Stack de estilos verificado
 
-- **CSS Modular con tokens nativos** compilado mediante **Vite** (`vite.config.js` con `npm run dev` / `npm run build`).
+- **CSS Modular con tokens nativos** compilado mediante **Vite** (`vite.config.js` con `npm run dev` / `npm run build`), gestionado de forma unificada con **npm** (`packageManager` en `package.json` y lockfile único `package-lock.json`).
 - **`color-scheme: dark`** declarado en `<meta name="color-scheme" content="dark">` (`head.blade.php`) y `:root` (`frontend.css`).
 - **Tipografía unificada**: familia `Inter` cargada localmente desde `public/fonts/inter/inter.css` con `preload` en `<head>` para `inter-400.woff2` e `inter-700.woff2`, expuesta como `--font-sans` y `--font-mono`.
 
