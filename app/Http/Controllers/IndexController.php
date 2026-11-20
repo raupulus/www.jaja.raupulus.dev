@@ -12,6 +12,7 @@ use App\Models\Suggestion;
 use App\Models\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -30,7 +31,12 @@ class IndexController extends Controller
     public function index(): View
     {
         $contents = Cache::remember('home_contents', 30, function () {
-            return Content::whereNotIn('group_id', [4, 14])
+            return Content::with([
+                'group.type',
+                'options' => fn ($q) => $q->orderBy('order'),
+                'user:id,nick',
+            ])
+                ->whereNotIn('group_id', [4, 14])
                 ->where('is_adult', false)
                 ->inRandomOrder()
                 ->take(10)
@@ -59,13 +65,10 @@ class IndexController extends Controller
         $validated = $request->validated();
         unset($validated['image'], $validated['terms']);
 
-        $options = isset($validated['options']) ? $validated['options'] : [];
-
+        $options = $validated['options'] ?? [];
         unset($validated['options']);
 
-        $suggestion = Suggestion::create($validated);
-
-        $suggestion->options()->createMany($options);
+        $webpPath = null;
 
         if ($request->hasFile('image')) {
             $tempPath = $request->file('image')?->store('suggestion-images', 'public');
@@ -73,15 +76,33 @@ class IndexController extends Controller
             if ($tempPath) {
                 $fullTempPath = Storage::disk('public')->path($tempPath);
 
-                $convertToWebp = new ConvertImageToWebp();
-                $webpPath = $convertToWebp($fullTempPath, 'suggestion-images');
-
-                $suggestion->update([
-                    'image_path' => $webpPath,
-                ]);
-
-                Storage::disk('public')->delete($tempPath);
+                try {
+                    $convertToWebp = new ConvertImageToWebp();
+                    $webpPath = $convertToWebp($fullTempPath, 'suggestion-images');
+                } finally {
+                    Storage::disk('public')->delete($tempPath);
+                }
             }
+        }
+
+        if ($webpPath) {
+            $validated['image_path'] = $webpPath;
+        }
+
+        try {
+            DB::transaction(function () use ($validated, $options): void {
+                $suggestion = Suggestion::create($validated);
+
+                if (! empty($options)) {
+                    $suggestion->options()->createMany($options);
+                }
+            });
+        } catch (\Throwable $e) {
+            if ($webpPath && Storage::disk('public')->exists($webpPath)) {
+                Storage::disk('public')->delete($webpPath);
+            }
+
+            throw $e;
         }
 
         return redirect()->route('index')->with('success', 'Contenido enviado correctamente.');

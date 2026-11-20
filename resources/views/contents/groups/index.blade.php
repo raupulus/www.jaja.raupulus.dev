@@ -117,7 +117,7 @@
             <div class="card-resume-right">
                 <span class="card-resume-badge">{{$group->contents_count}}</span>
 
-                @if($group->contents()->count())
+                @if($group->contents_count > 0)
                     <a href="{{route('content.group.content.random', $group->slug)}}" class="card-resume-button">
                         Ver contenidos de {{$group->title}}
                     </a>

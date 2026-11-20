@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collaborator;
 use App\Models\CollaboratorProject;
+use App\Services\CacheInvalidationService;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\View\View;
 
@@ -79,12 +80,16 @@ class CollaboratorController extends Controller
             abort(404);
         }
 
-        $projects = Cache::remember('page_collaborator'. $collaborator->id . '_show_project_' . $project->id, 600, function () use ($collaborator, $project) {
-            return $collaborator->projects()
-                ->where('status', 'published')
-                ->whereNot('id', $project->id)
-                ->get();
-        });
+        $projects = Cache::remember(
+            CacheInvalidationService::collaboratorShowProjectKey($collaborator->id, $project->id),
+            600,
+            function () use ($collaborator, $project) {
+                return $collaborator->projects()
+                    ->where('status', 'published')
+                    ->whereNot('id', $project->id)
+                    ->get();
+            }
+        );
 
         return view('collaborators.projects.show')->with([
             'collaborator' => $collaborator,

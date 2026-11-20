@@ -93,8 +93,12 @@ class Type extends Model
      */
     public function getLastUpdateMessageAttribute(): string
     {
-        // Si usamos la versión optimizada del controlador
-        if (isset($this->last_content_date)) {
+        if (array_key_exists('last_content_date', $this->attributes)) {
+            if (! $this->attributes['last_content_date']) {
+                return '¡Sé el primero en subir contenido!';
+            }
+            $lastContentDate = Carbon::parse($this->attributes['last_content_date']);
+        } elseif (isset($this->last_content_date)) {
             $lastContentDate = Carbon::parse($this->last_content_date);
         } else {
             // Fallback al método original

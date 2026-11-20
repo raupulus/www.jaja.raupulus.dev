@@ -22,7 +22,7 @@ Este módulo engloba la forma en la que se clasifica todo el contenido y sugeren
    - **Scope `hasAvailableContent`**: Filtra categorías que cuenten con contenidos públicos y disponibles (no adultos y fuera de los grupos internos `[4, 14]`).
 
 ## Funcionalidad Técnica
-- **Caché**: Se plantea un uso intensivo de caché al cargar listados de categorías, tipos y grupos en las vistas frontend para minimizar las consultas a la base de datos, dado que raramente cambian.
+- **Caché e Invalidación (Cero `N+1`)**: Los listados de tipos (`types_index`), grupos (`groups_index` y `groups_index_by_type_{id}`) y categorías (`categories_index`) se cachean con `Cache::remember`, calculando la última fecha de contenido (`last_content_date`) y `contents_count` mediante subconsultas en `ContentController` para evitar consultas `N+1` en las vistas. `AppServiceProvider` + `CacheInvalidationService` invalidan estas claves automáticamente al guardar, eliminar o restaurar registros de `Type`, `Group`, `Category` o `Content`.
 - **Filtrado de Taxonomías Vacías (SEO & UX)**:
   - En los listados `/categorias` y `/grupos`, únicamente se listan elementos que tengan contenidos públicos activos mediante `hasAvailableContent()`.
   - En las rutas de contenido aleatorio por categoría (`/categoria/{slug}/random`) o por grupo (`/grupo/{slug}/random`), si el elemento no dispone de contenidos aptos para mostrar, el controlador devuelve `404 Not Found` en lugar de una página 200 vacía para evitar penalizaciones por *Soft 404* y *Thin Content* en Google Search Console.

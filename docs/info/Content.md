@@ -10,11 +10,12 @@ Este módulo se compone de tres entidades principales:
 - **ContentOption**: Específico para el contenido de tipo **Quiz**. Almacena las posibles respuestas para una pregunta, indicando cuál es la correcta.
 
 ## Funcionalidad Técnica
-1. **Tipos de Contenido**: El modelo `Content` tiene una relación con `Type` y `Group`. Dependiendo del tipo, el comportamiento en la API y el frontend varía (ej. si es quiz, se precargan las `ContentOption`).
-2. **Ciclo de Vida, Paneles e Imágenes**:
-   - Los contenidos generalmente provienen del módulo `Suggestion`. Cuando una sugerencia es aprobada en el panel de Filament, se transforma o traslada a un `Content` definitivo.
+1. **Tipos de Contenido y Carga Ansiosa (Cero `N+1`)**: El modelo `Content` tiene relación con `Type` (vía `Group`), `Group` y `User`. Con `Model::preventLazyLoading(! app()->isProduction())` activo en `AppServiceProvider`, todas las consultas en `IndexController`, `ContentController` y `Api\V1Controller` precargan `group.type`, `options` ordenadas por `order` y `user:id,nick` para renderizar `partials/_content.blade.php` y `ContentResource` sin consultas `N+1`.
+2. **Ciclo de Vida, Paneles, Caché e Imágenes**:
+   - Los contenidos generalmente provienen del módulo `Suggestion`. Cuando una sugerencia es aprobada en el panel de Filament, se transforma o traslada a un `Content` definitivo dentro de una transacción atómica.
    - Mediante el trait `DeletesStoredImages`, `Content` y `ContentOption` eliminan automáticamente en `Storage::disk('public')` sus ficheros físicos al reemplazar la imagen o ejecutar `forceDelete()`, preservando la imagen por defecto `images/default/content.webp`.
-   - En Filament (`Admin/ContentResource` y `Panel/ContentResource`), los formularios organizan los campos en secciones (`Contenido`, `Clasificación`, `Moderación`) y las tablas agrupan acciones en `ActionGroup`, truncan textos largos (`limit`/`wrap`/`tooltip`) e incluyen filtros por `group_id`, `categories`, `is_adult`, `is_ai` y papelera (`TrashedFilter`). Los `StatsOverviewWidget` declaran `$columnSpan = 'full'` y `$sort` explícito.
+   - `AppServiceProvider` + `App\Services\CacheInvalidationService` invalidan automáticamente las cachés públicas (`home_contents`, `types_index`, `groups_index`, `groups_index_by_type_{id}`, `categories_index`, contadores de `StatsHelper`) y del widget `ContentOverview` (cacheado 300s) al guardar, borrar o restaurar registros.
+   - En Filament (`Admin/ContentResource` y `Panel/ContentResource`), los formularios organizan los campos en secciones (`Contenido`, `Clasificación`, `Moderación`) y las tablas agrupan acciones en `ActionGroup`, truncan textos largos (`limit`/`wrap`/`tooltip`) e incluyen filtros por `group_id`, `categories`, `is_adult`, `is_ai` y papelera (`TrashedFilter`). Los `StatsOverviewWidget` declaran `$columnSpan = 'full'` y `$sort` explícito. `Admin/ReportResource` precarga `user` y `assignedTo` en `getEloquentQuery()`.
 3. **Estadísticas**: El contenido registra interacciones (risas/votos generados) que posteriormente son calculadas mediante comandos asíncronos y mostradas tanto en el panel de administrador como en resúmenes públicos.
 4. **Relaciones Eloquent**:
    - `belongsTo`: Group, Type.

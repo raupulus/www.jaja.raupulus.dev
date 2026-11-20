@@ -14,7 +14,7 @@
 
         @if(($content->group?->type?->slug === 'quiz') && $content->options->count())
            <ol class="quiz-options-list">
-            @foreach ($content->options()->orderBy('order')->get() as $option)
+            @foreach ($content->options->sortBy('order') as $option)
                 <li>{{$option->value}}</li>
             @endforeach
            </ol>

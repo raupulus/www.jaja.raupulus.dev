@@ -2,7 +2,7 @@
 
 @section('title', $page->title)
 @section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $page->excerpt)), 155))
-@section('keywords', $page->keywords)
+@section('keywords', (string) ($page->keywords ?? ''))
 @section('og_type', 'article')
 
 @if ($page->urlImage)

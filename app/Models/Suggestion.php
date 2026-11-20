@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 /**
@@ -117,13 +118,15 @@ class Suggestion extends Model
     }
 
     /**
-     * Aprobar sugerencias de contenido.
+     * Aprobar sugerencias de contenido de forma atómica.
      *
      * @return bool
      */
     public function approve(): bool
     {
-        if (!$this->group_id) {
+        $this->loadMissing('type');
+
+        if (! $this->group_id) {
             Notification::make()
                 ->title('Grupo no seleccionado')
                 ->body('Debes seleccionar un grupo antes de aprobar esta sugerencia.')
@@ -131,7 +134,9 @@ class Suggestion extends Model
                 ->send();
         }
 
-        if (!$this->categories()->count()) {
+        $categories = $this->categories()->pluck('categories.id')->toArray();
+
+        if (empty($categories)) {
             Notification::make()
                 ->title('Categoría/s no seleccionada/s')
                 ->body('Debes seleccionar al menos una categoría antes de aprobar esta sugerencia.')
@@ -139,82 +144,99 @@ class Suggestion extends Model
                 ->send();
         }
 
-        if (!$this->group_id || !$this->categories()->count()) {
+        if (! $this->group_id || empty($categories)) {
             return false;
         }
 
-        $userExist = $this->nick ? User::where('nick', $this->nick)->first() : null;
+        $copiedFiles = [];
+        $sourceFilesToDelete = [];
 
-        $content = Content::create([
-            'user_id' => $userExist?->id ?? auth()->id(),
-            'group_id' => $this->group_id,
-            'title' => $this->title,
-            'content' => $this->content,
-            'uploaded_by' => $userExist ? null : ($this->nick ?? null),
-            'is_adult' => $this->is_adult ?? false,
-            'is_ai' => $this->is_ai ?? false,
-        ]);
+        try {
+            DB::transaction(function () use ($categories, &$copiedFiles, &$sourceFilesToDelete): void {
+                $userExist = $this->nick ? User::where('nick', $this->nick)->first() : null;
 
-        $categories = $this->categories()->pluck('categories.id')->toArray();
-        $content->categories()->attach($categories);
-
-        ## Copio las opciones solo si es tipo quiz
-        if ($this->type->slug === 'quiz') {
-            $suggestionOptions = $this->options()->orderBy('order')->get();
-
-            foreach ($suggestionOptions as $suggestionOption) {
-                $contentOption = ContentOption::create([
-                    'content_id' => $content->id,
-                    'value' => $suggestionOption->value,
-                    'is_correct' => $suggestionOption->is_correct,
-                    'order' => $suggestionOption->order,
+                $content = Content::create([
+                    'user_id' => $userExist?->id ?? auth()->id(),
+                    'group_id' => $this->group_id,
+                    'title' => $this->title,
+                    'content' => $this->content,
+                    'uploaded_by' => $userExist ? null : ($this->nick ?? null),
+                    'is_adult' => $this->is_adult ?? false,
+                    'is_ai' => $this->is_ai ?? false,
                 ]);
 
-                ## Copio la imagen de la opción si existe
-                if ($suggestionOption->image_path) {
-                    $optionFilename = basename($suggestionOption->image_path);
-                    $contentOptionImagePath = 'content-option-images/' . $contentOption->id . '_' . $optionFilename;
+                $content->categories()->syncWithoutDetaching($categories);
 
-                    ## Por si no existe el directorio
-                    Storage::disk('public')->makeDirectory('content-option-images');
+                ## Copio las opciones solo si es tipo quiz
+                if ($this->type?->slug === 'quiz') {
+                    $suggestionOptions = $this->options()->orderBy('order')->get();
 
-                    if (Storage::disk('public')->exists($suggestionOption->image_path)) {
-                        Storage::disk('public')->copy($suggestionOption->image_path, $contentOptionImagePath);
+                    foreach ($suggestionOptions as $suggestionOption) {
+                        $contentOption = ContentOption::create([
+                            'content_id' => $content->id,
+                            'value' => $suggestionOption->value,
+                            'is_correct' => $suggestionOption->is_correct,
+                            'order' => $suggestionOption->order,
+                        ]);
 
-                        $contentOption->image_path = $contentOptionImagePath;
-                        $contentOption->save();
+                        ## Copio la imagen de la opción si existe
+                        if ($suggestionOption->image_path && Storage::disk('public')->exists($suggestionOption->image_path)) {
+                            $optionFilename = basename($suggestionOption->image_path);
+                            $contentOptionImagePath = 'content-option-images/' . $contentOption->id . '_' . $optionFilename;
 
-                        ## Elimino imagen original de sugerencia
-                        Storage::disk('public')->delete($suggestionOption->image_path);
-                        $suggestionOption->update(['image_path' => null]);
+                            Storage::disk('public')->makeDirectory('content-option-images');
+                            Storage::disk('public')->copy($suggestionOption->image_path, $contentOptionImagePath);
+
+                            $copiedFiles[] = $contentOptionImagePath;
+                            $sourceFilesToDelete[] = $suggestionOption->image_path;
+
+                            $contentOption->image_path = $contentOptionImagePath;
+                            $contentOption->save();
+
+                            $suggestionOption->image_path = null;
+                            $suggestionOption->saveQuietly();
+                        }
                     }
                 }
+
+                if ($this->image_path && Storage::disk('public')->exists($this->image_path)) {
+                    $filename = basename($this->image_path);
+                    $contentImagePath = 'content-images/' . $content->id . '_' . $filename;
+
+                    Storage::disk('public')->makeDirectory('content-images');
+                    Storage::disk('public')->copy($this->image_path, $contentImagePath);
+
+                    $copiedFiles[] = $contentImagePath;
+                    $sourceFilesToDelete[] = $this->image_path;
+
+                    $content->image = $contentImagePath;
+                    $content->save();
+                }
+
+                $this->image_path = null;
+                $this->approved_at = now();
+                $this->saveQuietly();
+                $this->runSoftDelete();
+            });
+        } catch (\Throwable $e) {
+            foreach ($copiedFiles as $copiedFile) {
+                if (Storage::disk('public')->exists($copiedFile)) {
+                    Storage::disk('public')->delete($copiedFile);
+                }
+            }
+
+            throw $e;
+        }
+
+        foreach ($sourceFilesToDelete as $sourceFile) {
+            if (Storage::disk('public')->exists($sourceFile)) {
+                Storage::disk('public')->delete($sourceFile);
             }
         }
 
-        if ($this->image_path) {
-            $filename = basename($this->image_path);
-            $contentImagePath = 'content-images/' . $content->id . '_' . $filename;
+        \App\Services\CacheInvalidationService::forSuggestion();
 
-            ## Asegura de que el directorio existe
-            Storage::disk('public')->makeDirectory('content-images');
-
-            if (Storage::disk('public')->exists($this->image_path)) {
-                Storage::disk('public')->copy($this->image_path, $contentImagePath);
-
-                $content->image = $contentImagePath;
-                $content->save();
-
-                Storage::disk('public')->delete($this->image_path);
-            }
-        }
-
-        $this->image_path = null;
-        $this->approved_at = now();
-        $this->save();
-        $this->runSoftDelete();
-
-        return true; // Cambiado a true para indicar éxito
+        return true;
     }
 
     /**

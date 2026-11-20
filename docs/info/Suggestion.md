@@ -15,9 +15,10 @@ El módulo `Suggestion` es el puente de entrada para las aportaciones de la comu
    - En la API (`Api\SendSuggestionRequest`), `nick` es opcional (`null` si viene vacío), `title` toma `'Sugerencia'` como valor por defecto cuando se omite y el tipo `chistes` se valida con existencia obligatoria (`422` si faltara en base de datos).
    - Utilizan protecciones como ReCaptcha v3 y límites de peticiones (rate limiting) por IP para evitar spam.
    - Un administrador evalúa la sugerencia en el panel de Filament (`/admin`, grupo `'Moderación'`), con selector reactivo (`type_id` con `->live()`) y acción de aprobación confirmada cuando `approved_at === null`.
-   - Al aprobarse, un evento o acción en el panel toma los datos de la sugerencia (incluyendo imágenes cargadas localmente y opciones del quiz) y los clona en la tabla `Content`.
-   - Tras ser aprobada, el botón de aprobación se oculta para prevenir duplicidad.
-2. **Manejo de Imágenes**: Las imágenes asociadas se restringen a 2MB. Si una sugerencia es rechazada y borrada (Force Delete), la imagen subida es eliminada físicamente del almacenamiento.
+   - En el envío web (`IndexController::sendSuggestion`), la conversión a WebP se ejecuta antes de abrir `DB::transaction()` (limpiando el archivo resultante si falla la inserción en BD), garantizando atomicidad ACID entre `Suggestion` y sus `SuggestionOption`.
+   - Al aprobarse mediante `Suggestion::approve()`, toda la promoción (`Content`, `syncWithoutDetaching` de categorías sin duplicar la categoría por defecto, `ContentOption`, actualización de rutas de imagen y borrado lógico de la sugerencia) se ejecuta dentro de `DB::transaction()`: ante cualquier excepción se eliminan las copias creadas en `content-images`/`content-option-images` y los ficheros originales de sugerencia solo se eliminan tras confirmar el commit.
+   - Tras ser aprobada, el botón de aprobación se oculta para prevenir duplicidad y se invalidan las cachés de sugerencias y contenidos mediante `CacheInvalidationService`.
+2. **Manejo de Imágenes y Relaciones**: Las imágenes asociadas se restringen a 2MB. `SuggestionOption::suggestion()` apunta correctamente a `Suggestion::class`. Si una sugerencia es rechazada y borrada definitivamente (`Force Delete`), la imagen subida es eliminada físicamente del almacenamiento.
 3. **Asignación de Usuarios**: Si el "nick" proporcionado en la sugerencia coincide con un usuario registrado, la plataforma vincula automáticamente el contenido a ese usuario para sumar estadísticas a su perfil (uploader).
 
 ## Relaciones Eloquent

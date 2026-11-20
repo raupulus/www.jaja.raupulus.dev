@@ -69,8 +69,12 @@ class Group extends Model
      */
     public function getLastUpdateMessageAttribute(): string
     {
-        ## Si se cargó desde el controlador con optimización
-        if (isset($this->last_content_date)) {
+        if (array_key_exists('last_content_date', $this->attributes)) {
+            if (! $this->attributes['last_content_date']) {
+                return '¡Sé el primero en subir contenido!';
+            }
+            $lastContentDate = Carbon::parse($this->attributes['last_content_date']);
+        } elseif (isset($this->last_content_date)) {
             $lastContentDate = Carbon::parse($this->last_content_date);
         } else {
             $lastContent = $this->last_content;

@@ -135,7 +135,7 @@ class V1Controller extends Controller
 
             $contentsQuery = Content::whereNotIn('group_id', [4, 14])
                 ->where('is_adult', false)
-                ->with('options')
+                ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->inRandomOrder();
             $count = $contentsQuery->count();
 
@@ -210,7 +210,7 @@ class V1Controller extends Controller
 
             $contentsQuery = $type->contents()->whereNotIn('group_id', [4, 14])
                 ->where('is_adult', false)
-                ->with('options')
+                ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->inRandomOrder();
 
             $count = $contentsQuery->count();
@@ -507,7 +507,7 @@ class V1Controller extends Controller
                 ->where('is_adult', false)
                 ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id'])
                 ->byType($type)
-                ->with('options')
+                ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->random();
 
             $count = $contents->count();
@@ -603,7 +603,7 @@ class V1Controller extends Controller
                 ->where('is_adult', false)
                 ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
                 ->byTypeAndCategory($type, $category)
-                ->with('options')
+                ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->random();
 
             $count = $contents->count();
@@ -684,7 +684,7 @@ class V1Controller extends Controller
 
             $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
                 ->byGroup($group)
-                ->with('options')
+                ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->random();
 
             $count = $contents->count();
@@ -757,6 +757,8 @@ class V1Controller extends Controller
             );
 
             if ($suggestion) {
+                $suggestion->loadMissing('type:id,name');
+
                 return $this->successResponse(
                     [
                         'title' => $suggestion->title,
@@ -848,6 +850,8 @@ class V1Controller extends Controller
             ]);
 
             if ($report) {
+                $report->loadMissing('user:id,name,email');
+
                 return $this->successResponse(
                     [
                         'id' => $report->id,
@@ -916,7 +920,7 @@ class V1Controller extends Controller
             $user_id = User::where('nick', $nick)->first()?->id;
 
             $contents = Content::select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
-                ->with('options')
+                ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->where(function ($query) use ($user_id, $nick) {
                     if ($user_id) {
                         return $query->where('uploaded_by', 'like', '%' . $nick . '%')

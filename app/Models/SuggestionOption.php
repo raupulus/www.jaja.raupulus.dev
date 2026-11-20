@@ -36,7 +36,7 @@ class SuggestionOption extends Model
      */
     public function suggestion(): BelongsTo
     {
-        return $this->belongsTo(Content::class, 'suggestion_id', 'id');
+        return $this->belongsTo(Suggestion::class, 'suggestion_id', 'id');
     }
 
     /**

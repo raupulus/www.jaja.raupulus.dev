@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Content;
 use App\Models\Group;
 use App\Models\Type;
 use Illuminate\Support\Facades\Cache;
@@ -22,12 +23,14 @@ class ContentController extends Controller
      */
     public function typesIndex(): View
     {
-        $types = Cache::Remember('types_index', 60 * 60, function () {
+        $types = Cache::remember('types_index', 60 * 60, function () {
             return Type::select('id', 'name', 'slug', 'description', 'image')
                 ->withCount('groups')
-                ->with(['contents' => function ($query) {
-                    $query->select(['contents.created_at'])->latest('contents.created_at')->limit(1);
-                }])
+                ->addSelect([
+                    'last_content_date' => Content::selectRaw('MAX(contents.created_at)')
+                        ->join('groups', 'groups.id', '=', 'contents.group_id')
+                        ->whereColumn('groups.type_id', 'types.id'),
+                ])
                 ->orderBy('name')
                 ->get();
         });
@@ -52,6 +55,10 @@ class ContentController extends Controller
                     $query->whereNotIn('group_id', [4, 14])
                         ->where('is_adult', false);
                 }])
+                ->withMax(['contents as last_content_date' => function ($query) {
+                    $query->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false);
+                }], 'created_at')
                 ->orderBy('contents_count', 'desc')
                 ->get();
         });
@@ -82,6 +89,10 @@ class ContentController extends Controller
                     $query->whereNotIn('group_id', [4, 14])
                         ->where('is_adult', false);
                 }])
+                ->withMax(['contents as last_content_date' => function ($query) {
+                    $query->whereNotIn('group_id', [4, 14])
+                        ->where('is_adult', false);
+                }], 'created_at')
                 ->orderBy('contents_count', 'desc')
                 ->get();
         });
@@ -124,6 +135,11 @@ class ContentController extends Controller
     public function contentRandomFromGroup(Group $group): View
     {
         $contents = $group->contents()
+            ->with([
+                'group.type',
+                'options' => fn ($q) => $q->orderBy('order'),
+                'user:id,nick',
+            ])
             ->whereNotIn('group_id', [4, 14])
             ->where('is_adult', false)
             ->inRandomOrder()
@@ -149,6 +165,11 @@ class ContentController extends Controller
     public function contentRandomFromcategory(Category $category): View
     {
         $contents = $category->contents()
+            ->with([
+                'group.type',
+                'options' => fn ($q) => $q->orderBy('order'),
+                'user:id,nick',
+            ])
             ->whereNotIn('group_id', [4, 14])
             ->where('is_adult', false)
             ->inRandomOrder()
