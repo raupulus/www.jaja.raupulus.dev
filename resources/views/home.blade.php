@@ -113,7 +113,7 @@
     </section>
 
     <section class="card">
-        <h2 class="card-title">😜 ¡Envía el tuyo!</h2>
+        <h2 id="suggestion-form-heading" class="card-title">😜 ¡Envía el tuyo!</h2>
 
         <p>
             ¿Se te ha ocurrido algún chiste, pregunta tipo quiz o adivinanza?

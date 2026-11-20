@@ -7,44 +7,84 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function initSuggestionsForm() {
-    // Inicializar funcionalidades
     initTypeSelector();
     initGroupSelector();
     initAnswerCheckers();
     initImagePreview();
     initThrottleCounter();
     initDefaultCorrectAnswer();
+    initAccessibleValidation();
     initSubmitProtection();
 }
 
 /**
- * Selecciona la primera respuesta como correcta al cargar la página si no hay ninguna marcada
+ * Sincroniza visualmente un botón selector de respuesta correcta de quiz.
  */
-function initDefaultCorrectAnswer() {
-    // Solo ejecutar si el bloque de quiz está visible
-    const quizAnswersBlock = document.querySelector('.box-quiz-answers');
-    if (!quizAnswersBlock || quizAnswersBlock.style.display === 'none') return;
+function setQuizButtonState(button, isCorrect) {
+    const answerGroup = button.closest('.form-group-answer');
+    if (!answerGroup) return;
 
-    const alreadyChecked = quizAnswersBlock.querySelector('.answer-checkbox:checked');
-    if (alreadyChecked) return;
+    const checkOn = button.querySelector('.answer-check-on');
+    const checkOff = button.querySelector('.answer-check-off');
+    const checkbox = answerGroup.querySelector('.answer-checkbox');
 
-    const firstAnswerBox = document.querySelector('.box-answer-check');
-    if (firstAnswerBox) {
-        const checkOn = firstAnswerBox.querySelector('.answer-check-on');
-        const checkOff = firstAnswerBox.querySelector('.answer-check-off');
-        const checkbox = firstAnswerBox.closest('.form-group-answer').querySelector('.answer-checkbox');
+    button.setAttribute('aria-pressed', isCorrect ? 'true' : 'false');
+    button.classList.toggle('is-correct', isCorrect);
 
-        if (checkOn && checkOff && checkbox) {
-            // Marcar la primera como correcta sin animación (carga inicial)
-            checkOn.classList.remove('hidden');
-            checkOff.classList.add('hidden');
-            checkbox.checked = true;
+    if (checkOn && checkOff) {
+        checkOn.classList.toggle('hidden', !isCorrect);
+        checkOff.classList.toggle('hidden', isCorrect);
+    }
+
+    if (checkbox) {
+        checkbox.checked = isCorrect;
+    }
+}
+
+/**
+ * Selecciona una única respuesta como correcta y anuncia el cambio si corresponde.
+ */
+function selectCorrectAnswer(targetButton, announce = true) {
+    const answerButtons = document.querySelectorAll('.answer-check-btn');
+    answerButtons.forEach((btn) => {
+        setQuizButtonState(btn, btn === targetButton);
+    });
+
+    if (announce) {
+        const statusRegion = document.getElementById('quiz-answer-status');
+        const pos = targetButton.dataset.answerPos || '';
+        if (statusRegion && pos) {
+            statusRegion.textContent = `Respuesta ${pos} marcada como correcta.`;
         }
     }
 }
 
 /**
- * Maneja la visibilidad del bloque de respuestas según el tipo seleccionado
+ * Selecciona la primera respuesta como correcta al cargar la página si no hay ninguna marcada.
+ */
+function initDefaultCorrectAnswer() {
+    const quizAnswersBlock = document.querySelector('.box-quiz-answers');
+    if (!quizAnswersBlock || quizAnswersBlock.hidden || quizAnswersBlock.style.display === 'none') {
+        return;
+    }
+
+    const alreadyChecked = quizAnswersBlock.querySelector('.answer-checkbox:checked');
+    if (alreadyChecked) {
+        const existingBtn = alreadyChecked.closest('.form-group-answer')?.querySelector('.answer-check-btn');
+        if (existingBtn) {
+            selectCorrectAnswer(existingBtn, false);
+        }
+        return;
+    }
+
+    const firstButton = quizAnswersBlock.querySelector('.answer-check-btn');
+    if (firstButton) {
+        selectCorrectAnswer(firstButton, false);
+    }
+}
+
+/**
+ * Maneja la visibilidad del bloque de respuestas según el tipo seleccionado.
  */
 function initTypeSelector() {
     const typeSelect = document.querySelector('select[name="type_id"]');
@@ -52,31 +92,27 @@ function initTypeSelector() {
 
     if (!typeSelect || !quizAnswersBlock) return;
 
-    // Función para mostrar/ocultar el bloque de respuestas
     function toggleQuizAnswers() {
         const selectedOption = typeSelect.options[typeSelect.selectedIndex];
-        const slug = selectedOption.getAttribute('data-slug');
+        const slug = selectedOption ? selectedOption.getAttribute('data-slug') : '';
 
         if (slug === 'quiz') {
-            quizAnswersBlock.style.display = 'block';
-            // Marcar la primera respuesta como correcta cuando se muestra el bloque
-            setTimeout(initDefaultCorrectAnswer, 100);
+            quizAnswersBlock.hidden = false;
+            quizAnswersBlock.style.display = 'flex';
+            initDefaultCorrectAnswer();
         } else {
+            quizAnswersBlock.hidden = true;
             quizAnswersBlock.style.display = 'none';
-            // Limpiar todas las respuestas cuando se oculta
             clearAllAnswers();
         }
     }
 
-    // Ejecutar al cargar la página
     toggleQuizAnswers();
-
-    // Ejecutar cuando cambie la selección
     typeSelect.addEventListener('change', toggleQuizAnswers);
 }
 
 /**
- * Maneja el filtrado de grupos según el tipo seleccionado
+ * Maneja el filtrado de grupos según el tipo seleccionado.
  */
 function initGroupSelector() {
     const typeSelect = document.querySelector('select[name="type_id"]');
@@ -84,7 +120,6 @@ function initGroupSelector() {
 
     if (!typeSelect || !groupSelect) return;
 
-    // Función para filtrar grupos según el tipo
     function filterGroups(resetSelection = true) {
         const selectedTypeId = typeSelect.value;
         const groupOptions = groupSelect.querySelectorAll('option');
@@ -98,29 +133,22 @@ function initGroupSelector() {
             }
         }
 
-        // Filtrar opciones de grupo
-        groupOptions.forEach(option => {
+        groupOptions.forEach((option) => {
             if (option.value === '') {
-                // Mantener la opción por defecto "Grupo"
-                option.style.display = 'block';
+                option.hidden = false;
+                option.style.display = '';
                 return;
             }
 
-            const optionTypeId = option.getAttribute('data-type_id');
-
-            if (selectedTypeId === optionTypeId) {
-                option.style.display = 'block';
-            } else {
-                option.style.display = 'none';
-            }
+            const matchesType = selectedTypeId === option.getAttribute('data-type_id');
+            option.hidden = !matchesType;
+            option.style.display = matchesType ? '' : 'none';
         });
     }
 
-    // Función para manejar el tipo seleccionado al cargar
     function handleInitialType() {
         let selectedTypeId = typeSelect.value;
 
-        // Si no hay tipo seleccionado, seleccionar el primero
         if (!selectedTypeId) {
             const firstOption = typeSelect.querySelector('option[value]:not([value=""])');
             if (firstOption) {
@@ -129,165 +157,55 @@ function initGroupSelector() {
             }
         }
 
-        // Aplicar filtro de grupos conservando la selección previa si coincide con el tipo
         filterGroups(false);
     }
 
-    // Ejecutar al cargar la página
     handleInitialType();
-
-    // Ejecutar cuando cambie el tipo
     typeSelect.addEventListener('change', () => filterGroups(true));
 }
 
 /**
- * Maneja la funcionalidad de selección de respuestas correctas
+ * Maneja la funcionalidad accesible de selección de respuestas correctas (ratón y teclado).
  */
 function initAnswerCheckers() {
-    const answerBoxes = document.querySelectorAll('.box-answer-check');
+    const answerButtons = document.querySelectorAll('.answer-check-btn');
 
-    answerBoxes.forEach(box => {
-        const checkOn = box.querySelector('.answer-check-on');
-        const checkOff = box.querySelector('.answer-check-off');
-        const checkbox = box.closest('.form-group-answer').querySelector('.answer-checkbox');
+    answerButtons.forEach((button) => {
+        button.addEventListener('click', function () {
+            if (button.getAttribute('aria-pressed') === 'true') {
+                return;
+            }
 
-        if (!checkOn || !checkOff || !checkbox) return;
-
-        // Solo permitir hacer clic en la cruz (checkOff) para activar
-        checkOff.addEventListener('click', function() {
-            // Desmarcar todas las demás respuestas primero con animación
-            clearAllAnswersWithAnimation();
-
-            // Esperar un poco para que termine la animación de limpieza
-            setTimeout(() => {
-                // Marcar esta respuesta como correcta con animación
-                setCorrectAnswerWithAnimation(checkOn, checkOff, checkbox);
-            }, 150);
-        });
-
-        // No permitir hacer clic en el check verde para desmarcarlo
-        checkOn.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Añadir una pequeña animación de "rebote" para indicar que no se puede desmarcar
-            checkOn.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                checkOn.style.transform = 'scale(1)';
-            }, 150);
+            selectCorrectAnswer(button, true);
         });
     });
 }
 
 /**
- * Marca una respuesta como correcta con animación
- */
-function setCorrectAnswerWithAnimation(checkOn, checkOff, checkbox) {
-    // Ocultar cruz con animación
-    checkOff.style.transform = 'scale(0.8)';
-    checkOff.style.opacity = '0';
-
-    setTimeout(() => {
-        checkOff.classList.add('hidden');
-        checkOff.style.transform = 'scale(1)';
-        checkOff.style.opacity = '1';
-
-        // Mostrar check con animación
-        checkOn.classList.remove('hidden');
-        checkOn.style.transform = 'scale(0.8)';
-        checkOn.style.opacity = '0';
-
-        // Animar la aparición del check
-        setTimeout(() => {
-            checkOn.style.transform = 'scale(1.1)';
-            checkOn.style.opacity = '1';
-
-            // Rebote final
-            setTimeout(() => {
-                checkOn.style.transform = 'scale(1)';
-            }, 150);
-        }, 50);
-
-        checkbox.checked = true;
-    }, 150);
-}
-
-/**
- * Limpia todas las respuestas con animación
- */
-function clearAllAnswersWithAnimation() {
-    const answerBoxes = document.querySelectorAll('.box-answer-check');
-
-    answerBoxes.forEach(box => {
-        const checkOn = box.querySelector('.answer-check-on');
-        const checkOff = box.querySelector('.answer-check-off');
-        const checkbox = box.closest('.form-group-answer').querySelector('.answer-checkbox');
-
-        if (checkOn && checkOff && checkbox && !checkOn.classList.contains('hidden')) {
-            // Animar la desaparición del check
-            checkOn.style.transform = 'scale(0.8)';
-            checkOn.style.opacity = '0';
-
-            setTimeout(() => {
-                checkOn.classList.add('hidden');
-                checkOn.style.transform = 'scale(1)';
-                checkOn.style.opacity = '1';
-
-                // Mostrar cruz con animación
-                checkOff.classList.remove('hidden');
-                checkOff.style.transform = 'scale(0.8)';
-                checkOff.style.opacity = '0';
-
-                setTimeout(() => {
-                    checkOff.style.transform = 'scale(1)';
-                    checkOff.style.opacity = '1';
-                }, 50);
-
-                checkbox.checked = false;
-            }, 150);
-        }
-    });
-}
-
-/**
- * Limpia todas las respuestas (sin animación - para uso interno)
+ * Limpia todas las respuestas seleccionadas.
  */
 function clearAllAnswers() {
-    const answerBoxes = document.querySelectorAll('.box-answer-check');
+    const answerButtons = document.querySelectorAll('.answer-check-btn');
+    answerButtons.forEach((btn) => setQuizButtonState(btn, false));
 
-    answerBoxes.forEach(box => {
-        const checkOn = box.querySelector('.answer-check-on');
-        const checkOff = box.querySelector('.answer-check-off');
-        const checkbox = box.closest('.form-group-answer').querySelector('.answer-checkbox');
-
-        if (checkOn && checkOff && checkbox) {
-            checkOn.classList.add('hidden');
-            checkOff.classList.remove('hidden');
-            checkbox.checked = false;
-        }
-    });
-}
-
-/**
- * Maneja la previsualización de imágenes
- */
-function initImagePreview() {
-    const imageInput = document.getElementById('content-image');
-    const previewContainer = document.getElementById('image-preview-container');
-
-    if (!imageInput) return;
-
-    // Evento para cambio de archivo
-    imageInput.addEventListener('change', handleImagePreview);
-
-    // Evento para hacer clic en el contenedor de vista previa
-    if (previewContainer) {
-        previewContainer.addEventListener('click', () => {
-            imageInput.click();
-        });
+    const statusRegion = document.getElementById('quiz-answer-status');
+    if (statusRegion) {
+        statusRegion.textContent = '';
     }
 }
 
 /**
- * Maneja la vista previa de la imagen seleccionada
+ * Maneja la previsualización de imágenes (activada nativamente por <label for="content-image">).
+ */
+function initImagePreview() {
+    const imageInput = document.getElementById('content-image');
+    if (!imageInput) return;
+
+    imageInput.addEventListener('change', handleImagePreview);
+}
+
+/**
+ * Maneja la vista previa y validación de tamaño en cliente de la imagen seleccionada.
  */
 function handleImagePreview(e) {
     const input = e.target;
@@ -296,22 +214,27 @@ function handleImagePreview(e) {
     const previewImg = document.getElementById('preview-img');
     const placeholder = document.getElementById('preview-placeholder');
 
-    // Limpiar errores previos
     if (errorElement) {
+        errorElement.textContent = '';
         errorElement.style.display = 'none';
     }
 
+    input.setAttribute('aria-invalid', 'false');
+    if (input.getAttribute('aria-describedby') === 'file-error') {
+        input.removeAttribute('aria-describedby');
+    }
+
     if (file) {
-        // Validar tamaño (2MB = 2097152 bytes)
         if (file.size > 2097152) {
             const fileSizeMB = (file.size / (1024 * 1024)).toFixed(1);
             if (errorElement) {
-                errorElement.textContent = `La imagen es demasiado grande (${fileSizeMB}MB). Máximo permitido: 2MB`;
+                errorElement.textContent = `La imagen es demasiado grande (${fileSizeMB}MB). Máximo permitido: 2MB.`;
                 errorElement.style.display = 'block';
             }
+            input.setAttribute('aria-invalid', 'true');
+            input.setAttribute('aria-describedby', 'file-error');
             input.value = '';
 
-            // Mostrar placeholder, ocultar imagen
             if (placeholder) placeholder.style.display = 'flex';
             if (previewImg) {
                 previewImg.removeAttribute('src');
@@ -321,11 +244,10 @@ function handleImagePreview(e) {
             return false;
         }
 
-        // Mostrar preview
         const reader = new FileReader();
-        reader.onload = function (e) {
+        reader.onload = function (loadEvent) {
             if (previewImg) {
-                previewImg.src = e.target.result;
+                previewImg.src = loadEvent.target.result;
                 previewImg.classList.remove('hidden');
                 previewImg.style.display = 'block';
             }
@@ -335,7 +257,6 @@ function handleImagePreview(e) {
         };
         reader.readAsDataURL(file);
     } else {
-        // Si no hay archivo, mostrar placeholder
         if (placeholder) placeholder.style.display = 'flex';
         if (previewImg) {
             previewImg.removeAttribute('src');
@@ -348,7 +269,52 @@ function handleImagePreview(e) {
 }
 
 /**
- * Evita el doble envío del formulario mostrando estado de carga
+ * Sincroniza aria-invalid con :user-invalid tras la interacción sin pisar errores iniciales de servidor.
+ */
+function initAccessibleValidation() {
+    const form = document.getElementById('form-suggestion-send');
+    if (!form) return;
+
+    const serverInvalid = new WeakSet();
+    form.querySelectorAll('input, select, textarea').forEach((el) => {
+        if (el.getAttribute('aria-invalid') === 'true') {
+            serverInvalid.add(el);
+        }
+    });
+
+    const syncAria = (el) => {
+        if (!el || !el.matches?.('input, select, textarea')) return;
+        let isUserInvalid = false;
+        try {
+            isUserInvalid = el.matches(':user-invalid');
+        } catch {
+            isUserInvalid = !el.validity.valid;
+        }
+
+        if (isUserInvalid) {
+            el.setAttribute('aria-invalid', 'true');
+            serverInvalid.delete(el);
+        } else if (!serverInvalid.has(el)) {
+            el.setAttribute('aria-invalid', 'false');
+        }
+    };
+
+    form.addEventListener('blur', (event) => syncAria(event.target), true);
+    form.addEventListener('change', (event) => {
+        serverInvalid.delete(event.target);
+        syncAria(event.target);
+    }, true);
+    form.addEventListener('input', (event) => {
+        if (event.target.getAttribute('aria-invalid') === 'true') {
+            serverInvalid.delete(event.target);
+            syncAria(event.target);
+        }
+    });
+    form.addEventListener('invalid', (event) => syncAria(event.target), true);
+}
+
+/**
+ * Evita el doble envío del formulario mostrando estado de carga.
  */
 function initSubmitProtection() {
     const form = document.getElementById('form-suggestion-send');
@@ -371,39 +337,33 @@ function initSubmitProtection() {
 }
 
 /**
- * Maneja el contador de throttle
+ * Maneja el contador de throttle.
  */
 function initThrottleCounter() {
     const throttleCounter = document.getElementById('throttleCounter');
-
     if (!throttleCounter) return;
 
     let seconds = parseInt(throttleCounter.dataset.seconds, 10);
-
     if (isNaN(seconds) || seconds <= 0) return;
 
-    const submitButton = document.querySelector('button[type="submit"]');
+    const submitButton = document.querySelector('#form-suggestion-send button[type="submit"]');
     if (submitButton) {
         submitButton.disabled = true;
         submitButton.classList.add('disabled');
     }
 
-    // Iniciar contador
     const countdownInterval = setInterval(function () {
         seconds--;
         throttleCounter.textContent = seconds;
 
-        // Cuando llega a cero
         if (seconds <= 0) {
             clearInterval(countdownInterval);
 
-            // Habilitar botón de envío
             if (submitButton) {
                 submitButton.disabled = false;
                 submitButton.classList.remove('disabled');
             }
 
-            // Ocultar el mensaje de throttle con animación
             const throttleAlert = document.getElementById('throttleAlert');
             if (throttleAlert) {
                 throttleAlert.classList.add('fade-out');
@@ -416,14 +376,19 @@ function initThrottleCounter() {
 }
 
 /**
- * Función para hacer scroll al formulario (útil cuando hay errores)
+ * Desplaza y enfoca el formulario cuando hay errores de validación.
  */
 function goToForm() {
     const form = document.getElementById('form-suggestion-send');
-    if (form) {
-        form.scrollIntoView({behavior: 'smooth'});
+    if (!form) return;
+
+    const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    form.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth' });
+
+    const firstInvalid = form.querySelector('[aria-invalid="true"]');
+    if (firstInvalid && typeof firstInvalid.focus === 'function') {
+        firstInvalid.focus({ preventScroll: true });
     }
 }
 
-// Exportar función para uso global si es necesario
 window.goToForm = goToForm;

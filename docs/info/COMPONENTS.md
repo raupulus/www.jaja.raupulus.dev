@@ -48,7 +48,7 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 - `alerts.js` — Gestión de alertas en la interfaz.
 - `cookies.js` — Lógica del banner de cookies.
 - `navbar.js` — Comportamiento interactivo de la barra de navegación móvil con `aria-expanded`, cierre con `Escape` o clic exterior y atributo `inert` automático cuando el menú está colapsado en pantallas `<= 1024px`.
-- `suggestions_forms.js` — Interactividad del formulario de sugerencias (ej. opciones de quiz).
+- `suggestions_forms.js` — Interactividad accesible del formulario de sugerencias (filtrado de grupos, selector de respuesta correcta de quiz mediante `<button type="button" aria-pressed>`, vista previa de imagen mediante `<label>`, sincronización `aria-invalid` y contador de throttle).
 
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20
