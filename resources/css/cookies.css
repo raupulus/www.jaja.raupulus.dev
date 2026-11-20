@@ -18,7 +18,7 @@
 }
 
 .cookie-banner-content {
-    max-width: 1400px;
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 20px;
     display: flex;

@@ -65,7 +65,7 @@
         <div class="page-header">
             <h1 class="page-title">Colaborador {{$collaborator->name . '(@' . $collaborator->nick . ')'}}</h1>
             <div>
-                <img src="{{$collaborator->urlImage}}" alt="{{$collaborator->name}}">
+                <img src="{{$collaborator->urlImage}}" alt="{{$collaborator->name}}" class="collaborator-avatar-lg" width="140" height="140">
             </div>
             <p class="page-description">
                 {{$collaborator->description}}

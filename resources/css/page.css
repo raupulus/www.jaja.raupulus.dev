@@ -1,6 +1,6 @@
 /* Contenedor principal de la página */
 .page-container {
-    max-width: 1200px;
+    max-width: var(--container-max);
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -82,7 +82,9 @@
 .page-content-wrapper p {
     margin-bottom: 1.5rem;
     color: var(--color-texto-principal);
-    text-align: justify;
+    text-align: left;
+    max-width: var(--prose-max);
+    text-wrap: pretty;
 }
 
 .page-content-wrapper p:last-child {
@@ -109,6 +111,7 @@
     padding-left: 2rem;
     color: var(--color-texto-principal);
     text-align: left;
+    max-width: var(--prose-max);
 }
 
 .page-content-wrapper li {
@@ -147,7 +150,7 @@
     color: var(--color-primario);
     padding: 0.2rem 0.4rem;
     border-radius: 3px;
-    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-family: var(--font-mono);
     font-size: 0.9em;
 }
 
@@ -178,6 +181,7 @@
     font-style: italic;
     color: var(--color-texto-secundario);
     text-align: left; /* Alineación a la izquierda para citas */
+    max-width: var(--prose-max);
 }
 
 .page-content-wrapper blockquote p {

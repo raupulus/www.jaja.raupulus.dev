@@ -174,7 +174,7 @@
 
         <a href="{{route('page.show', 'agradecimientos')}}"
            title="Enlace a los agradecimientos de colaboradores y desarrolladores de {{config('app.name')}}"
-           class="btn">❤️ JAgradece A...</a>
+           class="btn btn--outline">❤️ JAgradece A...</a>
     </section>
 
 
@@ -188,7 +188,7 @@
 
         <a href="{{route('collaborator.index')}}"
            title="Enlace a los colaboradores y susproyectos de comunidad"
-           class="btn">🧑‍💻 Ver Colaboradores</a>
+           class="btn btn--outline">🧑‍💻 Ver Colaboradores</a>
     </section>
 
     <section class="card">
@@ -202,7 +202,7 @@
 
         <a href="{{route('page.index')}}"
            title="Enlace a todo el listado de páginas de {{config('app.name')}}"
-           class="btn">📄 Páginas para la comunidad</a>
+           class="btn btn--outline">📄 Páginas para la comunidad</a>
     </section>
 
     {{-- Botones enlazando a listado de contenidos --}}

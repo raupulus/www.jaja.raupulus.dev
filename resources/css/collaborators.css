@@ -22,7 +22,8 @@
     text-transform: uppercase;
     letter-spacing: 1.5px;
     position: relative;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 /* Línea decorativa bajo el título */

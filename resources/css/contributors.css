@@ -16,7 +16,8 @@
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    word-break: break-all;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 /* Contenedor de usuarios destacados */
@@ -109,6 +110,7 @@
     font-size: 0.8em;
     color: var(--color-texto-destacado);
     font-weight: bold;
+    font-variant-numeric: tabular-nums;
     white-space: nowrap;
     animation: contributor-value-pulse 2s infinite ease-in-out;
 }

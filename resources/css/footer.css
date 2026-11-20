@@ -8,7 +8,7 @@
     margin: auto;
     padding: 10px;
     width: 100%;
-    max-width: 1200px;
+    max-width: var(--container-max);
     grid-template-columns: 1fr auto;
     gap: 10px;
     color: var(--color-texto-secundario);

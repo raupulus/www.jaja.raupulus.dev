@@ -11,12 +11,12 @@
     display: block;
     text-decoration: none;
     color: inherit;
-    border: 1px solid #374151;
+    border: 1px solid var(--color-border-control);
     border-radius: 12px;
     overflow: hidden;
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-sm);
     height: 100%;
     position: relative;
     cursor: pointer;
@@ -29,15 +29,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    background: linear-gradient(135deg, var(--color-primary-soft) 0%, rgba(0, 151, 167, 0.08) 100%);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
 .category-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4), 0 8px 16px rgba(0, 0, 0, 0.3);
-    border-color: #3b82f6;
+    box-shadow: var(--shadow-md);
+    border-color: var(--color-primary);
 }
 
 .category-card:hover::before {
@@ -63,11 +63,11 @@
     margin-right: 1rem;
     border-radius: 8px;
     overflow: hidden;
-    background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+    background: linear-gradient(135deg, var(--color-surface-elevated) 0%, var(--color-bg) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid #4b5563;
+    border: 2px solid var(--color-border-control);
     transition: all 0.3s ease;
 }
 
@@ -79,8 +79,8 @@
 }
 
 .category-card:hover .category-card-image {
-    border-color: #3b82f6;
-    box-shadow: 0 0 12px rgba(59, 130, 246, 0.3);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 12px var(--color-primary-soft);
 }
 
 .category-card:hover .category-card-image img {
@@ -89,7 +89,7 @@
 
 /* Icono por defecto cuando no hay imagen */
 .category-card-image-placeholder {
-    color: #9ca3af;
+    color: var(--color-text-muted);
     font-size: 1.5rem;
 }
 
@@ -106,7 +106,7 @@
 .category-card-title {
     font-size: 1.125rem;
     font-weight: 700;
-    color: #f9fafb;
+    color: var(--color-text);
     margin: 0 0 0.5rem 0;
     line-height: 1.4;
     display: -webkit-box;
@@ -120,7 +120,7 @@
 /* Descripción de la categoría */
 .category-card-description {
     font-size: 0.875rem;
-    color: #d1d5db;
+    color: var(--color-text-muted);
     margin: 0;
     line-height: 1.5;
     display: -webkit-box;
@@ -142,11 +142,11 @@
 
 /* Estados de hover específicos */
 .category-card:hover .category-card-title {
-    color: #60a5fa;
+    color: var(--color-primary);
 }
 
 .category-card:hover .category-card-description {
-    color: #e5e7eb;
+    color: var(--color-text);
 }
 
 /* Efecto de brillo sutil */
@@ -249,7 +249,7 @@
 /* Modo de alto contraste para accesibilidad */
 @media (prefers-contrast: high) {
     .category-card {
-        border: 2px solid #60a5fa;
+        border: 2px solid var(--color-primary);
         background: #000000;
     }
 
@@ -258,7 +258,7 @@
     }
 
     .category-card-description {
-        color: #e5e7eb;
+        color: var(--color-text);
     }
 }
 

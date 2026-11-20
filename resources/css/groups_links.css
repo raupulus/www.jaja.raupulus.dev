@@ -4,7 +4,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     padding: 2rem 0;
-    max-width: 1200px;
+    max-width: var(--container-max);
     margin: 0 auto;
 }
 
@@ -13,12 +13,12 @@
     display: block;
     text-decoration: none;
     color: inherit;
-    border: 1px solid #374151;
+    border: 1px solid var(--color-border-control);
     border-radius: 16px;
     overflow: hidden;
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--shadow-sm);
     height: 140px;
     position: relative;
     text-align: center;
@@ -31,15 +31,15 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    background: linear-gradient(135deg, var(--color-primary-soft) 0%, rgba(0, 151, 167, 0.08) 100%);
     opacity: 0;
     transition: opacity 0.4s ease;
 }
 
 .groups-link-card:hover {
     transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 12px 24px rgba(0, 0, 0, 0.3);
-    border-color: #3b82f6;
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-primary);
 }
 
 .groups-link-card:hover::before {
@@ -62,7 +62,7 @@
 .groups-link-title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #f9fafb;
+    color: var(--color-text);
     margin: 0 0 0.75rem 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     transition: color 0.3s ease;
@@ -74,14 +74,11 @@
 .groups-link-count {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #60a5fa;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-text-accent);
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 /* Indicador visual opcional */
@@ -91,25 +88,25 @@
     right: 12px;
     width: 8px;
     height: 8px;
-    background: #10b981;
+    background: var(--color-primary);
     border-radius: 50%;
-    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
     transition: all 0.3s ease;
 }
 
 /* Estados de hover */
 .groups-link-card:hover .groups-link-title {
-    color: #60a5fa;
+    color: var(--color-primary);
 }
 
 .groups-link-card:hover .groups-link-count {
     transform: scale(1.1);
-    filter: brightness(1.2);
+    filter: brightness(1.15);
 }
 
 .groups-link-card:hover .groups-link-indicator {
-    background: #3b82f6;
-    box-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+    background: var(--color-text-accent);
+    box-shadow: 0 0 12px rgba(38, 217, 238, 0.8);
     transform: scale(1.2);
 }
 
@@ -132,69 +129,63 @@
 
 /* Variaciones de color para cada tarjeta */
 .groups-link-card.tipos {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
 }
 
 .groups-link-card.tipos::before {
-    background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(251, 113, 133, 0.12) 0%, rgba(244, 63, 94, 0.08) 100%);
 }
 
 .groups-link-card.tipos:hover {
-    border-color: #ef4444;
+    border-color: #fb7185;
 }
 
 .groups-link-card.tipos .groups-link-count {
-    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #fb7185;
 }
 
 .groups-link-card.tipos:hover .groups-link-title {
-    color: #ef4444;
+    color: #fb7185;
 }
 
 .groups-link-card.grupos {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
 }
 
 .groups-link-card.grupos::before {
-    background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(21, 128, 61, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(52, 211, 153, 0.12) 0%, rgba(16, 185, 129, 0.08) 100%);
 }
 
 .groups-link-card.grupos:hover {
-    border-color: #22c55e;
+    border-color: #34d399;
 }
 
 .groups-link-card.grupos .groups-link-count {
-    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: #34d399;
 }
 
 .groups-link-card.grupos:hover .groups-link-title {
-    color: #22c55e;
+    color: #34d399;
 }
 
 .groups-link-card.tags {
-    background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+    background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-bg) 100%);
 }
 
 .groups-link-card.tags::before {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(38, 217, 238, 0.12) 0%, rgba(0, 188, 212, 0.08) 100%);
 }
 
 .groups-link-card.tags:hover {
-    border-color: #a855f7;
+    border-color: var(--color-text-accent);
 }
 
 .groups-link-card.tags .groups-link-count {
-    background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--color-text-accent);
 }
 
 .groups-link-card.tags:hover .groups-link-title {
-    color: #a855f7;
+    color: var(--color-text-accent);
 }
 
 /* Responsive */

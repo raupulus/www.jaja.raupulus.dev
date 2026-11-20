@@ -10,7 +10,7 @@
     border-radius: 16px;
     color: #ffffff;
     text-decoration: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-sans);
     font-weight: 600;
     text-align: center;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -131,7 +131,7 @@
     }
 
     .btn-dc-bot span:last-of-type {
-        font-size: 11px;
+        font-size: 12px;
     }
 }
 
@@ -165,7 +165,7 @@
     border-radius: 16px;
     color: #2a2a2a;
     text-decoration: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--font-sans);
     font-weight: 700;
     text-align: center;
     position: relative;

@@ -23,7 +23,7 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
-    max-width: 1200px;
+    max-width: var(--container-max);
     margin: 0 auto;
 }
 
@@ -281,7 +281,7 @@
     }
 
     .keyword-badge {
-        font-size: 0.7em;
+        font-size: 0.75rem;
         padding: 0.25rem 0.5rem;
     }
 }

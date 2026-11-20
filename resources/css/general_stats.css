@@ -84,6 +84,7 @@
 .stats-value {
     font-size: 2.2em;
     font-weight: bold;
+    font-variant-numeric: tabular-nums;
     color: var(--color-texto-destacado);
     animation: countUp 2s ease-out;
     text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
