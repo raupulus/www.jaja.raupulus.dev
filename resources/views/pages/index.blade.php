@@ -5,7 +5,7 @@
 @section('keywords', 'páginas, documentación, normas, api, bots, agradecimientos, ' . config('app.name'))
 
 @section('css')
-    @vite(['resources/css/pages.css'])
+    @vite(['resources/css/page.css'])
 @endsection
 
 @push('jsonld')

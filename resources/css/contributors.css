@@ -110,7 +110,7 @@
     color: var(--color-texto-destacado);
     font-weight: bold;
     white-space: nowrap;
-    animation: pulse 2s infinite ease-in-out;
+    animation: contributor-value-pulse 2s infinite ease-in-out;
 }
 
 /* Nickname del usuario */
@@ -128,7 +128,7 @@
 }
 
 /* Animación de pulso para los valores */
-@keyframes pulse {
+@keyframes contributor-value-pulse {
     0%, 100% {
         opacity: 0.7;
         transform: translateX(-50%) scale(1);

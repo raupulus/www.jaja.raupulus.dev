@@ -31,7 +31,6 @@
 
 @include('layouts.footer')
 @include('layouts.footer_meta')
-@yield('css')
 @yield('js')
 
 </body>

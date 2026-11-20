@@ -70,9 +70,8 @@
     </div>
 
     <div class="form-group {{$errors->has('content') ? 'form-group-error' : ''}}">
-        <textarea name="content" class="form-control" placeholder="Escribe aquí el contenido"
+        <textarea name="content" class="form-control textarea-autosize" placeholder="Escribe aquí el contenido"
                   maxlength="1024"
-                  style="field-sizing: content;"
                   required>{{old('content')}}</textarea>
     </div>
 
@@ -133,7 +132,7 @@
 
     @if($errors->has('throttle'))
         <div class="alert alert-warning throttle-alert" id="throttleAlert">
-            <div class="throttle-icon" style="text-align: right;">
+            <div class="throttle-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                      fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round"
                      stroke-linejoin="round" class="timer-icon">

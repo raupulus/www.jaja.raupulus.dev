@@ -66,7 +66,7 @@
             <h1 class="page-title">{{ $page->title }}</h1>
 
             @if ($page->urlImage)
-                <img src="{{$page->urlImage}}" alt="{{$page->title}}" style="max-width: 600px;">
+                <img src="{{$page->urlImage}}" alt="{{$page->title}}" class="media-banner-lg">
             @endif
         </div>
 

@@ -6,7 +6,6 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css',
                 'resources/css/buttons.css',
                 'resources/css/collaborators.css',
                 'resources/css/contributors.css',
@@ -16,15 +15,12 @@ export default defineConfig({
                 'resources/css/general_stats.css',
                 'resources/css/grid_categories.css',
                 'resources/css/groups_links.css',
-                'resources/css/home.css',
                 'resources/css/page.css',
                 'resources/css/horizontal_card.css',
-                'resources/css/pages.css',
                 'resources/css/projects.css',
                 'resources/css/social_icons.css',
                 'resources/css/suggestions_form.css',
                 'resources/js/alerts.js',
-                'resources/js/app.js',
                 'resources/js/cookies.js',
                 'resources/js/navbar.js',
                 'resources/js/suggestions_forms.js',

@@ -24,14 +24,38 @@
     /*justify-self: start;*/
 }
 
-.footer-box-left svg {
-    width: 25px;
+.footer-box-left svg,
+.footer-icon-svg {
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .make-with-love {
     text-align: center;
     justify-self: center;
     align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.footer-love-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.footer-love-label {
+    font-weight: 600;
+}
+
+.footer-love-icons {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .footer-box-right {

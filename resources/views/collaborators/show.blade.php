@@ -11,7 +11,7 @@
 @endif
 
 @section('css')
-    @vite(['resources/css/projects.css'])
+    @vite(['resources/css/page.css', 'resources/css/projects.css'])
 @endsection
 
 @push('jsonld')

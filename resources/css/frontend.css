@@ -461,10 +461,10 @@ form button.btn {
 /* --- Iconos --- */
 .timer-icon {
     vertical-align: middle;
-    animation: pulse 2s infinite ease-in-out;
+    animation: timer-pulse 2s infinite ease-in-out;
 }
 
-@keyframes pulse {
+@keyframes timer-pulse {
     0% {
         transform: scale(1);
     }
@@ -474,6 +474,76 @@ form button.btn {
     100% {
         transform: scale(1);
     }
+}
+
+/* --- Etiqueta BETA --- */
+.beta-label-simple {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: linear-gradient(135deg, #c62828, #b71c1c);
+    color: #ffffff;
+    padding: 12px 6px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    z-index: 1000;
+    border-radius: 0 8px 8px 0;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.35);
+    cursor: default;
+    user-select: none;
+    width: 26px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    transition: transform 0.3s ease, background 0.3s ease;
+}
+
+.beta-label-simple span {
+    display: block;
+    line-height: 1;
+}
+
+.beta-label-simple:hover {
+    background: linear-gradient(135deg, #b71c1c, #991b1b);
+    transform: translateY(-50%) scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .beta-label-simple {
+        display: none;
+    }
+}
+
+/* --- Utilitarios de medios y formularios --- */
+.media-banner-md {
+    display: block;
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.media-banner-lg {
+    display: block;
+    margin: 1.5rem auto;
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.quiz-options-list {
+    margin-left: 1.5rem;
+    padding-left: 1rem;
+}
+
+.textarea-autosize {
+    field-sizing: content;
 }
 
 /* --- Navbar Menú Hamburguer --- */

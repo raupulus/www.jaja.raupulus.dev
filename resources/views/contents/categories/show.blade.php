@@ -63,7 +63,7 @@
             </p>
 
             @if($category->image)
-                <img src="{{$category->urlimage}}" alt="{{$category->title}}" style="max-width: 500px;">
+                <img src="{{$category->urlimage}}" alt="{{$category->title}}" class="media-banner-md">
             @endif
         </div>
 

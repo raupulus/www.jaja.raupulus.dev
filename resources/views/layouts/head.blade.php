@@ -42,6 +42,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     {{-- SEO Meta Tags --}}
@@ -99,10 +100,13 @@
     <link rel="manifest" href="{{ asset('images/favicon/site.webmanifest') }}">
 
     {{-- Fonts --}}
+    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/inter/inter-400.woff2') }}" crossorigin>
+    <link rel="preload" as="font" type="font/woff2" href="{{ asset('fonts/inter/inter-700.woff2') }}" crossorigin>
     <link rel="stylesheet" href="{{ asset('fonts/inter/inter.css') }}">
 
     {{-- CSS Assets --}}
     @vite(['resources/css/frontend.css', 'resources/css/buttons.css', 'resources/css/footer.css'])
+    @yield('css')
 
     {{-- Additional Head Content --}}
     @yield('head')
