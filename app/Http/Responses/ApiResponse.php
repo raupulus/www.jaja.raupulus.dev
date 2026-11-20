@@ -71,7 +71,7 @@ class ApiResponse
 
         if (!empty($debug) && config('app.debug')) {
             $response['debug'] = array_merge(
-                ['request' => request()->all()],
+                ['request' => request()->except(['password', 'password_confirmation', 'current_password', 'token', 'access_token'])],
                 $debug
             );
         }

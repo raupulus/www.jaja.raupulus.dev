@@ -17,6 +17,8 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
@@ -28,19 +30,22 @@ return Application::configure(basePath: dirname(__DIR__))
         //$middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        $exceptions->render(function (Throwable $e, Request $request) { // Aquí 'Request' se resuelve correcta
-             //dd($e, $request->expectsJson(), $request->headers->all());
+        $exceptions->shouldRenderJsonWhen(
+            fn (Request $request, Throwable $e): bool => $request->is('api/*') || $request->expectsJson()
+        );
+
+        $exceptions->render(function (Throwable $e, Request $request) {
+            $wantsJson = $request->is('api/*') || $request->expectsJson();
 
             if ($e instanceof \Illuminate\Auth\AuthenticationException) {
-                if ($request->expectsJson()) {
-
+                if ($wantsJson) {
                     return ApiResponse::error('No autenticado.', 401);
                 }
 
-                return redirect()->guest(route('filament.admin.auth.login'));
+                return redirect()->guest($e->redirectTo($request) ?? route('login'));
             }
 
-            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException && $request->expectsJson()) {
+            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException && $wantsJson) {
                 if (config('app.debug')) {
                     return ApiResponse::error($e->getMessage(), 404, null, null, ['trace' => $e->getTrace()]);
                 }
@@ -50,13 +55,4 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return false; // Importante: retornar false permite que el manejador de Laravel siga con otras excepciones.
         });
-
-        /*
-        $exceptions->renderable(function (\Illuminate\Auth\AuthenticationException $e, $request) {
-            if ($request->is('api/*')) {
-                return response()->json(['message' => 'No autorizado'], 403);
-            }
-        });
-        */
-
     })->create();

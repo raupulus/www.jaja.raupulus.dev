@@ -23,5 +23,10 @@ Registro de decisiones deliberadas del proyecto verificadas en el código, para 
 - **Decisión**: Si `config('google.recaptcha.secret_key')` no está configurado, el middleware deja pasar la petición sin bloquear.
 - **Motivo**: Permitir desarrollo local y tests sin depender de credenciales de Google reCAPTCHA.
 
+## 5. Cabeceras HTTP de seguridad en Laravel + Apache y rutas cacheables
+- **Dónde**: `app/Http/Middleware/SecurityHeadersMiddleware.php`, `bootstrap/app.php`, `apache.conf` y `routes/web.php`.
+- **Decisión**: Inyectar las cabeceras de seguridad (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` y `Strict-Transport-Security` en HTTPS) desde middleware global y replicarlas en `apache.conf` para cubrir también archivos estáticos. Evitar closures en archivos de rutas (`routes/web.php`) para mantener `php artisan route:cache` operativo.
+- **Motivo**: Defensa en profundidad tanto para respuestas dinámicas PHP como para activos servidos directamente por Apache y despliegue optimizado con caché de rutas.
+
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

@@ -10,8 +10,7 @@ use App\Http\Controllers\ContentController;
 /*************************************************
  * Autenticación
  ************************************************/
-Route::get('/login', static fn () => redirect()->route('filament.panel.auth.login'))->name('login');
-//Route::get('/login', fn () => abort(404))->name('login');
+Route::get('/login', [IndexController::class, 'login'])->name('login');
 
 
 /*************************************************
