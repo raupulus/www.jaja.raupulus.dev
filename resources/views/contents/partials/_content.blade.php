@@ -1,4 +1,4 @@
-<div class="card card-content">
+<article class="card card-content {{ $content->image ? '' : 'card-content--no-image' }}">
     @if ($content->image)
         <div class="card-content-image">
             <img src="{{$content->urlImage}}" title="{{$content->title}}" alt="{{$content->title}}" width="120" height="120" loading="lazy" decoding="async"/>
@@ -27,4 +27,4 @@
         <span>Por: {{$content->uploader}}</span>
     </div>
 
-</div>
+</article>

@@ -150,6 +150,7 @@
 
 .groups-link-card.tipos .groups-link-count {
     color: #fb7185;
+    background-clip: text;
 }
 
 .groups-link-card.tipos:hover .groups-link-title {
@@ -170,6 +171,7 @@
 
 .groups-link-card.grupos .groups-link-count {
     color: #34d399;
+    background-clip: text;
 }
 
 .groups-link-card.grupos:hover .groups-link-title {
@@ -190,6 +192,7 @@
 
 .groups-link-card.tags .groups-link-count {
     color: var(--color-text-accent);
+    background-clip: text;
 }
 
 .groups-link-card.tags:hover .groups-link-title {

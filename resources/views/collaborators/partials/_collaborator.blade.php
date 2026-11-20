@@ -1,4 +1,4 @@
-<div class="desarrollador-card">
+<article class="desarrollador-card">
     <div class="dev-avatar">
         <img src="{{$collaborator->urlImage}}"
              alt="Avatar desarrollador {{$collaborator->name}} ({{'@' . $collaborator->nick}})"
@@ -19,7 +19,7 @@
                class="dev-link"
                target="_blank"
                rel="noopener noreferrer">
-                🌐 Website
+                🌐 Sitio web
             </a>
         @endif
 
@@ -37,4 +37,4 @@
     <a href="{{route('collaborator.show', $collaborator->nick)}}" class="view-projects-link">
         Ver Proyectos
     </a>
-</div>
+</article>

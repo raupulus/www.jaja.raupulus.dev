@@ -14,15 +14,19 @@ function initSuggestionsForm() {
     initImagePreview();
     initThrottleCounter();
     initDefaultCorrectAnswer();
+    initSubmitProtection();
 }
 
 /**
- * Selecciona la primera respuesta como correcta al cargar la página
+ * Selecciona la primera respuesta como correcta al cargar la página si no hay ninguna marcada
  */
 function initDefaultCorrectAnswer() {
     // Solo ejecutar si el bloque de quiz está visible
     const quizAnswersBlock = document.querySelector('.box-quiz-answers');
     if (!quizAnswersBlock || quizAnswersBlock.style.display === 'none') return;
+
+    const alreadyChecked = quizAnswersBlock.querySelector('.answer-checkbox:checked');
+    if (alreadyChecked) return;
 
     const firstAnswerBox = document.querySelector('.box-answer-check');
     if (firstAnswerBox) {
@@ -81,12 +85,18 @@ function initGroupSelector() {
     if (!typeSelect || !groupSelect) return;
 
     // Función para filtrar grupos según el tipo
-    function filterGroups() {
+    function filterGroups(resetSelection = true) {
         const selectedTypeId = typeSelect.value;
         const groupOptions = groupSelect.querySelectorAll('option');
 
-        // Resetear selección de grupo
-        groupSelect.value = '';
+        if (resetSelection) {
+            groupSelect.value = '';
+        } else if (groupSelect.value) {
+            const currentSelected = groupSelect.options[groupSelect.selectedIndex];
+            if (currentSelected && currentSelected.getAttribute('data-type_id') !== selectedTypeId) {
+                groupSelect.value = '';
+            }
+        }
 
         // Filtrar opciones de grupo
         groupOptions.forEach(option => {
@@ -119,15 +129,15 @@ function initGroupSelector() {
             }
         }
 
-        // Aplicar filtro de grupos
-        filterGroups();
+        // Aplicar filtro de grupos conservando la selección previa si coincide con el tipo
+        filterGroups(false);
     }
 
     // Ejecutar al cargar la página
     handleInitialType();
 
     // Ejecutar cuando cambie el tipo
-    typeSelect.addEventListener('change', filterGroups);
+    typeSelect.addEventListener('change', () => filterGroups(true));
 }
 
 /**
@@ -303,7 +313,11 @@ function handleImagePreview(e) {
 
             // Mostrar placeholder, ocultar imagen
             if (placeholder) placeholder.style.display = 'flex';
-            if (previewImg) previewImg.style.display = 'none';
+            if (previewImg) {
+                previewImg.removeAttribute('src');
+                previewImg.classList.add('hidden');
+                previewImg.style.display = 'none';
+            }
             return false;
         }
 
@@ -312,6 +326,7 @@ function handleImagePreview(e) {
         reader.onload = function (e) {
             if (previewImg) {
                 previewImg.src = e.target.result;
+                previewImg.classList.remove('hidden');
                 previewImg.style.display = 'block';
             }
             if (placeholder) {
@@ -322,10 +337,37 @@ function handleImagePreview(e) {
     } else {
         // Si no hay archivo, mostrar placeholder
         if (placeholder) placeholder.style.display = 'flex';
-        if (previewImg) previewImg.style.display = 'none';
+        if (previewImg) {
+            previewImg.removeAttribute('src');
+            previewImg.classList.add('hidden');
+            previewImg.style.display = 'none';
+        }
     }
 
     return true;
+}
+
+/**
+ * Evita el doble envío del formulario mostrando estado de carga
+ */
+function initSubmitProtection() {
+    const form = document.getElementById('form-suggestion-send');
+    if (!form) return;
+
+    form.addEventListener('submit', function (event) {
+        if (form.dataset.submitting === 'true') {
+            event.preventDefault();
+            return;
+        }
+
+        form.dataset.submitting = 'true';
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.classList.add('disabled');
+            submitButton.textContent = 'Enviando...';
+        }
+    });
 }
 
 /**

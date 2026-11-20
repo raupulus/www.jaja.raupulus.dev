@@ -3,8 +3,10 @@
 
     @csrf
 
+    <p class="form-required-hint">Los campos marcados con <span aria-hidden="true">*</span> son obligatorios.</p>
+
     <div class="form-group">
-        {{-- Nicck --}}
+        {{-- Nick --}}
         <input type="text" name="nick" placeholder="Tu Nick (Sin @)"
                class="form-control {{$errors->has('nick') ? 'form-group-error' : ''}}"
                maxlength="25"
@@ -22,13 +24,19 @@
             @endforeach
         </select>
     </div>
+    @error('nick')
+        <span class="field-error">{{ $message }}</span>
+    @enderror
+    @error('type_id')
+        <span class="field-error">{{ $message }}</span>
+    @enderror
 
     {{-- Selector de grupos --}}
     <div class="form-group">
         <select name="group_id" class="form-control {{$errors->has('group_id') ? 'form-group-error' : ''}}">
             <option value="">Grupo</option>
             @foreach(\App\Models\Group::select(['id', 'type_id', 'slug', 'title'])->orderBy('title')->get() as $group)
-                <option value="{{$group->id}}" {{(old('type_id') == $group->id) ? 'selected' : ''}}
+                <option value="{{$group->id}}" {{(old('group_id') == $group->id) ? 'selected' : ''}}
                 data-type_id="{{$group->type_id}}"
                 data-slug="{{$group->slug}}">
                     {{$group->title}}
@@ -36,6 +44,9 @@
             @endforeach
         </select>
     </div>
+    @error('group_id')
+        <span class="field-error">{{ $message }}</span>
+    @enderror
 
     <div class="{{$errors->has('image') ? 'form-group-error' : ''}}" id="image-grid-container">
         <!-- Columna de la izquierda - Vista previa de la imagen -->
@@ -43,7 +54,7 @@
             <div id="preview-placeholder" class="text-center">
                 Vista previa de imagen
             </div>
-            <img id="preview-img" src="" alt="Vista previa">
+            <img id="preview-img" class="hidden" alt="Vista previa de la imagen seleccionada">
         </div>
 
         <!-- Columna derecha: Label, Input y Errores -->
@@ -59,21 +70,31 @@
                    accept="image/jpeg,image/png,image/webp">
 
             <div id="file-error" class="text-danger"></div>
+            @error('image')
+                <span class="field-error">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 
 
     <div class="form-group {{$errors->has('title') ? 'form-group-error' : ''}}">
-        <input type="text" name="title" placeholder="Título" class="form-control" required
+        <input type="text" name="title" placeholder="Título *" class="form-control" required
                maxlength="255"
                value="{{old('title')}}">
     </div>
+    @error('title')
+        <span class="field-error">{{ $message }}</span>
+    @enderror
 
     <div class="form-group {{$errors->has('content') ? 'form-group-error' : ''}}">
-        <textarea name="content" class="form-control textarea-autosize" placeholder="Escribe aquí el contenido"
+        <textarea name="content" class="form-control textarea-autosize" placeholder="Escribe aquí el contenido *"
+                  rows="4"
                   maxlength="1024"
                   required>{{old('content')}}</textarea>
     </div>
+    @error('content')
+        <span class="field-error">{{ $message }}</span>
+    @enderror
 
 
     <div class="box-quiz-answers">
@@ -89,28 +110,35 @@
         </div>
 
         @foreach(range(1,4) as $pos)
+            @php
+                $isCorrect = (bool) old("answer{$pos}_correct");
+            @endphp
             <div class="form-group-answer form-group {{$errors->has('answer' . $pos) ? 'form-group-error' : ''}}">
                 <div class="box-answer-check">
-                    <span class="answer-check answer-check-on hidden">
+                    <span class="answer-check answer-check-on {{ $isCorrect ? '' : 'hidden' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                             fill="none">
+                             fill="none" aria-hidden="true" focusable="false">
                             <path d="M5 13L9 17L19 7" stroke="green" stroke-width="2" fill="none"/>
                         </svg>
                     </span>
 
-                    <span class="answer-check answer-check-off">
+                    <span class="answer-check answer-check-off {{ $isCorrect ? 'hidden' : '' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                             fill="none">
+                             fill="none" aria-hidden="true" focusable="false">
                           <path d="M6 6L18 18" stroke="red" stroke-width="2"/>
                           <path d="M6 18L18 6" stroke="red" stroke-width="2"/>
                         </svg>
                     </span>
                 </div>
 
-                <input class="answer-checkbox hidden" type="checkbox" name="answer{{$pos}}_correct">
-                <input type="text" name="answer{{$pos}}" maxlength="255" value="{{old('answer' . $pos)}}">
+                <input class="answer-checkbox hidden" type="checkbox" name="answer{{$pos}}_correct" value="1" {{ $isCorrect ? 'checked' : '' }}>
+                <input type="text" name="answer{{$pos}}" maxlength="255" placeholder="Respuesta {{$pos}}" value="{{old('answer' . $pos)}}">
             </div>
         @endforeach
+
+        @error('options')
+            <span class="field-error">{{ $message }}</span>
+        @enderror
     </div>
 
     @php
@@ -135,7 +163,7 @@
             <div class="throttle-icon">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                      fill="none" stroke="#f5a623" stroke-width="2" stroke-linecap="round"
-                     stroke-linejoin="round" class="timer-icon">
+                     stroke-linejoin="round" class="timer-icon" aria-hidden="true" focusable="false">
                     <circle cx="12" cy="12" r="10"></circle>
                     <polyline points="12 6 12 12 16 14"></polyline>
                 </svg>
@@ -154,7 +182,7 @@
 
     {{-- Textos legales --}}
     <div>
-        <input id="terms" type="checkbox" name="terms" required>
+        <input id="terms" type="checkbox" name="terms" value="1" {{ old('terms') ? 'checked' : '' }} required>
         <label for="terms">
             Confirmo que he leído
             <a href="{{route('page.show', 'normas')}}"
@@ -167,9 +195,11 @@
             y las
             <a href="{{route('page.show', 'condiciones-de-uso')}}"
                title="Enlace a las condiciones de uso en {{config('app.name')}}" target="_blank" rel="noopener noreferrer">las
-                Condiciones de Uso</a>
+                Condiciones de Uso</a> *
         </label>
-
+        @error('terms')
+            <span class="field-error">{{ $message }}</span>
+        @enderror
     </div>
 
 

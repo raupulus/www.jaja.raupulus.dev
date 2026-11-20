@@ -10,7 +10,7 @@
             </p>
         </div>
         <div class="cookie-banner-actions">
-            <button id="acceptCookies" class="cookie-accept-btn">
+            <button type="button" id="acceptCookies" class="cookie-accept-btn">
                 Aceptar cookies
             </button>
         </div>

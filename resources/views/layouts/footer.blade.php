@@ -28,7 +28,7 @@
                         </animateTransform>
                     </svg>
 
-                    <svg viewBox="0 0 432.071 445.383" xml:space="preserve" class="footer-icon-svg" aria-hidden="true" focusable="false"
+                    <svg viewBox="0 0 432.071 445.383" class="footer-icon-svg" aria-hidden="true" focusable="false"
                          xmlns="http://www.w3.org/2000/svg">
                             <g style="fill-rule:nonzero;clip-rule:nonzero;stroke:#000000;stroke-miterlimit:4;"></g>
                         <g style="fill-rule:nonzero;clip-rule:nonzero;fill:none;stroke:#FFFFFF;stroke-width:12.4651;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;">
@@ -83,63 +83,62 @@
             </div>
 
             <div>
-                <p>
-                    <a href="https://raupulus.dev" target="_blank" rel="noopener noreferrer" title="Mi sitio web Personal"
-                       class="footer-btn-link">
-                        Portfolio
-                    </a>
-                </p>
-
-                <a href="{{route('page.show', 'agradecimientos')}}"
-                   title="Enlace a la página de agradecimientos por contribuciones de la comunidad en {{config('app.name')}}" class="footer-btn-link">
-                    Agradecimientos
-                </a>
-
-                <p>
-                    <a href="https://gitlab.com/raupulus/www.jaja.raupulus.dev" target="_blank" rel="noopener noreferrer"
-                       title="Enlace a repositorio de código para esta web en gitlab" class="footer-btn-link">
-                        Código en GitLab
-                    </a>
-                </p>
-
-                <p>
-                    <a href="https://github.com/raupulus/www.jaja.raupulus.dev" target="_blank" rel="noopener noreferrer"
-                       title="Enlace a repositorio de código para esta web en github" class="footer-btn-link">
-                        Código en GitHub
-                    </a>
-                </p>
+                <ul class="footer-links-list">
+                    <li>
+                        <a href="https://raupulus.dev" target="_blank" rel="noopener noreferrer" title="Mi sitio web personal"
+                           class="footer-btn-link">
+                            Portfolio
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('page.show', 'agradecimientos')}}"
+                           title="Enlace a la página de agradecimientos por contribuciones de la comunidad en {{config('app.name')}}" class="footer-btn-link">
+                            Agradecimientos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://gitlab.com/raupulus/www.jaja.raupulus.dev" target="_blank" rel="noopener noreferrer"
+                           title="Enlace al repositorio de código para esta web en GitLab" class="footer-btn-link">
+                            Código en GitLab
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/raupulus/www.jaja.raupulus.dev" target="_blank" rel="noopener noreferrer"
+                           title="Enlace al repositorio de código para esta web en GitHub" class="footer-btn-link">
+                            Código en GitHub
+                        </a>
+                    </li>
+                </ul>
             </div>
 
             <div>
-                <p>
-                    <a href="{{route('page.show', 'normas')}}"
-                       title="Enlace a las normas de la comunidad en {{config('app.name')}}" class="footer-btn-link">
-                        Normas
-                    </a>
-                </p>
-                <p>
-                    <a href="{{route('page.show', 'politica-de-cookies')}}"
-                       title="Enlace a las condiciones de uso de {{config('app.name')}}" class="footer-btn-link">
-                        Política de cookies
-                    </a>
-                </p>
-                <p>
-                    <a href="{{route('page.show', 'condiciones-de-uso')}}"
-                       title="Enlace a las condiciones de uso de {{config('app.name')}}" class="footer-btn-link">
-                        Condiciones de uso
-                    </a>
-                </p>
-                <p>
-                    <a href="{{route('page.show', 'politica-de-privacidad')}}"
-                       title="Enlace a las políticas de privacidad de {{config('app.name')}}" class="footer-btn-link">
-                        Políticas de privacidad
-                    </a>
-                </p>
+                <ul class="footer-links-list">
+                    <li>
+                        <a href="{{route('page.show', 'normas')}}"
+                           title="Enlace a las normas de la comunidad en {{config('app.name')}}" class="footer-btn-link">
+                            Normas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('page.show', 'politica-de-cookies')}}"
+                           title="Enlace a la política de cookies de {{config('app.name')}}" class="footer-btn-link">
+                            Política de cookies
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('page.show', 'condiciones-de-uso')}}"
+                           title="Enlace a las condiciones de uso de {{config('app.name')}}" class="footer-btn-link">
+                            Condiciones de uso
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{route('page.show', 'politica-de-privacidad')}}"
+                           title="Enlace a las políticas de privacidad de {{config('app.name')}}" class="footer-btn-link">
+                            Políticas de privacidad
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </div>
-
-        <div class="footer-box-right">
-
         </div>
     </div>
 

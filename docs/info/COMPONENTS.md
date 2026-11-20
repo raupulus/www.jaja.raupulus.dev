@@ -6,17 +6,22 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 
 - `master.blade.php` — Layout principal de las vistas públicas.
 - `head.blade.php` — Cabecera HTML, `<meta name="color-scheme" content="dark">`, preload de fuentes `Inter` (`400`/`700`), carga de CSS en `<head>` incluyendo `@yield('css')` (sin FOUC), metadatos SEO únicos (`<title>`, `<meta name="description">`, Open Graph `.jpg` con dimensiones y `og:type`, Twitter Cards con `twitter:image:alt`), `theme-color` por defecto (`#00bcd4`) y `@stack('jsonld')` para datos estructurados Schema.org.
-- `navbar.blade.php` — Barra de navegación principal (enlace `Dashboard` dinámico según rol: `/admin` para administradores y `/panel` para el resto de usuarios; enlaces externos con `rel="noopener noreferrer"`).
-- `footer.blade.php` — Pie de página público.
+- `navbar.blade.php` — Barra de navegación principal envuelta en `<header class="site-header"><nav aria-label="Navegación principal">` con enlaces directos (`Inicio`, `Grupos`, `Categorías`, `Colaboradores`, `API`, `Acerca de`, `Autor`), `aria-current="page"`, enlace `Admin`/`Panel` dinámico según rol, botón hamburguesa `<button type="button">` y enlaces externos con `rel="noopener noreferrer"`.
+- `footer.blade.php` — Pie de página público con listas semánticas `<ul><li>` y áreas táctiles mínimas de `44px`.
 - `footer_meta.blade.php` — Metadatos y scripts globales base en el pie.
 
-## Convenciones de seguridad, SEO y rendimiento en vistas y enlaces
+## Parciales y Vistas de Error (`resources/views/partials/`, `resources/views/errors/`)
+
+- `_breadcrumbs.blade.php` — Ruta de navegación reutilizable (`<nav aria-label="Ruta de navegación">`) usada en índices y vistas de detalle.
+- `errors/404.blade.php` y `errors/500.blade.php` — Páginas de error HTTP integradas con `layouts.master` y `noindex, nofollow`.
+
+## Convenciones de seguridad, SEO, W3C y rendimiento en vistas y enlaces
 
 - Todos los enlaces con `target="_blank"` en vistas y parciales incluyen `rel="noopener noreferrer"`.
 - Las descripciones de grupos y categorías en `contents/groups/show.blade.php` y `contents/categories/show.blade.php` se imprimen escapadas con `{{ ... }}`.
-- Las vistas públicas respetan la jerarquía secuencial de encabezados (`h1 → h2`, o `h1 → h2 → h3` dentro de parciales titulados), usan textos descriptivos en enlaces y mantienen atributos `alt` fieles a cada imagen/icono.
+- Las vistas públicas respetan la jerarquía secuencial de encabezados (`h1 → h2`, o `h1 → h2 → h3` dentro de parciales titulados), usan `<article>` en tarjetas de contenido/páginas/colaboradores/proyectos, evitan errores W3C (`<p>` en `<span>`, `src=""` vacío, `alt` en `<a>`, `xml:space="preserve"` y `X-UA-Compatible`), usan textos descriptivos en español y mantienen atributos `alt` fieles a cada imagen/icono.
 - La imagen LCP principal de portada (`portada-jaja-project.webp`) se carga con `fetchpriority="high"` y dimensiones explícitas (`800x300`); las imágenes *below-the-fold* declaran `width`, `height`, `loading="lazy"` y `decoding="async"`, y todos los iconos sociales se sirven localmente desde `public/images/icons/`.
-- Las vistas no incluyen bloques `<style>` inline (`_beta.blade.php` estilado desde `frontend.css`).
+- Las vistas no incluyen bloques `<style>` inline (`_beta.blade.php` estilado desde `frontend.css`) y cuentan con hoja de impresión `@media print`.
 
 ## Parciales reutilizables (`resources/views/partials/`)
 

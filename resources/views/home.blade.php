@@ -155,7 +155,7 @@
 
         <p>
             Los colaboradores de la comunidad crean bots para que puedas disfrutar del contenido de la comunidad
-            directamente en tu canal de Twitch, discord, etc...
+            directamente en tu canal de Twitch, Discord, etc...
 
             Adopta desde hoy mismo el comando !chiste y !adivina en tu canal/servidor/chat
         </p>
@@ -193,7 +193,7 @@
         </p>
 
         <a href="{{route('collaborator.index')}}"
-           title="Enlace a los colaboradores y susproyectos de comunidad"
+           title="Enlace a los colaboradores y sus proyectos de comunidad"
            class="btn btn--outline">🧑‍💻 Ver Colaboradores</a>
     </section>
 

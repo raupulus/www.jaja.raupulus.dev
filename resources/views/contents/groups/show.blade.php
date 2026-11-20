@@ -82,7 +82,7 @@
                         <div class="arrow"></div>
                         <div class="arrow"></div>
                     </div>
-                    <span class="text">Random</span>
+                    <span class="text">Aleatorio</span>
                 </a>
             </div>
         </div>

@@ -19,7 +19,7 @@
     <a href="{{ route('content.categories.index') }}" class="groups-link-card tags">
         <div class="groups-link-content">
             <div class="groups-link-indicator"></div>
-            <h2 class="groups-link-title">Tags</h2>
+            <h2 class="groups-link-title">Categorías</h2>
             <div class="groups-link-count">{{ $categoriesCount ?? 0 }}</div>
         </div>
     </a>

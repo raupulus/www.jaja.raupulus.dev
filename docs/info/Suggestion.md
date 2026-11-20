@@ -9,8 +9,9 @@ El módulo `Suggestion` es el puente de entrada para las aportaciones de la comu
 - **SuggestionOption**: Almacena las posibles respuestas para las sugerencias que son de tipo **Quiz**, para su posterior revisión.
 
 ## Funcionalidad Técnica
-1. **Flujo de Moderación**:
+1. **Flujo de Moderación y Formulario Web**:
    - Las sugerencias ingresan mediante el formulario en el frontend (`POST /suggestion/send`, exigiendo `terms` aceptado, reCAPTCHA v3 con acción `suggestion_send` cuando está configurado y límite por IP) o mediante la API (`POST /api/v1/suggestion/send` con `auth:sanctum`), quedando con estado "pendiente".
+   - El formulario web (`partials/forms/_form_suggestions.blade.php` y `resources/js/suggestions_forms.js`) preserva `old('group_id')` (cuando coincide con `type_id`), `old('answer*_correct')` y `old('terms')` tras errores de validación, muestra mensajes `@error(...)` por campo e impide dobles envíos bloqueando el botón en `submit` («Enviando...»).
    - En la API (`Api\SendSuggestionRequest`), `nick` es opcional (`null` si viene vacío), `title` toma `'Sugerencia'` como valor por defecto cuando se omite y el tipo `chistes` se valida con existencia obligatoria (`422` si faltara en base de datos).
    - Utilizan protecciones como ReCaptcha v3 y límites de peticiones (rate limiting) por IP para evitar spam.
    - Un administrador evalúa la sugerencia en el panel de Filament.
