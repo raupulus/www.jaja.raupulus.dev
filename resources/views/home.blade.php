@@ -7,34 +7,6 @@
     @vite(['resources/css/general_stats.css', 'resources/css/social_icons.css', 'resources/css/cookies.css', 'resources/css/suggestions_form.css', 'resources/css/groups_links.css'])
 @endsection
 
-@section('head')
-    @if(config('google.recaptcha.site_key'))
-        <script
-            src="https://www.google.com/recaptcha/api.js?render={{ urlencode((string) config('google.recaptcha.site_key')) }}&onload=onRecaptchaLoad"
-            async defer></script>
-
-        <script>
-
-            function onRecaptchaLoad() {
-                grecaptcha.ready(function () {
-                    grecaptcha.execute(@json(config('google.recaptcha.site_key')), {
-                        action: 'suggestion_send'
-                    }).then(function (token) {
-                        //console.log('Token generado:', token);
-                        if (token) {
-                            document.getElementById('g_recaptcha').value = token;
-                        }
-                    }).catch(function (error) {
-                        //console.error('Error generando token:', error);
-                    });
-                });
-            }
-
-        </script>
-    @endif
-
-@endsection
-
 @push('jsonld')
     @include('partials._jsonld', [
         'schema' => [

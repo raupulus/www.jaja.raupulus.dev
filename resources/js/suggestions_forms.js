@@ -14,7 +14,7 @@ function initSuggestionsForm() {
     initThrottleCounter();
     initDefaultCorrectAnswer();
     initAccessibleValidation();
-    initSubmitProtection();
+    initLazyRecaptchaAndSubmit();
 }
 
 /**
@@ -314,25 +314,130 @@ function initAccessibleValidation() {
 }
 
 /**
- * Evita el doble envío del formulario mostrando estado de carga.
+ * Carga Google reCAPTCHA v3 bajo demanda (al enfocar o interactuar con el formulario)
+ * y evita el doble envío sincronizando el token antes de enviar.
  */
-function initSubmitProtection() {
+function initLazyRecaptchaAndSubmit() {
     const form = document.getElementById('form-suggestion-send');
     if (!form) return;
 
-    form.addEventListener('submit', function (event) {
+    const siteKey = form.dataset.recaptchaSiteKey || '';
+    const tokenInput = document.getElementById('g_recaptcha');
+    const clientError = document.getElementById('recaptcha-client-error');
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton ? submitButton.textContent : '';
+
+    let scriptPromise = null;
+    let tokenGeneratedAt = 0;
+
+    const loadRecaptchaScript = () => {
+        if (!siteKey) {
+            return Promise.resolve(null);
+        }
+
+        if (window.grecaptcha && typeof window.grecaptcha.ready === 'function') {
+            return Promise.resolve(window.grecaptcha);
+        }
+
+        if (scriptPromise) {
+            return scriptPromise;
+        }
+
+        scriptPromise = new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(siteKey)}`;
+            script.async = true;
+            script.defer = true;
+            script.onload = () => resolve(window.grecaptcha);
+            script.onerror = () => {
+                scriptPromise = null;
+                reject(new Error('No se pudo cargar reCAPTCHA'));
+            };
+            document.head.appendChild(script);
+        });
+
+        return scriptPromise;
+    };
+
+    const refreshRecaptchaToken = async () => {
+        if (!siteKey || !tokenInput) {
+            return null;
+        }
+
+        const grecaptcha = await loadRecaptchaScript();
+        if (!grecaptcha || typeof grecaptcha.ready !== 'function') {
+            throw new Error('reCAPTCHA no disponible');
+        }
+
+        return new Promise((resolve, reject) => {
+            grecaptcha.ready(() => {
+                grecaptcha.execute(siteKey, { action: 'suggestion_send' })
+                    .then((token) => {
+                        if (!token) {
+                            reject(new Error('Token reCAPTCHA vacío'));
+                            return;
+                        }
+                        tokenInput.value = token;
+                        tokenGeneratedAt = Date.now();
+                        if (clientError) {
+                            clientError.textContent = '';
+                            clientError.classList.add('hidden');
+                        }
+                        resolve(token);
+                    })
+                    .catch(reject);
+            });
+        });
+    };
+
+    if (siteKey) {
+        const warmUpRecaptcha = () => {
+            refreshRecaptchaToken().catch(() => {
+                // Se reintentará al enviar el formulario si la precarga falló
+            });
+        };
+
+        form.addEventListener('focusin', warmUpRecaptcha, { once: true });
+        form.addEventListener('pointerdown', warmUpRecaptcha, { once: true });
+        form.addEventListener('input', warmUpRecaptcha, { once: true });
+    }
+
+    const setSubmittingState = (isSubmitting) => {
+        form.dataset.submitting = isSubmitting ? 'true' : 'false';
+        if (submitButton) {
+            submitButton.disabled = isSubmitting;
+            submitButton.classList.toggle('disabled', isSubmitting);
+            submitButton.textContent = isSubmitting ? 'Enviando...' : originalButtonText;
+        }
+    };
+
+    form.addEventListener('submit', async function (event) {
         if (form.dataset.submitting === 'true') {
             event.preventDefault();
             return;
         }
 
-        form.dataset.submitting = 'true';
-        const submitButton = form.querySelector('button[type="submit"]');
-        if (submitButton) {
-            submitButton.disabled = true;
-            submitButton.classList.add('disabled');
-            submitButton.textContent = 'Enviando...';
+        const tokenIsFresh = tokenInput && tokenInput.value && (Date.now() - tokenGeneratedAt) < 90000;
+
+        if (siteKey && tokenInput && !tokenIsFresh) {
+            event.preventDefault();
+            setSubmittingState(true);
+
+            try {
+                await refreshRecaptchaToken();
+                HTMLFormElement.prototype.submit.call(form);
+            } catch {
+                setSubmittingState(false);
+                if (clientError) {
+                    clientError.textContent = 'No se pudo inicializar la verificación antispam. Inténtalo de nuevo.';
+                    clientError.classList.remove('hidden');
+                }
+            }
+
+            return;
         }
+
+        setSubmittingState(true);
     });
 }
 

@@ -9,6 +9,7 @@ class CookieBanner {
         this.cookieExpireDays = 365; // 1 año
         this.banner = null;
         this.acceptButton = null;
+        this.dismissButton = null;
 
         this.init();
     }
@@ -19,19 +20,19 @@ class CookieBanner {
     init() {
         this.banner = document.getElementById('cookieBanner');
         this.acceptButton = document.getElementById('acceptCookies');
+        this.dismissButton = document.getElementById('dismissCookies');
 
         if (!this.banner || !this.acceptButton) {
-            console.warn('Cookie banner elements not found');
             return;
         }
+
+        // Configurar event listeners
+        this.setupEventListeners();
 
         // Verificar si ya se han aceptado las cookies
         if (!this.hasConsent()) {
             this.showBanner();
         }
-
-        // Configurar event listeners
-        this.setupEventListeners();
     }
 
     /**
@@ -42,10 +43,16 @@ class CookieBanner {
             this.acceptCookies();
         });
 
-        // Cerrar con ESC (opcional)
+        if (this.dismissButton) {
+            this.dismissButton.addEventListener('click', () => {
+                this.hideBanner();
+            });
+        }
+
+        // Cerrar con ESC sin otorgar consentimiento
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && this.banner.classList.contains('show')) {
-                this.acceptCookies();
+                this.hideBanner();
             }
         });
     }
@@ -54,17 +61,35 @@ class CookieBanner {
      * Muestra el banner de cookies
      */
     showBanner() {
-        // Pequeño delay para permitir que el CSS se cargue
+        this.banner.hidden = false;
+        this.banner.inert = false;
+
+        // Pequeño delay para permitir que el CSS anime la entrada tras quitar hidden
         setTimeout(() => {
             this.banner.classList.add('show');
         }, 100);
     }
 
     /**
-     * Oculta el banner de cookies
+     * Oculta el banner de cookies sin registrar consentimiento
      */
     hideBanner() {
+        const wasFocusedInside = this.banner.contains(document.activeElement);
         this.banner.classList.remove('show');
+        this.banner.inert = true;
+
+        const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const hideDelay = reducedMotion ? 0 : 300;
+
+        setTimeout(() => {
+            if (!this.banner.classList.contains('show')) {
+                this.banner.hidden = true;
+            }
+        }, hideDelay);
+
+        if (wasFocusedInside) {
+            document.getElementById('main-content')?.focus({ preventScroll: true });
+        }
     }
 
     /**
@@ -98,7 +123,8 @@ class CookieBanner {
         const expires = new Date();
         expires.setTime(expires.getTime() + (days * 24 * 60 * 60 * 1000));
 
-        const cookieString = `${name}=${value}; expires=${expires.toUTCString()}; path=/; SameSite=Lax; Secure`;
+        const secureFlag = window.location.protocol === 'https:' ? '; Secure' : '';
+        const cookieString = `${name}=${value}; expires=${expires.toUTCString()}; path=/; SameSite=Lax${secureFlag}`;
         document.cookie = cookieString;
     }
 

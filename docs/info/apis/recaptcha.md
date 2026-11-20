@@ -15,6 +15,11 @@ Cómo integra **JaJa Project** la verificación de Google reCAPTCHA v3.
   - Si está vacía o no configurada, el middleware hace bypass y permite continuar la petición.
 - `config('google.recaptcha.site_key')` — Clave pública usada en `home.blade.php` mediante `@json(...)`.
 
+## Carga bajo demanda en cliente (Privacidad RGPD)
+
+- El script oficial `https://www.google.com/recaptcha/api.js` **no** se carga en `<head>` durante las visitas de solo lectura ni en vistas sin formulario.
+- `resources/views/partials/forms/_form_suggestions.blade.php` expone `data-recaptcha-site-key` en `<form id="form-suggestion-send">` y `resources/js/suggestions_forms.js` inyecta el script de Google bajo demanda al primer foco/interacción con el formulario (`focusin`, `pointerdown` o `input`) o justo antes de completar el `submit`.
+
 ## Flujo y manejo de errores
 
 1. Si falta `g_recaptcha`, lanza `ValidationException` con mensaje en español en la clave `g_recaptcha`.

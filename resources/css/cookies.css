@@ -51,22 +51,33 @@
 
 .cookie-banner-actions {
     display: flex;
-    gap: 1rem;
+    gap: 0.75rem;
     align-items: center;
     flex-shrink: 0;
 }
 
 .cookie-accept-btn {
     background-color: var(--color-primario);
-    color: var(--color-superficie-oscura);
+    color: var(--color-on-primary);
     border: none;
     padding: 0.8rem 1.5rem;
+    min-height: 44px;
     border-radius: 4px;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: var(--sombra-ligera);
+    white-space: nowrap;
+}
+
+.cookie-dismiss-btn {
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 4px;
+    cursor: pointer;
     white-space: nowrap;
 }
 
@@ -136,8 +147,14 @@
         font-size: 0.85rem;
     }
 
-    .cookie-accept-btn {
+    .cookie-banner-actions {
+        flex-direction: column;
         width: 100%;
-        padding: 1rem;
+    }
+
+    .cookie-accept-btn,
+    .cookie-dismiss-btn {
+        width: 100%;
+        padding: 0.9rem 1rem;
     }
 }

@@ -2,7 +2,8 @@
       action="{{route('suggestion.send')}}"
       method="POST"
       enctype="multipart/form-data"
-      aria-labelledby="suggestion-form-heading">
+      aria-labelledby="suggestion-form-heading"
+      @if(config('google.recaptcha.site_key')) data-recaptcha-site-key="{{ config('google.recaptcha.site_key') }}" @endif>
 
     @csrf
 
@@ -280,8 +281,20 @@
     @if(config('google.recaptcha.site_key'))
         <div>
             <input type="hidden" name="g_recaptcha" id="g_recaptcha">
+            <span id="recaptcha-client-error" class="field-error hidden" role="alert"></span>
         </div>
     @endif
+
+    <div class="form-privacy-notice">
+        <p>
+            <strong>Información básica sobre protección de datos:</strong>
+            <strong>Responsable:</strong> JaJa Project (@raupulus · <a href="mailto:public@raupulus.dev">public@raupulus.dev</a>).
+            <strong>Finalidad:</strong> Moderar y publicar tu aportación y proteger el formulario frente a spam
+            (control de tasa por IP y Google reCAPTCHA v3 cargado únicamente al interactuar con este formulario).
+            <strong>Derechos:</strong> Acceso, rectificación y supresión conforme a nuestra
+            <a href="{{ route('page.show', 'politica-de-privacidad') }}" target="_blank" rel="noopener noreferrer">Política de Privacidad</a>.
+        </p>
+    </div>
 
     <button type="submit" class="btn">😜 Enviar 😝</button>
 </form>

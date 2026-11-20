@@ -26,11 +26,17 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 ## Parciales reutilizables (`resources/views/partials/`)
 
 - `_beta.blade.php` — Aviso/banner de versión beta.
-- `_cookies.blade.php` — Aviso y gestión de cookies.
+- `_cookies.blade.php` — Banner de cookies esenciales (`role="dialog"`, `aria-labelledby`, `aria-describedby`) con botón de aceptación (`#acceptCookies`) y cierre sin consentir (`#dismissCookies`).
 - `_general_stats.blade.php` — Bloque de estadísticas generales del proyecto.
 - `_groups_links.blade.php` — Enlaces rápidos a grupos de contenido.
 - `_jsonld.blade.php` — Renderiza un bloque `<script type="application/ld+json">` escapado de forma segura (`JSON_HEX_TAG | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE`).
-- `_social_icons.blade.php` — Iconos y enlaces a redes sociales.
+- `_social_icons.blade.php` — Iconos y enlaces a redes sociales locales.
+
+## Privacidad, cookies y formularios públicos
+
+- `resources/js/cookies.js` gestiona `hidden` e `inert` sobre `#cookieBanner`, aplica `; Secure` cuando se sirve por HTTPS y al pulsar `Escape` o `#dismissCookies` llama a `hideBanner()` sin grabar consentimiento (`FSEC-08`).
+- `SESSION_SECURE_COOKIE=true`, `SESSION_HTTP_ONLY=true` y `SESSION_SAME_SITE=lax` quedan configurados por defecto en `.env.example.production`.
+- `partials/forms/_form_suggestions.blade.php` incluye nota RGPD de primera capa (`public@raupulus.dev` y enlace a Política de Privacidad) y carga diferida de reCAPTCHA v3 únicamente al interactuar con el formulario.
 
 ## Vistas por sección (`resources/views/`)
 
@@ -46,7 +52,7 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 - `app.js` — Punto de entrada JS principal.
 - `bootstrap.js` — Configuración base (Axios / bootstrap de Laravel).
 - `alerts.js` — Gestión de alertas en la interfaz.
-- `cookies.js` — Lógica del banner de cookies.
+- `cookies.js` — Lógica accesible del banner de cookies (cierre con `Escape` sin consentir, `#dismissCookies`, atributos `inert`/`hidden`).
 - `navbar.js` — Comportamiento interactivo de la barra de navegación móvil con `aria-expanded`, cierre con `Escape` o clic exterior y atributo `inert` automático cuando el menú está colapsado en pantallas `<= 1024px`.
 - `suggestions_forms.js` — Interactividad accesible del formulario de sugerencias (filtrado de grupos, selector de respuesta correcta de quiz mediante `<button type="button" aria-pressed>`, vista previa de imagen mediante `<label>`, sincronización `aria-invalid` y contador de throttle).
 
