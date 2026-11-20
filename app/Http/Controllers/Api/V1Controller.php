@@ -115,6 +115,11 @@ class V1Controller extends Controller
                 'Listado de chistes obtenido correctamente'
             );
         } catch (\Exception $e) {
+            Log::error('API v1 contents list failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener el listado de chistes', 500);
         }
     }
@@ -177,8 +182,7 @@ class V1Controller extends Controller
         try {
             $limit = $request->getLimit();
 
-            $contentsQuery = Content::whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false)
+            $contentsQuery = Content::publicSafe()
                 ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->inRandomOrder();
             $count = $contentsQuery->count();
@@ -204,6 +208,10 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 random content failed', [
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener contenidos aleatorios', 500);
         }
     }
@@ -270,8 +278,8 @@ class V1Controller extends Controller
         try {
             $limit = $request->getLimit();
 
-            $contentsQuery = $type->contents()->whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false)
+            $contentsQuery = $type->contents()
+                ->publicSafe()
                 ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->inRandomOrder();
 
@@ -298,6 +306,10 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 random content failed', [
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener contenidos aleatorios', 500);
         }
     }
@@ -370,6 +382,11 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 types index failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener la lista de tipos', 500);
         }
     }
@@ -477,6 +494,11 @@ class V1Controller extends Controller
                 $message
             );
         } catch (\Exception $e) {
+            Log::error('API v1 groups index failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener la lista de grupos', 500);
         }
     }
@@ -586,6 +608,11 @@ class V1Controller extends Controller
                 $message
             );
         } catch (\Exception $e) {
+            Log::error('API v1 categories index failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener la lista de categorías', 500);
         }
     }
@@ -649,8 +676,7 @@ class V1Controller extends Controller
         try {
             $limit = $request->getLimit();
 
-            $contents = Content::whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false)
+            $contents = Content::publicSafe()
                 ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id'])
                 ->byType($type)
                 ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
@@ -685,6 +711,11 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 filtered random content failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener contenidos del tipo especificado', 500);
         }
     }
@@ -767,8 +798,7 @@ class V1Controller extends Controller
 
             $limit = $request->getLimit();
 
-            $contents = Content::whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false)
+            $contents = Content::publicSafe()
                 ->select(['id', 'title', 'content', 'image', 'uploaded_by', 'user_id', 'group_id'])
                 ->byTypeAndCategory($type, $category)
                 ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
@@ -805,6 +835,11 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 filtered random content failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener contenidos del tipo especificado', 500);
         }
     }
@@ -904,6 +939,12 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 random content by group failed', [
+                'user_id' => Auth::id(),
+                'group_slug' => $group->slug,
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener contenidos del grupo especificado', 500);
         }
     }
@@ -963,6 +1004,11 @@ class V1Controller extends Controller
             return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
 
         } catch (\Exception $e) {
+            Log::error('API v1 send suggestion failed', [
+                'user_id' => Auth::id(),
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
         }
     }
@@ -1164,6 +1210,12 @@ class V1Controller extends Controller
                 ]
             );
         } catch (\Exception $e) {
+            Log::error('API v1 random content by user failed', [
+                'user_id' => Auth::id(),
+                'nick' => $nick,
+                'message' => $e->getMessage(),
+            ]);
+
             return $this->errorResponse('Error al obtener contenidos del usuario especificado', 500);
         }
 

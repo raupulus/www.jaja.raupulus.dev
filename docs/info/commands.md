@@ -21,7 +21,8 @@ Este módulo contiene los comandos de consola (Artisan) personalizados que se ej
    - Puede ser invocado de forma manual desde el panel de administración o programado.
 
 ## Funcionalidad Técnica
-- Estos comandos están registrados y configurados para ejecutarse periódicamente a través del programador de tareas de Laravel (`app/Console/Kernel.php` o `routes/console.php`), así como desde acciones confirmadas (`POST` / modal de confirmación con control `try/catch` y `Notification`) en `App\Filament\Admin\Pages\Dashboard`.
+- Estos comandos están registrados en `routes/console.php` usando la fachada explícita `Illuminate\Support\Facades\Schedule` y protegidos con `->withoutOverlapping()` (`stats:update`, `sitemap:generate` y las tres ventanas diarias de `content:publish-social`), además de poder lanzarse bajo confirmación (`POST` / modal) desde `App\Filament\Admin\Pages\Dashboard`.
+- Los logs estructurados emitidos vía `Log::warning`/`Log::error` por todos los comandos se registran en **inglés** manteniendo la salida de consola para operadores en español.
 - Son esenciales para separar la carga de cálculo y peticiones externas del ciclo de vida HTTP normal.
 
 

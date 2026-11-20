@@ -62,8 +62,7 @@ class SitemapGeneratorCommand extends Command
     {
         $sitemap = Sitemap::create();
 
-        $latestContentAt = Content::whereNotIn('group_id', [4, 14])
-            ->where('is_adult', false)
+        $latestContentAt = Content::publicSafe()
             ->max('updated_at');
         $contentModAt = $latestContentAt ? Carbon::parse($latestContentAt) : Carbon::now();
 
@@ -102,8 +101,7 @@ class SitemapGeneratorCommand extends Command
 
         foreach (Type::all() as $type) {
             $latestTypeContent = $type->contents()
-                ->whereNotIn('contents.group_id', [4, 14])
-                ->where('contents.is_adult', false)
+                ->publicSafe()
                 ->max('contents.updated_at');
 
             $typeModAt = $latestTypeContent
@@ -128,14 +126,13 @@ class SitemapGeneratorCommand extends Command
         $chunkSize = $this->option('chunk');
         $groupCount = 0;
 
-        Group::whereNotIn('groups.id', [4, 14])
+        Group::publicSafe()
             ->hasAvailableContent()
             ->chunk($chunkSize, function ($groups) use ($sitemap, &$groupCount) {
                 foreach ($groups as $group) {
 
                     $lastModContent = $group->contents()
-                        ->whereNotIn('group_id', [4, 14])
-                        ->where('is_adult', false)
+                        ->publicSafe()
                         ->orderBy('updated_at', 'desc')
                         ->first();
                     $lastModContent = $lastModContent ? $lastModContent->updated_at : $group->created_at;
@@ -160,8 +157,7 @@ class SitemapGeneratorCommand extends Command
                 foreach ($categories as $category) {
 
                     $lastModContent = $category->contents()
-                        ->whereNotIn('group_id', [4, 14])
-                        ->where('is_adult', false)
+                        ->publicSafe()
                         ->orderBy('updated_at', 'desc')
                         ->first();
                     $lastModContent = $lastModContent ? $lastModContent->updated_at : $category->created_at;
@@ -257,7 +253,7 @@ class SitemapGeneratorCommand extends Command
                 $this->info('   ✓ Backup del sitemap anterior creado');
             } catch (\Exception $e) {
                 $this->warn('   ⚠️ No se pudo crear el backup: ' . $e->getMessage());
-                Log::warning('SitemapGeneratorCommand: No se pudo crear backup del sitemap', [
+                Log::warning('SitemapGeneratorCommand: Failed to create sitemap backup', [
                     'error' => $e->getMessage(),
                     'sitemap_path' => $sitemapPath,
                     'backup_path' => $backupPath,
@@ -291,7 +287,7 @@ class SitemapGeneratorCommand extends Command
                     $this->info('   ✓ Backup temporal eliminado');
                 } catch (\Exception $e) {
                     $this->warn('   ⚠️ No se pudo eliminar el backup temporal: ' . $e->getMessage());
-                    Log::warning('SitemapGeneratorCommand: No se pudo eliminar backup temporal', [
+                    Log::warning('SitemapGeneratorCommand: Failed to remove temporary sitemap backup', [
                         'error' => $e->getMessage(),
                         'backup_path' => $backupPath,
                     ]);
@@ -315,7 +311,7 @@ class SitemapGeneratorCommand extends Command
                     }
                 } catch (\Exception $restoreError) {
                     $this->error('   ❌ No se pudo restaurar el backup: ' . $restoreError->getMessage());
-                    Log::error('SitemapGeneratorCommand: Error al restaurar backup', [
+                    Log::error('SitemapGeneratorCommand: Failed to restore sitemap backup', [
                         'restore_error' => $restoreError->getMessage(),
                         'original_error' => $e->getMessage(),
                         'backup_path' => $backupPath,
@@ -332,9 +328,8 @@ class SitemapGeneratorCommand extends Command
     {
         $this->error('❌ Error al generar el sitemap: ' . $e->getMessage());
 
-        Log::error('SitemapGeneratorCommand: Error al generar el sitemap', [
+        Log::error('SitemapGeneratorCommand: Failed to generate sitemap', [
             'message' => $e->getMessage(),
-            'trace' => $e->getTraceAsString(),
             'line' => $e->getLine(),
             'file' => $e->getFile(),
             'memory_usage' => memory_get_usage(true),

@@ -38,5 +38,10 @@ Registro de decisiones deliberadas del proyecto verificadas en el código, para 
 - **Decisión**: Añadir de forma puramente aditiva los índices sobre claves foráneas y columnas frecuentes (`content_categories`, `content_options`, `suggestions`, `suggestion_options`, `suggestion_categories`, `collaborators`, `collaborator_projects`, `reports`, `contents`) y sustituir las restricciones `unique` estándar en tablas con `SoftDeletes` (`users.email`, `categories.slug`, `types.slug`, `groups.slug`, `pages.slug`) por índices únicos parciales `WHERE deleted_at IS NULL` (compatibles con PostgreSQL y SQLite), alineando la regla `unique` en Filament con `whereNull('deleted_at')`.
 - **Motivo**: Evitar *Sequential Scans* en joins frecuentes en PostgreSQL y permitir reutilizar un `email` o `slug` tras un borrado lógico sin provocar errores `500 UniqueConstraintViolationException`, manteniendo reversibilidad sin pérdida de datos en producción.
 
+## 8. Filtrado público centralizado (`scopePublicSafe`) y resolución segura de IP (`TrustProxies`)
+- **Dónde**: `config/content.php`, `app/Models/Content.php`, `app/Models/Group.php`, `config/trustedproxy.php` y `app/Helpers/IpHelper.php`.
+- **Decisión**: Centralizar los IDs de grupos excluidos de listados públicos y redes sociales en `config('content.excluded_public_group_ids')` (respaldado por `Content::EXCLUDED_PUBLIC_GROUP_IDS = [4, 14]`) y encapsular el criterio en `Content::scopePublicSafe()` / `isPublicSafe()` junto con `Group::scopePublicSafe()`. Así mismo, gobernar la confianza en proxies inversos vía `config/trustedproxy.php` (`TRUSTED_PROXIES`) y resolver la IP real del cliente en un único punto (`IpHelper::getClientIp()`), aceptando `CF-Connecting-IP` únicamente cuando `$request->isFromTrustedProxy()` es verdadero.
+- **Motivo**: Eliminar números mágicos dispersos en 7 archivos, permitir parametrizar grupos excluidos por entorno sin redeploy de código y evitar falsificación de IP (`X-Forwarded-For` / `CF-Connecting-IP`) para evadir rate limits.
+
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

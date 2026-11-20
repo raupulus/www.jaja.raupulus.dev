@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
-use App\Actions\ConvertImageToWebp;
+use App\Filament\Support\WebpImageUpload;
 
 class UserResource extends Resource
 {
@@ -33,45 +33,13 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('avatar')
+                WebpImageUpload::make('avatar', 'user-images', 'Avatar')
                     ->columnSpanFull()
                     ->alignCenter()
                     ->avatar()
-                    ->disk('public')
-                    ->directory('user-images')
-                    ->visibility('public')
-                    ->imageEditor()
                     ->imageResizeTargetHeight(250)
                     ->imageResizeTargetWidth(250)
-                    //->imageEditorAspectRatios(['1:1'])
-                    ->imageResizeMode('crop', )
-                    //->imageEditorMode(2)
-                    ->label('Avatar')
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                //\Log::info("Ruta temporal del archivo: " . $tempFile);
-
-                                $originalName = $state->getClientOriginalName();
-                                $path = 'user-images/' . time() . '_' . $originalName;
-
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'user-images');
-
-                                if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
-                                    $component->state([$newPath]);
-                                }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    })
-                ,
+                    ->imageResizeMode('crop'),
 
                 Forms\Components\TextInput::make('name')
                     ->required()

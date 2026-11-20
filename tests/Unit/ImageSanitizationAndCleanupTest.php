@@ -112,6 +112,10 @@ class ImageSanitizationAndCleanupTest extends TestCase
 
     public function test_all_filament_file_uploads_declare_2mb_limit_and_allowed_mime_types(): void
     {
+        $helperContents = (string) file_get_contents(app_path('Filament/Support/WebpImageUpload.php'));
+        $this->assertStringContainsString('->maxSize(2048)', $helperContents);
+        $this->assertStringContainsString('->acceptedFileTypes(', $helperContents);
+
         $filamentFiles = [
             app_path('Filament/Panel/Resources/ContentResource.php'),
             app_path('Filament/Panel/Resources/CollaboratorResource.php'),
@@ -130,8 +134,8 @@ class ImageSanitizationAndCleanupTest extends TestCase
 
         foreach ($filamentFiles as $file) {
             $contents = (string) file_get_contents($file);
-            $this->assertStringContainsString('->maxSize(2048)', $contents, "Missing maxSize(2048) in {$file}");
-            $this->assertStringContainsString('->acceptedFileTypes(', $contents, "Missing acceptedFileTypes in {$file}");
+            $this->assertStringContainsString('WebpImageUpload::make(', $contents, "Missing WebpImageUpload::make in {$file}");
+            $this->assertStringNotContainsString('FileUpload::make(', $contents, "Unexpected raw FileUpload::make in {$file}");
         }
     }
 

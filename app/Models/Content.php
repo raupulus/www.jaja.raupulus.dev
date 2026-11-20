@@ -21,6 +21,13 @@ class Content extends Model
     use DeletesStoredImages;
     use SoftDeletes;
 
+    /**
+     * IDs de grupos excluidos por defecto de listados públicos y difusión social.
+     *
+     * @var list<int>
+     */
+    public const EXCLUDED_PUBLIC_GROUP_IDS = [4, 14];
+
     protected $table = 'contents';
 
     protected $fillable = ['user_id', 'group_id', 'title', 'content', 'image', 'uploaded_by', 'last_social_published', 'is_adult', 'is_ai'];
@@ -190,6 +197,47 @@ class Content extends Model
             ->whereHas('categories', function ($q) use ($category) {
                 $q->where('categories.id', $category->id);
             });
+    }
+
+    /**
+     * Devuelve los IDs de grupos excluidos de las rutas y API públicas.
+     *
+     * @return list<int>
+     */
+    public static function excludedPublicGroupIds(): array
+    {
+        $configured = config('content.excluded_public_group_ids', self::EXCLUDED_PUBLIC_GROUP_IDS);
+
+        if (! is_array($configured)) {
+            return self::EXCLUDED_PUBLIC_GROUP_IDS;
+        }
+
+        return array_values(array_filter(
+            array_map('intval', $configured),
+            static fn (int $id): bool => $id > 0
+        ));
+    }
+
+    /**
+     * Scope para filtrar contenido apto para listados públicos, API pública y redes sociales.
+     */
+    public function scopePublicSafe(Builder $query): Builder
+    {
+        $excludedIds = self::excludedPublicGroupIds();
+
+        if ($excludedIds !== []) {
+            $query->whereNotIn($query->qualifyColumn('group_id'), $excludedIds);
+        }
+
+        return $query->where($query->qualifyColumn('is_adult'), false);
+    }
+
+    /**
+     * Indica si este registro concreto es apto para listados públicos y difusión social.
+     */
+    public function isPublicSafe(): bool
+    {
+        return ! in_array((int) $this->group_id, self::excludedPublicGroupIds(), true) && ! $this->is_adult;
     }
 
     /**

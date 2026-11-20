@@ -32,8 +32,7 @@ class PublishContentToSocialCommand extends Command
 
         ## Busco el contenido con menor fecha o null para el campo last_social_published del contenido
         $content = Content::with('categories')
-            ->whereNotIn('group_id', [4, 14])
-            ->where('is_adult', false)
+            ->publicSafe()
             ->orderByRaw('last_social_published IS NULL DESC')
             ->orderBy('last_social_published', 'asc')
             ->first();
@@ -52,7 +51,7 @@ class PublishContentToSocialCommand extends Command
         } catch (\Exception $e) {
             $this->error('Error al publicar contenido: ' . $e->getMessage());
 
-            Log::error('Error al publicar contenido en redes sociales', [
+            Log::error('PublishContentToSocialCommand: Failed to publish content to social media', [
                 'content_id' => $content->id,
                 'error' => $e->getMessage(),
             ]);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Api;
 
+use App\Helpers\IpHelper;
 use App\Models\Type;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
@@ -14,39 +15,6 @@ class SendSuggestionRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    /**
-     * Obtiene la IP real del usuario considerando Cloudflare
-     */
-    public function getRealIpAddress(): string
-    {
-        // Headers que Cloudflare puede usar para enviar la IP real
-        $headers = [
-            'CF-Connecting-IP',      // Header principal de Cloudflare
-            'HTTP_CF_CONNECTING_IP', // Variante del header de Cloudflare
-            'X-Forwarded-For',       // Header estándar para proxies
-            'X-Real-IP',             // Header alternativo
-            'HTTP_X_FORWARDED_FOR',  // Variante del X-Forwarded-For
-            'HTTP_X_REAL_IP',        // Variante del X-Real-IP
-        ];
-
-        foreach ($headers as $header) {
-            $ip = $this->header($header) ?? $_SERVER[$header] ?? null;
-
-            if ($ip) {
-                // Si hay múltiples IPs separadas por comas, toma la primera
-                $ip = trim(explode(',', $ip)[0]);
-
-                // Valida que sea una IP válida
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                    return $ip;
-                }
-            }
-        }
-
-        // Si no se encuentra ninguna IP válida, usa la IP por defecto
-        return $this->ip();
     }
 
     public function prepareForValidation()
@@ -67,7 +35,7 @@ class SendSuggestionRequest extends FormRequest
             'type_id' => $type?->id,
             'nick' => $nick,
             'title' => $title !== '' ? $title : 'Sugerencia',
-            'ip_address' => $this->getRealIpAddress(),
+            'ip_address' => IpHelper::getClientIp($this),
             'user_agent' => $this->userAgent(),
         ]);
     }

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\GroupResource\Pages;
 use App\Filament\Admin\Resources\GroupResource\RelationManagers;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\Group;
 use Filament\Forms;
 use Filament\Forms\Components\Textarea;
@@ -30,43 +30,11 @@ class GroupResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
-                    ->image()
+                WebpImageUpload::make('image', 'group-images')
                     ->columnSpanFull()
-                    ->disk('public')
-                    ->directory('group-images')
-                    ->visibility('public')
-                    ->imageEditor()
                     ->imageResizeTargetHeight(768)
                     ->imageResizeTargetWidth(1024)
-                    //->imageEditorAspectRatios(['1:1'])
-                    ->imageResizeMode('crop')
-                    //->imageEditorMode(2)
-                    ->label('Imagen')
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                //\Log::info("Ruta temporal del archivo: " . $tempFile);
-
-                                $originalName = $state->getClientOriginalName();
-
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'group-images');
-
-                                if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
-                                    $component->state([$newPath]);
-                                }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    })
-                ,
+                    ->imageResizeMode('crop'),
 
                 Forms\Components\TextInput::make('title')
                     ->required()

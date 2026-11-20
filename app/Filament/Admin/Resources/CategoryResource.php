@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\CategoryResource\Pages;
 use App\Filament\Admin\Resources\CategoryResource\RelationManagers;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\Category;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -33,38 +33,11 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
+                WebpImageUpload::make('image', 'category-images')
                     ->columnSpanFull()
-                    ->image()
-                    ->disk('public')
-                    ->directory('category-images')
-                    ->visibility('public')
-                    ->imageEditor()
-                    ->label('Imagen')
-                    ->default(null)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
                     ->imageResizeTargetHeight(250)
                     ->imageResizeTargetWidth(250)
-                    ->imageResizeMode('crop', )
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'category-images');
-
-                                if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
-                                    $component->state([$newPath]);
-                                }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    })
-                ,
+                    ->imageResizeMode('crop'),
                 Forms\Components\TextInput::make('title')
                     ->columnSpanFull()
                     ->label('Título')

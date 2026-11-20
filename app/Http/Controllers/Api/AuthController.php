@@ -113,34 +113,6 @@ class AuthController extends Controller
     }
 
     /**
-     * Cerrar todas las sesiones
-     *
-     * Elimina todos los tokens válidos para el usuario
-     *
-     * @group 🔐 Autenticación
-     * @authenticated
-     *
-     * @response 200 {
-     *   "success": true,
-     *   "data": null,
-     *   "message": "Sesión cerrada exitosamente"
-     * }
-     *
-     * @responseField success boolean Indica si la operación fue exitosa
-     * @responseField message string Mensaje descriptivo de la operación
-     * @responseField data null No se devuelven datos adicionales
-     *
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function deleteAllTokens(Request $request): JsonResponse
-    {
-        $request->user()->tokens()->delete();
-
-        return $this->successResponse(null, 'Sesión cerrada exitosamente');
-    }
-
-    /**
      * Información de usuario
      *
      * Devuelve la información del usuario actualmente logueado en la plataforma

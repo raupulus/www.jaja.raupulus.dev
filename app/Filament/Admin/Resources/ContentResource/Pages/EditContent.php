@@ -52,7 +52,7 @@ class EditContent extends EditRecord
                 })
                 ->visible(function () {
                     ## Solo muestro botón en contenido apto para publicar
-                    return !in_array($this->record->group_id, [4, 14]) && !$this->record->is_adult;
+                    return $this->record->isPublicSafe();
                 }),
         ];
     }

@@ -121,13 +121,26 @@ class Group extends Model
     }
 
     /**
+     * Scope para excluir grupos reservados/no aptos de los listados públicos.
+     */
+    public function scopePublicSafe(Builder $query): Builder
+    {
+        $excludedIds = Content::excludedPublicGroupIds();
+
+        if ($excludedIds !== []) {
+            return $query->whereNotIn($query->qualifyColumn('id'), $excludedIds);
+        }
+
+        return $query;
+    }
+
+    /**
      * Scope para filtrar grupos que tienen contenidos disponibles públicamente.
      */
     public function scopeHasAvailableContent(Builder $query): Builder
     {
-        return $query->whereHas('contents', function ($q) {
-            $q->whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false);
+        return $query->whereHas('contents', function (Builder $q): void {
+            $q->publicSafe();
         });
     }
 }

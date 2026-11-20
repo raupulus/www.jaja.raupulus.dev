@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\PageResource\Pages;
 use App\Filament\Admin\Resources\PageResource\RelationManagers;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\Page;
 use Filament\Forms;
 use Filament\Forms\Components\MarkdownEditor;
@@ -119,38 +119,11 @@ class PageResource extends Resource
                 Forms\Components\Group::make([
                     Forms\Components\Section::make('Imagen')
                         ->schema([
-                            Forms\Components\FileUpload::make('image')
+                            WebpImageUpload::make('image', 'page-images')
                                 ->columnSpanFull()
-                                ->image()
-                                ->disk('public')
-                                ->directory('page-images')
-                                ->visibility('public')
-                                ->imageEditor()
-                                ->label('Imagen')
-                                ->default(null)
-                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                                ->maxSize(2048)
                                 ->imageResizeTargetHeight(600)
                                 ->imageResizeTargetWidth(1024)
-                                ->imageResizeMode('crop', )
-                                ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                                    if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                                        try {
-                                            $tempFile = $state->getRealPath();
-                                            $converter = new ConvertImageToWebp();
-                                            $newPath = $converter($tempFile, 'page-images');
-
-                                            if ($newPath && $newPath !== $tempFile) {
-                                                ## Actualizo el estado con un array en lugar de un string
-                                                $component->state([$newPath]);
-                                            }
-                                        } catch (\Exception $e) {
-                                            \Log::error('Error en la conversión: ' . $e->getMessage());
-                                            \Log::error($e->getTraceAsString());
-                                        }
-                                    }
-                                })
-                            ,
+                                ->imageResizeMode('crop'),
 
                             Forms\Components\Section::make('SEO')
                             ->schema([

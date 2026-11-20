@@ -2,9 +2,9 @@
 
 namespace App\Filament\Panel\Resources;
 
-use App\Actions\ConvertImageToWebp;
 use App\Filament\Panel\Resources\ContentResource\Pages;
 use App\Filament\Panel\Resources\ContentResource\RelationManagers\OptionsRelationManager;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\Content;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -37,37 +37,11 @@ class ContentResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Contenido')
                     ->schema([
-                        Forms\Components\FileUpload::make('image')
+                        WebpImageUpload::make('image', 'content-images')
                             ->columnSpanFull()
-                            ->image()
-                            ->disk('public')
-                            ->directory('content-images')
-                            ->visibility('public')
-                            ->imageEditor()
-                            ->label('Imagen')
-                            ->default(null)
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->maxSize(2048)
                             ->imageResizeTargetHeight(768)
                             ->imageResizeTargetWidth(1024)
-                            ->imageResizeMode('crop', )
-                            ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                                if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                                    try {
-                                        $tempFile = $state->getRealPath();
-                                        $converter = new ConvertImageToWebp();
-                                        $newPath = $converter($tempFile, 'content-images');
-
-                                        if ($newPath && $newPath !== $tempFile) {
-                                            ## Actualizo el estado con un array en lugar de un string
-                                            $component->state([$newPath]);
-                                        }
-                                    } catch (\Exception $e) {
-                                        \Log::error('Error en la conversión: ' . $e->getMessage());
-                                        \Log::error($e->getTraceAsString());
-                                    }
-                                }
-                            }),
+                            ->imageResizeMode('crop'),
                         Forms\Components\TextInput::make('title')
                             ->label('Título')
                             ->required()

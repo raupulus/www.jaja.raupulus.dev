@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Helpers\IpHelper;
 use App\Http\Responses\ApiResponse;
 use Closure;
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class ThrottleWithRealIp
 {
     public function handle(Request $request, Closure $next, $maxAttempts = 60, $decayMinutes = 1)
     {
-        $ip = $this->getRealIpAddress($request);
+        $ip = IpHelper::getClientIp($request);
 
         ## Verifico si la IP está en la lista de exclusión
         if ($this->isIpExcluded($ip)) {
@@ -140,31 +141,5 @@ class ThrottleWithRealIp
         }
 
         return $response;
-    }
-
-    private function getRealIpAddress(Request $request): string
-    {
-        $headers = [
-            'CF-Connecting-IP',
-            'HTTP_CF_CONNECTING_IP',
-            'X-Forwarded-For',
-            'X-Real-IP',
-            'HTTP_X_FORWARDED_FOR',
-            'HTTP_X_REAL_IP',
-        ];
-
-        foreach ($headers as $header) {
-            $ip = $request->header($header) ?? $_SERVER[$header] ?? null;
-
-            if ($ip) {
-                $ip = trim(explode(',', $ip)[0]);
-
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                    return $ip;
-                }
-            }
-        }
-
-        return $request->ip();
     }
 }

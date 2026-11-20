@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Helpers\IpHelper;
 use App\Models\Type;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 /**
@@ -30,45 +31,12 @@ class SuggestionRequest extends FormRequest
     }
 
     /**
-     * Obtiene la IP real del usuario considerando Cloudflare
-     */
-    protected function getRealIpAddress(): string
-    {
-        // Headers que Cloudflare puede usar para enviar la IP real
-        $headers = [
-            'CF-Connecting-IP',      // Header principal de Cloudflare
-            'HTTP_CF_CONNECTING_IP', // Variante del header de Cloudflare
-            'X-Forwarded-For',       // Header estándar para proxies
-            'X-Real-IP',             // Header alternativo
-            'HTTP_X_FORWARDED_FOR',  // Variante del X-Forwarded-For
-            'HTTP_X_REAL_IP',        // Variante del X-Real-IP
-        ];
-
-        foreach ($headers as $header) {
-            $ip = $this->header($header) ?? $_SERVER[$header] ?? null;
-
-            if ($ip) {
-                // Si hay múltiples IPs separadas por comas, toma la primera
-                $ip = trim(explode(',', $ip)[0]);
-
-                // Valida que sea una IP válida
-                if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)) {
-                    return $ip;
-                }
-            }
-        }
-
-        // Si no se encuentra ninguna IP válida, usa la IP por defecto
-        return $this->ip();
-    }
-
-    /**
      * Configure the validator instance.
      */
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator) {
-            $ip = $this->getRealIpAddress();
+            $ip = IpHelper::getClientIp($this);
             $throttleKey = 'suggestions:' . $ip;
 
             // Si hay demasiados intentos, añado un error de validación
@@ -132,7 +100,7 @@ class SuggestionRequest extends FormRequest
 
     protected function passedValidation()
     {
-        $ip = $this->getRealIpAddress();
+        $ip = IpHelper::getClientIp($this);
         $throttleKey = 'suggestions:' . $ip;
         RateLimiter::clear($throttleKey);
 
@@ -171,7 +139,7 @@ class SuggestionRequest extends FormRequest
         $this->merge([
             'nick' => $nick,
             'options' => $options,
-            'ip_address' => $this->getRealIpAddress(),
+            'ip_address' => IpHelper::getClientIp($this),
             'user_agent' => $this->userAgent(),
         ]);
     }
@@ -183,7 +151,13 @@ class SuggestionRequest extends FormRequest
     {
         $rules = [
             'type_id' => 'required|exists:types,id',
-            'group_id' => 'nullable|exists:groups,id',
+            'group_id' => [
+                'nullable',
+                'integer',
+                Rule::exists('groups', 'id')->where(
+                    fn ($query) => $query->where('type_id', $this->input('type_id'))
+                ),
+            ],
             'nick' => 'nullable|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
             'title' => 'required|string|max:255',
             'content' => 'required|string|max:1024',
@@ -233,7 +207,8 @@ class SuggestionRequest extends FormRequest
             'type_id.exists' => 'El tipo seleccionado no es válido',
             'title.required' => 'El título es obligatorio',
             'title.max' => 'El título no debe superar los :max caracteres',
-            'group_id.exists' => 'El Grupo debe existir',
+            'group_id.integer' => 'El grupo seleccionado no es válido.',
+            'group_id.exists' => 'El grupo seleccionado no pertenece al tipo de contenido indicado.',
             'content.required' => 'El contenido es obligatorio',
             'content.max' => 'El contenido no debe superar los :max caracteres',
             'image.image' => 'El archivo debe ser una imagen en formato JPEG, PNG o WebP',

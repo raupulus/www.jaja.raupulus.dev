@@ -2,9 +2,9 @@
 
 namespace App\Filament\Panel\Resources;
 
-use App\Actions\ConvertImageToWebp;
 use App\Filament\Panel\Resources\CollaboratorResource\Pages;
 use App\Filament\Panel\Resources\CollaboratorResource\RelationManagers;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\Collaborator;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -44,36 +44,11 @@ class CollaboratorResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
+                WebpImageUpload::make('image', 'collaborator-images')
                     ->columnSpanFull()
-                    ->image()
-                    ->disk('public')
-                    ->directory('collaborator-images')
-                    ->visibility('public')
-                    ->imageEditor()
-                    ->label('Imagen')
-                    ->default(null)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
                     ->imageResizeTargetHeight(400)
                     ->imageResizeTargetWidth(400)
-                    ->imageResizeMode('crop')
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'collaborator-images');
-
-                                if ($newPath && $newPath !== $tempFile) {
-                                    $component->state([$newPath]);
-                                }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    }),
+                    ->imageResizeMode('crop'),
                 Forms\Components\TextInput::make('name')
                     ->label('Nombre')
                     ->required()

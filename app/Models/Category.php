@@ -72,9 +72,8 @@ class Category extends Model
      */
     public function scopeHasAvailableContent(Builder $query): Builder
     {
-        return $query->whereHas('contents', function ($q) {
-            $q->whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false);
+        return $query->whereHas('contents', function (Builder $q): void {
+            $q->publicSafe();
         });
     }
 }

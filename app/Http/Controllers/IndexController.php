@@ -36,8 +36,7 @@ class IndexController extends Controller
                 'options' => fn ($q) => $q->orderBy('order'),
                 'user:id,nick',
             ])
-                ->whereNotIn('group_id', [4, 14])
-                ->where('is_adult', false)
+                ->publicSafe()
                 ->inRandomOrder()
                 ->take(10)
                 ->get()

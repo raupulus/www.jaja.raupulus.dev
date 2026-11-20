@@ -2,9 +2,9 @@
 
 namespace App\Filament\Admin\Resources;
 
-use App\Actions\ConvertImageToWebp;
 use App\Filament\Admin\Resources\SuggestionResource\Pages;
 use App\Filament\Admin\Resources\SuggestionResource\RelationManagers\OptionsRelationManager;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\Group;
 use App\Models\Suggestion;
 use Filament\Forms;
@@ -33,36 +33,11 @@ class SuggestionResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Contenido')
                     ->schema([
-                        Forms\Components\FileUpload::make('image_path')
-                            ->image()
+                        WebpImageUpload::make('image_path', 'suggestion-images')
                             ->columnSpanFull()
-                            ->disk('public')
-                            ->directory('suggestion-images')
-                            ->visibility('public')
-                            ->imageEditor()
                             ->imageResizeTargetHeight(768)
                             ->imageResizeTargetWidth(1024)
-                            ->imageResizeMode('crop')
-                            ->label('Imagen')
-                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                            ->maxSize(2048)
-                            ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                                if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                                    try {
-                                        $tempFile = $state->getRealPath();
-                                        $converter = new ConvertImageToWebp();
-                                        $newPath = $converter($tempFile, 'suggestion-images');
-
-                                        if ($newPath && $newPath !== $tempFile) {
-                                            ## Actualizo el estado con un array en lugar de un string
-                                            $component->state([$newPath]);
-                                        }
-                                    } catch (\Exception $e) {
-                                        \Log::error('Error en la conversión: ' . $e->getMessage());
-                                        \Log::error($e->getTraceAsString());
-                                    }
-                                }
-                            }),
+                            ->imageResizeMode('crop'),
 
                         Forms\Components\TextInput::make('title')
                             ->label('Título')
