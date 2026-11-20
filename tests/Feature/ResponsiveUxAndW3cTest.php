@@ -137,6 +137,9 @@ class ResponsiveUxAndW3cTest extends TestCase
         $this->assertStringContainsString('<nav class="navbar" aria-label="Navegación principal">', $homeHtml);
         $this->assertStringContainsString('type="button"', $homeHtml);
         $this->assertStringContainsString('id="acceptCookies"', $homeHtml);
+        $this->assertStringContainsString('<option value="" disabled>Selecciona un tipo</option>', $homeHtml);
+        $this->assertMatchesRegularExpression('/<img id="preview-img"\s+src="data:image\/gif;base64,/s', $homeHtml);
+        $this->assertDoesNotMatchRegularExpression('/<input type="hidden" name="_token"[^>]*autocomplete=/i', $homeHtml);
         $this->assertStringNotContainsString('src=""', $homeHtml);
         $this->assertStringNotContainsString('X-UA-Compatible', $homeHtml);
         $this->assertStringNotContainsString('xml:space="preserve"', $homeHtml);

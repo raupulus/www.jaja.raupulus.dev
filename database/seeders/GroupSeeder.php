@@ -38,6 +38,8 @@ class GroupSeeder extends Seeder
                 continue;
             }
 
+            $group['description'] ??= $group['title'];
+
             Group::create($group);
         }
     }

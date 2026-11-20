@@ -5,7 +5,7 @@
       aria-labelledby="suggestion-form-heading"
       @if(config('google.recaptcha.site_key')) data-recaptcha-site-key="{{ config('google.recaptcha.site_key') }}" @endif>
 
-    @csrf
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
     <p class="form-required-hint">Los campos marcados con <span aria-hidden="true">*</span> son obligatorios.</p>
 
@@ -40,6 +40,7 @@
                     class="form-control {{$errors->has('type_id') ? 'form-group-error' : ''}}"
                     aria-invalid="{{ $errors->has('type_id') ? 'true' : 'false' }}"
                     @error('type_id') aria-describedby="error-type_id" @enderror>
+                <option value="" disabled>Selecciona un tipo</option>
                 @foreach(\App\Models\Type::select(['id', 'slug', 'name'])->orderBy('id')->get() as $type)
                     <option value="{{$type->id}}" {{(old('type_id', 1) == $type->id) ? 'selected' : ''}}
                             data-slug="{{$type->slug}}">
@@ -83,7 +84,10 @@
             <span id="preview-placeholder" class="text-center">
                 Vista previa de imagen
             </span>
-            <img id="preview-img" class="hidden" alt="Vista previa de la imagen seleccionada">
+            <img id="preview-img"
+                 src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+                 class="hidden"
+                 alt="Vista previa de la imagen seleccionada">
         </label>
 
         <!-- Columna derecha: Label, Input y Errores -->

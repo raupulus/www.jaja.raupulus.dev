@@ -29,7 +29,7 @@ class PanelPanelProvider extends PanelProvider
             ->path('panel')
             ->default()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::hex('#0e7490'),
             ])
             ->discoverResources(in: app_path('Filament/Panel/Resources'), for: 'App\\Filament\\Panel\\Resources')
             ->discoverPages(in: app_path('Filament/Panel/Pages'), for: 'App\\Filament\\Panel\\Pages')

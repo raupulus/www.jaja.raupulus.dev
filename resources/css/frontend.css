@@ -135,6 +135,12 @@ a:hover {
     color: var(--color-primario-hover);
 }
 
+:where(p, li, label, dd, td, .page-content-wrapper) a:not(.btn):not(.nav-link):not(.brand-logo) {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1.5px;
+}
+
 img {
     max-width: 100%;
     height: auto;
