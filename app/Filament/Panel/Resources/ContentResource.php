@@ -35,94 +35,104 @@ class ContentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
-                    ->columnSpanFull()
-                    ->image()
-                    ->disk('public')
-                    ->directory('content-images')
-                    ->visibility('public')
-                    ->imageEditor()
-                    ->label('Imagen')
-                    ->default(null)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
-                    ->imageResizeTargetHeight(768)
-                    ->imageResizeTargetWidth(1024)
-                    ->imageResizeMode('crop', )
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'content-images');
+                Forms\Components\Section::make('Contenido')
+                    ->schema([
+                        Forms\Components\FileUpload::make('image')
+                            ->columnSpanFull()
+                            ->image()
+                            ->disk('public')
+                            ->directory('content-images')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->label('Imagen')
+                            ->default(null)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->maxSize(2048)
+                            ->imageResizeTargetHeight(768)
+                            ->imageResizeTargetWidth(1024)
+                            ->imageResizeMode('crop', )
+                            ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
+                                if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                                    try {
+                                        $tempFile = $state->getRealPath();
+                                        $converter = new ConvertImageToWebp();
+                                        $newPath = $converter($tempFile, 'content-images');
 
-                                if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
-                                    $component->state([$newPath]);
+                                        if ($newPath && $newPath !== $tempFile) {
+                                            ## Actualizo el estado con un array en lugar de un string
+                                            $component->state([$newPath]);
+                                        }
+                                    } catch (\Exception $e) {
+                                        \Log::error('Error en la conversión: ' . $e->getMessage());
+                                        \Log::error($e->getTraceAsString());
+                                    }
                                 }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    })
-                ,
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->columnSpanFull()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull()
-                    ->maxLength(1024),
-
-                Forms\Components\Checkbox::make('is_adult')
-                    ->label('Contenido Adulto')
-                    ->default(false)
-                    ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
-                    ->extraAttributes([
-                        'class' => 'border-red-500'
+                            }),
+                        Forms\Components\TextInput::make('title')
+                            ->label('Título')
+                            ->required()
+                            ->columnSpanFull()
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('content')
+                            ->label('Contenido')
+                            ->required()
+                            ->columnSpanFull()
+                            ->maxLength(1024),
                     ]),
 
-                Forms\Components\Checkbox::make('is_ai')
-                    ->label('Generado con AI')
-                    ->default(false)
-                    ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
-                    ->extraAttributes([
-                        'class' => 'border-orange-500'
+                Forms\Components\Section::make('Clasificación')
+                    ->schema([
+                        Forms\Components\Select::make('group_id')
+                            ->relationship('group', 'title')
+                            ->columnSpanFull()
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->label('Grupo')
+                            ->placeholder('Seleccione un grupo'),
+
+                        Forms\Components\Select::make('categories')
+                            ->label('Categorías')
+                            ->multiple()
+                            ->relationship('categories', 'title')
+                            ->preload()
+                            ->searchable()
+                            ->default([1])
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                // Si no hay categorías seleccionadas, asignar la categoría "General" con id 1
+                                if (empty($state)) {
+                                    $set('categories', [1]);
+                                }
+                            })
+                            ->dehydrateStateUsing(function ($state) {
+                                // Si no hay categorías seleccionadas, asignar la categoría "General" por defecto
+                                if (empty($state)) {
+                                    return [1];
+                                }
+                                return $state;
+                            })
+                            ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Select::make('group_id')
-                    ->relationship('group', 'title')
-                    ->columnSpanFull()
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->label('Grupo')
-                    ->placeholder('Seleccione un grupo')
-                    ,
+                Forms\Components\Section::make('Moderación')
+                    ->schema([
+                        Forms\Components\Checkbox::make('is_adult')
+                            ->label('Contenido Adulto')
+                            ->default(false)
+                            ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
+                            ->extraAttributes([
+                                'class' => 'border-red-500'
+                            ]),
 
-                Forms\Components\Select::make('categories')
-                    ->label('Categorías')
-                    ->multiple()
-                    ->relationship('categories', 'title')
-                    ->preload()
-                    ->searchable()
-                    ->default([1])
-                    ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        // Si no hay categorías seleccionadas, asignar la categoría "General" con id 1
-                        if (empty($state)) {
-                            $set('categories', [1]);
-                        }
-                    })
-                    ->dehydrateStateUsing(function ($state) {
-                        // Si no hay categorías seleccionadas, asignar la categoría "General" por defecto
-                        if (empty($state)) {
-                            return [1];
-                        }
-                        return $state;
-                    })
-                    ->columnSpanFull(),
+                        Forms\Components\Checkbox::make('is_ai')
+                            ->label('Generado con IA')
+                            ->default(false)
+                            ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
+                            ->extraAttributes([
+                                'class' => 'border-orange-500'
+                            ]),
+                    ])
+                    ->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 
@@ -171,6 +181,20 @@ class ContentResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                Tables\Filters\SelectFilter::make('group_id')
+                    ->label('Grupo')
+                    ->relationship('group', 'title')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('categories')
+                    ->label('Categoría')
+                    ->relationship('categories', 'title')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\TernaryFilter::make('is_adult')
+                    ->label('Contenido Adulto'),
+                Tables\Filters\TernaryFilter::make('is_ai')
+                    ->label('Generado con IA'),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

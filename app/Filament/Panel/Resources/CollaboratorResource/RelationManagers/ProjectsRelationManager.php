@@ -176,7 +176,9 @@ class ProjectsRelationManager extends RelationManager
                     ->toggleable(isToggledHiddenByDefault: false),
 
                 Tables\Columns\TextColumn::make('status')
+                    ->label('Estado')
                     ->badge()
+                    ->formatStateUsing(fn (string $state): string => $state === 'published' ? 'Publicado' : 'Borrador')
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'warning',
                         'published' => 'success',

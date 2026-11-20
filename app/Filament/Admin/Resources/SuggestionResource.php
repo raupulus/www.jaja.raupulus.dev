@@ -31,158 +31,137 @@ class SuggestionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image_path')
-                    ->image()
-                    ->columnSpanFull()
-                    ->disk('public')
-                    ->directory('suggestion-images')
-                    ->visibility('public')
-                    ->imageEditor()
-                    ->imageResizeTargetHeight(768)
-                    ->imageResizeTargetWidth(1024)
-                    //->imageEditorAspectRatios(['1:1'])
-                    ->imageResizeMode('crop')
-                    //->imageEditorMode(2)
-                    ->label('Imagen')
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                //\Log::info("Ruta temporal del archivo: " . $tempFile);
+                Forms\Components\Section::make('Contenido')
+                    ->schema([
+                        Forms\Components\FileUpload::make('image_path')
+                            ->image()
+                            ->columnSpanFull()
+                            ->disk('public')
+                            ->directory('suggestion-images')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->imageResizeTargetHeight(768)
+                            ->imageResizeTargetWidth(1024)
+                            ->imageResizeMode('crop')
+                            ->label('Imagen')
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->maxSize(2048)
+                            ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
+                                if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                                    try {
+                                        $tempFile = $state->getRealPath();
+                                        $converter = new ConvertImageToWebp();
+                                        $newPath = $converter($tempFile, 'suggestion-images');
 
-                                $originalName = $state->getClientOriginalName();
-
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'suggestion-images');
-
-                                if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
-                                    $component->state([$newPath]);
+                                        if ($newPath && $newPath !== $tempFile) {
+                                            ## Actualizo el estado con un array en lugar de un string
+                                            $component->state([$newPath]);
+                                        }
+                                    } catch (\Exception $e) {
+                                        \Log::error('Error en la conversión: ' . $e->getMessage());
+                                        \Log::error($e->getTraceAsString());
+                                    }
                                 }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    })
-                ,
+                            }),
 
-                Forms\Components\TextInput::make('title')
-                    ->label('Título')
-                    ->required()
-                    ->columnSpanFull()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('content')
-                    ->label('Contenido')
-                    ->required()
-                    ->columnSpanFull(),
-
-                Forms\Components\Checkbox::make('is_adult')
-                    ->label('Contenido Adulto')
-                    ->default(false)
-                    ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
-                    ->extraAttributes([
-                        'class' => 'border-red-500'
+                        Forms\Components\TextInput::make('title')
+                            ->label('Título')
+                            ->required()
+                            ->columnSpanFull()
+                            ->maxLength(255),
+                        Forms\Components\Textarea::make('content')
+                            ->label('Contenido')
+                            ->required()
+                            ->columnSpanFull(),
                     ]),
 
-                Forms\Components\Checkbox::make('is_ai')
-                    ->label('Generado con AI')
-                    ->default(false)
-                    ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
-                    ->extraAttributes([
-                        'class' => 'border-orange-500'
-                    ]),
+                Forms\Components\Section::make('Clasificación y Moderación')
+                    ->schema([
+                        Forms\Components\Select::make('type_id')
+                            ->label('Tipo')
+                            ->searchable()
+                            ->relationship('type', 'name')
+                            ->required()
+                            ->preload()
+                            ->live()
+                            ->afterStateUpdated(function (Forms\Set $set) {
+                                ## Cuando cambia el tipo, reseteo el grupo
+                                $set('group_id', null);
+                            }),
 
+                        Forms\Components\Select::make('group_id')
+                            ->label('Grupo')
+                            ->searchable()
+                            ->options(function (Forms\Get $get) {
+                                $typeId = $get('type_id');
 
-                Forms\Components\TextInput::make('nick')
-                    ->label('Nick')
-                    ->maxLength(25),
+                                if (! $typeId) {
+                                    return [];
+                                }
 
+                                ## Grupos que pertenecen al tipo seleccionado
+                                return Group::where('type_id', $typeId)
+                                    ->pluck('title', 'id')
+                                    ->toArray();
+                            })
+                            ->required()
+                            ->disabled(fn (Forms\Get $get) => ! $get('type_id')),
 
-                Forms\Components\Select::make('type_id')
-                    ->label('Tipo')
-                    ->searchable()
-                    ->relationship('type', 'name')
-                    ->required()
-                    ->preload()
-                    ->live()
-                    ->afterStateUpdated(function (Forms\Set $set) {
-                        ## Cuando cambia el tipo, reseteo el grupo
-                        $set('group_id', null);
-                    }),
+                        Forms\Components\Select::make('categories')
+                            ->label('Categorías')
+                            ->multiple()
+                            ->relationship('categories', 'title')
+                            ->preload()
+                            ->searchable()
+                            ->default([1])
+                            ->dehydrateStateUsing(function ($state) {
+                                // Siempre asegurar que hay al menos la categoría General
+                                if (empty($state) || $state === null || (is_array($state) && count($state) === 0)) {
+                                    return [1];
+                                }
+                                return $state;
+                            })
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                // Si el usuario borra todas las categorías, automáticamente asignar General
+                                if (empty($state) || $state === null) {
+                                    $set('categories', [1]);
+                                }
+                            })
+                            ->columnSpanFull(),
 
-                Forms\Components\Select::make('group_id')
-                    ->label('Grupo')
-                    ->searchable()
-                    ->options(function (Forms\Get $get) {
-                        $typeId = $get('type_id');
+                        Forms\Components\Checkbox::make('is_adult')
+                            ->label('Contenido Adulto')
+                            ->default(false)
+                            ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
+                            ->extraAttributes([
+                                'class' => 'border-red-500'
+                            ]),
 
-                        if (!$typeId) {
-                            return [];
-                        }
+                        Forms\Components\Checkbox::make('is_ai')
+                            ->label('Generado con IA')
+                            ->default(false)
+                            ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
+                            ->extraAttributes([
+                                'class' => 'border-orange-500'
+                            ]),
+                    ])
+                    ->columns(['default' => 1, 'md' => 2]),
 
-                        ## Grupos que pertenecen al tipo seleccionado
-                        return Group::where('type_id', $typeId)
-                            ->pluck('title', 'id')
-                            ->toArray();
-                    })
-                    ->required()
-                    ->disabled(fn(Forms\Get $get) => !$get('type_id'))
+                Forms\Components\Section::make('Metadatos de Envío')
+                    ->schema([
+                        Forms\Components\TextInput::make('nick')
+                            ->label('Nick')
+                            ->maxLength(25),
 
-                /*
-                ->createOptionForm([
-                    Forms\Components\TextInput::make('title')
-                        ->required()
-                        ->maxLength(255)
-                        ->label('Título'),
-                    Forms\Components\TextInput::make('slug')
-                        ->columnSpanFull()
-                        ->label('Slug')
-                        ->required()
-                        ->unique('groups', 'slug', ignoreRecord: true)
-                        ->maxLength(255),
-                    Forms\Components\Select::make('type_id')
-                        ->relationship('type', 'name')
-                        ->searchable()
-                        ->preload()
-                        ->required()
-                        ->label('Tipo')
-                        ->placeholder('Seleccione un tipo')
-
-                ])
-                */
-                ,
-
-                Forms\Components\Select::make('categories')
-                    ->label('Categorías')
-                    ->multiple()
-                    ->relationship('categories', 'title')
-                    ->preload()
-                    ->searchable()
-                    ->default([1])
-                    ->dehydrateStateUsing(function ($state) {
-                        // Siempre asegurar que hay al menos la categoría General
-                        if (empty($state) || $state === null || (is_array($state) && count($state) === 0)) {
-                            return [1];
-                        }
-                        return $state;
-                    })
-                    ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        // Si el usuario borra todas las categorías, automáticamente asignar General
-                        if (empty($state) || $state === null) {
-                            $set('categories', [1]);
-                        }
-                    })
-                ,
-
-                Forms\Components\TextInput::make('ip_address')
-                    ->label('IP')
-                    ->readOnly(),
-                Forms\Components\TextInput::make('user_agent')
-                    ->label('User Agent')
-                    ->readOnly(),
+                        Forms\Components\TextInput::make('ip_address')
+                            ->label('IP')
+                            ->readOnly(),
+                        Forms\Components\TextInput::make('user_agent')
+                            ->label('Agente de Usuario')
+                            ->readOnly()
+                            ->columnSpanFull(),
+                    ])
+                    ->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 
@@ -204,23 +183,42 @@ class SuggestionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('ip_address')->label('IP'),
                 Tables\Columns\TextColumn::make('user_agent')
-                    ->label('User Agent')
+                    ->label('Agente de Usuario')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Fecha de Borrado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at')
             ->filters([
+                Tables\Filters\SelectFilter::make('type_id')
+                    ->label('Tipo')
+                    ->relationship('type', 'name')
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('group_id')
+                    ->label('Grupo')
+                    ->relationship('group', 'title')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\TernaryFilter::make('is_adult')
+                    ->label('Contenido Adulto'),
+                Tables\Filters\TernaryFilter::make('is_ai')
+                    ->label('Generado con IA'),
+                Tables\Filters\TernaryFilter::make('approved_at')
+                    ->label('Aprobada')
+                    ->nullable(),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

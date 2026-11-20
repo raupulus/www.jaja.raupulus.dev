@@ -60,10 +60,12 @@ class ContentsRelationManager extends RelationManager
                     })
                 ,
                 Forms\Components\TextInput::make('title')
+                    ->label('Título')
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('content')
+                    ->label('Contenido')
                     ->required()
                     ->columnSpanFull()
                     ->maxLength(1024),
@@ -100,7 +102,7 @@ class ContentsRelationManager extends RelationManager
                     ]),
 
                 Forms\Components\Checkbox::make('is_ai')
-                    ->label('Generado con AI')
+                    ->label('Generado con IA')
                     ->default(false)
                     ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
                     ->extraAttributes([

@@ -20,6 +20,8 @@ class ReportResource extends Resource
 
     protected static ?string $navigationGroup = 'Moderación';
 
+    protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $navigationIcon = 'heroicon-o-flag';
 
     protected static ?int $navigationSort = 1;
@@ -28,7 +30,7 @@ class ReportResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('Información del Reporter')
+                Forms\Components\Section::make('Información del Informante')
                     ->schema([
                         Forms\Components\Select::make('user_id')
                             ->relationship('user', 'name')
@@ -37,11 +39,11 @@ class ReportResource extends Resource
                             ->label('Usuario Registrado'),
 
                         Forms\Components\TextInput::make('reporter_name')
-                            ->label('Nombre del Reporter')
+                            ->label('Nombre del Informante')
                             ->maxLength(255),
 
                         Forms\Components\TextInput::make('reporter_email')
-                            ->label('Email del Reporter')
+                            ->label('Email del Informante')
                             ->email()
                             ->maxLength(255),
 
@@ -126,7 +128,7 @@ class ReportResource extends Resource
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('reporter_name')
-                    ->label('Reporter')
+                    ->label('Informante')
                     ->searchable()
                     ->sortable(),
 
@@ -209,6 +211,10 @@ class ReportResource extends Resource
                         'App\Models\Content' => 'Contenido',
                         'App\Models\Suggestion' => 'Sugerencia',
                     ]),
+
+                Tables\Filters\TernaryFilter::make('resolved_at')
+                    ->label('Resuelto')
+                    ->nullable(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

@@ -9,7 +9,9 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
 use Filament\Navigation\NavigationGroup;
+use Filament\Navigation\NavigationItem;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -68,6 +70,28 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make()
                     ->label('Administración')
                     ->collapsible(false),
+            ])
+            ->navigationItems([
+                NavigationItem::make('Ir a mi Panel')
+                    ->url(fn (): string => route('filament.panel.pages.dashboard'))
+                    ->icon('heroicon-o-squares-2x2')
+                    ->sort(90),
+                NavigationItem::make('Ver web pública')
+                    ->url(fn (): string => route('index'))
+                    ->icon('heroicon-o-globe-alt')
+                    ->openUrlInNewTab()
+                    ->sort(95),
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Ir a mi Panel')
+                    ->url(fn (): string => route('filament.panel.pages.dashboard'))
+                    ->icon('heroicon-o-squares-2x2'),
+                MenuItem::make()
+                    ->label('Ver web pública')
+                    ->url(fn (): string => route('index'))
+                    ->icon('heroicon-o-globe-alt')
+                    ->openUrlInNewTab(),
             ])
             ->login()
             //->registration()

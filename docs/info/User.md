@@ -14,7 +14,7 @@ El módulo `User` gestiona la autenticación, roles básicos y perfiles público
    - `User` utiliza `DeletesStoredImages` para eliminar automáticamente avatares anteriores o al ejecutar `forceDelete()`, preservando `images/default/avatar.webp`.
 2. **Sistema de Roles y Control de Acceso**:
    - El modelo carece de un paquete complejo de roles y permisos (como Spatie) por simplicidad de negocio.
-   - Se gestiona mediante el campo `role_id`. Por convención, el `role_id = 1` otorga privilegios totales y acceso al panel de administración `/admin`. Los nuevos usuarios creados (`php artisan make:filament-user`) adquieren el `role_id = 2` por defecto, restringiendo su acceso únicamente a `/panel`.
+   - Se gestiona mediante el campo `role_id` (excluido explícitamente de `$fillable` en `User`). Por convención, el `role_id = 1` otorga privilegios totales y acceso al panel de administración `/admin`, mientras `role_id = 2` restringe el acceso a `/panel`. Desde `Admin/UserResource` (`/admin/users`), un administrador puede consultar, filtrar y asignar `role_id` mediante `CreateUser`/`EditUser`, con protección que impide degradar al último administrador activo.
    - `User::canAccessPanel(Panel $panel)` exige `$this->isAdmin` para el panel `admin` y permite usuarios autenticados en `panel`.
    - `AdminMiddleware` e `IsAdminMiddleware` operan con política *fail-closed* (`abort(403)` para cualquier usuario no administrador o no autenticado).
    - Todos los modelos con recurso en Filament disponen de su correspondiente Policy en `app/Policies/` (`AdminOnlyPolicy` y políticas de propiedad por `user_id`).

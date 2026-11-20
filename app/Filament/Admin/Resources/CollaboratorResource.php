@@ -74,12 +74,15 @@ class CollaboratorResource extends Resource
                     })
                 ,
                 Forms\Components\TextInput::make('name')
+                    ->label('Nombre')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nick')
+                    ->label('Nick')
                     ->required()
                     ->maxLength(25),
                 Forms\Components\TextInput::make('website')
+                    ->label('Sitio Web')
                     ->rules(['url:http,https'])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('url_repositories')
@@ -88,9 +91,12 @@ class CollaboratorResource extends Resource
                     ->maxLength(255),
                 Forms\Components\Select::make('user_id')
                     ->label('Usuario')
+                    ->searchable()
+                    ->preload()
                     ->columnSpanFull()
                     ->relationship('user', 'name'),
                 Forms\Components\Textarea::make('description')
+                    ->label('Descripción')
                     ->columnSpanFull()
                     ->rows(3)
                     ->required()
@@ -133,7 +139,11 @@ class CollaboratorResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('Usuario')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

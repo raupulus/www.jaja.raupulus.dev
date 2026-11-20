@@ -175,7 +175,7 @@ class PageResource extends Resource
                     ->sortable()
                     ->searchable()
                     ->label('Descripción'),
-                Tables\Columns\TextColumn::make('keywords')->label('Keywords'),
+                Tables\Columns\TextColumn::make('keywords')->label('Palabras Clave'),
                 Tables\Columns\SelectColumn::make('status')->label('Estado')->options([
                     'published' => 'Publicado',
                     'draft' => 'Borrador',
@@ -195,7 +195,12 @@ class PageResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->label('Estado')
+                    ->options([
+                        'published' => 'Publicado',
+                        'draft' => 'Borrador',
+                    ]),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

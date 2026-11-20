@@ -87,6 +87,29 @@ class UserResource extends Resource
                     ->required()
                     ->label('Nick')
                     ->maxLength(25),
+                Forms\Components\Select::make('role_id')
+                    ->label('Rol')
+                    ->options([
+                        1 => 'Administrador',
+                        2 => 'Usuario',
+                    ])
+                    ->default(2)
+                    ->required()
+                    ->native(false)
+                    ->rule(function (?User $record): \Closure {
+                        return function (string $attribute, $value, \Closure $fail) use ($record): void {
+                            if ($record && (int) $record->role_id === 1 && (int) $value !== 1) {
+                                $hasOtherAdmin = User::where('role_id', 1)
+                                    ->whereNull('deleted_at')
+                                    ->where('id', '!=', $record->id)
+                                    ->exists();
+
+                                if (! $hasOtherAdmin) {
+                                    $fail('No puedes rebajar el rol del último administrador activo.');
+                                }
+                            }
+                        };
+                    }),
                 Forms\Components\DateTimePicker::make('email_verified_at')
                     ->label('Verificado')
                     ->hiddenOn(['create', 'edit'])
@@ -121,6 +144,12 @@ class UserResource extends Resource
                     ->label('Email')
                     ->sortable()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('role_id')
+                    ->label('Rol')
+                    ->badge()
+                    ->formatStateUsing(fn ($state): string => (int) $state === 1 ? 'Administrador' : 'Usuario')
+                    ->color(fn ($state): string => (int) $state === 1 ? 'danger' : 'info')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->label('Verificado')
                     ->dateTime()
@@ -143,6 +172,12 @@ class UserResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                Tables\Filters\SelectFilter::make('role_id')
+                    ->label('Rol')
+                    ->options([
+                        1 => 'Administrador',
+                        2 => 'Usuario',
+                    ]),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

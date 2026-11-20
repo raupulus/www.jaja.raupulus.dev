@@ -12,8 +12,8 @@ El módulo `Report` provee a los consumidores de la API y visitantes de la web u
    - El campo `description` es opcional en el payload de entrada (`nullable|string|max:1024`) y se normaliza a cadena vacía (`''`) al persistir para respetar la columna `NOT NULL` en base de datos sin romper clientes existentes.
    - Integración potencial desde la web pública (TODO list).
 2. **Moderación**:
-   - Los reportes son visibles en el backoffice (`/admin`) a través de un Recurso de Filament para `Report`.
-   - Permite a los administradores evaluar el reporte, visualizar el contenido vinculado y tomar acciones correctivas (ej. forzar el borrado del contenido o simplemente descartar el reporte).
+   - Los reportes son visibles en el backoffice (`/admin`, grupo `'Moderación'`) a través de `Admin/ReportResource` (con `$recordTitleAttribute = 'title'`).
+   - El formulario y la tabla muestran todas las etiquetas en español («Informante») y permiten filtrar por `status`, `type`, `priority`, `reportable_type` y resolución (`resolved_at`), así como marcar reportes como resueltos o rechazados.
 3. **Relaciones**:
    - `belongsTo`: Content. Cada reporte está ligado intrínsecamente a un contenido particular.
 

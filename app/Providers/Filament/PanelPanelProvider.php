@@ -6,6 +6,8 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
+use Filament\Navigation\MenuItem;
+use Filament\Navigation\NavigationItem;
 use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -52,6 +54,30 @@ class PanelPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->navigationItems([
+                NavigationItem::make('Panel de Administración')
+                    ->url(fn (): string => route('filament.admin.pages.dashboard'))
+                    ->icon('heroicon-o-shield-check')
+                    ->visible(fn (): bool => (bool) auth()->user()?->isAdmin)
+                    ->sort(90),
+                NavigationItem::make('Ver web pública')
+                    ->url(fn (): string => route('index'))
+                    ->icon('heroicon-o-globe-alt')
+                    ->openUrlInNewTab()
+                    ->sort(95),
+            ])
+            ->userMenuItems([
+                MenuItem::make()
+                    ->label('Panel de Administración')
+                    ->url(fn (): string => route('filament.admin.pages.dashboard'))
+                    ->icon('heroicon-o-shield-check')
+                    ->visible(fn (): bool => (bool) auth()->user()?->isAdmin),
+                MenuItem::make()
+                    ->label('Ver web pública')
+                    ->url(fn (): string => route('index'))
+                    ->icon('heroicon-o-globe-alt')
+                    ->openUrlInNewTab(),
             ])
             ->login()
             //->registration()

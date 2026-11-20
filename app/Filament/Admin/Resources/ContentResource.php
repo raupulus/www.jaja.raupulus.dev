@@ -32,153 +32,150 @@ class ContentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\FileUpload::make('image')
-                    ->columnSpanFull()
-                    ->image()
-                    ->disk('public')
-                    ->directory('content-images')
-                    ->visibility('public')
-                    ->imageEditor()
-                    ->label('Imagen')
-                    ->default(null)
-                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                    ->maxSize(2048)
-                    ->imageResizeTargetHeight(768)
-                    ->imageResizeTargetWidth(1024)
-                    ->imageResizeMode('crop', )
-                    ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
-                        if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
-                            try {
-                                $tempFile = $state->getRealPath();
-                                $converter = new ConvertImageToWebp();
-                                $newPath = $converter($tempFile, 'content-images');
-
-                                if ($newPath && $newPath !== $tempFile) {
-                                    ## Actualizo el estado con un array en lugar de un string
-                                    $component->state([$newPath]);
-                                }
-                            } catch (\Exception $e) {
-                                \Log::error('Error en la conversión: ' . $e->getMessage());
-                                \Log::error($e->getTraceAsString());
-                            }
-                        }
-                    })
-                ,
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->columnSpanFull()
-                    ->maxLength(255),
-                Forms\Components\Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull()
-                    ->maxLength(1024),
-
-                Forms\Components\Checkbox::make('is_adult')
-                    ->label('Contenido Adulto')
-                    ->default(false)
-                    ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
-                    ->extraAttributes([
-                        'class' => 'border-red-500'
-                    ]),
-
-                Forms\Components\Checkbox::make('is_ai')
-                    ->label('Generado con AI')
-                    ->default(false)
-                    ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
-                    ->extraAttributes([
-                        'class' => 'border-orange-500'
-                    ]),
-
-                Forms\Components\Select::make('user_id')
-                    ->relationship('user', 'name')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->label('Usuario')
-                    ->default(fn () => auth()->id())
-                    ->placeholder('Seleccione un usuario'),
-
-                Forms\Components\Select::make('group_id')
-                    ->relationship('group', 'title')
-                    ->searchable()
-                    ->preload()
-                    ->required()
-                    ->label('Grupo')
-                    ->placeholder('Seleccione un grupo')
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('title')
-                            ->required()
-                            ->maxLength(255)
-                            ->label('Título'),
-                        Forms\Components\TextInput::make('slug')
+                Forms\Components\Section::make('Contenido')
+                    ->schema([
+                        Forms\Components\FileUpload::make('image')
                             ->columnSpanFull()
-                            ->label('Slug')
+                            ->image()
+                            ->disk('public')
+                            ->directory('content-images')
+                            ->visibility('public')
+                            ->imageEditor()
+                            ->label('Imagen')
+                            ->default(null)
+                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                            ->maxSize(2048)
+                            ->imageResizeTargetHeight(768)
+                            ->imageResizeTargetWidth(1024)
+                            ->imageResizeMode('crop', )
+                            ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
+                                if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
+                                    try {
+                                        $tempFile = $state->getRealPath();
+                                        $converter = new ConvertImageToWebp();
+                                        $newPath = $converter($tempFile, 'content-images');
+
+                                        if ($newPath && $newPath !== $tempFile) {
+                                            ## Actualizo el estado con un array en lugar de un string
+                                            $component->state([$newPath]);
+                                        }
+                                    } catch (\Exception $e) {
+                                        \Log::error('Error en la conversión: ' . $e->getMessage());
+                                        \Log::error($e->getTraceAsString());
+                                    }
+                                }
+                            }),
+                        Forms\Components\TextInput::make('title')
+                            ->label('Título')
                             ->required()
-                            ->unique('groups', 'slug', ignoreRecord: true)
+                            ->columnSpanFull()
                             ->maxLength(255),
-                        Forms\Components\Select::make('type_id')
-                            ->relationship('type', 'name')
+                        Forms\Components\Textarea::make('content')
+                            ->label('Contenido')
+                            ->required()
+                            ->columnSpanFull()
+                            ->maxLength(1024),
+                    ]),
+
+                Forms\Components\Section::make('Clasificación')
+                    ->schema([
+                        Forms\Components\Select::make('user_id')
+                            ->relationship('user', 'name')
                             ->searchable()
                             ->preload()
                             ->required()
-                            ->label('Tipo')
-                            ->placeholder('Seleccione un tipo')
-                        /*
-                        ->createOptionForm([
-                            Forms\Components\TextInput::make('name')
-                                ->required()
-                                ->maxLength(255)
-                                ->label('Nombre'),
-                            Forms\Components\Textarea::make('description')
-                                ->required()
-                                ->maxLength(1024)
-                                ->label('Descripción')
+                            ->label('Usuario')
+                            ->default(fn () => auth()->id())
+                            ->placeholder('Seleccione un usuario'),
 
-                        ]),
-                        */
+                        Forms\Components\Select::make('group_id')
+                            ->relationship('group', 'title')
+                            ->searchable()
+                            ->preload()
+                            ->required()
+                            ->label('Grupo')
+                            ->placeholder('Seleccione un grupo')
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('title')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->label('Título'),
+                                Forms\Components\TextInput::make('slug')
+                                    ->columnSpanFull()
+                                    ->label('Slug')
+                                    ->required()
+                                    ->unique('groups', 'slug', ignoreRecord: true)
+                                    ->maxLength(255),
+                                Forms\Components\Select::make('type_id')
+                                    ->relationship('type', 'name')
+                                    ->searchable()
+                                    ->preload()
+                                    ->required()
+                                    ->label('Tipo')
+                                    ->placeholder('Seleccione un tipo'),
+                            ]),
 
-                    ]),
-
-                Forms\Components\Select::make('categories')
-                    ->label('Categorías')
-                    ->multiple()
-                    ->relationship('categories', 'title')
-                    ->preload()
-                    ->searchable()
-                    ->default([1])
-                    ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        ## Si no hay categorías seleccionadas, asignaro la categoría "General" con id 1
-                        if (empty($state)) {
-                            $set('categories', [1]);
-                        }
-                    })
-                    ->dehydrateStateUsing(function ($state) {
-                        ## Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
-                        if (empty($state)) {
-                            return [1];
-                        }
-                        return $state;
-                    })
-                    ->columnSpanFull()
-                    ->createOptionForm([
-                        Forms\Components\TextInput::make('title')
+                        Forms\Components\Select::make('categories')
+                            ->label('Categorías')
+                            ->multiple()
+                            ->relationship('categories', 'title')
+                            ->preload()
+                            ->searchable()
+                            ->default([1])
+                            ->afterStateUpdated(function ($state, Forms\Set $set) {
+                                ## Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
+                                if (empty($state)) {
+                                    $set('categories', [1]);
+                                }
+                            })
+                            ->dehydrateStateUsing(function ($state) {
+                                ## Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
+                                if (empty($state)) {
+                                    return [1];
+                                }
+                                return $state;
+                            })
                             ->columnSpanFull()
-                            ->label('Título')
-                            ->required()
-                            ->maxLength(255),
-                        Forms\Components\TextInput::make('slug')
-                            ->columnSpanFull()
-                            ->label('Slug')
-                            ->required()
-                            ->unique('categories', 'slug', ignoreRecord: true)
-                            ->maxLength(255),
-                        Forms\Components\Textarea::make('description')
-                            ->columnSpanFull()
-                            ->required()
-                            ->label('Descripción')
-                            ->maxLength(255),
+                            ->createOptionForm([
+                                Forms\Components\TextInput::make('title')
+                                    ->columnSpanFull()
+                                    ->label('Título')
+                                    ->required()
+                                    ->maxLength(255),
+                                Forms\Components\TextInput::make('slug')
+                                    ->columnSpanFull()
+                                    ->label('Slug')
+                                    ->required()
+                                    ->unique('categories', 'slug', ignoreRecord: true)
+                                    ->maxLength(255),
+                                Forms\Components\Textarea::make('description')
+                                    ->columnSpanFull()
+                                    ->required()
+                                    ->label('Descripción')
+                                    ->maxLength(255),
+                            ]),
                     ])
-                ,
+                    ->columns(['default' => 1, 'md' => 2]),
+
+                Forms\Components\Section::make('Moderación')
+                    ->schema([
+                        Forms\Components\Checkbox::make('is_adult')
+                            ->label('Contenido Adulto')
+                            ->default(false)
+                            ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
+                            ->extraAttributes([
+                                'class' => 'border-red-500'
+                            ]),
+
+                        Forms\Components\Checkbox::make('is_ai')
+                            ->label('Generado con IA')
+                            ->default(false)
+                            ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
+                            ->extraAttributes([
+                                'class' => 'border-orange-500'
+                            ]),
+                    ])
+                    ->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 
@@ -225,6 +222,20 @@ class ContentResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
+                Tables\Filters\SelectFilter::make('group_id')
+                    ->label('Grupo')
+                    ->relationship('group', 'title')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\SelectFilter::make('categories')
+                    ->label('Categoría')
+                    ->relationship('categories', 'title')
+                    ->searchable()
+                    ->preload(),
+                Tables\Filters\TernaryFilter::make('is_adult')
+                    ->label('Contenido Adulto'),
+                Tables\Filters\TernaryFilter::make('is_ai')
+                    ->label('Generado con IA'),
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([

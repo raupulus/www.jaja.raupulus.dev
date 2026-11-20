@@ -22,7 +22,7 @@ class UserOverview extends BaseWidget
         return [
             Stat::make('Total', $users + $uploaders),
             Stat::make('Registrados', $users),
-            Stat::make('Uploaders', $uploaders),
+            Stat::make('Aportantes', $uploaders),
         ];
     }
 }

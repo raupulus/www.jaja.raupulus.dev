@@ -117,7 +117,7 @@ class GroupResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('contents_count')
                     ->label('Contenidos')
                     ->getStateUsing(function ($record) {
@@ -133,6 +133,7 @@ class GroupResource extends Resource
                     ->icon('heroicon-o-document-text')
                     ->sortable(false),
                 Tables\Columns\TextColumn::make('title')
+                    ->label('Título')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type.name')
                     ->label('Tipo')
@@ -143,21 +144,27 @@ class GroupResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
+                    ->label('Fecha de Creación')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
+                    ->label('Fecha de Actualización')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
+                    ->label('Fecha de Borrado')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type_id')
+                    ->label('Tipo')
+                    ->relationship('type', 'name')
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
