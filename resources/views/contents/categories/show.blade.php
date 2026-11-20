@@ -20,7 +20,7 @@
         <div>
             <h1>{{$category->title}}</h1>
             <p>
-                {!! $category->description !!}
+                {{ $category->description }}
             </p>
 
             @if($category->image)

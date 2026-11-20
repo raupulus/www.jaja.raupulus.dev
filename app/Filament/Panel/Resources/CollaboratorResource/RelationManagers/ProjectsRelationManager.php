@@ -83,7 +83,7 @@ class ProjectsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('url')
                     ->label('Url')
                     ->maxLength(255)
-                    ->rules(['url']),
+                    ->rules(['url:http,https']),
                 Forms\Components\Textarea::make('excerpt')
                     ->label('Resumen')
                     ->required()

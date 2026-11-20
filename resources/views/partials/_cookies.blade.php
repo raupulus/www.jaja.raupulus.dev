@@ -3,7 +3,7 @@
         <div class="cookie-banner-text">
             <p>
                 Utilizamos únicamente cookies esenciales para garantizar la seguridad y funcionalidad del sitio web.
-                <a href="{{route('page.show', 'politica-de-cookies')}}" target="_blank" rel="noopener">
+                <a href="{{route('page.show', 'politica-de-cookies')}}" target="_blank" rel="noopener noreferrer">
                     Consulta nuestra política de cookies
                 </a>
                 para más información.

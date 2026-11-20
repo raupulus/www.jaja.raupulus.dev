@@ -17,11 +17,15 @@
                 <li><a href="{{ route('page.show', 'api') }}" class="{{ (request()->routeIs('page.show') && request()->route('page')->slug === 'api') ? 'active' : '' }}">Api</a></li>
                 <li><a href="{{ route('page.show', 'about') }}" class="{{ (request()->routeIs('page.show') && request()->route('page')->slug === 'about') ? 'active' : '' }}">Acerca de</a></li>
 
-                <li><a href="https://raupulus.dev" target="_blank">Autor</a></li>
+                <li><a href="https://raupulus.dev" target="_blank" rel="noopener noreferrer">Autor</a></li>
 
-                @if (!auth()->guest())
-                    <li><a href="{{ route('filament.admin.pages.dashboard') }}" class="{{ request()->routeIs('filament.admin.pages.dashboard') ? 'active' : '' }}">Dashboard</a></li>
-                @endif
+                @auth
+                    @if (auth()->user()->isAdmin)
+                        <li><a href="{{ route('filament.admin.pages.dashboard') }}" class="{{ request()->routeIs('filament.admin.*') ? 'active' : '' }}">Dashboard</a></li>
+                    @else
+                        <li><a href="{{ route('filament.panel.pages.dashboard') }}" class="{{ request()->routeIs('filament.panel.*') ? 'active' : '' }}">Dashboard</a></li>
+                    @endif
+                @endauth
             </ul>
         </div>
     </div>

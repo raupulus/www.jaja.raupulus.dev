@@ -25,4 +25,11 @@ class EditCollaborator extends EditRecord
             abort(403, 'No tienes permisos para acceder a este colaborador.');
         }
     }
+
+    protected function mutateFormDataBeforeSave(array $data): array
+    {
+        unset($data['user_id']);
+
+        return $data;
+    }
 }

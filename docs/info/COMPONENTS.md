@@ -6,9 +6,14 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 
 - `master.blade.php` — Layout principal de las vistas públicas.
 - `head.blade.php` — Cabecera HTML, metadatos SEO y carga de assets.
-- `navbar.blade.php` — Barra de navegación principal.
+- `navbar.blade.php` — Barra de navegación principal (enlace `Dashboard` dinámico según rol: `/admin` para administradores y `/panel` para el resto de usuarios; enlaces externos con `rel="noopener noreferrer"`).
 - `footer.blade.php` — Pie de página público.
 - `footer_meta.blade.php` — Metadatos y cierre de scripts en el pie.
+
+## Convenciones de seguridad en vistas y enlaces
+
+- Todos los enlaces con `target="_blank"` en vistas y parciales incluyen `rel="noopener noreferrer"`.
+- Las descripciones de grupos y categorías en `contents/groups/show.blade.php` y `contents/categories/show.blade.php` se imprimen escapadas con `{{ ... }}`.
 
 ## Parciales reutilizables (`resources/views/partials/`)
 

@@ -89,7 +89,7 @@
 
             <div>
                 <p>
-                    <a href="https://raupulus.dev" target="_blank" title="Mi sitio web Personal"
+                    <a href="https://raupulus.dev" target="_blank" rel="noopener noreferrer" title="Mi sitio web Personal"
                        class="footer-btn-link">
                         Portfolio
                     </a>
@@ -101,14 +101,14 @@
                 </a>
 
                 <p>
-                    <a href="https://gitlab.com/raupulus/www.jaja.raupulus.dev" target="_blank"
+                    <a href="https://gitlab.com/raupulus/www.jaja.raupulus.dev" target="_blank" rel="noopener noreferrer"
                        title="Enlace a repositorio de código para esta web en gitlab" class="footer-btn-link">
                         Código en GitLab
                     </a>
                 </p>
 
                 <p>
-                    <a href="https://github.com/raupulus/www.jaja.raupulus.dev" target="_blank"
+                    <a href="https://github.com/raupulus/www.jaja.raupulus.dev" target="_blank" rel="noopener noreferrer"
                        title="Enlace a repositorio de código para esta web en github" class="footer-btn-link">
                         Código en GitHub
                     </a>

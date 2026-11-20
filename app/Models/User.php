@@ -101,17 +101,18 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     }
 
     /**
-     * Método canAccessPanel.
+     * Determina si el usuario puede acceder a cada panel de Filament.
      *
+     * @param Panel $panel
      * @return bool
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        return true;
-
-        // TODO: Cuando se tengan claras las condiciones de acceso a los paneles, se puede quitar este comentario.
-
-        ##return str_ends_with($this->email, '@yourdomain.com') && $this->hasVerifiedEmail();
+        return match ($panel->getId()) {
+            'admin' => $this->isAdmin,
+            'panel' => true,
+            default => false,
+        };
     }
 
 }

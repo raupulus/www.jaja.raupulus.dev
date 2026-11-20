@@ -15,10 +15,10 @@ class IsAdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->id() && auth()->user()->isAdmin) {
-            return $next($request);
+        if (! $request->user()?->isAdmin) {
+            abort(403);
         }
 
-        return redirect()->back();
+        return $next($request);
     }
 }

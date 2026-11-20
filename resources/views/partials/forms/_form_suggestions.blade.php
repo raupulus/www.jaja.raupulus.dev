@@ -159,15 +159,15 @@
         <label for="terms">
             Confirmo que he leído
             <a href="{{route('page.show', 'normas')}}"
-               title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank">las
+               title="Enlace a las normas de la comunidad en {{config('app.name')}}" target="_blank" rel="noopener noreferrer">las
                 Normas</a>
             sobre contenido adecuado para la comunidad, acepto
             <a href="{{route('page.show', 'politica-de-privacidad')}}"
-               title="Enlace a la política de privacidad en {{config('app.name')}}" target="_blank">la
+               title="Enlace a la política de privacidad en {{config('app.name')}}" target="_blank" rel="noopener noreferrer">la
                 Política de Privacidad</a>
             y las
             <a href="{{route('page.show', 'condiciones-de-uso')}}"
-               title="Enlace a las condiciones de uso en {{config('app.name')}}" target="_blank">las
+               title="Enlace a las condiciones de uso en {{config('app.name')}}" target="_blank" rel="noopener noreferrer">las
                 Condiciones de Uso</a>
         </label>
 

@@ -13,7 +13,8 @@
             <a href="{{$collaborator->website}}"
                title="Enlace al sitio web personal de {{$collaborator->name}} ({{'@' . $collaborator->nick}})"
                class="dev-link"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
                 🌐 Website
             </a>
         @endif
@@ -22,7 +23,8 @@
             <a href="{{$collaborator->url_repositories}}"
                title="Enlace al perfil de repositorios personal de {{$collaborator->name}} ({{'@' . $collaborator->nick}})"
                class="dev-link"
-               target="_blank">
+               target="_blank"
+               rel="noopener noreferrer">
                 🔗 Repositorios
             </a>
         @endif

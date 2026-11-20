@@ -78,11 +78,11 @@ class CollaboratorResource extends Resource
                     ->required()
                     ->maxLength(25),
                 Forms\Components\TextInput::make('website')
-                    ->rules(['url'])
+                    ->rules(['url:http,https'])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('url_repositories')
                     ->label('Enlace a perfil de repositorios (Github, Gitlab, etc.)')
-                    ->rules(['url'])
+                    ->rules(['url:http,https'])
                     ->maxLength(255),
                 Forms\Components\Select::make('user_id')
                     ->label('Usuario')

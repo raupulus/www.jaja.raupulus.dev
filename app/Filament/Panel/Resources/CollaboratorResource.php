@@ -82,14 +82,12 @@ class CollaboratorResource extends Resource
                     ->maxLength(25),
                 Forms\Components\TextInput::make('website')
                     ->label('Sitio Web')
-                    ->rules(['url'])
+                    ->rules(['url:http,https'])
                     ->maxLength(255),
                 Forms\Components\TextInput::make('url_repositories')
                     ->label('Enlace a perfil de repositorios (Github, Gitlab, etc.)')
-                    ->rules(['url'])
+                    ->rules(['url:http,https'])
                     ->maxLength(255),
-                Forms\Components\Hidden::make('user_id')
-                    ->default(auth()->id()),
                 Forms\Components\Textarea::make('description')
                     ->label('Descripción')
                     ->columnSpanFull()

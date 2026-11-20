@@ -57,7 +57,7 @@ Route::get('/categoria/{category:slug}/random', [ContentController::class, 'cont
  * Solicitudes
  ************************************************/
 Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])
-    ->middleware('recaptcha:0.7')
+    ->middleware('recaptcha:0.7,suggestion_send')
     ->middleware('throttle.real.ip:10,1')
     ->name('suggestion.send');
 

@@ -6,14 +6,14 @@
 
     @if(config('google.recaptcha.site_key'))
         <script
-            src="https://www.google.com/recaptcha/api.js?render={{config('google.recaptcha.site_key')}}&onload=onRecaptchaLoad"
+            src="https://www.google.com/recaptcha/api.js?render={{ urlencode((string) config('google.recaptcha.site_key')) }}&onload=onRecaptchaLoad"
             async defer></script>
 
         <script>
 
             function onRecaptchaLoad() {
                 grecaptcha.ready(function () {
-                    grecaptcha.execute("{{config('google.recaptcha.site_key')}}", {
+                    grecaptcha.execute(@json(config('google.recaptcha.site_key')), {
                         action: 'suggestion_send'
                     }).then(function (token) {
                         //console.log('Token generado:', token);
@@ -82,7 +82,7 @@
             Comparte tu contenido con la comunidad para que todos lo disfrutemos pero asegúrate de que no sean
             inapropiados o incumplan <a href="{{route('page.show', 'normas')}}"
                                         title="Enlace a las normas de la comunidad en {{config('app.name')}}"
-                                        target="_blank">las normas</a> .
+                                        target="_blank" rel="noopener noreferrer">las normas</a> .
         </p>
 
         {{-- Formulario  para enviar sugerencias --}}

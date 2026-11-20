@@ -1,5 +1,6 @@
 <a class="btn-dc-bot"
    target="_blank"
+   rel="noopener noreferrer"
    alt="Enlace al bot de discord de jaja project para añadirlo a tu servidor"
    title="Enlace al bot de discord de jaja project para añadirlo a tu servidor"
    href="https://discord.com/oauth2/authorize?client_id=1391159444490158202&permissions=274877908992&integration_type=0&scope=bot">

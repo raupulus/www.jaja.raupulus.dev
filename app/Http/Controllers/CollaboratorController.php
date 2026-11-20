@@ -70,7 +70,12 @@ class CollaboratorController extends Controller
      */
     public function showProject(Collaborator $collaborator, CollaboratorProject $project): View
     {
-        if (!$collaborator?->id || !$project?->id) {
+        if (
+            ! $collaborator->exists
+            || ! $project->exists
+            || $project->collaborator_id !== $collaborator->id
+            || $project->status !== 'published'
+        ) {
             abort(404);
         }
 

@@ -11,8 +11,11 @@ Este módulo gestiona el directorio de colaboradores de código o software abier
 1. **Gestión desde Panel / Intranet**:
    - Los colaboradores registrados pueden acceder a un panel privado para editar sus propios proyectos o añadir nuevos.
    - Todos los proyectos nuevos o editados por colaboradores entran en un estado de borrador ("draft") por seguridad, hasta que un administrador revise y apruebe la visibilidad.
-2. **Visibilidad Frontend**:
+   - El formulario de `Panel/CollaboratorResource` omite `user_id` del esquema del formulario y `EditCollaborator` descarta cualquier posible envío de `user_id` en `mutateFormDataBeforeSave()`, protegiendo frente a asignación indebida de propiedad.
+   - Los enlaces externos (`website`, `url_repositories` y `url` de proyecto) se validan exclusivamente con esquema `http`/`https` (`url:http,https`).
+2. **Visibilidad Frontend y Anti-IDOR**:
    - Se generan páginas dinámicas para los colaboradores con el listado de todos sus proyectos activos.
+   - En `CollaboratorController::showProject()`, además de resolver las rutas enlazadas, se verifica que el proyecto pertenezca al colaborador de la URL y tenga `status === 'published'` (devolviendo `404` en caso contrario).
    - Cada proyecto posee su propia página individual, lo cual fomenta un mejor SEO al generar más contenido indexado internamente.
 3. **Relaciones**:
    - `Collaborator` `hasMany` `CollaboratorProject`.
