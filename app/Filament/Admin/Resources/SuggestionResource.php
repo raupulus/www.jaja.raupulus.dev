@@ -39,8 +39,8 @@ class SuggestionResource extends Resource
                     ->schema([
                         WebpImageUpload::make('image_path', 'suggestion-images')
                             ->columnSpanFull()
-                            ->imageResizeTargetHeight(768)
-                            ->imageResizeTargetWidth(1024)
+                            ->imageResizeTargetHeight('768')
+                            ->imageResizeTargetWidth('1024')
                             ->imageResizeMode('crop'),
 
                         Forms\Components\TextInput::make('title')
@@ -95,7 +95,7 @@ class SuggestionResource extends Resource
                             ->default([1])
                             ->dehydrateStateUsing(function ($state) {
                                 // Siempre asegurar que hay al menos la categoría General
-                                if (empty($state) || $state === null || (is_array($state) && count($state) === 0)) {
+                                if (empty($state)) {
                                     return [1];
                                 }
 
@@ -103,7 +103,7 @@ class SuggestionResource extends Resource
                             })
                             ->afterStateUpdated(function ($state, Forms\Set $set) {
                                 // Si el usuario borra todas las categorías, automáticamente asignar General
-                                if (empty($state) || $state === null) {
+                                if (empty($state)) {
                                     $set('categories', [1]);
                                 }
                             })
@@ -230,7 +230,7 @@ class SuggestionResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Suggestion::whereNull('deleted_at')->count();
+        return (string) Suggestion::whereNull('deleted_at')->count();
     }
 
     public static function getPages(): array

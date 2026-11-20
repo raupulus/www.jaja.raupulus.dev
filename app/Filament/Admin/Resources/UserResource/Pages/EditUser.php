@@ -34,6 +34,10 @@ class EditUser extends EditRecord
 
     protected function handleRecordUpdate(Model $record, array $data): Model
     {
+        if (! $record instanceof User) {
+            throw new \InvalidArgumentException('Expected User model instance.');
+        }
+
         $roleId = isset($data['role_id']) ? (int) $data['role_id'] : (int) $record->role_id;
         unset($data['role_id']);
 

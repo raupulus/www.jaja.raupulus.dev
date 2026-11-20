@@ -267,7 +267,7 @@ class ReportResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Report::where('status', 'pending')->count();
+        return (string) Report::where('status', 'pending')->count();
     }
 
     public static function getNavigationBadgeColor(): ?string

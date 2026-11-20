@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
 use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,6 +14,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Modelo Group
  *
  * Representa un grupo demográfico o público objetivo (ej. Adultos, General).
+ *
+ * @property int $id
+ * @property int $type_id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $image
+ * @property string|null $description
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $last_content_date
+ * @property-read Type|null $type
+ * @property-read Content|null $last_content
+ * @property-read string $last_update_message
+ * @property-read string $urlImage
  */
 class Group extends Model
 {
@@ -34,6 +49,8 @@ class Group extends Model
 
     /**
      * Relación con el tipo del grupo
+     *
+     * @return BelongsTo<Type, $this>
      */
     public function type(): BelongsTo
     {
@@ -42,6 +59,8 @@ class Group extends Model
 
     /**
      * Relación con los contenidos del grupo.
+     *
+     * @return HasMany<Content, $this>
      */
     public function contents(): HasMany
     {
@@ -50,12 +69,12 @@ class Group extends Model
 
     /**
      * Obtiene el último contenido subido para este grupo
-     *
-     * @return Content|null
      */
-    public function getLastContentAttribute()
+    public function getLastContentAttribute(): ?Content
     {
-        return $this->contents()->latest('created_at')->first();
+        $lastContent = $this->contents()->latest('created_at')->first();
+
+        return $lastContent instanceof Content ? $lastContent : null;
     }
 
     /**
@@ -78,10 +97,6 @@ class Group extends Model
             $lastContentDate = Carbon::parse($lastContent->created_at);
         }
 
-        if (! $lastContentDate) {
-            return '¡Sé el primero en subir contenido!';
-        }
-
         $now = Carbon::now();
 
         // # Si es contenido del futuro, tratar como muy reciente
@@ -89,7 +104,7 @@ class Group extends Model
             return 'Hace unos momentos';
         }
 
-        $diff = $lastContentDate->diffForHumans($now, true);
+        $diff = $lastContentDate->diffForHumans($now, CarbonInterface::DIFF_ABSOLUTE);
 
         // #Si es más de 5 días, muestro mensaje especial
         if ($now->diffInDays($lastContentDate) > 5) {
@@ -130,7 +145,8 @@ class Group extends Model
      */
     public function scopeHasAvailableContent(Builder $query): Builder
     {
-        return $query->whereHas('contents', function (Builder $q): void {
+        return $query->whereHas('contents', function ($q): void {
+            /** @var Builder<Content> $q */
             $q->publicSafe();
         });
     }

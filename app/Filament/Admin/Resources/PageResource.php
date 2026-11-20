@@ -120,8 +120,8 @@ class PageResource extends Resource
                         ->schema([
                             WebpImageUpload::make('image', 'page-images')
                                 ->columnSpanFull()
-                                ->imageResizeTargetHeight(600)
-                                ->imageResizeTargetWidth(1024)
+                                ->imageResizeTargetHeight('600')
+                                ->imageResizeTargetWidth('1024')
                                 ->imageResizeMode('crop'),
 
                             Forms\Components\Section::make('SEO')

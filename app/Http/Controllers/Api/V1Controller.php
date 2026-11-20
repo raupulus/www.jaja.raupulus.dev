@@ -948,25 +948,20 @@ class V1Controller extends Controller
                 'type_id' => $request->type_id,
                 'ip_address' => $request->ip_address,
                 'user_agent' => $request->user_agent,
-            ], $data)
+            ], $data));
+
+            $suggestion->loadMissing('type:id,name');
+
+            return $this->successResponse(
+                [
+                    'title' => $suggestion->title,
+                    'content' => $suggestion->content,
+                    'type' => $suggestion->type?->name,
+                    'nick' => $suggestion->nick,
+                ],
+                'La sugerencia ha sido enviada correctamente.',
+                201,
             );
-
-            if ($suggestion) {
-                $suggestion->loadMissing('type:id,name');
-
-                return $this->successResponse(
-                    [
-                        'title' => $suggestion->title,
-                        'content' => $suggestion->content,
-                        'type' => $suggestion->type?->name,
-                        'nick' => $suggestion->nick,
-                    ],
-                    'La sugerencia ha sido enviada correctamente.',
-                    201,
-                );
-            }
-
-            return $this->errorResponse('Error al añadir sugerencia, si persiste contacta con el administrador', 500);
 
         } catch (\Exception $e) {
             Log::error('API v1 send suggestion failed', [
@@ -1045,25 +1040,21 @@ class V1Controller extends Controller
                 'assigned_to' => $data['assigned_to'],
             ]);
 
-            if ($report) {
-                $report->loadMissing('user:id,name,email');
+            $report->loadMissing('user:id,name,email');
 
-                return $this->successResponse(
-                    [
-                        'id' => $report->id,
-                        'title' => $report->title,
-                        'type' => $report->type,
-                        'status' => $report->status,
-                        'content_id' => $report->reportable_id,
-                        'reporter_name' => $report->reporter_name,
-                        'created_at' => $report->created_at->format('Y-m-d H:i:s'),
-                    ],
-                    'El reporte ha sido enviado correctamente y será revisado por nuestro equipo.',
-                    201
-                );
-            }
-
-            return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
+            return $this->successResponse(
+                [
+                    'id' => $report->id,
+                    'title' => $report->title,
+                    'type' => $report->type,
+                    'status' => $report->status,
+                    'content_id' => $report->reportable_id,
+                    'reporter_name' => $report->reporter_name,
+                    'created_at' => $report->created_at->format('Y-m-d H:i:s'),
+                ],
+                'El reporte ha sido enviado correctamente y será revisado por nuestro equipo.',
+                201
+            );
 
         } catch (\Exception $e) {
             Log::error('Error creating report: '.$e->getMessage(), [

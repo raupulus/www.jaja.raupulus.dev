@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Modelo SuggestionOption
  *
  * Representa las opciones de respuesta sugeridas para un contenido tipo Quiz.
+ *
+ * @property int $id
+ * @property int $suggestion_id
+ * @property string $value
+ * @property bool $is_correct
+ * @property string|null $image_path
+ * @property int $order
+ * @property-read Suggestion|null $suggestion
+ * @property-read string|null $urlImage
  */
 class SuggestionOption extends Model
 {
@@ -31,6 +40,8 @@ class SuggestionOption extends Model
 
     /**
      * Relación con el contenido asociado.
+     *
+     * @return BelongsTo<Suggestion, $this>
      */
     public function suggestion(): BelongsTo
     {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -11,6 +12,25 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * Modelo Report
  *
  * Representa un reporte de contenido inapropiado o spam realizado por un usuario.
+ *
+ * @property int $id
+ * @property int|null $user_id
+ * @property string|null $reporter_name
+ * @property string|null $reporter_email
+ * @property string|null $reporter_ip
+ * @property string $reportable_type
+ * @property int $reportable_id
+ * @property string $type
+ * @property string $title
+ * @property string $description
+ * @property string|null $additional_info
+ * @property string $status
+ * @property string $priority
+ * @property int|null $assigned_to
+ * @property string|null $admin_notes
+ * @property Carbon|null $resolved_at
+ * @property-read User|null $user
+ * @property-read User|null $assignedTo
  */
 class Report extends Model
 {
@@ -42,6 +62,8 @@ class Report extends Model
 
     /**
      * Contenido reportado (polimórfico)
+     *
+     * @return MorphTo<Model, $this>
      */
     public function reportable(): MorphTo
     {
@@ -50,6 +72,8 @@ class Report extends Model
 
     /**
      * Usuario que hizo el reporte
+     *
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -58,6 +82,8 @@ class Report extends Model
 
     /**
      * Administrador asignado al reporte
+     *
+     * @return BelongsTo<User, $this>
      */
     public function assignedTo(): BelongsTo
     {

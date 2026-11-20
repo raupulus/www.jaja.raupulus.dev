@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -12,6 +13,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Modelo Category
  *
  * Representa una categoría temática para clasificar contenidos y sugerencias.
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $description
+ * @property string|null $image
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read string $urlImage
  */
 class Category extends Model
 {
@@ -34,6 +45,8 @@ class Category extends Model
 
     /**
      * Relación con los contenidos de una categoría.
+     *
+     * @return BelongsToMany<Content, $this>
      */
     public function contents(): BelongsToMany
     {
@@ -42,6 +55,8 @@ class Category extends Model
 
     /**
      * Relación con las sugerencias de una categoría.
+     *
+     * @return BelongsToMany<Suggestion, $this>
      */
     public function suggestions(): BelongsToMany
     {
@@ -62,10 +77,14 @@ class Category extends Model
 
     /**
      * Scope para filtrar categorías que tienen contenidos disponibles públicamente.
+     *
+     * @param  Builder<Category>  $query
+     * @return Builder<Category>
      */
     public function scopeHasAvailableContent(Builder $query): Builder
     {
-        return $query->whereHas('contents', function (Builder $q): void {
+        return $query->whereHas('contents', function ($q): void {
+            /** @var Builder<Content> $q */
             $q->publicSafe();
         });
     }

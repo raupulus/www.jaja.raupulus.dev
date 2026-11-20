@@ -3,6 +3,7 @@
 namespace App\Filament\Panel\Resources\CollaboratorResource\Pages;
 
 use App\Filament\Panel\Resources\CollaboratorResource;
+use App\Models\Collaborator;
 use Filament\Resources\Pages\EditRecord;
 
 class EditCollaborator extends EditRecord
@@ -20,7 +21,9 @@ class EditCollaborator extends EditRecord
     {
         parent::authorizeAccess();
 
-        if ($this->getRecord()->user_id !== auth()->id()) {
+        $record = $this->getRecord();
+
+        if (! $record instanceof Collaborator || $record->user_id !== auth()->id()) {
             abort(403, 'No tienes permisos para acceder a este colaborador.');
         }
     }

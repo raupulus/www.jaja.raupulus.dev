@@ -3,6 +3,7 @@
 namespace App\Filament\Admin\Resources\UserResource\Pages;
 
 use App\Filament\Admin\Resources\UserResource;
+use App\Models\User;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,6 +17,7 @@ class CreateUser extends CreateRecord
         unset($data['role_id']);
 
         $modelClass = $this->getModel();
+        /** @var User $record */
         $record = new $modelClass($data);
 
         if (auth()->user()?->isAdmin && in_array($roleId, [1, 2], true)) {

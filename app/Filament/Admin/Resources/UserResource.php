@@ -37,8 +37,8 @@ class UserResource extends Resource
                     ->columnSpanFull()
                     ->alignCenter()
                     ->avatar()
-                    ->imageResizeTargetHeight(250)
-                    ->imageResizeTargetWidth(250)
+                    ->imageResizeTargetHeight('250')
+                    ->imageResizeTargetWidth('250')
                     ->imageResizeMode('crop'),
 
                 Forms\Components\TextInput::make('name')

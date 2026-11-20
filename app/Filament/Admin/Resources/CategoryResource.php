@@ -34,8 +34,8 @@ class CategoryResource extends Resource
             ->schema([
                 WebpImageUpload::make('image', 'category-images')
                     ->columnSpanFull()
-                    ->imageResizeTargetHeight(250)
-                    ->imageResizeTargetWidth(250)
+                    ->imageResizeTargetHeight('250')
+                    ->imageResizeTargetWidth('250')
                     ->imageResizeMode('crop'),
                 Forms\Components\TextInput::make('title')
                     ->columnSpanFull()

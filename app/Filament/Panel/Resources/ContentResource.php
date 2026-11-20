@@ -37,8 +37,8 @@ class ContentResource extends Resource
                     ->schema([
                         WebpImageUpload::make('image', 'content-images')
                             ->columnSpanFull()
-                            ->imageResizeTargetHeight(768)
-                            ->imageResizeTargetWidth(1024)
+                            ->imageResizeTargetHeight('768')
+                            ->imageResizeTargetWidth('1024')
                             ->imageResizeMode('crop'),
                         Forms\Components\TextInput::make('title')
                             ->label('Título')
@@ -219,16 +219,16 @@ class ContentResource extends Resource
 
     public static function canEdit(Model $record): bool
     {
-        return $record->user_id === auth()->id();
+        return $record instanceof Content && $record->user_id === auth()->id();
     }
 
     public static function canView(Model $record): bool
     {
-        return $record->user_id === auth()->id();
+        return $record instanceof Content && $record->user_id === auth()->id();
     }
 
     public static function canDelete(Model $record): bool
     {
-        return $record->user_id === auth()->id();
+        return $record instanceof Content && $record->user_id === auth()->id();
     }
 }

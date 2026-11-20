@@ -10,6 +10,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Modelo CollaboratorProject
  *
  * Representa un proyecto o repositorio creado por un colaborador.
+ *
+ * @property int $id
+ * @property int $collaborator_id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $url
+ * @property string|null $image
+ * @property string $excerpt
+ * @property string $content
+ * @property string $type
+ * @property string $repository_type
+ * @property string|null $keywords
+ * @property string $status
+ * @property-read Collaborator|null $collaborator
+ * @property-read string|null $urlImage
  */
 class CollaboratorProject extends Model
 {
@@ -32,6 +47,8 @@ class CollaboratorProject extends Model
 
     /**
      * Relación con el colaborador.
+     *
+     * @return BelongsTo<Collaborator, $this>
      */
     public function collaborator(): BelongsTo
     {

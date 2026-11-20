@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * Modelo ContentOption
  *
  * Representa las opciones de respuesta para un contenido de tipo Quiz.
+ *
+ * @property int $id
+ * @property int $content_id
+ * @property string $value
+ * @property bool $is_correct
+ * @property string|null $image_path
+ * @property int $order
+ * @property-read Content|null $content
+ * @property-read string|null $urlImage
  */
 class ContentOption extends Model
 {
@@ -31,6 +40,8 @@ class ContentOption extends Model
 
     /**
      * Relación con el contenido asociado.
+     *
+     * @return BelongsTo<Content, $this>
      */
     public function content(): BelongsTo
     {

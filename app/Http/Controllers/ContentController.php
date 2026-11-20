@@ -63,7 +63,7 @@ class ContentController extends Controller
      */
     public function gruposByTypeIndex(Type $type): View
     {
-        if (! $type?->id) {
+        if (! $type->exists) {
             abort(404);
         }
 

@@ -32,5 +32,24 @@ Jerarquía de verdad sobre el estado actual: **código > `docs/info/` > `AGENTS.
 - [decisiones-tecnicas.md](decisiones-tecnicas.md) — Decisiones deliberadas de arquitectura y comportamiento.
 - [_MODULE_TEMPLATE.md](_MODULE_TEMPLATE.md) — Plantilla obligatoria al documentar un módulo nuevo.
 
+## Quality Gate y verificación
+
+Comandos obligatorios de calidad y comprobación antes de cada commit o paso a producción:
+
+```bash
+./vendor/bin/pint --test
+composer phpstan
+php artisan test --compact
+composer test:pgsql
+composer audit --no-interaction
+npm audit
+npm run build
+php artisan route:cache && php artisan config:cache && php artisan view:cache && php artisan optimize:clear
+```
+
+- **Estilo (`pint`)**: formateo Laravel Pint (`composer pint` en modo `--test` o `./vendor/bin/pint` para corregir).
+- **Análisis estático (`phpstan.neon`)**: Larastan nivel 5 sobre `app/`, `config/` y `routes/` ejecutado vía `composer phpstan`.
+- **Tests**: suite rápida en SQLite `:memory:` (`php artisan test --compact`) y paridad en PostgreSQL real (`composer test:pgsql`).
+
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

@@ -40,8 +40,8 @@ class CollaboratorResource extends Resource
             ->schema([
                 WebpImageUpload::make('image', 'collaborator-images')
                     ->columnSpanFull()
-                    ->imageResizeTargetHeight(400)
-                    ->imageResizeTargetWidth(400)
+                    ->imageResizeTargetHeight('400')
+                    ->imageResizeTargetWidth('400')
                     ->imageResizeMode('crop'),
                 Forms\Components\TextInput::make('name')
                     ->label('Nombre')

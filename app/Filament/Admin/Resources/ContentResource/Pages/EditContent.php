@@ -4,6 +4,7 @@ namespace App\Filament\Admin\Resources\ContentResource\Pages;
 
 use App\Filament\Admin\Resources\ContentResource;
 use App\Helpers\PublishToSocialHelper;
+use App\Models\Content;
 use Filament\Actions;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
@@ -23,18 +24,24 @@ class EditContent extends EditRecord
                 ->color('success')
                 ->requiresConfirmation()
                 ->modalHeading('Confirmar publicación en redes sociales')
-                ->modalDescription(function () {
-                    $lastPublished = $this->record->last_social_published
-                        ? $this->record->last_social_published->diffForHumans()
+                ->modalDescription(function (): string {
+                    $record = $this->getRecord();
+                    $lastPublished = ($record instanceof Content && $record->last_social_published)
+                        ? $record->last_social_published->diffForHumans()
                         : 'Nunca';
 
                     return "¿Estás seguro de que quieres publicar este contenido en redes sociales?\n\nÚltima publicación: {$lastPublished}";
                 })
 
                 ->modalSubmitActionLabel('Publicar')
-                ->action(function () {
+                ->action(function (): void {
+                    $record = $this->getRecord();
+                    if (! $record instanceof Content) {
+                        return;
+                    }
+
                     try {
-                        PublishToSocialHelper::publishContent($this->record);
+                        PublishToSocialHelper::publishContent($record);
 
                         Notification::make()
                             ->title('Contenido publicado')
@@ -50,9 +57,11 @@ class EditContent extends EditRecord
                             ->send();
                     }
                 })
-                ->visible(function () {
+                ->visible(function (): bool {
+                    $record = $this->getRecord();
+
                     // # Solo muestro botón en contenido apto para publicar
-                    return $this->record->isPublicSafe();
+                    return $record instanceof Content && $record->isPublicSafe();
                 }),
         ];
     }

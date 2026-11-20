@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Concerns\DeletesStoredImages;
+use Carbon\Carbon;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -18,6 +19,17 @@ use Laravel\Sanctum\HasApiTokens;
  * Modelo User
  *
  * Representa un usuario registrado, administrador o colaborador de la plataforma.
+ *
+ * @property int $id
+ * @property string $name
+ * @property string|null $nick
+ * @property string $email
+ * @property Carbon|null $email_verified_at
+ * @property string|null $avatar
+ * @property int $role_id
+ * @property-read string $urlImage
+ * @property-read bool $isAdmin
+ * @property-read Collaborator|null $collaborator
  */
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
@@ -71,6 +83,8 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     /**
      * Relación con el colaborador del usuario.
+     *
+     * @return HasOne<Collaborator, $this>
      */
     public function collaborator(): HasOne
     {

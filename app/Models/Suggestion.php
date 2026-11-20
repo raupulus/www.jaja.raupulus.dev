@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
 use App\Services\CacheInvalidationService;
+use Carbon\Carbon;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,6 +18,23 @@ use Illuminate\Support\Facades\Storage;
  * Modelo Suggestion
  *
  * Representa una sugerencia de contenido aportada por un usuario y pendiente de moderación.
+ *
+ * @property int $id
+ * @property int|null $type_id
+ * @property int|null $group_id
+ * @property string|null $nick
+ * @property string $title
+ * @property string $content
+ * @property string|null $image_path
+ * @property string|null $ip_address
+ * @property string|null $user_agent
+ * @property Carbon|null $approved_at
+ * @property bool $is_adult
+ * @property bool $is_ai
+ * @property Carbon|null $deleted_at
+ * @property-read Type|null $type
+ * @property-read Group|null $group
+ * @property-read string|null $urlImage
  */
 class Suggestion extends Model
 {
@@ -39,6 +57,8 @@ class Suggestion extends Model
 
     /**
      * Relación con el tipo de contenido.
+     *
+     * @return BelongsTo<Type, $this>
      */
     public function type(): BelongsTo
     {
@@ -47,6 +67,8 @@ class Suggestion extends Model
 
     /**
      * Relación con la categoría del contenido.
+     *
+     * @return BelongsToMany<Category, $this>
      */
     public function categories(): BelongsToMany
     {
@@ -55,6 +77,8 @@ class Suggestion extends Model
 
     /**
      * Relación con el grupo al que pertenece el contenido.
+     *
+     * @return BelongsTo<Group, $this>
      */
     public function group(): BelongsTo
     {
@@ -63,6 +87,8 @@ class Suggestion extends Model
 
     /**
      * Relación con las opciones asociadas al contenido.
+     *
+     * @return HasMany<SuggestionOption, $this>
      */
     public function options(): HasMany
     {
@@ -143,7 +169,7 @@ class Suggestion extends Model
                 $userExist = $this->nick ? User::where('nick', $this->nick)->first() : null;
 
                 $content = Content::create([
-                    'user_id' => $userExist?->id ?? auth()->id(),
+                    'user_id' => $userExist->id ?? auth()->id(),
                     'group_id' => $this->group_id,
                     'title' => $this->title,
                     'content' => $this->content,

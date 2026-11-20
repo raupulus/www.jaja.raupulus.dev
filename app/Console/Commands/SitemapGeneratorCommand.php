@@ -126,7 +126,7 @@ class SitemapGeneratorCommand extends Command
     {
         $this->info('Agregando páginas de grupos al sitemap...');
 
-        $chunkSize = $this->option('chunk');
+        $chunkSize = max(1, (int) $this->option('chunk'));
         $groupCount = 0;
 
         Group::publicSafe()
@@ -184,7 +184,7 @@ class SitemapGeneratorCommand extends Command
     {
         $this->info('📄 Agregando páginas al sitemap...');
 
-        $chunkSize = $this->option('chunk');
+        $chunkSize = max(1, (int) $this->option('chunk'));
         $pageCount = 0;
 
         Page::where('status', 'published')

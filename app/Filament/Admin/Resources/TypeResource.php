@@ -34,8 +34,8 @@ class TypeResource extends Resource
             ->schema([
                 WebpImageUpload::make('image', 'type-images')
                     ->columnSpanFull()
-                    ->imageResizeTargetHeight(768)
-                    ->imageResizeTargetWidth(1024)
+                    ->imageResizeTargetHeight('768')
+                    ->imageResizeTargetWidth('1024')
                     ->imageResizeMode('crop'),
                 Forms\Components\TextInput::make('name')
                     ->label('Nombre')

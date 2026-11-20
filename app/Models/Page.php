@@ -9,6 +9,18 @@ use Illuminate\Database\Eloquent\Model;
  * Modelo Page
  *
  * Representa una página estática o legal del mini-CMS integrado.
+ *
+ * @property int $id
+ * @property string $title
+ * @property string $slug
+ * @property string|null $excerpt
+ * @property string $content
+ * @property string|null $image
+ * @property string|null $keywords
+ * @property string $status
+ * @property-read string $url
+ * @property-read string|null $urlImage
+ * @property-read string|null $urlImageThumbnail
  */
 class Page extends Model
 {

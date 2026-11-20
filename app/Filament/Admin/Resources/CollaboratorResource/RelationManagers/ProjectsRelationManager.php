@@ -36,8 +36,8 @@ class ProjectsRelationManager extends RelationManager
             ->schema([
                 WebpImageUpload::make('image', 'collaborator_projects-images')
                     ->columnSpanFull()
-                    ->imageResizeTargetHeight(500)
-                    ->imageResizeTargetWidth(800)
+                    ->imageResizeTargetHeight('500')
+                    ->imageResizeTargetWidth('800')
                     ->imageResizeMode('crop'),
 
                 Forms\Components\TextInput::make('title')

@@ -36,8 +36,8 @@ class ProjectsRelationManager extends RelationManager
             ->schema([
                 WebpImageUpload::make('image', 'collaborator_projects-images')
                     ->columnSpanFull()
-                    ->imageResizeTargetHeight(500)
-                    ->imageResizeTargetWidth(800)
+                    ->imageResizeTargetHeight('500')
+                    ->imageResizeTargetWidth('800')
                     ->imageResizeMode('crop'),
 
                 Forms\Components\TextInput::make('title')
@@ -146,7 +146,7 @@ class ProjectsRelationManager extends RelationManager
                         'desktop' => 'info',
                         'bot' => 'gray',
                         'marketing' => 'danger',
-                        'other' => 'gray',
+                        default => 'gray',
                     }),
                 Tables\Columns\TextColumn::make('excerpt')
                     ->label('Resumen')
@@ -162,6 +162,7 @@ class ProjectsRelationManager extends RelationManager
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'warning',
                         'published' => 'success',
+                        default => 'gray',
                     })
                     ->sortable(),
                 /*

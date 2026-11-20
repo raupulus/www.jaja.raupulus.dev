@@ -11,6 +11,17 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * Modelo Collaborator
  *
  * Representa un colaborador de software o creador de contenido que aporta al proyecto.
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property string $name
+ * @property string $nick
+ * @property string|null $website
+ * @property string|null $image
+ * @property string|null $description
+ * @property string|null $url_repositories
+ * @property-read User|null $user
+ * @property-read string $urlImage
  */
 class Collaborator extends Model
 {
@@ -45,6 +56,8 @@ class Collaborator extends Model
 
     /**
      * Usuario asociado al colaborador.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -53,6 +66,8 @@ class Collaborator extends Model
 
     /**
      * Proyectos asociados al colaborador.
+     *
+     * @return HasMany<CollaboratorProject, $this>
      */
     public function projects(): HasMany
     {

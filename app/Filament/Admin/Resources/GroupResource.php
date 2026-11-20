@@ -34,8 +34,8 @@ class GroupResource extends Resource
             ->schema([
                 WebpImageUpload::make('image', 'group-images')
                     ->columnSpanFull()
-                    ->imageResizeTargetHeight(768)
-                    ->imageResizeTargetWidth(1024)
+                    ->imageResizeTargetHeight('768')
+                    ->imageResizeTargetWidth('1024')
                     ->imageResizeMode('crop'),
 
                 Forms\Components\TextInput::make('title')

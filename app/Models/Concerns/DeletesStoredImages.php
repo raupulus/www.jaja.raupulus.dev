@@ -34,7 +34,7 @@ trait DeletesStoredImages
         $usesSoftDeletes = in_array(SoftDeletes::class, class_uses_recursive(static::class), true);
 
         if ($usesSoftDeletes) {
-            static::forceDeleting(function ($model): void {
+            static::registerModelEvent('forceDeleting', function ($model): void {
                 foreach ($model->storedImageAttributes() as $attribute => $defaultPath) {
                     $model->deleteStoredImageFile($model->getAttribute($attribute), $defaultPath);
                 }

@@ -37,8 +37,8 @@ class ContentResource extends Resource
                     ->schema([
                         WebpImageUpload::make('image', 'content-images')
                             ->columnSpanFull()
-                            ->imageResizeTargetHeight(768)
-                            ->imageResizeTargetWidth(1024)
+                            ->imageResizeTargetHeight('768')
+                            ->imageResizeTargetWidth('1024')
                             ->imageResizeMode('crop'),
                         Forms\Components\TextInput::make('title')
                             ->label('Título')
@@ -291,7 +291,7 @@ class ContentResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return Content::whereNull('deleted_at')->count();
+        return (string) Content::whereNull('deleted_at')->count();
     }
 
     public static function getPages(): array

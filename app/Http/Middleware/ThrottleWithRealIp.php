@@ -80,35 +80,6 @@ class ThrottleWithRealIp
     }
 
     /**
-     * Verifica si una IP está dentro de un rango CIDR
-     */
-    private function ipInRange(string $ip, string $range): bool
-    {
-        // # Si no es un rango CIDR, solo comparar exactamente
-        if (! str_contains($range, '/')) {
-            return $ip === $range;
-        }
-
-        [$subnet, $mask] = explode('/', $range);
-
-        // # Convierto a formato binario para IPv4
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            $ip_long = ip2long($ip);
-            $subnet_long = ip2long($subnet);
-            $mask_long = -1 << (32 - (int) $mask);
-
-            return ($ip_long & $mask_long) === ($subnet_long & $mask_long);
-        }
-
-        // # Para IPv6 (implementación básica)
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            return false;
-        }
-
-        return false;
-    }
-
-    /**
      * Construye la respuesta para peticiones web (similar al middleware throttle original)
      */
     private function buildWebResponse(Request $request, int $retryAfter): Response

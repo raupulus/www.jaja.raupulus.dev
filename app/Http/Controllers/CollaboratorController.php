@@ -36,12 +36,12 @@ class CollaboratorController extends Controller
      */
     public function show(Collaborator $collaborator): View
     {
-        if (! $collaborator?->id) {
+        if (! $collaborator->exists) {
             abort(404);
         }
 
         $projectsCount = Cache::remember('page_collaborator_projects_count_'.$collaborator->id, 600, function () use ($collaborator) {
-            return $collaborator?->projects()->where('status', 'published')->count();
+            return $collaborator->projects()->where('status', 'published')->count();
         });
 
         if (! $projectsCount) {

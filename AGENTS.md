@@ -46,6 +46,7 @@ resources/
 routes/                   # web.php, console.php y api/v1.php
 scripts/                  # Scripts auxiliares de entorno y base de datos
 tests/                    # Tests PHPUnit (Feature/ y Unit/)
+phpstan.neon              # Configuración Larastan / PHPStan nivel 5
 ```
 
 ## Reglas de Arquitectura y Código
@@ -71,6 +72,21 @@ tests/                    # Tests PHPUnit (Feature/ y Unit/)
 8. **Flujo de commits y compatibilidad en producción**:
    - Se realiza un **commit por cada funcionalidad completada** antes de pasar a la siguiente (incluyendo su documentación actualizada en el mismo commit).
    - La web está en producción y en uso activo por la comunidad: **mantener siempre la compatibilidad actual** (no romper ni cambiar contratos ni endpoints ya publicados).
+
+## Quality Gate y Verificación
+
+Antes de cerrar cualquier cambio o commit relevante, verificar el Quality Gate:
+
+```bash
+./vendor/bin/pint --test
+composer phpstan
+php artisan test --compact
+composer test:pgsql
+composer audit --no-interaction
+npm audit
+npm run build
+php artisan route:cache && php artisan config:cache && php artisan view:cache && php artisan optimize:clear
+```
 
 ## Documentación
 

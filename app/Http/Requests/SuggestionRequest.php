@@ -122,7 +122,9 @@ class SuggestionRequest extends FormRequest
 
         $options = [];
 
-        if ($this->type_id && ($type = Type::find($this->type_id)) && $type && $type->slug === 'quiz') {
+        $type = $this->type_id ? Type::find($this->type_id) : null;
+
+        if ($type instanceof Type && $type->slug === 'quiz') {
             foreach (range(1, 4) as $pos) {
                 $answer = trim($this->input("answer{$pos}"));
                 $checked = (bool) $this->input("answer{$pos}_correct");

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +16,25 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * Modelo Content
  *
  * Representa el contenido principal aprobado (chistes, adivinanzas, quiz) en la plataforma.
+ *
+ * @property int $id
+ * @property int|null $user_id
+ * @property int $group_id
+ * @property string $title
+ * @property string $content
+ * @property string|null $image
+ * @property string|null $uploaded_by
+ * @property Carbon|null $last_social_published
+ * @property bool $is_adult
+ * @property bool $is_ai
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property Carbon|null $deleted_at
+ * @property-read User|null $user
+ * @property-read Group|null $group
+ * @property-read string $uploader
+ * @property-read string $urlImage
+ * @property-read string $formattedHtmlContent
  */
 class Content extends Model
 {
@@ -85,6 +105,8 @@ class Content extends Model
 
     /**
      * Reportes de este contenido
+     *
+     * @return MorphMany<Report, $this>
      */
     public function reports(): MorphMany
     {
@@ -93,6 +115,8 @@ class Content extends Model
 
     /**
      * Relación con el Propietario del contenido.
+     *
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -101,6 +125,8 @@ class Content extends Model
 
     /**
      * Relación con el Grupo al que pertenece el contenido.
+     *
+     * @return BelongsTo<Group, $this>
      */
     public function group(): BelongsTo
     {
@@ -109,6 +135,8 @@ class Content extends Model
 
     /**
      * Relación con las categorías del contenido.
+     *
+     * @return BelongsToMany<Category, $this>
      */
     public function categories(): BelongsToMany
     {
@@ -117,6 +145,8 @@ class Content extends Model
 
     /**
      * Relación con las opciones asociadas al contenido.
+     *
+     * @return HasMany<ContentOption, $this>
      */
     public function options(): HasMany
     {
@@ -125,6 +155,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenidos por grupo
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeByGroup(Builder $query, Group $group): Builder
     {
@@ -133,6 +166,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenidos por tipo
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeByType(Builder $query, Type $type): Builder
     {
@@ -143,6 +179,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenidos por categoría
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeByCategory(Builder $query, Category $category): Builder
     {
@@ -153,6 +192,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenidos por grupo Y categoría
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeByGroupAndCategory(Builder $query, Group $group, Category $category): Builder
     {
@@ -164,6 +206,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenidos por tipo Y categoría
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeByTypeAndCategory(Builder $query, Type $type, Category $category): Builder
     {
@@ -176,6 +221,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenidos por grupo, tipo Y categoría
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeByGroupTypeAndCategory(Builder $query, Group $group, Type $type, Category $category): Builder
     {
@@ -209,6 +257,9 @@ class Content extends Model
 
     /**
      * Scope para filtrar contenido apto para listados públicos, API pública y redes sociales.
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopePublicSafe(Builder $query): Builder
     {
@@ -231,6 +282,9 @@ class Content extends Model
 
     /**
      * Scope para obtener contenido aleatorio
+     *
+     * @param  Builder<Content>  $query
+     * @return Builder<Content>
      */
     public function scopeRandom(Builder $query): Builder
     {
@@ -250,7 +304,7 @@ class Content extends Model
      */
     public function getUploaderAttribute(): string
     {
-        return '@'.($this->uploaded_by ?? $this->user?->nick ?? 'SinAsignar');
+        return '@'.($this->uploaded_by ?? $this->user->nick ?? 'SinAsignar');
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Filament\Admin\Resources\SuggestionResource\RelationManagers;
 
+use App\Models\Suggestion;
+use App\Models\SuggestionOption;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -29,7 +31,18 @@ class OptionsRelationManager extends RelationManager
 
     public static function canViewForRecord(Model $ownerRecord, string $pageClass): bool
     {
-        return $ownerRecord->type && $ownerRecord->type->slug === 'quiz';
+        return $ownerRecord instanceof Suggestion && $ownerRecord->type?->slug === 'quiz';
+    }
+
+    private function ownerSuggestion(): Suggestion
+    {
+        $owner = $this->getOwnerRecord();
+
+        if (! $owner instanceof Suggestion) {
+            throw new \RuntimeException('Expected Suggestion owner record.');
+        }
+
+        return $owner;
     }
 
     public function form(Form $form): Form
@@ -76,15 +89,17 @@ class OptionsRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
+                        $owner = $this->ownerSuggestion();
+
                         // # Al crear asigna el siguiente orden secuencial automáticamente
-                        $maxOrder = $this->getOwnerRecord()
+                        $maxOrder = $owner
                             ->options()
                             ->max('order') ?? 0;
                         $data['order'] = $maxOrder + 1;
 
                         // # En caso de ser marcada como correcta, desmarcar las demás
                         if ($data['is_correct'] ?? false) {
-                            $this->getOwnerRecord()
+                            $owner
                                 ->options()
                                 ->update(['is_correct' => false]);
                         }
@@ -95,9 +110,13 @@ class OptionsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->mutateFormDataUsing(function (array $data, Model $record): array {
+                        if (! $record instanceof SuggestionOption) {
+                            return $data;
+                        }
+
                         // # En caso de ser marcada como correcta, desmarcar las demás (excluyo la actual)
                         if (($data['is_correct'] ?? false) && ! $record->is_correct) {
-                            $this->getOwnerRecord()
+                            $this->ownerSuggestion()
                                 ->options()
                                 ->where('id', '!=', $record->id)
                                 ->update(['is_correct' => false]);
@@ -108,7 +127,7 @@ class OptionsRelationManager extends RelationManager
                 Tables\Actions\DeleteAction::make()
                     ->after(function () {
                         // # Reajusto el orden después de eliminar
-                        $options = $this->getOwnerRecord()
+                        $options = $this->ownerSuggestion()
                             ->options()
                             ->orderBy('order')
                             ->get();
@@ -123,7 +142,7 @@ class OptionsRelationManager extends RelationManager
                     Tables\Actions\DeleteBulkAction::make()
                         ->after(function () {
                             // # Reajusto el orden después de eliminar por lote
-                            $options = $this->getOwnerRecord()
+                            $options = $this->ownerSuggestion()
                                 ->options()
                                 ->orderBy('order')
                                 ->get();
