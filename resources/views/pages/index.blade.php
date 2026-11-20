@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
 @section('title', 'Listado de páginas en ' . config('app.name'))
-@section('description', '')
-@section('keywords', '')
+@section('description', 'Explora todas las páginas informativas, guías de la API, bots comunitarios, normas y documentación legal de ' . config('app.name') . '.')
+@section('keywords', 'páginas, documentación, normas, api, bots, agradecimientos, ' . config('app.name'))
 
 @section('css')
     @vite(['resources/css/pages.css'])

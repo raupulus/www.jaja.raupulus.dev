@@ -23,14 +23,20 @@
     $twitterSite = trim($__env->yieldContent('twitter_site'));
 
     ## Otros
-    $themeColor = trim($__env->yieldContent('theme_color'));
+    $themeColor = trim($__env->yieldContent('theme_color')) ?: '#00bcd4';
 
     ## Imágenes por defecto para redes sociales
-    $defaultOgImage = asset('images/social/jaja-project-og-default.webp'); // 1200x630px
-    $defaultTwitterImage = asset('images/social/jaja-project-twitter-default.webp'); // 1200x675px
+    $defaultOgImage = asset('images/social/jaja-project-og-default.jpg'); // 1200x630px
+    $defaultTwitterImage = asset('images/social/jaja-project-twitter-default.jpg'); // 1200x675px
 
-    $ogImage = trim($__env->yieldContent('og_image')) ?: $defaultOgImage;
+    $customOgImage = trim($__env->yieldContent('og_image'));
+    $usingDefaultOgImage = ! $customOgImage;
+    $ogImage = $customOgImage ?: $defaultOgImage;
+    $ogImageWidth = trim($__env->yieldContent('og_image_width')) ?: ($usingDefaultOgImage ? '1200' : '');
+    $ogImageHeight = trim($__env->yieldContent('og_image_height')) ?: ($usingDefaultOgImage ? '630' : '');
+
     $twitterImage = trim($__env->yieldContent('twitter_image')) ?: $defaultTwitterImage;
+    $twitterImageAlt = trim($__env->yieldContent('twitter_image_alt')) ?: $ogImageAlt;
 @endphp
 
 <head>
@@ -58,6 +64,12 @@
 
     @if($ogImage)
         <meta property="og:image" content="{{ $ogImage }}">
+        @if($ogImageWidth)
+            <meta property="og:image:width" content="{{ $ogImageWidth }}">
+        @endif
+        @if($ogImageHeight)
+            <meta property="og:image:height" content="{{ $ogImageHeight }}">
+        @endif
         <meta property="og:image:alt" content="{{ $ogImageAlt }}">
     @endif
 
@@ -68,6 +80,7 @@
 
     @if($twitterImage)
         <meta name="twitter:image" content="{{ $twitterImage }}">
+        <meta name="twitter:image:alt" content="{{ $twitterImageAlt }}">
     @endif
 
     @if($twitterSite)

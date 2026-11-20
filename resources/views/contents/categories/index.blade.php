@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title', 'Listados de Categorías')
-@section('description', 'Categorías disponibles en la comunidad de chistes/adivinanzas/quiz')
+@section('title', 'Listados de Categorías - ' . config('app.name'))
+@section('description', 'Explora todas las categorías temáticas de chistes, adivinanzas y preguntas quiz disponibles en la comunidad de ' . config('app.name') . '.')
 @section('keywords', 'categorías, categoría, comunidad, lista de categorías, listado de categorías')
 
 @section('css')

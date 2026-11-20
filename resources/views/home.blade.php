@@ -1,5 +1,8 @@
 @extends('layouts.master')
 
+@section('title', config('app.name') . ' - Comunidad de Chistes, Adivinanzas y Preguntas Quiz')
+@section('description', 'Descubre y comparte chistes, adivinanzas y preguntas tipo quiz en español. Comunidad abierta con API gratuita y bots para Discord y Twitch.')
+
 @section('head')
     @vite(['resources/css/home.css', 'resources/css/general_stats.css', 'resources/css/social_icons.css', 'resources/css/cookies.css', 'resources/css/suggestions_form.css', 'resources/js/cookies.js', 'resources/js/suggestions_forms.js', 'resources/css/groups_links.css'])
 

@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
 @section('title', 'Proyecto ' . $project->title . ' del colaborador ' . $collaborator->name . ' @' . $collaborator->nick)
-@section('description', $project->excerpt)
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $project->excerpt)), 155))
 @section('keywords', $project->keywords . ', ' . $project->type . ', ' . $project->repository_type)
+@section('og_type', 'article')
 
 @if ($project->image)
     @section('og_image', $project->urlImage)

@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
 @section('title', $page->title)
-@section('description', $page->excerpt)
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $page->excerpt)), 155))
 @section('keywords', $page->keywords)
+@section('og_type', 'article')
 
 @if ($page->urlImage)
     @section('og_image', $page->urlImage)

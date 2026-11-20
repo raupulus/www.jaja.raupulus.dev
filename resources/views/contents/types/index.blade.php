@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
-@section('title', 'Tipos de contenidos en la comunidad')
-@section('description', 'Listado con los tipos de contenidos disponibles')
+@section('title', 'Tipos de contenidos en ' . config('app.name'))
+@section('description', 'Descubre todos los tipos de contenido disponibles en ' . config('app.name') . ': chistes, adivinanzas y preguntas tipo quiz creados por la comunidad.')
 @section('keywords', implode(',', $types->pluck('name')->toArray()))
 
 @section('css')

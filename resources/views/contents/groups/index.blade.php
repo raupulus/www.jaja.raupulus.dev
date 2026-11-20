@@ -1,7 +1,22 @@
 @extends('layouts.master')
 
-@section('title', 'Grupos de contenidos en la comunidad')
-@section('description', 'Listado con los grupos de contenidos disponibles')
+@php
+    if (isset($type)) {
+        $groupsTitle = 'Grupos de ' . $type->name . ' - ' . config('app.name');
+        $groupsHeading = 'Grupos de ' . $type->name;
+        $groupsDescription = \Illuminate\Support\Str::limit(
+            'Explora los grupos de ' . mb_strtolower($type->name) . ' en ' . config('app.name') . ': ' . ($type->description ?: 'contenido comunitario clasificado para descubrir y compartir.'),
+            155
+        );
+    } else {
+        $groupsTitle = 'Grupos de contenido - ' . config('app.name');
+        $groupsHeading = 'Grupos de contenido';
+        $groupsDescription = 'Explora todos los grupos de chistes, adivinanzas y preguntas quiz creados por la comunidad de ' . config('app.name') . ' para descubrir contenido al instante.';
+    }
+@endphp
+
+@section('title', $groupsTitle)
+@section('description', $groupsDescription)
 @section('keywords', implode(',', $groups->pluck('title')->toArray()))
 
 @section('css')
@@ -62,7 +77,7 @@
 @endpush
 
 @section('content')
-    <h1 class="text-center">Grupos de contenido</h1>
+    <h1 class="text-center">{{ $groupsHeading }}</h1>
 
     @foreach($groups as $group)
 

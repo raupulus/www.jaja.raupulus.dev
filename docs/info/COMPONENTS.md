@@ -5,7 +5,7 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 ## Layouts (`resources/views/layouts/`)
 
 - `master.blade.php` — Layout principal de las vistas públicas.
-- `head.blade.php` — Cabecera HTML, metadatos SEO, carga de assets y `@stack('jsonld')` para datos estructurados Schema.org.
+- `head.blade.php` — Cabecera HTML, metadatos SEO únicos (`<title>`, `<meta name="description">`, Open Graph `.jpg` con dimensiones y `og:type`, Twitter Cards con `twitter:image:alt`), `theme-color` por defecto (`#00bcd4`), carga de assets y `@stack('jsonld')` para datos estructurados Schema.org.
 - `navbar.blade.php` — Barra de navegación principal (enlace `Dashboard` dinámico según rol: `/admin` para administradores y `/panel` para el resto de usuarios; enlaces externos con `rel="noopener noreferrer"`).
 - `footer.blade.php` — Pie de página público.
 - `footer_meta.blade.php` — Metadatos y cierre de scripts en el pie.

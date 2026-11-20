@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title', 'Contenidos aleatorios para la categoría ' . $category->title)
-@section('description', 'Listado de contenido aleatorio para la categoría ' . $category->title)
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $category->description)) ?: 'Descubre contenidos aleatorios de la categoría ' . $category->title . ' en ' . config('app.name') . '.', 155))
 @section('keywords', $category->title . ',categoría, listado, category, chistes, adivinanzas, quiz, aleatorio')
 
 @section('css')

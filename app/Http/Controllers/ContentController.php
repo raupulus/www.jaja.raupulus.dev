@@ -88,6 +88,7 @@ class ContentController extends Controller
 
         return view('contents.groups.index')->with([
             'groups' => $groups,
+            'type' => $type,
         ]);
     }
 

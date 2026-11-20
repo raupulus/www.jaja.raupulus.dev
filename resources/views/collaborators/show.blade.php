@@ -1,8 +1,9 @@
 @extends('layouts.master')
 
 @section('title', 'Colaborador ' . $collaborator->name . ' @' . $collaborator->nick)
-@section('description', $collaborator->description)
+@section('description', \Illuminate\Support\Str::limit(trim(strip_tags((string) $collaborator->description)), 155))
 @section('keywords', $collaborator->nick . ', colaborador, contribuidor, jaja project')
+@section('og_type', 'profile')
 
 @if ($collaborator->image)
     @section('og_image', $collaborator->urlImage)
