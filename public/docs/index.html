@@ -87,6 +87,50 @@
                             </li>
                                                                         </ul>
                             </ul>
+                    <ul id="tocify-header-categorias-grupos-y-tipos" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="categorias-grupos-y-tipos">
+                    <a href="#categorias-grupos-y-tipos">🏷️ Categorías, Grupos y Tipos</a>
+                </li>
+                                    <ul id="tocify-subheader-categorias-grupos-y-tipos" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="categorias-grupos-y-tipos-GETapi-v1-types">
+                                <a href="#categorias-grupos-y-tipos-GETapi-v1-types">Tipos de Contenido</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="categorias-grupos-y-tipos-GETapi-v1-groups">
+                                <a href="#categorias-grupos-y-tipos-GETapi-v1-groups">Grupos de Contenidos</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="categorias-grupos-y-tipos-GETapi-v1-categories">
+                                <a href="#categorias-grupos-y-tipos-GETapi-v1-categories">Categorías</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
+                    <ul id="tocify-header-contenidos" class="tocify-header">
+                <li class="tocify-item level-1" data-unique="contenidos">
+                    <a href="#contenidos">📚 Contenidos</a>
+                </li>
+                                    <ul id="tocify-subheader-contenidos" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-random">
+                                <a href="#contenidos-GETapi-v1-random">Contenido Aleatorio</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-random--type_slug-">
+                                <a href="#contenidos-GETapi-v1-random--type_slug-">Contenido Aleatorio por Tipo</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-type--type_slug--content-random">
+                                <a href="#contenidos-GETapi-v1-type--type_slug--content-random">Contenido en base a un tipo</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-type--type_slug--category--categorySlug--content-random">
+                                <a href="#contenidos-GETapi-v1-type--type_slug--category--categorySlug--content-random">Contenido en base a un tipo y Categoría</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-group--group_slug--content-random">
+                                <a href="#contenidos-GETapi-v1-group--group_slug--content-random">Contenido en base a un grupo</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-user--nick--content-random">
+                                <a href="#contenidos-GETapi-v1-user--nick--content-random">Contenido en base a un usuario</a>
+                            </li>
+                                                                                <li class="tocify-item level-2" data-unique="contenidos-GETapi-v1-contents-list">
+                                <a href="#contenidos-GETapi-v1-contents-list">Listado de Contenidos (Chistes)</a>
+                            </li>
+                                                                        </ul>
+                            </ul>
                     <ul id="tocify-header-sugerencias" class="tocify-header">
                 <li class="tocify-item level-1" data-unique="sugerencias">
                     <a href="#sugerencias">💡 Sugerencias</a>
@@ -116,7 +160,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Última actualización: October 24, 2026</li>
+        <li>Última actualización: November 20, 2026</li>
     </ul>
 </div>
 
@@ -906,6 +950,3439 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
                     </div>
                                     </details>
         </div>
+                    <h1 id="categorias-grupos-y-tipos">🏷️ Categorías, Grupos y Tipos</h1>
+
+    
+
+                                <h2 id="categorias-grupos-y-tipos-GETapi-v1-types">Tipos de Contenido</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve la lista de tipos de contenido que existen.</p>
+<p>Útil para utilizar el slug del tipo que necesites y filtrar en otros endpoints.</p>
+
+<span id="example-requests-GETapi-v1-types">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/types" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/types';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/types'
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/types"
+);
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-types">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;name&quot;: &quot;Chistes&quot;,
+            &quot;slug&quot;: &quot;chistes&quot;,
+            &quot;description&quot;: &quot;Chistes de la comunidad&quot;,
+            &quot;urlImage&quot;: &quot;https://jaja.raupulus.dev/images/default/type.webp&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se obtuvieron 1 tipos&quot;,
+    &quot;meta&quot;: {
+        &quot;total_items&quot;: 1
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron tipos de contenido&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener la lista de tipos&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-types" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-types"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-types"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-types" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-types">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-types" data-method="GET"
+      data-path="api/v1/types"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-types', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-types"
+                    onclick="tryItOut('GETapi-v1-types');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-types"
+                    onclick="cancelTryOut('GETapi-v1-types');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-types"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/types</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-types"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-types"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-types"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Lista de tipos de contenido disponibles</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>name</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del tipo de contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug del tipo para URLs amigables</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Descripción del tipo de contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al tipo (null si no tiene imagen)</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número total de tipos disponibles</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="categorias-grupos-y-tipos-GETapi-v1-groups">Grupos de Contenidos</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve la lista de grupos de contenido que existen paginados.</p>
+
+<span id="example-requests-GETapi-v1-groups">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/groups?page=1&amp;limit=2" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/groups';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+            'limit' =&gt; '2',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/groups'
+params = {
+  'page': '1',
+  'limit': '2',
+}
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/groups"
+);
+
+const params = {
+    "page": "1",
+    "limit": "2",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-groups">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;title&quot;: &quot;Chistes Devs&quot;,
+            &quot;slug&quot;: &quot;chistes-devs&quot;,
+            &quot;urlImage&quot;: &quot;https://jaja.raupulus.dev/images/default/group.webp&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se obtuvo 1 grupo de contenido&quot;,
+    &quot;meta&quot;: {
+        &quot;pagination&quot;: {
+            &quot;current_page&quot;: 1,
+            &quot;per_page&quot;: 20,
+            &quot;total&quot;: 1,
+            &quot;last_page&quot;: 1,
+            &quot;from&quot;: 1,
+            &quot;to&quot;: 1,
+            &quot;has_more_pages&quot;: false,
+            &quot;has_previous_page&quot;: false,
+            &quot;next_page_url&quot;: null,
+            &quot;prev_page_url&quot;: null
+        }
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;La p&aacute;gina solicitada no existe. &Uacute;ltima p&aacute;gina disponible: 2&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron grupos de contenido&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener la lista de grupos&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-groups" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-groups"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-groups"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-groups" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-groups">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-groups" data-method="GET"
+      data-path="api/v1/groups"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-groups', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-groups"
+                    onclick="tryItOut('GETapi-v1-groups');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-groups"
+                    onclick="cancelTryOut('GETapi-v1-groups');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-groups"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/groups</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-groups"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-groups"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-groups"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-groups"
+               value="1"
+               data-component="query">
+    <br>
+<p>Número de página a obtener. El campo value debe tener al menos 1. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-groups"
+               value="2"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50. Example: <code>2</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Lista de grupos de contenido paginados</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del grupo</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug del grupo para URLs amigables</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al grupo (null si no tiene imagen)</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>pagination</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Información de paginación</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>current_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Página actual</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>from</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número del primer elemento en la página actual</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>last_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número de la última página</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>next_page_url</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL de la siguiente página (null si es la última)</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Elementos por página</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>prev_page_url</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL de la página anterior (null si es la primera)</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número del último elemento en la página actual</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>total</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Total de elementos disponibles</p>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                        <h2 id="categorias-grupos-y-tipos-GETapi-v1-categories">Categorías</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve la lista de categorías disponibles paginadas.</p>
+
+<span id="example-requests-GETapi-v1-categories">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/categories?page=1&amp;limit=2" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/categories';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'page' =&gt; '1',
+            'limit' =&gt; '2',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/categories'
+params = {
+  'page': '1',
+  'limit': '2',
+}
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/categories"
+);
+
+const params = {
+    "page": "1",
+    "limit": "2",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-categories">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;title&quot;: &quot;Programaci&oacute;n&quot;,
+            &quot;slug&quot;: &quot;programacion&quot;,
+            &quot;description&quot;: &quot;Chistes de programaci&oacute;n&quot;,
+            &quot;urlImage&quot;: &quot;https://jaja.raupulus.dev/images/default/category.webp&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se obtuvo 1 categor&iacute;a de 1, p&aacute;gina 1.&quot;,
+    &quot;meta&quot;: {
+        &quot;pagination&quot;: {
+            &quot;current_page&quot;: 1,
+            &quot;per_page&quot;: 20,
+            &quot;total&quot;: 1,
+            &quot;last_page&quot;: 1,
+            &quot;from&quot;: 1,
+            &quot;to&quot;: 1,
+            &quot;has_more_pages&quot;: false,
+            &quot;has_previous_page&quot;: false,
+            &quot;next_page_url&quot;: null,
+            &quot;prev_page_url&quot;: null
+        }
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se han encontrado categor&iacute;as&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;La p&aacute;gina solicitada no existe. &Uacute;ltima p&aacute;gina disponible: 5&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener la lista de categor&iacute;as&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-categories" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-categories"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-categories"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-categories" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-categories">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-categories" data-method="GET"
+      data-path="api/v1/categories"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-categories', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-categories"
+                    onclick="tryItOut('GETapi-v1-categories');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-categories"
+                    onclick="cancelTryOut('GETapi-v1-categories');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-categories"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/categories</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-categories"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-categories"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-categories"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="page"                data-endpoint="GETapi-v1-categories"
+               value="1"
+               data-component="query">
+    <br>
+<p>Número de página a obtener. El campo value debe tener al menos 1. Example: <code>1</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-categories"
+               value="2"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50. Example: <code>2</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Lista de categorías paginadas</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título de la categoría</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug de la categoría para URLs amigables</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>description</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Descripción de la categoría</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada a la categoría (null si no tiene imagen)</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+
+            </summary>
+                                                <div style=" margin-left: 14px; clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>pagination</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Información de paginación</p>
+            </summary>
+                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>current_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Página actual</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>from</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número del primer elemento en la página actual</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>last_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número de la última página</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>next_page_url</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL de la siguiente página (null si es la última)</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>per_page</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Elementos por página</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>prev_page_url</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL de la página anterior (null si es la primera)</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>to</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número del último elemento en la página actual</p>
+                    </div>
+                                                                <div style="margin-left: 28px; clear: unset;">
+                        <b style="line-height: 2;"><code>total</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Total de elementos disponibles</p>
+                    </div>
+                                    </details>
+        </div>
+                                        </details>
+        </div>
+                    <h1 id="contenidos">📚 Contenidos</h1>
+
+    
+
+                                <h2 id="contenidos-GETapi-v1-random">Contenido Aleatorio</h2>
+
+<p>
+</p>
+
+<p>Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.</p>
+<p>Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.</p>
+
+<span id="example-requests-GETapi-v1-random">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/random?limit=1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/random';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'limit' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/random'
+params = {
+  'limit': '1',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/random"
+);
+
+const params = {
+    "limit": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-random">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 12,
+            &quot;title&quot;: &quot;El perro programador&quot;,
+            &quot;content&quot;: &quot;&iquest;Por qu&eacute; el perro no compilaba? Porque ten&iacute;a demasiadas pulgas.&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se obtuvo 1 contenido aleatorio&quot;,
+    &quot;meta&quot;: {
+        &quot;total_items&quot;: 100,
+        &quot;limit&quot;: 1
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener chistes aleatorios&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-random" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-random"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-random"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-random" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-random">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-random" data-method="GET"
+      data-path="api/v1/random"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-random', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-random"
+                    onclick="tryItOut('GETapi-v1-random');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-random"
+                    onclick="cancelTryOut('GETapi-v1-random');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-random"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/random</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-random"
+               value="1"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Colección de contenidos aleatorios</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del contenido, principalmente para reportes</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del usuario que subió el contenido</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número total de contenidos disponibles</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Límite aplicado en esta consulta</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="contenidos-GETapi-v1-random--type_slug-">Contenido Aleatorio por Tipo</h2>
+
+<p>
+</p>
+
+<p>Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo
+[chistes|adivinanzas|quiz].</p>
+<p>Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.</p>
+
+<span id="example-requests-GETapi-v1-random--type_slug-">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/random/chistes?limit=1" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/random/chistes';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'limit' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/random/chistes'
+params = {
+  'limit': '1',
+}
+headers = {
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/random/chistes"
+);
+
+const params = {
+    "limit": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-random--type_slug-">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 18,
+            &quot;title&quot;: &quot;Chiste aleatorio por tipo&quot;,
+            &quot;content&quot;: &quot;&iquest;Qu&eacute; le dice un bit a otro? Nos vemos en el bus.&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se obtuvo 1 contenido aleatorio&quot;,
+    &quot;meta&quot;: {
+        &quot;total_items&quot;: 40,
+        &quot;limit&quot;: 1
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener chistes aleatorios&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-random--type_slug-" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-random--type_slug-"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-random--type_slug-"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-random--type_slug-" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-random--type_slug-">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-random--type_slug-" data-method="GET"
+      data-path="api/v1/random/{type_slug}"
+      data-authed="0"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-random--type_slug-', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-random--type_slug-"
+                    onclick="tryItOut('GETapi-v1-random--type_slug-');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-random--type_slug-"
+                    onclick="cancelTryOut('GETapi-v1-random--type_slug-');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-random--type_slug-"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/random/{type_slug}</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de URL</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>type_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type_slug"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="chistes"
+               data-component="url">
+    <br>
+<p>El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: <code>chistes</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-random--type_slug-"
+               value="1"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Colección de contenidos aleatorios</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del contenido, principalmente para reportes</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del usuario que subió el contenido</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número total de contenidos disponibles</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Límite aplicado en esta consulta</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="contenidos-GETapi-v1-type--type_slug--content-random">Contenido en base a un tipo</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve un contenido aleatorio de un tipo concreto recibido.</p>
+
+<span id="example-requests-GETapi-v1-type--type_slug--content-random">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/type/chistes/content/random?limit=1" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/type/chistes/content/random';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'limit' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/type/chistes/content/random'
+params = {
+  'limit': '1',
+}
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/type/chistes/content/random"
+);
+
+const params = {
+    "limit": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-type--type_slug--content-random">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 22,
+            &quot;title&quot;: &quot;Chiste de tipo&quot;,
+            &quot;content&quot;: &quot;Hardware es lo que golpeas cuando falla el software.&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el tipo Chistes de 10 contenidos totales para este tipo.&quot;,
+    &quot;meta&quot;: {
+        &quot;type&quot;: &quot;Chistes&quot;,
+        &quot;type_slug&quot;: &quot;chistes&quot;,
+        &quot;total_items&quot;: 10
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos para el tipo especificado&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener contenidos del tipo especificado&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-type--type_slug--content-random" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-type--type_slug--content-random"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-type--type_slug--content-random"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-type--type_slug--content-random" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-type--type_slug--content-random">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-type--type_slug--content-random" data-method="GET"
+      data-path="api/v1/type/{type_slug}/content/random"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-type--type_slug--content-random', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-type--type_slug--content-random"
+                    onclick="tryItOut('GETapi-v1-type--type_slug--content-random');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-type--type_slug--content-random"
+                    onclick="cancelTryOut('GETapi-v1-type--type_slug--content-random');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-type--type_slug--content-random"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/type/{type_slug}/content/random</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-type--type_slug--content-random"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-type--type_slug--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-type--type_slug--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de URL</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>type_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type_slug"                data-endpoint="GETapi-v1-type--type_slug--content-random"
+               value="chistes"
+               data-component="url">
+    <br>
+<p>El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: <code>chistes</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-type--type_slug--content-random"
+               value="1"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Lista con el contenido aleatorio solicitado</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del contenido, principalmente para reportes</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nick del usuario que subió el contenido (formato: @nick)</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del tipo de contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>type_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug del tipo</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Total de contenidos disponibles para este tipo</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="contenidos-GETapi-v1-type--type_slug--category--categorySlug--content-random">Contenido en base a un tipo y Categoría</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.</p>
+
+<span id="example-requests-GETapi-v1-type--type_slug--category--categorySlug--content-random">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/type/chistes/category/javascript/content/random?limit=1" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/type/chistes/category/javascript/content/random';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'limit' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/type/chistes/category/javascript/content/random'
+params = {
+  'limit': '1',
+}
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/type/chistes/category/javascript/content/random"
+);
+
+const params = {
+    "limit": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-type--type_slug--category--categorySlug--content-random">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 31,
+            &quot;title&quot;: &quot;Chiste JS&quot;,
+            &quot;content&quot;: &quot;NaN === NaN es false en JavaScript.&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor&iacute;a JavaScript de 4 contenidos totales.&quot;,
+    &quot;meta&quot;: {
+        &quot;type&quot;: &quot;Chistes&quot;,
+        &quot;type_slug&quot;: &quot;chistes&quot;,
+        &quot;category&quot;: &quot;JavaScript&quot;,
+        &quot;category_slug&quot;: &quot;javascript&quot;,
+        &quot;total_items&quot;: 4
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Categor&iacute;a no encontrada&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos para el tipo y categor&iacute;a especificados&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener contenidos del tipo especificado&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-type--type_slug--category--categorySlug--content-random" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-type--type_slug--category--categorySlug--content-random"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-type--type_slug--category--categorySlug--content-random"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-type--type_slug--category--categorySlug--content-random" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-type--type_slug--category--categorySlug--content-random">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-type--type_slug--category--categorySlug--content-random" data-method="GET"
+      data-path="api/v1/type/{type_slug}/category/{categorySlug}/content/random"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-type--type_slug--category--categorySlug--content-random', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-type--type_slug--category--categorySlug--content-random"
+                    onclick="tryItOut('GETapi-v1-type--type_slug--category--categorySlug--content-random');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-type--type_slug--category--categorySlug--content-random"
+                    onclick="cancelTryOut('GETapi-v1-type--type_slug--category--categorySlug--content-random');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-type--type_slug--category--categorySlug--content-random"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/type/{type_slug}/category/{categorySlug}/content/random</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-type--type_slug--category--categorySlug--content-random"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-type--type_slug--category--categorySlug--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-type--type_slug--category--categorySlug--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de URL</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>type_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type_slug"                data-endpoint="GETapi-v1-type--type_slug--category--categorySlug--content-random"
+               value="chistes"
+               data-component="url">
+    <br>
+<p>El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: <code>chistes</code></p>
+            </div>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>categorySlug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="categorySlug"                data-endpoint="GETapi-v1-type--type_slug--category--categorySlug--content-random"
+               value="javascript"
+               data-component="url">
+    <br>
+<p>El slug de la categoría. Example: <code>javascript</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-type--type_slug--category--categorySlug--content-random"
+               value="1"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Lista con el contenido aleatorio solicitado</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del contenido, principalmente para reportes</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nick del usuario que subió el contenido (formato: @nick)</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>type</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del tipo de contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>type_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug del tipo</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>category</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título de la categoría</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>category_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug de la categoría</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Total de contenidos disponibles para este tipo y categoría</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="contenidos-GETapi-v1-group--group_slug--content-random">Contenido en base a un grupo</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Contenido aleatorio que pertenecen al grupo recibido.</p>
+
+<span id="example-requests-GETapi-v1-group--group_slug--content-random">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/group/chistes-devs/content/random?limit=1" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/group/chistes-devs/content/random';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'limit' =&gt; '1',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/group/chistes-devs/content/random'
+params = {
+  'limit': '1',
+}
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/group/chistes-devs/content/random"
+);
+
+const params = {
+    "limit": "1",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-group--group_slug--content-random">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 45,
+            &quot;title&quot;: &quot;Chiste Dev&quot;,
+            &quot;content&quot;: &quot;No es un bug, es una caracter&iacute;stica indocumentada.&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se devuelve 1 contenido aleatorio para el grupo Chistes Devs de 12 contenidos totales.&quot;,
+    &quot;meta&quot;: {
+        &quot;group&quot;: &quot;Chistes Devs&quot;,
+        &quot;group_slug&quot;: &quot;chistes-devs&quot;,
+        &quot;total_items&quot;: 12
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos para el grupo especificado&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener contenidos del tipo especificado&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-group--group_slug--content-random" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-group--group_slug--content-random"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-group--group_slug--content-random"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-group--group_slug--content-random" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-group--group_slug--content-random">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-group--group_slug--content-random" data-method="GET"
+      data-path="api/v1/group/{group_slug}/content/random"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-group--group_slug--content-random', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-group--group_slug--content-random"
+                    onclick="tryItOut('GETapi-v1-group--group_slug--content-random');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-group--group_slug--content-random"
+                    onclick="cancelTryOut('GETapi-v1-group--group_slug--content-random');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-group--group_slug--content-random"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/group/{group_slug}/content/random</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-group--group_slug--content-random"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-group--group_slug--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-group--group_slug--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de URL</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>group_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="group_slug"                data-endpoint="GETapi-v1-group--group_slug--content-random"
+               value="chistes-devs"
+               data-component="url">
+    <br>
+<p>El slug del grupo de contenido. Example: <code>chistes-devs</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-group--group_slug--content-random"
+               value="1"
+               data-component="query">
+    <br>
+<p>Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5. Example: <code>1</code></p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Lista con el contenido aleatorio solicitado</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del contenido, principalmente para reportes</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nick del usuario que subió el contenido (formato: @nick)</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>group</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del grupo</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>group_slug</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Slug del grupo</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Total de contenidos disponibles para este grupo</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="contenidos-GETapi-v1-user--nick--content-random">Contenido en base a un usuario</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario.</p>
+
+<span id="example-requests-GETapi-v1-user--nick--content-random">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/user/raupulus/content/random" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/user/raupulus/content/random';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/user/raupulus/content/random'
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/user/raupulus/content/random"
+);
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-user--nick--content-random">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 7,
+            &quot;title&quot;: &quot;Chiste de usuario&quot;,
+            &quot;content&quot;: &quot;Un cl&aacute;sico de la comunidad.&quot;,
+            &quot;urlImage&quot;: null,
+            &quot;uploader&quot;: &quot;@raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Se devuelven 2 contenidos aleatorios para el usuario @raupulus&quot;,
+    &quot;meta&quot;: {
+        &quot;user&quot;: &quot;raupulus&quot;,
+        &quot;total_items&quot;: 2
+    }
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (404):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;No se encontraron contenidos para el usuario especificado&quot;
+}</code>
+ </pre>
+            <blockquote>
+            <p>Ejemplo de respuesta (500):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: false,
+    &quot;message&quot;: &quot;Error al obtener contenidos del usuario especificado&quot;
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-user--nick--content-random" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-user--nick--content-random"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-user--nick--content-random"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-user--nick--content-random" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-user--nick--content-random">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-user--nick--content-random" data-method="GET"
+      data-path="api/v1/user/{nick}/content/random"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-user--nick--content-random', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-user--nick--content-random"
+                    onclick="tryItOut('GETapi-v1-user--nick--content-random');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-user--nick--content-random"
+                    onclick="cancelTryOut('GETapi-v1-user--nick--content-random');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-user--nick--content-random"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/user/{nick}/content/random</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-user--nick--content-random"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-user--nick--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-user--nick--content-random"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                        <h4 class="fancy-heading-panel"><b>Parámetros de URL</b></h4>
+                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>nick</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="nick"                data-endpoint="GETapi-v1-user--nick--content-random"
+               value="raupulus"
+               data-component="url">
+    <br>
+<p>El nick del usuario para filtrar por su contenido. Example: <code>raupulus</code></p>
+            </div>
+                    </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Colección de contenidos aleatorios</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del contenido, principalmente para reportes</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Título del contenido (chiste, adivinanza, etc.)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del contenido</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>urlImage</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>URL completa de la imagen asociada al contenido (null si no tiene imagen)</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploader</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del usuario que subió el contenido</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos adicionales de la respuesta</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>user</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nick del usuario sobre el que se filtran los contenidos</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>total_items</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Número total de contenidos disponibles</p>
+                    </div>
+                                    </details>
+        </div>
+                        <h2 id="contenidos-GETapi-v1-contents-list">Listado de Contenidos (Chistes)</h2>
+
+<p>
+<small class="badge badge-darkred">requires authentication</small>
+</p>
+
+<p>Devuelve un listado paginado de chistes que no son para adultos.
+Se puede filtrar para obtener chistes a partir de un ID específico o excluir grupos concretos.</p>
+
+<span id="example-requests-GETapi-v1-contents-list">
+<blockquote>Ejemplo de petición:</blockquote>
+
+
+<div class="bash-example">
+    <pre><code class="language-bash">curl --request GET \
+    --get "https://jaja.raupulus.dev/api/v1/contents/list?after_id=0&amp;limit=25&amp;exclude_groups[]=4&amp;exclude_groups[]=14" \
+    --header "Authorization: Bearer {TU_TOKEN_BEARER}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"</code></pre></div>
+
+
+<div class="php-example">
+    <pre><code class="language-php">$client = new \GuzzleHttp\Client();
+$url = 'https://jaja.raupulus.dev/api/v1/contents/list';
+$response = $client-&gt;get(
+    $url,
+    [
+        'headers' =&gt; [
+            'Authorization' =&gt; 'Bearer {TU_TOKEN_BEARER}',
+            'Content-Type' =&gt; 'application/json',
+            'Accept' =&gt; 'application/json',
+        ],
+        'query' =&gt; [
+            'after_id' =&gt; '0',
+            'limit' =&gt; '25',
+            'exclude_groups[0]' =&gt; '4',
+            'exclude_groups[1]' =&gt; '14',
+        ],
+    ]
+);
+$body = $response-&gt;getBody();
+print_r(json_decode((string) $body));</code></pre></div>
+
+
+<div class="python-example">
+    <pre><code class="language-python">import requests
+import json
+
+url = 'https://jaja.raupulus.dev/api/v1/contents/list'
+params = {
+  'after_id': '0',
+  'limit': '25',
+  'exclude_groups[0]': '4',
+  'exclude_groups[1]': '14',
+}
+headers = {
+  'Authorization': 'Bearer {TU_TOKEN_BEARER}',
+  'Content-Type': 'application/json',
+  'Accept': 'application/json'
+}
+
+response = requests.request('GET', url, headers=headers, params=params)
+response.json()</code></pre></div>
+
+
+<div class="javascript-example">
+    <pre><code class="language-javascript">const url = new URL(
+    "https://jaja.raupulus.dev/api/v1/contents/list"
+);
+
+const params = {
+    "after_id": "0",
+    "limit": "25",
+    "exclude_groups[0]": "4",
+    "exclude_groups[1]": "14",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
+
+const headers = {
+    "Authorization": "Bearer {TU_TOKEN_BEARER}",
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+};
+
+
+fetch(url, {
+    method: "GET",
+    headers,
+}).then(response =&gt; response.json());</code></pre></div>
+
+</span>
+
+<span id="example-responses-GETapi-v1-contents-list">
+            <blockquote>
+            <p>Ejemplo de respuesta (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json" style="max-height: 300px;">{
+    &quot;success&quot;: true,
+    &quot;data&quot;: [
+        {
+            &quot;id&quot;: 1,
+            &quot;content&quot;: &quot;&iquest;Qu&eacute; hace una abeja en el gimnasio? &iexcl;Zum-ba!&quot;,
+            &quot;uploaded_by&quot;: &quot;raupulus&quot;
+        }
+    ],
+    &quot;message&quot;: &quot;Listado de chistes obtenido correctamente&quot;,
+    &quot;meta&quot;: {
+        &quot;pagination&quot;: {
+            &quot;current_page&quot;: 1,
+            &quot;per_page&quot;: 25,
+            &quot;total&quot;: 1,
+            &quot;last_page&quot;: 1,
+            &quot;from&quot;: 1,
+            &quot;to&quot;: 1,
+            &quot;has_more_pages&quot;: false,
+            &quot;has_previous_page&quot;: false,
+            &quot;next_page_url&quot;: null,
+            &quot;prev_page_url&quot;: null
+        }
+    }
+}</code>
+ </pre>
+    </span>
+<span id="execution-results-GETapi-v1-contents-list" hidden>
+    <blockquote>Respuesta recibida<span
+                id="execution-response-status-GETapi-v1-contents-list"></span>:
+    </blockquote>
+    <pre class="json"><code id="execution-response-content-GETapi-v1-contents-list"
+      data-empty-response-text="<Respuesta vacía>" style="max-height: 400px;"></code></pre>
+</span>
+<span id="execution-error-GETapi-v1-contents-list" hidden>
+    <blockquote>La petición falló con error:</blockquote>
+    <pre><code id="execution-error-message-GETapi-v1-contents-list">
+
+Consejo: Verifica que estés conectado correctamente a la red.
+Si eres el mantenedor de esta API, verifica que tu API esté funcionando y que hayas habilitado CORS.
+Puedes revisar la consola de Herramientas de Desarrollador para información de depuración.</code></pre>
+</span>
+<form id="form-GETapi-v1-contents-list" data-method="GET"
+      data-path="api/v1/contents/list"
+      data-authed="1"
+      data-hasfiles="0"
+      data-isarraybody="0"
+      autocomplete="off"
+      onsubmit="event.preventDefault(); executeTryOut('GETapi-v1-contents-list', this);">
+    <h3>
+        Petición&nbsp;&nbsp;&nbsp;
+                    <button type="button"
+                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-tryout-GETapi-v1-contents-list"
+                    onclick="tryItOut('GETapi-v1-contents-list');">Pruébalo ⚡
+            </button>
+            <button type="button"
+                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-canceltryout-GETapi-v1-contents-list"
+                    onclick="cancelTryOut('GETapi-v1-contents-list');" hidden>Cancelar 🛑
+            </button>&nbsp;&nbsp;
+            <button type="submit"
+                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
+                    id="btn-executetryout-GETapi-v1-contents-list"
+                    data-initial-text="Enviar Petición 💥"
+                    data-loading-text="⏱ Enviando..."
+                    hidden>Enviar Petición 💥
+            </button>
+            </h3>
+            <p>
+            <small class="badge badge-green">GET</small>
+            <b><code>api/v1/contents/list</code></b>
+        </p>
+                <h4 class="fancy-heading-panel"><b>Cabeceras</b></h4>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Authorization</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Authorization" class="auth-value"               data-endpoint="GETapi-v1-contents-list"
+               value="Bearer {TU_TOKEN_BEARER}"
+               data-component="header">
+    <br>
+<p>Example: <code>Bearer {TU_TOKEN_BEARER}</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Content-Type</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Content-Type"                data-endpoint="GETapi-v1-contents-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                                <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>Accept</code></b>&nbsp;&nbsp;
+&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="Accept"                data-endpoint="GETapi-v1-contents-list"
+               value="application/json"
+               data-component="header">
+    <br>
+<p>Example: <code>application/json</code></p>
+            </div>
+                            <h4 class="fancy-heading-panel"><b>Parámetros de consulta</b></h4>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>after_id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="after_id"                data-endpoint="GETapi-v1-contents-list"
+               value="0"
+               data-component="query">
+    <br>
+<p>ID a partir del cual se desean obtener los chistes. Example: <code>0</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>limit</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="limit"                data-endpoint="GETapi-v1-contents-list"
+               value="25"
+               data-component="query">
+    <br>
+<p>Cantidad de chistes por página (por defecto 25, máximo 100). Example: <code>25</code></p>
+            </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>exclude_groups</code></b>&nbsp;&nbsp;
+<small>integer[]</small>&nbsp;
+<i>optional</i> &nbsp;
+ &nbsp;
+                <input type="number" style="display: none"
+               step="any"               name="exclude_groups[0]"                data-endpoint="GETapi-v1-contents-list"
+               data-component="query">
+        <input type="number" style="display: none"
+               name="exclude_groups[1]"                data-endpoint="GETapi-v1-contents-list"
+               data-component="query">
+    <br>
+<p>Opcional. Array de IDs numéricos de grupos a descartar.</p>
+            </div>
+                </form>
+
+    <h3>Respuesta</h3>
+    <h4 class="fancy-heading-panel"><b>Campos de respuesta</b></h4>
+    <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>success</code></b>&nbsp;&nbsp;
+<small>boolean</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Indica si la operación fue exitosa</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>message</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Mensaje descriptivo de la operación</p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+        <details>
+            <summary style="padding-bottom: 10px;">
+                <b style="line-height: 2;"><code>data</code></b>&nbsp;&nbsp;
+<small>string[]</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Colección de chistes</p>
+            </summary>
+                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>id</code></b>&nbsp;&nbsp;
+<small>integer</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Identificador del chiste</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>content</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Texto del chiste</p>
+                    </div>
+                                                                <div style="margin-left: 14px; clear: unset;">
+                        <b style="line-height: 2;"><code>uploaded_by</code></b>&nbsp;&nbsp;
+<small>string|null</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Nombre del usuario que subió el chiste</p>
+                    </div>
+                                    </details>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>meta</code></b>&nbsp;&nbsp;
+<small>object</small>&nbsp;
+ &nbsp;
+ &nbsp;
+<br>
+<p>Metadatos y paginación</p>
+        </div>
                     <h1 id="sugerencias">💡 Sugerencias</h1>
 
     
@@ -929,6 +4406,7 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
+    \"type_id\": \"architecto\",
     \"nick\": \"mi_usuario_123\",
     \"title\": \"Pájaros caminantes\",
     \"content\": \"¿Por qué los pájaros vuelan hacia el sur? Porque caminando tardarían mucho.\"
@@ -948,6 +4426,7 @@ $response = $client-&gt;post(
             'Accept' =&gt; 'application/json',
         ],
         'json' =&gt; [
+            'type_id' =&gt; 'architecto',
             'nick' =&gt; 'mi_usuario_123',
             'title' =&gt; 'Pájaros caminantes',
             'content' =&gt; '¿Por qué los pájaros vuelan hacia el sur? Porque caminando tardarían mucho.',
@@ -964,6 +4443,7 @@ import json
 
 url = 'https://jaja.raupulus.dev/api/v1/suggestion/send'
 payload = {
+    "type_id": "architecto",
     "nick": "mi_usuario_123",
     "title": "Pájaros caminantes",
     "content": "¿Por qué los pájaros vuelan hacia el sur? Porque caminando tardarían mucho."
@@ -990,6 +4470,7 @@ const headers = {
 };
 
 let body = {
+    "type_id": "architecto",
     "nick": "mi_usuario_123",
     "title": "Pájaros caminantes",
     "content": "¿Por qué los pájaros vuelan hacia el sur? Porque caminando tardarían mucho."
@@ -1111,6 +4592,18 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
             </div>
                                 <h4 class="fancy-heading-panel"><b>Parámetros del cuerpo</b></h4>
         <div style=" padding-left: 28px;  clear: unset;">
+            <b style="line-height: 2;"><code>type_id</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+ &nbsp;
+ &nbsp;
+                <input type="text" style="display: none"
+                              name="type_id"                data-endpoint="POSTapi-v1-suggestion-send"
+               value="architecto"
+               data-component="body">
+    <br>
+<p>Must match an existing stored value. Example: <code>architecto</code></p>
+        </div>
+                <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>nick</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
 <i>optional</i> &nbsp;
@@ -1125,7 +4618,7 @@ Puedes revisar la consola de Herramientas de Desarrollador para información de 
                 <div style=" padding-left: 28px;  clear: unset;">
             <b style="line-height: 2;"><code>title</code></b>&nbsp;&nbsp;
 <small>string</small>&nbsp;
-<i>optional</i> &nbsp;
+ &nbsp;
  &nbsp;
                 <input type="text" style="display: none"
                               name="title"                data-endpoint="POSTapi-v1-suggestion-send"

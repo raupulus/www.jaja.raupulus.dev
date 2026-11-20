@@ -3,15 +3,12 @@
 namespace App\Helpers;
 
 use App\Models\Content;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PublishToSocialHelper
 {
-    /**
-     * URL de la API donde se enviará el contenido
-     */
-    private const API_URL = 'http://localhost:8080/publish';
-
     /**
      * Hashtags predefinidos que siempre se envían
      */
@@ -101,20 +98,51 @@ class PublishToSocialHelper
             $payload['images'] = $images;
         }
 
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'Content-Type' => 'application/json',
-        ])->post(self::API_URL, $payload);
+        $url = (string) config('services.social_publisher.url', 'http://localhost:8080/publish');
+        $connectTimeout = max(1, (int) config('services.social_publisher.connect_timeout', 5));
+        $timeout = max(1, (int) config('services.social_publisher.timeout', 15));
+
+        try {
+            $response = Http::withHeaders([
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json',
+            ])
+                ->connectTimeout($connectTimeout)
+                ->timeout($timeout)
+                ->post($url, $payload);
+        } catch (ConnectionException $e) {
+            Log::error('Social publisher HTTP connection failed', [
+                'url' => $url,
+                'title' => $title,
+                'exception' => $e->getMessage(),
+            ]);
+
+            throw new \Exception('No se pudo conectar con el servicio de publicación social: ' . $e->getMessage(), 0, $e);
+        }
 
         ## Verifico si la respuesta HTTP fue exitosa
-        if (!$response->successful()) {
+        if (! $response->successful()) {
+            Log::error('Social publisher returned non-successful HTTP status', [
+                'url' => $url,
+                'status' => $response->status(),
+                'title' => $title,
+            ]);
+
             throw new \Exception("Error HTTP en la API: {$response->status()} - {$response->body()}");
         }
 
         ## Verifico si la respuesta JSON contiene success: true
         $responseData = $response->json();
-        if (!isset($responseData['success']) || $responseData['success'] !== true) {
-            throw new \Exception("La API devolvió success: false - " . ($responseData['message'] ?? $responseData['error'] ?? 'Sin mensaje'));
+        if (! isset($responseData['success']) || $responseData['success'] !== true) {
+            $apiMessage = $responseData['message'] ?? $responseData['error'] ?? 'Sin mensaje';
+
+            Log::error('Social publisher API returned failure payload', [
+                'url' => $url,
+                'title' => $title,
+                'api_message' => $apiMessage,
+            ]);
+
+            throw new \Exception('La API devolvió success: false - ' . $apiMessage);
         }
 
         return true;

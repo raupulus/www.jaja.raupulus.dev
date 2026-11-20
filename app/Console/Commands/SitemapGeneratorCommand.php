@@ -73,7 +73,9 @@ class SitemapGeneratorCommand extends Command
         $latestCollabAt = CollaboratorProject::where('status', 'published')->max('updated_at');
         $collabModAt = $latestCollabAt ? Carbon::parse($latestCollabAt) : Carbon::now();
 
-        $docsFile = resource_path('views/scribe/index.blade.php');
+        $docsFile = file_exists(public_path('docs/index.html'))
+            ? public_path('docs/index.html')
+            : resource_path('views/scribe/index.blade.php');
         $docsModAt = file_exists($docsFile)
             ? Carbon::createFromTimestamp(filemtime($docsFile))
             : Carbon::now();

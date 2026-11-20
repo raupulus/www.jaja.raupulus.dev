@@ -158,6 +158,16 @@
                                 Contenidos
                             </a>
                         </li>
+                        <li>
+                            <a href="{{url('docs#sugerencias-POSTapi-v1-suggestion-send')}}">
+                                Sugerencias
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{url('docs#reportes-POSTapi-v1-report-send')}}">
+                                Reportes
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </section>

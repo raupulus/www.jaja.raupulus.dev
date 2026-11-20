@@ -130,4 +130,41 @@ class SendReportRequest extends FormRequest
         $admin = User::where('role_id', 1)->first();
         return $admin ? $admin->id : null;
     }
+
+    /**
+     * Parámetros del body para la documentación generada por Scribe.
+     */
+    public function bodyParameters(): array
+    {
+        return [
+            'content_id' => [
+                'description' => 'ID del contenido a reportar.',
+                'example' => 123,
+            ],
+            'title' => [
+                'description' => 'Título breve del reporte (máximo 255 caracteres).',
+                'example' => 'Contenido inapropiado',
+            ],
+            'type' => [
+                'description' => 'Tipo de reporte (spam, inappropriate_content, adult_content, hate_speech, copyright, violence, harassment, misinformation, other).',
+                'example' => 'inappropriate_content',
+            ],
+            'description' => [
+                'description' => 'Descripción detallada del motivo del reporte (máximo 1024 caracteres).',
+                'example' => 'Este contenido incumple las normas de la comunidad.',
+            ],
+            'additional_info' => [
+                'description' => 'Información adicional opcional sobre el contexto del reporte.',
+                'example' => 'Reportado tras revisión de moderación.',
+            ],
+            'reporter_name' => [
+                'description' => 'Nombre visible del informante si difiere del usuario autenticado.',
+                'example' => 'Juan Pérez',
+            ],
+            'reporter_email' => [
+                'description' => 'Correo de contacto del informante si difiere del usuario autenticado.',
+                'example' => 'usuario@ejemplo.com',
+            ],
+        ];
+    }
 }

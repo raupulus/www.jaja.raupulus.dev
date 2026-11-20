@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "JaJa Project API Documentaci\u00f3n Oficial",
-        "_postman_id": "f62d3485-3431-4602-998f-c47aed3ea342",
+        "_postman_id": "bf3d6376-7afa-4b10-a774-56886d49320b",
         "description": "JaJa Project - La mejor comunidad para entretenimiento y compartir el humor",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -130,6 +130,602 @@
             ]
         },
         {
+            "name": "\ud83c\udff7\ufe0f Categor\u00edas, Grupos y Tipos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Tipos de Contenido",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/types",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/types"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la lista de tipos de contenido que existen.\n\n\u00datil para utilizar el slug del tipo que necesites y filtrar en otros endpoints."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"name\": \"Chistes\",\n      \"slug\": \"chistes\",\n      \"description\": \"Chistes de la comunidad\",\n      \"urlImage\": \"https:\/\/jaja.raupulus.dev\/images\/default\/type.webp\"\n    }\n  ],\n  \"message\": \"Se obtuvieron 1 tipos\",\n  \"meta\": {\n    \"total_items\": 1\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron tipos de contenido\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener la lista de tipos\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Grupos de Contenidos",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/groups",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "N\u00famero de p\u00e1gina a obtener. El campo value debe tener al menos 1.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "2",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/groups?page=1&limit=2"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la lista de grupos de contenido que existen paginados."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"title\": \"Chistes Devs\",\n      \"slug\": \"chistes-devs\",\n      \"urlImage\": \"https:\/\/jaja.raupulus.dev\/images\/default\/group.webp\"\n    }\n  ],\n  \"message\": \"Se obtuvo 1 grupo de contenido\",\n  \"meta\": {\n    \"pagination\": {\n      \"current_page\": 1,\n      \"per_page\": 20,\n      \"total\": 1,\n      \"last_page\": 1,\n      \"from\": 1,\n      \"to\": 1,\n      \"has_more_pages\": false,\n      \"has_previous_page\": false,\n      \"next_page_url\": null,\n      \"prev_page_url\": null\n    }\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"La p\u00e1gina solicitada no existe. \u00daltima p\u00e1gina disponible: 2\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron grupos de contenido\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener la lista de grupos\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Categor\u00edas",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/categories",
+                            "query": [
+                                {
+                                    "key": "page",
+                                    "value": "1",
+                                    "description": "N\u00famero de p\u00e1gina a obtener. El campo value debe tener al menos 1.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "2",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/categories?page=1&limit=2"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve la lista de categor\u00edas disponibles paginadas."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"title\": \"Programaci\u00f3n\",\n      \"slug\": \"programacion\",\n      \"description\": \"Chistes de programaci\u00f3n\",\n      \"urlImage\": \"https:\/\/jaja.raupulus.dev\/images\/default\/category.webp\"\n    }\n  ],\n  \"message\": \"Se obtuvo 1 categor\u00eda de 1, p\u00e1gina 1.\",\n  \"meta\": {\n    \"pagination\": {\n      \"current_page\": 1,\n      \"per_page\": 20,\n      \"total\": 1,\n      \"last_page\": 1,\n      \"from\": 1,\n      \"to\": 1,\n      \"has_more_pages\": false,\n      \"has_previous_page\": false,\n      \"next_page_url\": null,\n      \"prev_page_url\": null\n    }\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se han encontrado categor\u00edas\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"La p\u00e1gina solicitada no existe. \u00daltima p\u00e1gina disponible: 5\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener la lista de categor\u00edas\"\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "\ud83d\udcda Contenidos",
+            "description": "",
+            "item": [
+                {
+                    "name": "Contenido Aleatorio",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/random?limit=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser p\u00fablico est\u00e1 limitado a m\u00e1ximo 5 elementos por petici\u00f3n y a 10 peticiones por minuto.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 12,\n      \"title\": \"El perro programador\",\n      \"content\": \"\u00bfPor qu\u00e9 el perro no compilaba? Porque ten\u00eda demasiadas pulgas.\",\n      \"urlImage\": null,\n      \"uploader\": \"@raupulus\"\n    }\n  ],\n  \"message\": \"Se obtuvo 1 contenido aleatorio\",\n  \"meta\": {\n    \"total_items\": 100,\n    \"limit\": 1\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener chistes aleatorios\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido Aleatorio por Tipo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/random\/:type_slug",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/random\/:type_slug?limit=1",
+                            "variable": [
+                                {
+                                    "id": "type_slug",
+                                    "key": "type_slug",
+                                    "value": "chistes",
+                                    "description": "El slug del tipo de contenido [chistes|adivinanzas|quiz]."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo\n[chistes|adivinanzas|quiz].\n\nEste endpoint al ser p\u00fablico est\u00e1 limitado a m\u00e1ximo 5 elementos por petici\u00f3n y a 10 peticiones por minuto.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 18,\n      \"title\": \"Chiste aleatorio por tipo\",\n      \"content\": \"\u00bfQu\u00e9 le dice un bit a otro? Nos vemos en el bus.\",\n      \"urlImage\": null,\n      \"uploader\": \"@raupulus\"\n    }\n  ],\n  \"message\": \"Se obtuvo 1 contenido aleatorio\",\n  \"meta\": {\n    \"total_items\": 40,\n    \"limit\": 1\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"success\": false,\n\"message\": \"No se encontraron contenidos\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"success\": false,\n\"message\": \"Error al obtener chistes aleatorios\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un tipo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/type\/:type_slug\/content\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/type\/:type_slug\/content\/random?limit=1",
+                            "variable": [
+                                {
+                                    "id": "type_slug",
+                                    "key": "type_slug",
+                                    "value": "chistes",
+                                    "description": "El slug del tipo de contenido [chistes|adivinanzas|quiz]."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de un tipo concreto recibido."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 22,\n      \"title\": \"Chiste de tipo\",\n      \"content\": \"Hardware es lo que golpeas cuando falla el software.\",\n      \"urlImage\": null,\n      \"uploader\": \"@raupulus\"\n    }\n  ],\n  \"message\": \"Se devuelve 1 contenido aleatorio para el tipo Chistes de 10 contenidos totales para este tipo.\",\n  \"meta\": {\n    \"type\": \"Chistes\",\n    \"type_slug\": \"chistes\",\n    \"total_items\": 10\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos para el tipo especificado\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un tipo y Categor\u00eda",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/type\/:type_slug\/category\/:categorySlug\/content\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/type\/:type_slug\/category\/:categorySlug\/content\/random?limit=1",
+                            "variable": [
+                                {
+                                    "id": "type_slug",
+                                    "key": "type_slug",
+                                    "value": "chistes",
+                                    "description": "El slug del tipo de contenido [chistes|adivinanzas|quiz]."
+                                },
+                                {
+                                    "id": "categorySlug",
+                                    "key": "categorySlug",
+                                    "value": "javascript",
+                                    "description": "El slug de la categor\u00eda."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio que pertenezca al tipo y categor\u00eda recibido."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 31,\n      \"title\": \"Chiste JS\",\n      \"content\": \"NaN === NaN es false en JavaScript.\",\n      \"urlImage\": null,\n      \"uploader\": \"@raupulus\"\n    }\n  ],\n  \"message\": \"Se devuelve 1 contenido aleatorio para el tipo Chistes y la categor\u00eda JavaScript de 4 contenidos totales.\",\n  \"meta\": {\n    \"type\": \"Chistes\",\n    \"type_slug\": \"chistes\",\n    \"category\": \"JavaScript\",\n    \"category_slug\": \"javascript\",\n    \"total_items\": 4\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Categor\u00eda no encontrada\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos para el tipo y categor\u00eda especificados\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un grupo",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/group\/:group_slug\/content\/random",
+                            "query": [
+                                {
+                                    "key": "limit",
+                                    "value": "1",
+                                    "description": "Cantidad de elementos por p\u00e1gina (m\u00e1ximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/group\/:group_slug\/content\/random?limit=1",
+                            "variable": [
+                                {
+                                    "id": "group_slug",
+                                    "key": "group_slug",
+                                    "value": "chistes-devs",
+                                    "description": "El slug del grupo de contenido."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Contenido aleatorio que pertenecen al grupo recibido."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 45,\n      \"title\": \"Chiste Dev\",\n      \"content\": \"No es un bug, es una caracter\u00edstica indocumentada.\",\n      \"urlImage\": null,\n      \"uploader\": \"@raupulus\"\n    }\n  ],\n  \"message\": \"Se devuelve 1 contenido aleatorio para el grupo Chistes Devs de 12 contenidos totales.\",\n  \"meta\": {\n    \"group\": \"Chistes Devs\",\n    \"group_slug\": \"chistes-devs\",\n    \"total_items\": 12\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"No se encontraron contenidos para el grupo especificado\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n  \"success\": false,\n  \"message\": \"Error al obtener contenidos del tipo especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Contenido en base a un usuario",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/user\/:nick\/content\/random",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/user\/:nick\/content\/random",
+                            "variable": [
+                                {
+                                    "id": "nick",
+                                    "key": "nick",
+                                    "value": "raupulus",
+                                    "description": "El nick del usuario para filtrar por su contenido."
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 7,\n      \"title\": \"Chiste de usuario\",\n      \"content\": \"Un cl\u00e1sico de la comunidad.\",\n      \"urlImage\": null,\n      \"uploader\": \"@raupulus\"\n    }\n  ],\n  \"message\": \"Se devuelven 2 contenidos aleatorios para el usuario @raupulus\",\n  \"meta\": {\n    \"user\": \"raupulus\",\n    \"total_items\": 2\n  }\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\n\"success\": false,\n\"message\": \"No se encontraron contenidos para el usuario especificado\"\n}",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\n\"success\": false,\n\"message\": \"Error al obtener contenidos del usuario especificado\"\n}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Listado de Contenidos (Chistes)",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/contents\/list",
+                            "query": [
+                                {
+                                    "key": "after_id",
+                                    "value": "0",
+                                    "description": "ID a partir del cual se desean obtener los chistes.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "limit",
+                                    "value": "25",
+                                    "description": "Cantidad de chistes por p\u00e1gina (por defecto 25, m\u00e1ximo 100).",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "exclude_groups[0]",
+                                    "value": "4",
+                                    "description": "Opcional. Array de IDs num\u00e9ricos de grupos a descartar.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "exclude_groups[1]",
+                                    "value": "14",
+                                    "description": "Opcional. Array de IDs num\u00e9ricos de grupos a descartar.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/v1\/contents\/list?after_id=0&limit=25&exclude_groups%5B0%5D=4&exclude_groups%5B1%5D=14"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "Devuelve un listado paginado de chistes que no son para adultos.\nSe puede filtrar para obtener chistes a partir de un ID espec\u00edfico o excluir grupos concretos."
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n  \"success\": true,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"content\": \"\u00bfQu\u00e9 hace una abeja en el gimnasio? \u00a1Zum-ba!\",\n      \"uploaded_by\": \"raupulus\"\n    }\n  ],\n  \"message\": \"Listado de chistes obtenido correctamente\",\n  \"meta\": {\n    \"pagination\": {\n      \"current_page\": 1,\n      \"per_page\": 25,\n      \"total\": 1,\n      \"last_page\": 1,\n      \"from\": 1,\n      \"to\": 1,\n      \"has_more_pages\": false,\n      \"has_previous_page\": false,\n      \"next_page_url\": null,\n      \"prev_page_url\": null\n    }\n  }\n}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        },
+        {
             "name": "\ud83d\udca1 Sugerencias",
             "description": "",
             "item": [
@@ -155,7 +751,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"nick\":\"mi_usuario_123\",\"title\":\"P\u00e1jaros caminantes\",\"content\":\"\u00bfPor qu\u00e9 los p\u00e1jaros vuelan hacia el sur? Porque caminando tardar\u00edan mucho.\"}"
+                            "raw": "{\"type_id\":\"architecto\",\"nick\":\"mi_usuario_123\",\"title\":\"P\u00e1jaros caminantes\",\"content\":\"\u00bfPor qu\u00e9 los p\u00e1jaros vuelan hacia el sur? Porque caminando tardar\u00edan mucho.\"}"
                         },
                         "description": "Se permiten m\u00e1ximo 10 sugerencias en 1 minuto."
                     },

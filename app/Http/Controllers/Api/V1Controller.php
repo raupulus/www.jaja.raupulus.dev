@@ -40,13 +40,14 @@ class V1Controller extends Controller
      * Listado de Contenidos (Chistes)
      *
      * Devuelve un listado paginado de chistes que no son para adultos.
-     * Se puede filtrar para obtener chistes a partir de un ID específico.
+     * Se puede filtrar para obtener chistes a partir de un ID específico o excluir grupos concretos.
      *
      * @group 📚 Contenidos
      * @authenticated
      *
      * @queryParam after_id integer ID a partir del cual se desean obtener los chistes. Example: 0
      * @queryParam limit integer Cantidad de chistes por página (por defecto 25, máximo 100). Example: 25
+     * @queryParam exclude_groups int[] Opcional. Array de IDs numéricos de grupos a descartar. Example: [4, 14]
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
@@ -54,8 +55,33 @@ class V1Controller extends Controller
      * @responseField data[].id int Identificador del chiste
      * @responseField data[].content string Texto del chiste
      * @responseField data[].uploaded_by string|null Nombre del usuario que subió el chiste
+     * @responseField meta object Metadatos y paginación
      *
-     * @bodyParam exclude_groups int[] Opcional. Array de IDs numéricos de grupos a descartar. Ejemplo: [5, 12]
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "content": "¿Qué hace una abeja en el gimnasio? ¡Zum-ba!",
+     *       "uploaded_by": "raupulus"
+     *     }
+     *   ],
+     *   "message": "Listado de chistes obtenido correctamente",
+     *   "meta": {
+     *     "pagination": {
+     *       "current_page": 1,
+     *       "per_page": 25,
+     *       "total": 1,
+     *       "last_page": 1,
+     *       "from": 1,
+     *       "to": 1,
+     *       "has_more_pages": false,
+     *       "has_previous_page": false,
+     *       "next_page_url": null,
+     *       "prev_page_url": null
+     *     }
+     *   }
+     * }
      *
      * @param ContentListRequest $request
      * @return JsonResponse
@@ -115,6 +141,24 @@ class V1Controller extends Controller
      * @responseField meta.total_items integer Número total de contenidos disponibles
      * @responseField meta.limit integer Límite aplicado en esta consulta
      *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 12,
+     *       "title": "El perro programador",
+     *       "content": "¿Por qué el perro no compilaba? Porque tenía demasiadas pulgas.",
+     *       "urlImage": null,
+     *       "uploader": "@raupulus"
+     *     }
+     *   ],
+     *   "message": "Se obtuvo 1 contenido aleatorio",
+     *   "meta": {
+     *     "total_items": 100,
+     *     "limit": 1
+     *   }
+     * }
+     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron contenidos"
@@ -165,7 +209,7 @@ class V1Controller extends Controller
     }
 
     /**
-     * Contenido Aleatorio
+     * Contenido Aleatorio por Tipo
      *
      * Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo
      * [chistes|adivinanzas|quiz].
@@ -188,6 +232,24 @@ class V1Controller extends Controller
      * @responseField meta object Metadatos adicionales de la respuesta
      * @responseField meta.total_items integer Número total de contenidos disponibles
      * @responseField meta.limit integer Límite aplicado en esta consulta
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 18,
+     *       "title": "Chiste aleatorio por tipo",
+     *       "content": "¿Qué le dice un bit a otro? Nos vemos en el bus.",
+     *       "urlImage": null,
+     *       "uploader": "@raupulus"
+     *     }
+     *   ],
+     *   "message": "Se obtuvo 1 contenido aleatorio",
+     *   "meta": {
+     *     "total_items": 40,
+     *     "limit": 1
+     *   }
+     * }
      *
      * @response 404 {
      * "success": false,
@@ -248,6 +310,7 @@ class V1Controller extends Controller
      * Útil para utilizar el slug del tipo que necesites y filtrar en otros endpoints.
      *
      * @group 🏷️ Categorías, Grupos y Tipos
+     * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
@@ -258,6 +321,22 @@ class V1Controller extends Controller
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al tipo (null si no tiene imagen)
      * @responseField meta object Metadatos adicionales de la respuesta
      * @responseField meta.total_items integer Número total de tipos disponibles
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "name": "Chistes",
+     *       "slug": "chistes",
+     *       "description": "Chistes de la comunidad",
+     *       "urlImage": "https://jaja.raupulus.dev/images/default/type.webp"
+     *     }
+     *   ],
+     *   "message": "Se obtuvieron 1 tipos",
+     *   "meta": {
+     *     "total_items": 1
+     *   }
+     * }
      *
      * @response 404 {
      *   "success": false,
@@ -301,26 +380,49 @@ class V1Controller extends Controller
      * Devuelve la lista de grupos de contenido que existen paginados.
      *
      * @group 🏷️ Categorías, Grupos y Tipos
+     * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista de grupos de contenido paginados
-     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título del grupo
      * @responseField data[].slug string Slug del grupo para URLs amigables
      * @responseField data[].urlImage string|null URL completa de la imagen asociada al grupo (null si no tiene imagen)
-     * @responseField pagination object Información de paginación
-     * @responseField pagination.current_page integer Página actual
-     * @responseField pagination.first_page_url string URL de la primera página
-     * @responseField pagination.from integer Número del primer elemento en la página actual
-     * @responseField pagination.last_page integer Número de la última página
-     * @responseField pagination.last_page_url string URL de la última página
-     * @responseField pagination.next_page_url string|null URL de la siguiente página (null si es la última)
-     * @responseField pagination.path string URL base para la paginación
-     * @responseField pagination.per_page integer Elementos por página
-     * @responseField pagination.prev_page_url string|null URL de la página anterior (null si es la primera)
-     * @responseField pagination.to integer Número del último elemento en la página actual
-     * @responseField pagination.total integer Total de elementos disponibles
+     * @responseField meta.pagination object Información de paginación
+     * @responseField meta.pagination.current_page integer Página actual
+     * @responseField meta.pagination.from integer Número del primer elemento en la página actual
+     * @responseField meta.pagination.last_page integer Número de la última página
+     * @responseField meta.pagination.next_page_url string|null URL de la siguiente página (null si es la última)
+     * @responseField meta.pagination.per_page integer Elementos por página
+     * @responseField meta.pagination.prev_page_url string|null URL de la página anterior (null si es la primera)
+     * @responseField meta.pagination.to integer Número del último elemento en la página actual
+     * @responseField meta.pagination.total integer Total de elementos disponibles
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "title": "Chistes Devs",
+     *       "slug": "chistes-devs",
+     *       "urlImage": "https://jaja.raupulus.dev/images/default/group.webp"
+     *     }
+     *   ],
+     *   "message": "Se obtuvo 1 grupo de contenido",
+     *   "meta": {
+     *     "pagination": {
+     *       "current_page": 1,
+     *       "per_page": 20,
+     *       "total": 1,
+     *       "last_page": 1,
+     *       "from": 1,
+     *       "to": 1,
+     *       "has_more_pages": false,
+     *       "has_previous_page": false,
+     *       "next_page_url": null,
+     *       "prev_page_url": null
+     *     }
+     *   }
+     * }
      *
      * @response 404 {
      *   "success": false,
@@ -385,27 +487,51 @@ class V1Controller extends Controller
      * Devuelve la lista de categorías disponibles paginadas.
      *
      * @group 🏷️ Categorías, Grupos y Tipos
+     * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data array Lista de categorías paginadas
-     * @responseField data[].id int Identificador del contenido, principalmente para reportes
      * @responseField data[].title string Título de la categoría
      * @responseField data[].slug string Slug de la categoría para URLs amigables
      * @responseField data[].description string Descripción de la categoría
      * @responseField data[].urlImage string|null URL completa de la imagen asociada a la categoría (null si no tiene imagen)
-     * @responseField pagination object Información de paginación
-     * @responseField pagination.current_page integer Página actual
-     * @responseField pagination.first_page_url string URL de la primera página
-     * @responseField pagination.from integer Número del primer elemento en la página actual
-     * @responseField pagination.last_page integer Número de la última página
-     * @responseField pagination.last_page_url string URL de la última página
-     * @responseField pagination.next_page_url string|null URL de la siguiente página (null si es la última)
-     * @responseField pagination.path string URL base para la paginación
-     * @responseField pagination.per_page integer Elementos por página
-     * @responseField pagination.prev_page_url string|null URL de la página anterior (null si es la primera)
-     * @responseField pagination.to integer Número del último elemento en la página actual
-     * @responseField pagination.total integer Total de elementos disponibles
+     * @responseField meta.pagination object Información de paginación
+     * @responseField meta.pagination.current_page integer Página actual
+     * @responseField meta.pagination.from integer Número del primer elemento en la página actual
+     * @responseField meta.pagination.last_page integer Número de la última página
+     * @responseField meta.pagination.next_page_url string|null URL de la siguiente página (null si es la última)
+     * @responseField meta.pagination.per_page integer Elementos por página
+     * @responseField meta.pagination.prev_page_url string|null URL de la página anterior (null si es la primera)
+     * @responseField meta.pagination.to integer Número del último elemento en la página actual
+     * @responseField meta.pagination.total integer Total de elementos disponibles
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "title": "Programación",
+     *       "slug": "programacion",
+     *       "description": "Chistes de programación",
+     *       "urlImage": "https://jaja.raupulus.dev/images/default/category.webp"
+     *     }
+     *   ],
+     *   "message": "Se obtuvo 1 categoría de 1, página 1.",
+     *   "meta": {
+     *     "pagination": {
+     *       "current_page": 1,
+     *       "per_page": 20,
+     *       "total": 1,
+     *       "last_page": 1,
+     *       "from": 1,
+     *       "to": 1,
+     *       "has_more_pages": false,
+     *       "has_previous_page": false,
+     *       "next_page_url": null,
+     *       "prev_page_url": null
+     *     }
+     *   }
+     * }
      *
      * @response 404 {
      *   "success": false,
@@ -470,6 +596,7 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio de un tipo concreto recibido.
      *
      * @group 📚 Contenidos
+     * @authenticated
      * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -484,6 +611,25 @@ class V1Controller extends Controller
      * @responseField meta.type string Nombre del tipo de contenido
      * @responseField meta.type_slug string Slug del tipo
      * @responseField meta.total_items integer Total de contenidos disponibles para este tipo
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 22,
+     *       "title": "Chiste de tipo",
+     *       "content": "Hardware es lo que golpeas cuando falla el software.",
+     *       "urlImage": null,
+     *       "uploader": "@raupulus"
+     *     }
+     *   ],
+     *   "message": "Se devuelve 1 contenido aleatorio para el tipo Chistes de 10 contenidos totales para este tipo.",
+     *   "meta": {
+     *     "type": "Chistes",
+     *     "type_slug": "chistes",
+     *     "total_items": 10
+     *   }
+     * }
      *
      * @response 404 {
      *   "success": false,
@@ -549,6 +695,7 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.
      *
      * @group 📚 Contenidos
+     * @authenticated
      *
      * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
      * @urlParam categorySlug string required El slug de la categoría. Example: javascript
@@ -567,6 +714,27 @@ class V1Controller extends Controller
      * @responseField meta.category string Título de la categoría
      * @responseField meta.category_slug string Slug de la categoría
      * @responseField meta.total_items integer Total de contenidos disponibles para este tipo y categoría
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 31,
+     *       "title": "Chiste JS",
+     *       "content": "NaN === NaN es false en JavaScript.",
+     *       "urlImage": null,
+     *       "uploader": "@raupulus"
+     *     }
+     *   ],
+     *   "message": "Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 4 contenidos totales.",
+     *   "meta": {
+     *     "type": "Chistes",
+     *     "type_slug": "chistes",
+     *     "category": "JavaScript",
+     *     "category_slug": "javascript",
+     *     "total_items": 4
+     *   }
+     * }
      *
      * @response 404 {
      *   "success": false,
@@ -647,6 +815,7 @@ class V1Controller extends Controller
      * Contenido aleatorio que pertenecen al grupo recibido.
      *
      * @group 📚 Contenidos
+     * @authenticated
      *
      * @urlParam group_slug string required El slug del grupo de contenido. Example: chistes-devs
      *
@@ -662,6 +831,25 @@ class V1Controller extends Controller
      * @responseField meta.group string Título del grupo
      * @responseField meta.group_slug string Slug del grupo
      * @responseField meta.total_items integer Total de contenidos disponibles para este grupo
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 45,
+     *       "title": "Chiste Dev",
+     *       "content": "No es un bug, es una característica indocumentada.",
+     *       "urlImage": null,
+     *       "uploader": "@raupulus"
+     *     }
+     *   ],
+     *   "message": "Se devuelve 1 contenido aleatorio para el grupo Chistes Devs de 12 contenidos totales.",
+     *   "meta": {
+     *     "group": "Chistes Devs",
+     *     "group_slug": "chistes-devs",
+     *     "total_items": 12
+     *   }
+     * }
      *
      * @response 404 {
      *   "success": false,
@@ -726,6 +914,7 @@ class V1Controller extends Controller
      * Se permiten máximo 10 sugerencias en 1 minuto.
      *
      * @group 💡 Sugerencias
+     * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
@@ -785,6 +974,7 @@ class V1Controller extends Controller
      * Se permiten máximo 10 reportes en 1 minuto por usuario.
      *
      * @group 🚨 Reportes
+     * @authenticated
      *
      * @bodyParam content_id integer required ID del contenido a reportar. Example: 123
      * @bodyParam title string required Título del reporte (máximo 255 caracteres). Example: Contenido inapropiado
@@ -886,6 +1076,7 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario.
      *
      * @group 📚 Contenidos
+     * @authenticated
      *
      * @urlParam nick string required El nick del usuario para filtrar por su contenido. Example: raupulus
      *
@@ -900,6 +1091,24 @@ class V1Controller extends Controller
      * @responseField meta object Metadatos adicionales de la respuesta
      * @responseField meta.user string Nick del usuario sobre el que se filtran los contenidos
      * @responseField meta.total_items integer Número total de contenidos disponibles
+     *
+     * @response 200 {
+     *   "success": true,
+     *   "data": [
+     *     {
+     *       "id": 7,
+     *       "title": "Chiste de usuario",
+     *       "content": "Un clásico de la comunidad.",
+     *       "urlImage": null,
+     *       "uploader": "@raupulus"
+     *     }
+     *   ],
+     *   "message": "Se devuelven 2 contenidos aleatorios para el usuario @raupulus",
+     *   "meta": {
+     *     "user": "raupulus",
+     *     "total_items": 2
+     *   }
+     * }
      *
      * @response 404 {
      * "success": false,

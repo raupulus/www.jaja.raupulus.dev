@@ -90,6 +90,7 @@ class AuthController extends Controller
      * Cierra la sesión de un usuario e invalida el token de acceso utilizado en ese momento
      *
      * @group 🔐 Autenticación
+     * @authenticated
      *
      * @response 200 {
      *   "success": true,
@@ -117,6 +118,7 @@ class AuthController extends Controller
      * Elimina todos los tokens válidos para el usuario
      *
      * @group 🔐 Autenticación
+     * @authenticated
      *
      * @response 200 {
      *   "success": true,
@@ -144,6 +146,7 @@ class AuthController extends Controller
      * Devuelve la información del usuario actualmente logueado en la plataforma
      *
      * @group 🔐 Autenticación
+     * @authenticated
      *
      * @response 200 {
      *   "success": true,

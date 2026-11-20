@@ -13,10 +13,10 @@ Registro de decisiones deliberadas del proyecto verificadas en el código, para 
 - **Decisión**: Mantener dos paneles Filament separados: administración completa en `/admin` y gestión de aportaciones/colaborador para usuarios en `/panel`.
 - **Motivo**: Aislar permisos y recursos expuestos sin duplicar vistas Blade manuales.
 
-## 3. Publicación en redes sociales mediante servicio local externo
-- **Dónde**: `app/Helpers/PublishToSocialHelper.php` y `app/Console/Commands/PublishContentToSocialCommand.php`.
-- **Decisión**: Delegar la publicación en redes sociales a un servicio HTTP local (`http://localhost:8080/publish`), excluyendo siempre contenido marcado con `is_adult = true`.
-- **Motivo**: Desacoplar las credenciales y APIs de cada red social de la aplicación Laravel.
+## 3. Publicación en redes sociales mediante servicio externo configurable y política de tokens Sanctum
+- **Dónde**: `config/services.php`, `config/sanctum.php`, `app/Helpers/PublishToSocialHelper.php` y `app/Console/Commands/PublishContentToSocialCommand.php`.
+- **Decisión**: Delegar la publicación en redes sociales a la URL configurable `services.social_publisher.url` (`SOCIAL_PUBLISHER_URL`, con valor retrocompatible `http://localhost:8080/publish`), aplicando timeouts explícitos (`connect_timeout = 5s`, `timeout = 15s`) y excluyendo siempre contenido marcado con `is_adult = true`. En paralelo, mantener `config('sanctum.expiration')` gobernado por `SANCTUM_TOKEN_EXPIRATION` con valor por defecto `null` y habilidades completas retrocompatibles para no invalidar tokens activos de bots comunitarios.
+- **Motivo**: Desacoplar las credenciales y despliegue del servicio de redes sociales garantizando tolerancia a fallos de red y conservar compatibilidad retroactiva total con integraciones en producción.
 
 ## 4. Verificación reCAPTCHA opcional según configuración
 - **Dónde**: `app/Http/Middleware/VerifyRecaptcha.php`.

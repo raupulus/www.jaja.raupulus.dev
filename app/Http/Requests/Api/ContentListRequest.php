@@ -62,4 +62,25 @@ class ContentListRequest extends FormRequest
     {
         return $this->validated()['exclude_groups'] ?? [];
     }
+
+    /**
+     * Parámetros de query para la documentación generada por Scribe.
+     */
+    public function queryParameters(): array
+    {
+        return [
+            'after_id' => [
+                'description' => 'ID a partir del cual se desean obtener los chistes.',
+                'example' => 0,
+            ],
+            'limit' => [
+                'description' => 'Cantidad de chistes por página (máximo 100).',
+                'example' => 25,
+            ],
+            'exclude_groups' => [
+                'description' => 'Lista de IDs numéricos de grupos a excluir.',
+                'example' => [4, 14],
+            ],
+        ];
+    }
 }

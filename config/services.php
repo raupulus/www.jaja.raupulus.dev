@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'social_publisher' => [
+        'url' => env('SOCIAL_PUBLISHER_URL', 'http://localhost:8080/publish'),
+        'connect_timeout' => (int) env('SOCIAL_PUBLISHER_CONNECT_TIMEOUT', 5),
+        'timeout' => (int) env('SOCIAL_PUBLISHER_TIMEOUT', 15),
+    ],
+
 ];

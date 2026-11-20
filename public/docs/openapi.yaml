@@ -11,6 +11,12 @@ tags:
     name: '🔐 Autenticación'
     description: ''
   -
+    name: '🏷️ Categorías, Grupos y Tipos'
+    description: ''
+  -
+    name: '📚 Contenidos'
+    description: ''
+  -
     name: '💡 Sugerencias'
     description: ''
   -
@@ -224,6 +230,1451 @@ paths:
                     description: 'Mensaje descriptivo de la operación'
       tags:
         - '🔐 Autenticación'
+  /api/v1/types:
+    get:
+      summary: 'Tipos de Contenido'
+      operationId: tiposDeContenido
+      description: "Devuelve la lista de tipos de contenido que existen.\n\nÚtil para utilizar el slug del tipo que necesites y filtrar en otros endpoints."
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      name: Chistes
+                      slug: chistes
+                      description: 'Chistes de la comunidad'
+                      urlImage: 'https://jaja.raupulus.dev/images/default/type.webp'
+                  message: 'Se obtuvieron 1 tipos'
+                  meta:
+                    total_items: 1
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        name: Chistes
+                        slug: chistes
+                        description: 'Chistes de la comunidad'
+                        urlImage: 'https://jaja.raupulus.dev/images/default/type.webp'
+                    description: 'Lista de tipos de contenido disponibles'
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: Chistes
+                        slug:
+                          type: string
+                          example: chistes
+                        description:
+                          type: string
+                          example: 'Chistes de la comunidad'
+                        urlImage:
+                          type: string
+                          example: 'https://jaja.raupulus.dev/images/default/type.webp'
+                  message:
+                    type: string
+                    example: 'Se obtuvieron 1 tipos'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      total_items:
+                        type: integer
+                        example: 1
+                        description: 'Número total de tipos disponibles'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron tipos de contenido'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'No se encontraron tipos de contenido'
+                    description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener la lista de tipos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener la lista de tipos'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '🏷️ Categorías, Grupos y Tipos'
+  /api/v1/groups:
+    get:
+      summary: 'Grupos de Contenidos'
+      operationId: gruposDeContenidos
+      description: 'Devuelve la lista de grupos de contenido que existen paginados.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+            example: 1
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+          example: 2
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+            example: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: 'Chistes Devs'
+                      slug: chistes-devs
+                      urlImage: 'https://jaja.raupulus.dev/images/default/group.webp'
+                  message: 'Se obtuvo 1 grupo de contenido'
+                  meta:
+                    pagination:
+                      current_page: 1
+                      per_page: 20
+                      total: 1
+                      last_page: 1
+                      from: 1
+                      to: 1
+                      has_more_pages: false
+                      has_previous_page: false
+                      next_page_url: null
+                      prev_page_url: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: 'Chistes Devs'
+                        slug: chistes-devs
+                        urlImage: 'https://jaja.raupulus.dev/images/default/group.webp'
+                    description: 'Lista de grupos de contenido paginados'
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: 'Chistes Devs'
+                        slug:
+                          type: string
+                          example: chistes-devs
+                        urlImage:
+                          type: string
+                          example: 'https://jaja.raupulus.dev/images/default/group.webp'
+                  message:
+                    type: string
+                    example: 'Se obtuvo 1 grupo de contenido'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        type: object
+                        properties:
+                          current_page:
+                            type: integer
+                            example: 1
+                            description: 'Página actual'
+                          per_page:
+                            type: integer
+                            example: 20
+                            description: 'Elementos por página'
+                          total:
+                            type: integer
+                            example: 1
+                            description: 'Total de elementos disponibles'
+                          last_page:
+                            type: integer
+                            example: 1
+                            description: 'Número de la última página'
+                          from:
+                            type: integer
+                            example: 1
+                            description: 'Número del primer elemento en la página actual'
+                          to:
+                            type: integer
+                            example: 1
+                            description: 'Número del último elemento en la página actual'
+                          has_more_pages:
+                            type: boolean
+                            example: false
+                          has_previous_page:
+                            type: boolean
+                            example: false
+                          next_page_url:
+                            type: string
+                            example: null
+                            description: 'URL de la siguiente página (null si es la última)'
+                          prev_page_url:
+                            type: string
+                            example: null
+                            description: 'URL de la página anterior (null si es la primera)'
+                        description: 'Información de paginación'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'La página solicitada no existe. Última página disponible: 2'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                      message:
+                        type: string
+                        example: 'La página solicitada no existe. Última página disponible: 2'
+                        description: 'Mensaje descriptivo de la operación'
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'No se encontraron grupos de contenido'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                      message:
+                        type: string
+                        example: 'No se encontraron grupos de contenido'
+                        description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener la lista de grupos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener la lista de grupos'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '🏷️ Categorías, Grupos y Tipos'
+  /api/v1/categories:
+    get:
+      summary: Categorías
+      operationId: categoras
+      description: 'Devuelve la lista de categorías disponibles paginadas.'
+      parameters:
+        -
+          in: query
+          name: page
+          description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Número de página a obtener. El campo value debe tener al menos 1.'
+            example: 1
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+          example: 2
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 50). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 50.'
+            example: 2
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      title: Programación
+                      slug: programacion
+                      description: 'Chistes de programación'
+                      urlImage: 'https://jaja.raupulus.dev/images/default/category.webp'
+                  message: 'Se obtuvo 1 categoría de 1, página 1.'
+                  meta:
+                    pagination:
+                      current_page: 1
+                      per_page: 20
+                      total: 1
+                      last_page: 1
+                      from: 1
+                      to: 1
+                      has_more_pages: false
+                      has_previous_page: false
+                      next_page_url: null
+                      prev_page_url: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        title: Programación
+                        slug: programacion
+                        description: 'Chistes de programación'
+                        urlImage: 'https://jaja.raupulus.dev/images/default/category.webp'
+                    description: 'Lista de categorías paginadas'
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                          example: Programación
+                        slug:
+                          type: string
+                          example: programacion
+                        description:
+                          type: string
+                          example: 'Chistes de programación'
+                        urlImage:
+                          type: string
+                          example: 'https://jaja.raupulus.dev/images/default/category.webp'
+                  message:
+                    type: string
+                    example: 'Se obtuvo 1 categoría de 1, página 1.'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        type: object
+                        properties:
+                          current_page:
+                            type: integer
+                            example: 1
+                            description: 'Página actual'
+                          per_page:
+                            type: integer
+                            example: 20
+                            description: 'Elementos por página'
+                          total:
+                            type: integer
+                            example: 1
+                            description: 'Total de elementos disponibles'
+                          last_page:
+                            type: integer
+                            example: 1
+                            description: 'Número de la última página'
+                          from:
+                            type: integer
+                            example: 1
+                            description: 'Número del primer elemento en la página actual'
+                          to:
+                            type: integer
+                            example: 1
+                            description: 'Número del último elemento en la página actual'
+                          has_more_pages:
+                            type: boolean
+                            example: false
+                          has_previous_page:
+                            type: boolean
+                            example: false
+                          next_page_url:
+                            type: string
+                            example: null
+                            description: 'URL de la siguiente página (null si es la última)'
+                          prev_page_url:
+                            type: string
+                            example: null
+                            description: 'URL de la página anterior (null si es la primera)'
+                        description: 'Información de paginación'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'No se han encontrado categorías'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                      message:
+                        type: string
+                        example: 'No se han encontrado categorías'
+                        description: 'Mensaje descriptivo de la operación'
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'La página solicitada no existe. Última página disponible: 5'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                      message:
+                        type: string
+                        example: 'La página solicitada no existe. Última página disponible: 5'
+                        description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener la lista de categorías'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener la lista de categorías'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '🏷️ Categorías, Grupos y Tipos'
+  /api/v1/random:
+    get:
+      summary: 'Contenido Aleatorio'
+      operationId: contenidoAleatorio
+      description: "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma sin filtro alguno.\n\nEste endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto."
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 12
+                      title: 'El perro programador'
+                      content: '¿Por qué el perro no compilaba? Porque tenía demasiadas pulgas.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se obtuvo 1 contenido aleatorio'
+                  meta:
+                    total_items: 100
+                    limit: 1
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 12
+                        title: 'El perro programador'
+                        content: '¿Por qué el perro no compilaba? Porque tenía demasiadas pulgas.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Colección de contenidos aleatorios'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 12
+                        title:
+                          type: string
+                          example: 'El perro programador'
+                        content:
+                          type: string
+                          example: '¿Por qué el perro no compilaba? Porque tenía demasiadas pulgas.'
+                        urlImage:
+                          type: string
+                          example: null
+                          nullable: true
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se obtuvo 1 contenido aleatorio'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      total_items:
+                        type: integer
+                        example: 100
+                        description: 'Número total de contenidos disponibles'
+                      limit:
+                        type: integer
+                        example: 1
+                        description: 'Límite aplicado en esta consulta'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos'
+                    description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener chistes aleatorios'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener chistes aleatorios'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '📚 Contenidos'
+      security: []
+  '/api/v1/random/{type_slug}':
+    get:
+      summary: 'Contenido Aleatorio por Tipo'
+      operationId: contenidoAleatorioPorTipo
+      description: "Devuelve un contenido aleatorio de entre todos los existentes en la plataforma filtrando por tipo\n[chistes|adivinanzas|quiz].\n\nEste endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto."
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 18
+                      title: 'Chiste aleatorio por tipo'
+                      content: '¿Qué le dice un bit a otro? Nos vemos en el bus.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se obtuvo 1 contenido aleatorio'
+                  meta:
+                    total_items: 40
+                    limit: 1
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 18
+                        title: 'Chiste aleatorio por tipo'
+                        content: '¿Qué le dice un bit a otro? Nos vemos en el bus.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Colección de contenidos aleatorios'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 18
+                        title:
+                          type: string
+                          example: 'Chiste aleatorio por tipo'
+                        content:
+                          type: string
+                          example: '¿Qué le dice un bit a otro? Nos vemos en el bus.'
+                        urlImage:
+                          type: string
+                          example: null
+                          nullable: true
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se obtuvo 1 contenido aleatorio'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      total_items:
+                        type: integer
+                        example: 40
+                        description: 'Número total de contenidos disponibles'
+                      limit:
+                        type: integer
+                        example: 1
+                        description: 'Límite aplicado en esta consulta'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos'
+                    description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener chistes aleatorios'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener chistes aleatorios'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '📚 Contenidos'
+      security: []
+    parameters:
+      -
+        in: path
+        name: type_slug
+        description: 'El slug del tipo de contenido [chistes|adivinanzas|quiz].'
+        example: chistes
+        required: true
+        schema:
+          type: string
+  '/api/v1/type/{type_slug}/content/random':
+    get:
+      summary: 'Contenido en base a un tipo'
+      operationId: contenidoEnBaseAUnTipo
+      description: 'Devuelve un contenido aleatorio de un tipo concreto recibido.'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 22
+                      title: 'Chiste de tipo'
+                      content: 'Hardware es lo que golpeas cuando falla el software.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 10 contenidos totales para este tipo.'
+                  meta:
+                    type: Chistes
+                    type_slug: chistes
+                    total_items: 10
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 22
+                        title: 'Chiste de tipo'
+                        content: 'Hardware es lo que golpeas cuando falla el software.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Lista con el contenido aleatorio solicitado'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 22
+                        title:
+                          type: string
+                          example: 'Chiste de tipo'
+                        content:
+                          type: string
+                          example: 'Hardware es lo que golpeas cuando falla el software.'
+                        urlImage:
+                          type: string
+                          example: null
+                          nullable: true
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes de 10 contenidos totales para este tipo.'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: Chistes
+                        description: 'Nombre del tipo de contenido'
+                      type_slug:
+                        type: string
+                        example: chistes
+                        description: 'Slug del tipo'
+                      total_items:
+                        type: integer
+                        example: 10
+                        description: 'Total de contenidos disponibles para este tipo'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos para el tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos para el tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: type_slug
+        description: 'El slug del tipo de contenido [chistes|adivinanzas|quiz].'
+        example: chistes
+        required: true
+        schema:
+          type: string
+  '/api/v1/type/{type_slug}/category/{categorySlug}/content/random':
+    get:
+      summary: 'Contenido en base a un tipo y Categoría'
+      operationId: contenidoEnBaseAUnTipoYCategora
+      description: 'Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 31
+                      title: 'Chiste JS'
+                      content: 'NaN === NaN es false en JavaScript.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 4 contenidos totales.'
+                  meta:
+                    type: Chistes
+                    type_slug: chistes
+                    category: JavaScript
+                    category_slug: javascript
+                    total_items: 4
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 31
+                        title: 'Chiste JS'
+                        content: 'NaN === NaN es false en JavaScript.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Lista con el contenido aleatorio solicitado'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 31
+                        title:
+                          type: string
+                          example: 'Chiste JS'
+                        content:
+                          type: string
+                          example: 'NaN === NaN es false en JavaScript.'
+                        urlImage:
+                          type: string
+                          example: null
+                          nullable: true
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelve 1 contenido aleatorio para el tipo Chistes y la categoría JavaScript de 4 contenidos totales.'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: Chistes
+                        description: 'Nombre del tipo de contenido'
+                      type_slug:
+                        type: string
+                        example: chistes
+                        description: 'Slug del tipo'
+                      category:
+                        type: string
+                        example: JavaScript
+                        description: 'Título de la categoría'
+                      category_slug:
+                        type: string
+                        example: javascript
+                        description: 'Slug de la categoría'
+                      total_items:
+                        type: integer
+                        example: 4
+                        description: 'Total de contenidos disponibles para este tipo y categoría'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'Categoría no encontrada'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                      message:
+                        type: string
+                        example: 'Categoría no encontrada'
+                        description: 'Mensaje descriptivo de la operación'
+                  -
+                    description: ''
+                    type: object
+                    example:
+                      success: false
+                      message: 'No se encontraron contenidos para el tipo y categoría especificados'
+                    properties:
+                      success:
+                        type: boolean
+                        example: false
+                        description: 'Indica si la operación fue exitosa'
+                      message:
+                        type: string
+                        example: 'No se encontraron contenidos para el tipo y categoría especificados'
+                        description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: type_slug
+        description: 'El slug del tipo de contenido [chistes|adivinanzas|quiz].'
+        example: chistes
+        required: true
+        schema:
+          type: string
+      -
+        in: path
+        name: categorySlug
+        description: 'El slug de la categoría.'
+        example: javascript
+        required: true
+        schema:
+          type: string
+  '/api/v1/group/{group_slug}/content/random':
+    get:
+      summary: 'Contenido en base a un grupo'
+      operationId: contenidoEnBaseAUnGrupo
+      description: 'Contenido aleatorio que pertenecen al grupo recibido.'
+      parameters:
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+          example: 1
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de elementos por página (máximo 5). El campo value debe tener al menos 1. El campo value no debe de ser mayor a 5.'
+            example: 1
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 45
+                      title: 'Chiste Dev'
+                      content: 'No es un bug, es una característica indocumentada.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelve 1 contenido aleatorio para el grupo Chistes Devs de 12 contenidos totales.'
+                  meta:
+                    group: 'Chistes Devs'
+                    group_slug: chistes-devs
+                    total_items: 12
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 45
+                        title: 'Chiste Dev'
+                        content: 'No es un bug, es una característica indocumentada.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Lista con el contenido aleatorio solicitado'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 45
+                        title:
+                          type: string
+                          example: 'Chiste Dev'
+                        content:
+                          type: string
+                          example: 'No es un bug, es una característica indocumentada.'
+                        urlImage:
+                          type: string
+                          example: null
+                          nullable: true
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelve 1 contenido aleatorio para el grupo Chistes Devs de 12 contenidos totales.'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      group:
+                        type: string
+                        example: 'Chistes Devs'
+                        description: 'Título del grupo'
+                      group_slug:
+                        type: string
+                        example: chistes-devs
+                        description: 'Slug del grupo'
+                      total_items:
+                        type: integer
+                        example: 12
+                        description: 'Total de contenidos disponibles para este grupo'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos para el grupo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos para el grupo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del tipo especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del tipo especificado'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: group_slug
+        description: 'El slug del grupo de contenido.'
+        example: chistes-devs
+        required: true
+        schema:
+          type: string
+  '/api/v1/user/{nick}/content/random':
+    get:
+      summary: 'Contenido en base a un usuario'
+      operationId: contenidoEnBaseAUnUsuario
+      description: 'Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 7
+                      title: 'Chiste de usuario'
+                      content: 'Un clásico de la comunidad.'
+                      urlImage: null
+                      uploader: '@raupulus'
+                  message: 'Se devuelven 2 contenidos aleatorios para el usuario @raupulus'
+                  meta:
+                    user: raupulus
+                    total_items: 2
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 7
+                        title: 'Chiste de usuario'
+                        content: 'Un clásico de la comunidad.'
+                        urlImage: null
+                        uploader: '@raupulus'
+                    description: 'Colección de contenidos aleatorios'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 7
+                        title:
+                          type: string
+                          example: 'Chiste de usuario'
+                        content:
+                          type: string
+                          example: 'Un clásico de la comunidad.'
+                        urlImage:
+                          type: string
+                          example: null
+                          nullable: true
+                        uploader:
+                          type: string
+                          example: '@raupulus'
+                  message:
+                    type: string
+                    example: 'Se devuelven 2 contenidos aleatorios para el usuario @raupulus'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      user:
+                        type: string
+                        example: raupulus
+                        description: 'Nick del usuario sobre el que se filtran los contenidos'
+                      total_items:
+                        type: integer
+                        example: 2
+                        description: 'Número total de contenidos disponibles'
+                    description: 'Metadatos adicionales de la respuesta'
+        404:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'No se encontraron contenidos para el usuario especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'No se encontraron contenidos para el usuario especificado'
+                    description: 'Mensaje descriptivo de la operación'
+        500:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: false
+                  message: 'Error al obtener contenidos del usuario especificado'
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                    description: 'Indica si la operación fue exitosa'
+                  message:
+                    type: string
+                    example: 'Error al obtener contenidos del usuario especificado'
+                    description: 'Mensaje descriptivo de la operación'
+      tags:
+        - '📚 Contenidos'
+    parameters:
+      -
+        in: path
+        name: nick
+        description: 'El nick del usuario para filtrar por su contenido.'
+        example: raupulus
+        required: true
+        schema:
+          type: string
+  /api/v1/contents/list:
+    get:
+      summary: 'Listado de Contenidos (Chistes)'
+      operationId: listadoDeContenidosChistes
+      description: "Devuelve un listado paginado de chistes que no son para adultos.\nSe puede filtrar para obtener chistes a partir de un ID específico o excluir grupos concretos."
+      parameters:
+        -
+          in: query
+          name: after_id
+          description: 'ID a partir del cual se desean obtener los chistes.'
+          example: 0
+          required: false
+          schema:
+            type: integer
+            description: 'ID a partir del cual se desean obtener los chistes.'
+            example: 0
+        -
+          in: query
+          name: limit
+          description: 'Cantidad de chistes por página (por defecto 25, máximo 100).'
+          example: 25
+          required: false
+          schema:
+            type: integer
+            description: 'Cantidad de chistes por página (por defecto 25, máximo 100).'
+            example: 25
+        -
+          in: query
+          name: exclude_groups
+          description: 'Opcional. Array de IDs numéricos de grupos a descartar.'
+          example:
+            - 4
+            - 14
+          required: false
+          schema:
+            type: array
+            description: 'Opcional. Array de IDs numéricos de grupos a descartar.'
+            example:
+              - 4
+              - 14
+            items:
+              type: integer
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  success: true
+                  data:
+                    -
+                      id: 1
+                      content: '¿Qué hace una abeja en el gimnasio? ¡Zum-ba!'
+                      uploaded_by: raupulus
+                  message: 'Listado de chistes obtenido correctamente'
+                  meta:
+                    pagination:
+                      current_page: 1
+                      per_page: 25
+                      total: 1
+                      last_page: 1
+                      from: 1
+                      to: 1
+                      has_more_pages: false
+                      has_previous_page: false
+                      next_page_url: null
+                      prev_page_url: null
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                    description: 'Indica si la operación fue exitosa'
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 1
+                        content: '¿Qué hace una abeja en el gimnasio? ¡Zum-ba!'
+                        uploaded_by: raupulus
+                    description: 'Colección de chistes'
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 1
+                        content:
+                          type: string
+                          example: '¿Qué hace una abeja en el gimnasio? ¡Zum-ba!'
+                        uploaded_by:
+                          type: string
+                          example: raupulus
+                  message:
+                    type: string
+                    example: 'Listado de chistes obtenido correctamente'
+                    description: 'Mensaje descriptivo de la operación'
+                  meta:
+                    type: object
+                    properties:
+                      pagination:
+                        type: object
+                        properties:
+                          current_page:
+                            type: integer
+                            example: 1
+                          per_page:
+                            type: integer
+                            example: 25
+                          total:
+                            type: integer
+                            example: 1
+                          last_page:
+                            type: integer
+                            example: 1
+                          from:
+                            type: integer
+                            example: 1
+                          to:
+                            type: integer
+                            example: 1
+                          has_more_pages:
+                            type: boolean
+                            example: false
+                          has_previous_page:
+                            type: boolean
+                            example: false
+                          next_page_url:
+                            type: string
+                            example: null
+                            nullable: true
+                          prev_page_url:
+                            type: string
+                            example: null
+                            nullable: true
+                    description: 'Metadatos y paginación'
+      tags:
+        - '📚 Contenidos'
   /api/v1/suggestion/send:
     post:
       summary: 'Envía una sugerencia de chiste a la plataforma'
@@ -281,10 +1732,15 @@ paths:
             schema:
               type: object
               properties:
+                type_id:
+                  type: string
+                  description: 'Must match an existing stored value.'
+                  example: architecto
                 nick:
                   type: string
                   description: 'Nombre de usuario o nick del autor de la sugerencia (máximo 25 caracteres, solo letras, números y guiones bajos). Must match the regex /^[a-zA-Z0-9_]+$/. El campo value debe ser menor que 25 caracteres.'
                   example: mi_usuario_123
+                  nullable: true
                 title:
                   type: string
                   description: 'Título de la sugerencia (máximo 255 caracteres). El campo value debe ser menor que 255 caracteres.'
@@ -294,6 +1750,8 @@ paths:
                   description: 'Contenido principal de la sugerencia (chiste, adivinanza, etc.) - máximo 1024 caracteres. El campo value debe ser menor que 1024 caracteres.'
                   example: '¿Por qué los pájaros vuelan hacia el sur? Porque caminando tardarían mucho.'
               required:
+                - type_id
+                - title
                 - content
   /api/v1/report/send:
     post:
