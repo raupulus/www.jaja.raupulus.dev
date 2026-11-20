@@ -35,9 +35,18 @@
 }
 
 .category-card:hover {
-    transform: translateY(-4px);
     box-shadow: var(--shadow-md);
     border-color: var(--color-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .category-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .category-card:hover .category-card-image img {
+        transform: scale(1.05);
+    }
 }
 
 .category-card:hover::before {
@@ -81,10 +90,6 @@
 .category-card:hover .category-card-image {
     border-color: var(--color-primary);
     box-shadow: 0 0 12px var(--color-primary-soft);
-}
-
-.category-card:hover .category-card-image img {
-    transform: scale(1.05);
 }
 
 /* Icono por defecto cuando no hay imagen */

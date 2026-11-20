@@ -40,11 +40,20 @@
 }
 
 .btn-dc-bot:hover {
-    transform: translateY(-2px);
     box-shadow:
         0 8px 25px rgba(88, 101, 242, 0.4),
         0 0 0 4px rgba(88, 101, 242, 0.2);
     border-color: rgba(88, 101, 242, 0.6);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-dc-bot:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-dc-bot:hover img {
+        transform: scale(1.1) rotate(5deg);
+    }
 }
 
 .btn-dc-bot:active {
@@ -63,7 +72,6 @@
 }
 
 .btn-dc-bot:hover img {
-    transform: scale(1.1) rotate(5deg);
     filter: brightness(1.5) contrast(1.2) saturate(0.9);
 }
 
@@ -340,12 +348,21 @@
 
 /* Efectos hover */
 .btn-random-content a:hover {
-    transform: translateY(-3px) scale(1.05);
     box-shadow:
         0 10px 30px rgba(255, 215, 0, 0.6),
         0 0 0 6px rgba(255, 215, 0, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.4);
     background: linear-gradient(135deg, #ffed4a 0%, #ffd700 50%, #ff8c00 100%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .btn-random-content a:hover {
+        transform: translateY(-3px) scale(1.05);
+    }
+
+    .btn-random-content a:hover .text {
+        transform: scale(1.1);
+    }
 }
 
 .btn-random-content a:hover .arrow {
@@ -355,7 +372,6 @@
 
 .btn-random-content a:hover .text {
     color: #1a1a1a;
-    transform: scale(1.1);
 }
 
 .btn-random-content a:hover .wheel::before {

@@ -46,8 +46,25 @@
 }
 
 .project-item:hover {
-    transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .project-item:hover {
+        transform: translateY(-2px);
+    }
+
+    .project-item:hover > div:first-child img {
+        transform: scale(1.05);
+    }
+
+    .keyword-badge:hover {
+        transform: translateY(-1px);
+    }
+
+    .project-item > a:hover {
+        transform: translateY(-1px);
+    }
 }
 
 /* --- Imagen del Proyecto --- */
@@ -71,10 +88,6 @@
     transition: transform 0.3s ease;
 }
 
-.project-item:hover > div:first-child img {
-    transform: scale(1.05);
-}
-
 /* Placeholder para imagen */
 .project-item > div:first-child > div {
     color: var(--color-texto-secundario);
@@ -89,6 +102,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    min-width: 0;
 }
 
 /* Título del proyecto */
@@ -174,7 +188,6 @@
 .keyword-badge:hover {
     background-color: var(--color-primario);
     color: var(--color-superficie-oscura);
-    transform: translateY(-1px);
 }
 
 /* --- Botón de Acción --- */
@@ -201,7 +214,6 @@
 
 .project-item > a:hover {
     background-color: var(--color-primario-hover);
-    transform: translateY(-1px);
     box-shadow: var(--sombra-media);
     color: var(--color-superficie-oscura);
 }
@@ -212,7 +224,7 @@
 }
 
 /* --- Responsive Design --- */
-@media (max-width: 968px) {
+@media (max-width: 1024px) {
     .project-item {
         grid-template-columns: 160px 1fr auto;
         grid-template-areas:

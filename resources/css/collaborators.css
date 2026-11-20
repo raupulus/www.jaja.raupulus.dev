@@ -77,9 +77,26 @@
 
 /* Efecto hover en tarjetas de desarrollador */
 .desarrollador-card:hover {
-    transform: translateY(-8px);
     border-color: var(--color-primario);
     box-shadow: 0 15px 40px rgba(0, 188, 212, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .desarrollador-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .dev-avatar:hover {
+        transform: scale(1.1);
+    }
+
+    .dev-link:hover {
+        transform: translateY(-2px);
+    }
+
+    .view-projects-link:hover {
+        transform: translateY(-3px);
+    }
 }
 
 /* Efecto de borde animado en hover */
@@ -112,7 +129,6 @@
 }
 
 .dev-avatar:hover {
-    transform: scale(1.1);
     box-shadow: 0 8px 25px rgba(0, 188, 212, 0.5);
 }
 
@@ -169,7 +185,6 @@
 .dev-link:hover {
     color: var(--color-superficie-oscura);
     background-color: var(--color-primario);
-    transform: translateY(-2px);
     box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
 }
 
@@ -194,7 +209,6 @@
 .view-projects-link:hover {
     background-color: transparent;
     color: var(--color-primario);
-    transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 188, 212, 0.4);
 }
 

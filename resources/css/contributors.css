@@ -43,9 +43,18 @@
 
 /* Efecto hover en tarjetas de usuario */
 .usuario-card:hover {
-    transform: scale(1.05);
     border-color: var(--color-primario);
     box-shadow: 0 10px 30px rgba(0, 188, 212, 0.3);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .usuario-card:hover {
+        transform: scale(1.05);
+    }
+
+    .app-icon:hover {
+        transform: translateY(-3px) rotate(5deg);
+    }
 }
 
 /* Contenedor de iconos de app */
@@ -72,7 +81,6 @@
 
 /* Efecto hover en iconos */
 .app-icon:hover {
-    transform: translateY(-3px) rotate(5deg);
     box-shadow: 0 8px 25px rgba(0, 188, 212, 0.4);
 }
 

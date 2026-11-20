@@ -14,7 +14,7 @@
 }
 
 .page-title {
-    font-size: 2.5em;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
     color: var(--color-primario);
     margin: 0;
     font-weight: 700;
@@ -191,12 +191,14 @@
 
 /* Tablas */
 .page-content-wrapper table {
+    display: block;
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     border-collapse: collapse;
     margin: 2rem 0;
     background-color: var(--color-fondo-oscuro);
     border-radius: 6px;
-    overflow: hidden;
     box-shadow: var(--sombra-ligera);
 }
 

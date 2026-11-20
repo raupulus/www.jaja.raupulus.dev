@@ -63,6 +63,10 @@
     padding: 0;
 }
 
+html {
+    scroll-padding-top: 5.5rem;
+}
+
 body {
     font-family: var(--font-sans);
     background-color: var(--color-fondo-oscuro);
@@ -71,6 +75,12 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    min-height: 100dvh;
+    overflow-wrap: break-word;
+}
+
+:where(a, code) {
+    overflow-wrap: anywhere;
 }
 
 h1, h2, h3 {
@@ -140,6 +150,9 @@ img {
     color: var(--color-texto-principal);
     font-weight: 500;
     padding: 0.5rem 0.8rem;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
     border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
@@ -165,7 +178,7 @@ img {
 
 /* --- Estilos de Contenido --- */
 .container h1 {
-    font-size: 2.5em;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
     color: var(--color-primario);
     margin-bottom: 1rem;
 }
@@ -334,7 +347,7 @@ form button.btn {
 }
 
 .box-card-content h2 {
-    font-size: 2em;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
     color: var(--color-primario);
     margin-bottom: 1.5rem;
     text-align: center;
@@ -382,6 +395,7 @@ form button.btn {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    min-width: 0;
 }
 
 .card-content-body h2,
@@ -504,11 +518,16 @@ form button.btn {
 /* Botón de cierre */
 .alert .close {
     position: absolute;
-    top: 12px;
-    right: 12px;
+    top: 6px;
+    right: 6px;
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: transparent;
     border: none;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 0.75);
     cursor: pointer;
     font-size: 20px;
     line-height: 1;
@@ -579,7 +598,6 @@ form button.btn {
 
 .beta-label-simple:hover {
     background: linear-gradient(135deg, #b71c1c, #991b1b);
-    transform: translateY(-50%) scale(1.05);
 }
 
 @media (max-width: 768px) {
@@ -623,6 +641,11 @@ form button.btn {
     border: none;
     cursor: pointer;
     padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
     z-index: 1100;
 }
 
@@ -692,12 +715,13 @@ form button.btn {
     }
 
     .nav-links a {
-        display: block;
+        display: flex;
+        justify-content: center;
         padding: 0.8rem;
     }
 
     .container {
-        padding: 0 0.3rem;
+        padding: 0 1rem;
     }
 
     .container h1 {
@@ -743,5 +767,41 @@ form button.btn {
 
     .card-content-meta {
         justify-content: center;
+    }
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .beta-label-simple:hover {
+        background: linear-gradient(135deg, #b71c1c, #991b1b);
+        transform: translateY(-50%) scale(1.05);
+    }
+}
+
+/* --- Estilos para impresión --- */
+@media print {
+    .site-header,
+    .navbar,
+    .footer-container,
+    .beta-label-simple,
+    .cookie-banner,
+    .btn-dc-bot-container,
+    .social-box-center,
+    .breadcrumbs,
+    #form-suggestion-send,
+    #box-btn-random {
+        display: none !important;
+    }
+
+    body,
+    .card,
+    .page-content-wrapper {
+        background: #ffffff !important;
+        color: #111111 !important;
+        box-shadow: none !important;
+    }
+
+    .card,
+    .page-content-wrapper {
+        border: 1px solid #cccccc !important;
     }
 }

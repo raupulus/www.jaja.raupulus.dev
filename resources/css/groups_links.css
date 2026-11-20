@@ -37,9 +37,23 @@
 }
 
 .groups-link-card:hover {
-    transform: translateY(-6px) scale(1.02);
     box-shadow: var(--shadow-lg);
     border-color: var(--color-primary);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .groups-link-card:hover {
+        transform: translateY(-6px) scale(1.02);
+    }
+
+    .groups-link-card:hover .groups-link-count {
+        transform: scale(1.1);
+        filter: brightness(1.15);
+    }
+
+    .groups-link-card:hover .groups-link-indicator {
+        transform: scale(1.2);
+    }
 }
 
 .groups-link-card:hover::before {
@@ -99,15 +113,9 @@
     color: var(--color-primary);
 }
 
-.groups-link-card:hover .groups-link-count {
-    transform: scale(1.1);
-    filter: brightness(1.15);
-}
-
 .groups-link-card:hover .groups-link-indicator {
     background: var(--color-text-accent);
     box-shadow: 0 0 12px rgba(38, 217, 238, 0.8);
-    transform: scale(1.2);
 }
 
 /* Efecto de brillo */
