@@ -1,34 +1,56 @@
 # Módulo de Taxonomía (Type, Group, Category)
 
-## Descripción General
-Este módulo engloba la forma en la que se clasifica todo el contenido y sugerencias de la aplicación. Se compone de tres pilares fundamentales que permiten organizar, filtrar y presentar el contenido tanto en la API como en la interfaz web.
+## Qué hace y qué NO hace
+- **Qué hace**: Organiza todo el contenido y sugerencias en tres ejes (`Type`, `Group`, `Category`), filtra taxonomías vacías en los listados públicos, optimiza consultas SEO y mantiene limpieza de imágenes e índices únicos parciales compatibles con `SoftDeletes`.
+- **Qué NO hace**: No devuelve páginas `200` vacías en rutas aleatorias sin contenido ni mezcla contenidos adultos dentro de las taxonomías públicas generales.
 
-## Componentes y Modelos
-1. **Type (Tipo)**:
-   - Define el formato o naturaleza del contenido. (Ej: Chiste, Adivinanza, Quiz).
-   - Posee campos de imagen y descripción para representarlos visualmente en la plataforma.
-   - Afecta la lógica de la aplicación (por ejemplo, los de tipo "Quiz" obligan a manejar y mostrar el modelo `ContentOption`).
+## Modelo de datos
+- **`App\Models\Type`** (tabla `types`, con `SoftDeletes`, `DeletesStoredImages`, `HasFactory`):
+  - Campos: `name`, `slug`, `description`, `image`.
+  - Relaciones: `hasMany(Group)`, `hasManyThrough(Content, Group)`.
+- **`App\Models\Group`** (tabla `groups`, con `SoftDeletes`, `DeletesStoredImages`, `HasFactory`):
+  - Campos: `type_id`, `title`, `slug`, `image`, `description`.
+  - Relaciones: `belongsTo(Type)`, `hasMany(Content)`.
+  - Scopes: `scopePublicSafe()`, `scopeHasAvailableContent()`.
+- **`App\Models\Category`** (tabla `categories`, con `SoftDeletes`, `DeletesStoredImages`, `HasFactory`):
+  - Campos: `title`, `slug`, `description`, `image`.
+  - Relaciones: `belongsToMany(Content)`, `belongsToMany(Suggestion)`.
+  - Scope: `scopeHasAvailableContent()`.
+- **Índices únicos parciales**: `types_slug_unique_active`, `groups_slug_unique_active` y `categories_slug_unique_active` (`WHERE deleted_at IS NULL` en PostgreSQL y SQLite).
 
-2. **Group (Grupo)**:
-   - Define el segmento demográfico o tono del contenido. (Ej: Adultos, Infantil, General).
-   - Contiene imágenes y descripciones.
-   - Tiene lógica de negocio importante ligada a la moderación. Por ejemplo, en los endpoints públicos y redes sociales, el contenido del grupo para "adultos" está excluido por defecto.
-   - **Scope `hasAvailableContent`**: Filtra grupos que posean contenidos aprobados disponibles públicamente (no adultos y fuera de los grupos internos `[4, 14]`).
+## Flujos principales
+1. **Listados web (`ContentController`)**: cachea `types_index`, `groups_index`, `groups_index_by_type_{id}` y `categories_index` (60 minutos), calculando `contents_count` y `last_content_date` en subconsultas (`withCount`, `withMax`) sin `N+1` y excluyendo grupos/categorías sin contenido público seguro.
+2. **Rutas aleatorias (`/grupo/{group:slug}/random` y `/categoria/{category:slug}/random`)**: obtienen hasta 3 elementos mediante `publicSafe()` y devuelven `404` intencionadamente si la colección está vacía.
+3. **Diferenciación SEO por tipo (`/{type:slug}/grupos`)**: inyecta `$type` en la vista para emitir `<title>`, `<h1>`, `<meta name="description">` y JSON-LD (`CollectionPage` + `BreadcrumbList`) diferenciados respecto a `/grupos`.
+4. **Cálculo legible de última actividad**: `Type::getLastUpdateMessageAttribute()` y `Group::getLastUpdateMessageAttribute()` usan `CarbonInterface::DIFF_ABSOLUTE`.
 
-3. **Category (Categoría)**:
-   - Define etiquetas de clasificación temática más específicas. (Ej: Informáticos, Cortos, Absurdos).
-   - Las categorías pueden ser asociadas múltiplemente a un solo contenido mediante la tabla pivot (muchos a muchos).
-   - Si no se especifica ninguna en una sugerencia, por defecto se asigna la categoría "General" (ID 1).
-   - **Scope `hasAvailableContent`**: Filtra categorías que cuenten con contenidos públicos y disponibles (no adultos y fuera de los grupos internos `[4, 14]`).
+## Puntos de entrada
+- **Web pública**: `/tipos`, `/grupos`, `/{type:slug}/grupos`, `/grupo/{group:slug}/random`, `/categorias`, `/categoria/{category:slug}/random`.
+- **API v1 (`auth:sanctum`)**: `/api/v1/types`, `/api/v1/groups`, `/api/v1/categories`, más filtros `*/content/random` en `routes/api/v1.php`.
+- **Filament (`/admin`)**: `Admin\TypeResource`, `Admin\GroupResource` (+ `ContentsRelationManager`), `Admin\CategoryResource`, protegidos por `AdminOnlyPolicy`.
 
-## Funcionalidad Técnica
-- **Caché e Invalidación (Cero `N+1`)**: Los listados de tipos (`types_index`), grupos (`groups_index` y `groups_index_by_type_{id}`) y categorías (`categories_index`) se cachean con `Cache::remember`, calculando la última fecha de contenido (`last_content_date`) y `contents_count` mediante subconsultas en `ContentController` para evitar consultas `N+1` en las vistas. `AppServiceProvider` + `CacheInvalidationService` invalidan estas claves automáticamente al guardar, eliminar o restaurar registros de `Type`, `Group`, `Category` o `Content`.
-- **Filtrado de Taxonomías Vacías (SEO & UX)**:
-  - En los listados `/categorias` y `/grupos`, únicamente se listan elementos que tengan contenidos públicos activos mediante `hasAvailableContent()`.
-  - En las rutas de contenido aleatorio por categoría (`/categoria/{slug}/random`) o por grupo (`/grupo/{slug}/random`), si el elemento no dispone de contenidos aptos para mostrar, el controlador devuelve `404 Not Found` en lugar de una página 200 vacía para evitar penalizaciones por *Soft 404* y *Thin Content* en Google Search Console.
-- **Rutas y SEO**: Existen rutas específicas en el sitemap para listados y cruces (por ejemplo, contenido aleatorio de un grupo o categoría) y todas las vistas de taxonomía emiten Schema.org JSON-LD (`CollectionPage` y `BreadcrumbList`) con jerarquía `h1 → h2` y textos de enlace descriptivos. Asimismo, `ContentController::gruposByTypeIndex()` inyecta `$type` en `contents.groups.index` para diferenciar el `<title>`, `<h1>` y `<meta name="description">` de `/{type}/grupos` respecto a `/grupos`.
-- **Relaciones, Índices y Limpieza de Imágenes**: Son modelos maestros utilizados extensamente en `Content` y `Suggestion` bajo relaciones `belongsTo` (para Type y Group) y `belongsToMany` (para Category). Los slugs de `Type`, `Group` y `Category` emplean índices únicos parciales `WHERE deleted_at IS NULL` en BD y regla `unique(..., whereNull('deleted_at'))` en Filament para poder reutilizar slugs tras borrado lógico, mientras los pivotes `content_categories`/`suggestion_categories` disponen de índices compuestos para agilizar filtros. `Type`, `Group` y `Category` integran `DeletesStoredImages` para eliminar imágenes reemplazadas o borradas definitivamente en `Storage::disk('public')` sin afectar sus imágenes por defecto (`images/default/*.webp`), y sus `FileUpload` en Filament limitan tamaño (`2048 KB`) y MIME (`JPEG`, `PNG`, `WebP`).
+## Dependencias
+- **Depende de**: `Content::scopePublicSafe()`, `DeletesStoredImages`, `CacheInvalidationService`, `App\Filament\Support\WebpImageUpload`.
+- **Usado por**: `Content`, `Suggestion`, `SitemapGeneratorCommand`, `StatsHelper`.
 
+## Configuración
+- `CONTENT_EXCLUDED_PUBLIC_GROUP_IDS` (`config/content.php`): excluye automáticamente grupos internos/sensibles (`[4, 14]` por defecto) en `Group::scopePublicSafe()` y `scopeHasAvailableContent()`.
+
+## Trampas conocidas
+- Las rutas aleatorias `/categoria/{slug}/random` y `/grupo/{slug}/random` devuelven `404` cuando no tienen contenido público apto (aunque tengan contenido marcado `is_adult = true`).
+- La categoría ID `1` (`General`) es requerida por el `boot()` de `Content` y `Suggestion`.
+- En tests bajo PostgreSQL con `RefreshDatabase`, las secuencias no retroceden con `ROLLBACK`; `tests/TestCase.php` adelanta `groups_id_seq` a `>= 100` para no colisionar accidentalmente con los grupos excluidos `[4, 14]`.
+
+## Tests que lo cubren
+- `tests/Feature/CategoryEmptyContentTest.php`
+- `tests/Feature/DatabaseIndexesAndSoftDeletesTest.php`
+- `tests/Feature/SeoMetadataAndSitemapTest.php`
+- `tests/Feature/DatabasePerformanceAndAtomicityTest.php`
+- `tests/Feature/ReliabilityAndArchitectureTest.php`
+- `tests/Unit/ImageSanitizationAndCleanupTest.php`
+
+## Pendiente real
+- Sin deuda técnica pendiente del alcance actual.
 
 ---
 > Creado: 2026-06-29 · Última revisión: 2026-11-20

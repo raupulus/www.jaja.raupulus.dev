@@ -1,31 +1,51 @@
-# Módulo de Comandos (Console/Commands)
+# Módulo de Comandos Artisan y Tareas Programadas
 
-## Descripción General
-Este módulo contiene los comandos de consola (Artisan) personalizados que se ejecutan en segundo plano o mediante tareas programadas (cron) para el mantenimiento de la aplicación.
+## Qué hace y qué NO hace
+- **Qué hace**: Automatiza mediante Artisan y el planificador de Laravel (`routes/console.php`) la regeneración del `sitemap.xml`, el recálculo cacheado de estadísticas y la publicación programada en redes sociales, exponiendo también disparadores confirmados en el dashboard de `/admin`.
+- **Qué NO hace**: No publica contenido marcado `is_adult = true` ni de grupos excluidos (`[4, 14]`), ni ejecuta tareas concurrentes solapadas (`withoutOverlapping()`).
 
-## Componentes
-1. **SitemapGeneratorCommand (`app/Console/Commands/SitemapGeneratorCommand.php`)**:
-   - Genera dinámicamente el `sitemap.xml` para la web pública (acepta `--output=` para escribir en ruta alternativa durante pruebas o validaciones).
-   - Itera a través de páginas estáticas publicadas, colaboradores con proyectos publicados, `Type::all()` para construir las rutas `/{type}/grupos`, grupos y categorías.
-   - Excluye artefactos técnicos no indexables (`docs/collection.json`, `docs/openapi.yaml`) y utiliza fechas `lastmod` reales derivadas de los registros en base de datos y fecha de compilación de `docs`.
-   - **Optimización SEO**: Filtra grupos y categorías utilizando el scope `hasAvailableContent()`, asegurando que no se indexen ni se añadan al sitemap URLs vacías que puedan provocar errores de tipo *Soft 404* en Google Search Console.
-   - Previene errores de permisos en servidor y asegura la visibilidad SEO.
+## Modelo de datos
+- No crea tablas propias; lee `Type`, `Group`, `Category`, `Content`, `Suggestion`, `Page`, `Collaborator`, `CollaboratorProject` y `User`, actualizando `contents.last_social_published` al publicar en redes y claves de caché en `StatsHelper`.
 
-2. **StatsCommand (`app/Console/Commands/StatsCommand.php`)**:
-   - Calcula asincrónicamente las estadísticas globales de la aplicación y las estadísticas de cada usuario/uploader.
-   - Refresca los contadores de aportaciones para mostrarlos en el frontend.
-   - Excluye del cómputo los contenidos eliminados o reportados.
+## Flujos principales
+1. **`sitemap:generate` (`SitemapGeneratorCommand`)**:
+   - Acepta `{--force}`, `{--chunk=100}` y `{--output=}` (útil para validaciones en ruta temporal).
+   - Incluye rutas estáticas públicas, páginas publicadas, colaboradores con proyectos publicados, `Type::all()` y grupos/categorías filtrados con `publicSafe()` y `hasAvailableContent()`, excluyendo `docs/collection.json` y `docs/openapi.yaml`.
+   - Realiza copia temporal `.bak` y la elimina al verificar escritura válida.
+2. **`stats:update` (`StatsCommand`)**:
+   - Refresca las claves `suggestions_pending_count`, `suggestions_accepted_count`, `contents_count`, `users_active_total`, `users_more_active_10`, `users_more_active_20` y `types_and_groups_and_categories_count` vía `StatsHelper`.
+3. **`content:publish-social` (`PublishContentToSocialCommand`)**:
+   - Selecciona el primer `Content::publicSafe()` priorizando `last_social_published IS NULL` y después los más antiguos, y lo envía mediante `PublishToSocialHelper::publishContent()`.
 
-3. **PublishContentToSocialCommand (`app/Console/Commands/PublishContentToSocialCommand.php`)**:
-   - Permite la publicación automatizada de contenidos (chistes, adivinanzas) en las redes sociales conectadas al proyecto (Bluesky, Telegram, Mastodon, X/Twitter).
-   - Puede ser invocado de forma manual desde el panel de administración o programado.
+## Puntos de entrada
+- **CLI Artisan**: `php artisan sitemap:generate`, `php artisan stats:update`, `php artisan content:publish-social`.
+- **Scheduler (`routes/console.php`)**:
+  - `stats:update` cada 30 minutos (`->withoutOverlapping()`).
+  - `sitemap:generate` diario a las `02:00` (`->withoutOverlapping()`).
+  - `content:publish-social` diario a las `07:00`, `12:00` y `18:00` (`->withoutOverlapping()`).
+- **Web Admin (`AdminController` / `Admin\Pages\Dashboard`)**: acciones `POST /admin/action/generate/sitemap` y `POST /admin/action/generate/stats` protegidas por `['auth', 'isAdmin']` y modal de confirmación.
 
-## Funcionalidad Técnica
-- Estos comandos están registrados en `routes/console.php` usando la fachada explícita `Illuminate\Support\Facades\Schedule` y protegidos con `->withoutOverlapping()` (`stats:update`, `sitemap:generate` y las tres ventanas diarias de `content:publish-social`), además de poder lanzarse bajo confirmación (`POST` / modal) desde `App\Filament\Admin\Pages\Dashboard`.
-- Los logs estructurados emitidos vía `Log::warning`/`Log::error` por todos los comandos se registran en **inglés** manteniendo la salida de consola para operadores en español.
-- Son esenciales para separar la carga de cálculo y peticiones externas del ciclo de vida HTTP normal.
-- Verificados en `tests/Feature/FactoriesAndCommandsTest.php` (`stats:update`, `content:publish-social` con `Http::fake()`, `sitemap:generate --output=...`), `tests/Feature/SeoMetadataAndSitemapTest.php` y `tests/Feature/ReliabilityAndArchitectureTest.php` (`schedule:list`).
+## Dependencias
+- **Depende de**: `spatie/laravel-sitemap`, `PublishToSocialHelper`, `StatsHelper`, `Content::scopePublicSafe()`, `Group`/`Category::scopeHasAvailableContent()`.
+- **Usado por**: Cron de producción, dashboard de administración y pruebas de comandos.
 
+## Configuración
+- `SOCIAL_PUBLISHER_URL`, `SOCIAL_PUBLISHER_CONNECT_TIMEOUT`, `SOCIAL_PUBLISHER_TIMEOUT` (`config/services.php`).
+- `CONTENT_EXCLUDED_PUBLIC_GROUP_IDS` (`config/content.php`).
+
+## Trampas conocidas
+- `sitemap:generate` mantiene un lock de caché (`sitemap_generation_lock`) durante la ejecución; en ejecuciones de prueba repetidas conviene pasar `--force` y siempre `--output=<ruta_temporal>` para no sobrescribir `public/sitemap.xml`.
+- En `PublishContentToSocialCommand`, se debe mantener `orderByRaw('last_social_published IS NULL DESC')`, sintaxis compatible tanto con PostgreSQL como con SQLite.
+- Los logs de error en comandos van en inglés (`Log::error` / `Log::warning`) aunque los mensajes de consola para el operador estén en español.
+
+## Tests que lo cubren
+- `tests/Feature/FactoriesAndCommandsTest.php`
+- `tests/Feature/SeoMetadataAndSitemapTest.php`
+- `tests/Feature/ReliabilityAndArchitectureTest.php`
+- `tests/Feature/FilamentPanelsUxTest.php`
+
+## Pendiente real
+- Sin deuda técnica pendiente del alcance actual.
 
 ---
 > Creado: 2026-06-29 · Última revisión: 2026-11-20

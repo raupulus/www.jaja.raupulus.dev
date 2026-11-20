@@ -19,7 +19,8 @@ app/
 ├── Exceptions/           # Manejo de excepciones
 ├── Filament/
 │   ├── Admin/            # Panel /admin (Resources y Widgets)
-│   └── Panel/            # Panel /panel (Resources y Widgets)
+│   ├── Panel/            # Panel /panel (Resources y Widgets)
+│   └── Support/          # Utilidades compartidas Filament (WebpImageUpload)
 ├── Helpers/              # IpHelper, PublishToSocialHelper, StatsHelper
 ├── Http/
 │   ├── Controllers/      # Controladores web y Api/ (AuthController, V1Controller)
@@ -28,15 +29,15 @@ app/
 │   ├── Resources/        # API Resources
 │   ├── Responses/        # ApiResponse
 │   └── Traits/           # ApiResponseTrait
-├── Models/               # Modelos Eloquent
-└── Providers/            # AppServiceProvider y proveedores Filament
+├── Models/               # Modelos Eloquent y Concerns/ (DeletesStoredImages)
+├── Policies/             # Políticas de autorización Filament y dominio
+├── Providers/            # AppServiceProvider y proveedores Filament
+└── Services/             # CacheInvalidationService
 config/                   # Configuración Laravel y paquetes
 database/                 # Migraciones, seeders y factories
 docs/
-├── info/                 # Documentación técnica VIVA del proyecto (versionada)
-│   └── apis/             # Cómo integramos APIs externas
-├── planning/             # [NO GIT · EFÍMERO] Planificaciones locales por desarrollador
-└── auditorias/           # [NO GIT · EFÍMERO] Informes de auditoría locales
+└── info/                 # Documentación técnica VIVA del proyecto (versionada)
+    └── apis/             # Cómo integramos APIs externas
 lang/                     # Traducciones
 public/                   # Punto de entrada público y assets compilados
 resources/
@@ -47,6 +48,7 @@ routes/                   # web.php, console.php y api/v1.php
 scripts/                  # Scripts auxiliares de entorno y base de datos
 tests/                    # Tests PHPUnit (Feature/ y Unit/)
 phpstan.neon              # Configuración Larastan / PHPStan nivel 5
+phpunit.pgsql.xml         # Configuración PHPUnit con paridad PostgreSQL real
 ```
 
 ## Reglas de Arquitectura y Código
@@ -130,5 +132,8 @@ php artisan route:cache && php artisan config:cache && php artisan view:cache &&
 | Área | Trampa | Referencia |
 |---|---|---|
 | SEO / Rutas aleatorias | `/categoria/{slug}/random` y `/grupo/{slug}/random` devuelven `404` intencionadamente si no hay contenido apto (evita *Soft 404*). | [decisiones-tecnicas.md](docs/info/decisiones-tecnicas.md), [Taxonomy.md](docs/info/Taxonomy.md) |
-| Publicación social | `PublishToSocialHelper` rechaza cualquier contenido con `is_adult = true` y apunta a `http://localhost:8080/publish`. | [decisiones-tecnicas.md](docs/info/decisiones-tecnicas.md) |
-| reCAPTCHA | Si `config('google.recaptcha.secret_key')` está vacío, `VerifyRecaptcha` deja pasar la petición sin validar. | [apis/recaptcha.md](docs/info/apis/recaptcha.md) |
+| Publicación social | `PublishToSocialHelper` rechaza cualquier contenido con `is_adult = true` y usa `config('services.social_publisher.url')` (por defecto `http://localhost:8080/publish`). | [decisiones-tecnicas.md](docs/info/decisiones-tecnicas.md), [Actions.md](docs/info/Actions.md) |
+| reCAPTCHA / Proxy IP | Si `config('google.recaptcha.secret_key')` está vacío, `VerifyRecaptcha` deja pasar la petición; `IpHelper` solo confía en `CF-Connecting-IP` si la IP origen figura en `TRUSTED_PROXIES` (`config/trustedproxy.php`). | [apis/recaptcha.md](docs/info/apis/recaptcha.md), [Actions.md](docs/info/Actions.md) |
+| SoftDeletes y unicidad | `users.email`, `categories.slug`, `types.slug`, `groups.slug` y `pages.slug` usan índices únicos parciales `WHERE deleted_at IS NULL`; los formularios Filament deben añadir `whereNull('deleted_at')`. | [decisiones-tecnicas.md](docs/info/decisiones-tecnicas.md), [Taxonomy.md](docs/info/Taxonomy.md) |
+| API / Quiz imágenes | `ContentOptionResource` comprueba `$this->image_path` (no `$this->image`) al construir `urlImage`. | [API.md](docs/info/API.md), [Content.md](docs/info/Content.md) |
+| Tests PostgreSQL | Bajo `RefreshDatabase`, las secuencias PG no retroceden tras `ROLLBACK`: usar `$this->ensureGeneralCategory()` (`id = 1`), `groups_id_seq >= 100` para evitar colisión con `[4, 14]`, `DB::transaction()` (SAVEPOINT) antes de esperar `QueryException` y ejecutar `php artisan test -c phpunit.pgsql.xml` (no `--configuration=`). | [decisiones-tecnicas.md](docs/info/decisiones-tecnicas.md), [README.md](docs/info/README.md) |

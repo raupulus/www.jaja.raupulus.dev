@@ -1,24 +1,48 @@
 # Módulo de Páginas Estáticas (Page)
 
-## Descripción General
-El módulo `Page` es un mini-CMS integrado destinado a gestionar páginas informativas estáticas dentro de la plataforma. Esto evita tener que modificar vistas (Blade templates) por cada cambio de textos legales o informativos.
+## Qué hace y qué NO hace
+- **Qué hace**: Actúa como mini-CMS integrado para publicar páginas legales e informativas (Normas de Uso, Privacidad, Cookies, Guía de la API) renderizando Markdown seguro, metadatos SEO, JSON-LD y enlaces públicos en `sitemap.xml`.
+- **Qué NO hace**: No expone borradores (`status = 'draft'`) en la web pública ni en el sitemap, ni permite JavaScript sin sanear dentro del Markdown (`Parsedown::setSafeMode(true)`).
 
-## Componentes y Modelos
-- **Page**: Almacena el título, slug, contenido enriquecido (HTML/Markdown) y metadatos SEO.
+## Modelo de datos
+- **`App\Models\Page`** (tabla `pages`, con `SoftDeletes`, `DeletesStoredImages`, `HasFactory`):
+  - Campos clave: `title`, `slug`, `excerpt`, `content`, `image`, `keywords`, `status` (`draft`, `published`).
+  - Accessors y helpers: `url` (`route('page.show', $this->slug)`), `urlImage`, `urlImageThumbnail`, `getHtmlContent()` (`\Parsedown` en modo seguro).
+  - Índice único parcial: `pages_slug_unique_active` (`WHERE deleted_at IS NULL`).
 
-## Funcionalidad Técnica
-1. **Gestión de Páginas Legales e Informativas**:
-   - Usado intensamente para páginas requeridas como: Normas de Uso, Política de Privacidad, Política de Cookies y Condiciones de Cesión de Contenido.
-2. **Sistema de Enrutado**:
-   - El enrutamiento capta el `slug` guardado en la base de datos (ej. `/pagina/normas`) y renderiza la vista pública.
-   - Existe una ruta índice para listar todas las páginas creadas (`/paginas`).
-3. **SEO, Metadatos y Datos Estructurados**:
-   - Las páginas generadas insertan automáticamente metadatos personalizados en el layout `head.blade.php` (`og_type="article"`, `description` recortada a 155 caracteres), optimizando la previsualización en redes sociales y la indexación por parte de motores de búsqueda.
-   - `pages/index.blade.php` emite JSON-LD `CollectionPage` + `BreadcrumbList` (con jerarquía `h1 → h2` y anchor texts descriptivos `Leer {título}`), y `pages/show.blade.php` emite `WebPage` + `BreadcrumbList`.
-4. **Filament Resource e Imágenes**:
-   - Son gestionadas desde `Admin/PageResource` empleando `MarkdownEditor` y un esquema responsive (`columns(['default' => 1, 'lg' => 3])`), filtro por estado (`published`/`draft`), columna de palabras clave ocultable, `ActionGroup` en tabla e índice único parcial por `slug` (`WHERE deleted_at IS NULL`) alineado con validación en Filament.
-   - Las subidas de imagen limitan tamaño a `2048 KB` (`JPEG`, `PNG`, `WebP`) y, al actualizar la imagen o eliminar una página, `DeletesStoredImages` borra el fichero previo de `Storage::disk('public')`.
+## Flujos principales
+1. **Índice y visualización pública (`PageController`)**:
+   - `/paginas` lista páginas publicadas omitiendo el contenedor de imagen cuando una página no dispone de imagen y emitiendo JSON-LD `CollectionPage` + `BreadcrumbList` con jerarquía `h1 → h2` y textos descriptivos (`Leer {título}`).
+   - `/pagina/{page:slug}` muestra el contenido Markdown convertido a HTML seguro (`og_type="article"`, `description` recortada a 155 caracteres y JSON-LD `WebPage` + `BreadcrumbList`). Si el registro está en `draft`, responde `404`.
+2. **Gestión en Filament (`Admin\PageResource`)**:
+   - Formulario responsive (`columns(['default' => 1, 'lg' => 3])`) con `MarkdownEditor`, `WebpImageUpload` (2048 KB, `JPEG`/`PNG`/`WebP`), validación de unicidad por `slug` ignorando `deleted_at IS NOT NULL`, filtro por `status`, `ActionGroup` en tabla e invalidación automática en `CacheInvalidationService`.
 
+## Puntos de entrada
+- **Web pública**: `/paginas`, `/pagina/{page:slug}`.
+- **Filament (`/admin`)**: `Admin\PageResource` protegido por `PagePolicy` / `AdminOnlyPolicy`.
+
+## Dependencias
+- **Depende de**: `DeletesStoredImages`, `WebpImageUpload`, `CacheInvalidationService`, `erusev/parsedown`.
+- **Usado por**: `SitemapGeneratorCommand` (`addPagesToSitemap()`), navegación principal y documentación `/pagina/api` enlazada con Scribe.
+
+## Configuración
+- Sin variables de entorno propias; hereda configuración general de caché (`CacheInvalidationService`) y disco público (`Storage::disk('public')`).
+
+## Trampas conocidas
+- En `/pagina/api`, las anclas rápidas en `resources/views/pages/show.blade.php` dependen de los IDs generados por Scribe (`#autenticacion`, `#categorias-grupos-y-tipos`, `#contenidos`, `#sugerencias`, `#reportes`).
+- Al usar `Page::keywords` en `@section('keywords', ...)`, debe forzarse a cadena `(string) ($page->keywords ?? '')` cuando `keywords` es `null`.
+
+## Tests que lo cubren
+- `tests/Feature/ApiV1ContractTest.php`
+- `tests/Feature/DesignSystemAndPerformanceTest.php`
+- `tests/Feature/SeoMetadataAndSitemapTest.php`
+- `tests/Feature/ResponsiveUxAndW3cTest.php`
+- `tests/Feature/DatabaseIndexesAndSoftDeletesTest.php`
+- `tests/Feature/FilamentPanelsUxTest.php`
+- `tests/Feature/FactoriesAndCommandsTest.php`
+
+## Pendiente real
+- Implementar generación de miniaturas diferenciadas en `getUrlImageThumbnailAttribute()` cuando el diseño lo necesite (actualmente devuelve `urlImage`).
 
 ---
 > Creado: 2026-06-29 · Última revisión: 2026-11-20
