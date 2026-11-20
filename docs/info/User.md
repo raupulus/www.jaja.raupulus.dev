@@ -20,3 +20,7 @@ El módulo `User` gestiona la autenticación, roles básicos y perfiles público
 4. **Relaciones**:
    - Tienen relación con las tablas de tokens de acceso personal de Sanctum.
    - Poseen relación implícita con `Content` para calcular las estadísticas y aportes.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

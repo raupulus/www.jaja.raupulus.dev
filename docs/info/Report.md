@@ -15,3 +15,7 @@ El módulo `Report` provee a los consumidores de la API y visitantes de la web u
    - Permite a los administradores evaluar el reporte, visualizar el contenido vinculado y tomar acciones correctivas (ej. forzar el borrado del contenido o simplemente descartar el reporte).
 3. **Relaciones**:
    - `belongsTo`: Content. Cada reporte está ligado intrínsecamente a un contenido particular.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

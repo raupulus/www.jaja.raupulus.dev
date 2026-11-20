@@ -16,3 +16,7 @@ El módulo `Page` es un mini-CMS integrado destinado a gestionar páginas inform
    - Las páginas generadas insertan automáticamente metadatos personalizados en el layout `head.blade.php`, optimizando la previsualización en redes sociales y la indexación por parte de motores de búsqueda.
 4. **Filament Resource**:
    - Son gestionadas desde el panel de administrador empleando editores de texto enriquecido provistos por Filament (como Trix o RichEditor).
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

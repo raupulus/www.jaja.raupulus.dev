@@ -20,3 +20,7 @@ Este módulo se compone de tres entidades principales:
 
 ## Endpoints Asociados
 Los contenidos se exponen de forma pública a través de endpoints de la API (documentados en Scribe) para devolver elementos aleatorios, o filtrados por Grupo, Tipo y Categoría, excluyendo contenido explícito si es necesario.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

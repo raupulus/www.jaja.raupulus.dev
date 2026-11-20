@@ -1,0 +1,27 @@
+# Decisiones Técnicas
+
+Registro de decisiones deliberadas del proyecto verificadas en el código, para evitar que futuros cambios las reviertan por error.
+
+## 1. Devolver `404 Not Found` en rutas aleatorias sin contenido
+- **Dónde**: Controladores web de contenido aleatorio por categoría (`/categoria/{slug}/random`) o grupo (`/grupo/{slug}/random`).
+- **Decisión**: Si no hay contenidos aptos para mostrar, se devuelve HTTP `404` en lugar de una página `200` vacía.
+- **Motivo**: Evitar penalizaciones SEO por *Soft 404* y *Thin Content* en Google Search Console.
+- **Test asociado**: `tests/Feature/CategoryEmptyContentTest.php`.
+
+## 2. Separación de paneles Filament (`/admin` y `/panel`)
+- **Dónde**: `app/Providers/Filament/AdminPanelProvider.php` y `app/Providers/Filament/PanelPanelProvider.php`.
+- **Decisión**: Mantener dos paneles Filament separados: administración completa en `/admin` y gestión de aportaciones/colaborador para usuarios en `/panel`.
+- **Motivo**: Aislar permisos y recursos expuestos sin duplicar vistas Blade manuales.
+
+## 3. Publicación en redes sociales mediante servicio local externo
+- **Dónde**: `app/Helpers/PublishToSocialHelper.php` y `app/Console/Commands/PublishContentToSocialCommand.php`.
+- **Decisión**: Delegar la publicación en redes sociales a un servicio HTTP local (`http://localhost:8080/publish`), excluyendo siempre contenido marcado con `is_adult = true`.
+- **Motivo**: Desacoplar las credenciales y APIs de cada red social de la aplicación Laravel.
+
+## 4. Verificación reCAPTCHA opcional según configuración
+- **Dónde**: `app/Http/Middleware/VerifyRecaptcha.php`.
+- **Decisión**: Si `config('google.recaptcha.secret_key')` no está configurado, el middleware deja pasar la petición sin bloquear.
+- **Motivo**: Permitir desarrollo local y tests sin depender de credenciales de Google reCAPTCHA.
+
+---
+> Creado: 2026-11-20 · Última revisión: 2026-11-20

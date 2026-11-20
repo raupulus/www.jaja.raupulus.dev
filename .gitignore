@@ -24,4 +24,5 @@ yarn-error.log
 /public/sitemap.xml
 /.scribe
 /.junie
-/docs/planning
+/docs/planning/
+/docs/auditorias/

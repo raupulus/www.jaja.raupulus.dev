@@ -17,3 +17,7 @@ Este módulo gestiona el directorio de colaboradores de código o software abier
 3. **Relaciones**:
    - `Collaborator` `hasMany` `CollaboratorProject`.
    - `CollaboratorProject` `belongsTo` `Collaborator`.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

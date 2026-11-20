@@ -28,3 +28,7 @@ Este módulo engloba la forma en la que se clasifica todo el contenido y sugeren
   - En las rutas de contenido aleatorio por categoría (`/categoria/{slug}/random`) o por grupo (`/grupo/{slug}/random`), si el elemento no dispone de contenidos aptos para mostrar, el controlador devuelve `404 Not Found` en lugar de una página 200 vacía para evitar penalizaciones por *Soft 404* y *Thin Content* en Google Search Console.
 - **Rutas y SEO**: Existen rutas específicas en el sitemap para listados y cruces (por ejemplo, contenido aleatorio de un grupo o categoría).
 - **Relaciones**: Son modelos maestros utilizados extensamente en `Content` y `Suggestion` bajo relaciones `belongsTo` (para Type y Group) y `belongsToMany` (para Category).
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

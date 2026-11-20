@@ -25,3 +25,7 @@ La API de JaJa Project es el principal medio por el cual clientes externos (Bots
 3. **Formatos**:
    - Toda la comunicación se debe realizar forzando los headers `Accept: application/json` y `Content-type: application/json`.
    - Las respuestas con colecciones múltiples o vacías siempre deben adaptar sus envoltorios JSON, devolviendo plural o singular según el caso.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

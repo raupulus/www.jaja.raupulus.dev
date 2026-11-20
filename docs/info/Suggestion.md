@@ -22,3 +22,7 @@ El módulo `Suggestion` es el puente de entrada para las aportaciones de la comu
    - `belongsTo`: Group, Type.
    - `belongsToMany`: Category (a través de SuggestionCategory).
    - `hasMany`: SuggestionOption.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

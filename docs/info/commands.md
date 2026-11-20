@@ -22,3 +22,7 @@ Este módulo contiene los comandos de consola (Artisan) personalizados que se ej
 ## Funcionalidad Técnica
 - Estos comandos están registrados y configurados para ejecutarse periódicamente a través del programador de tareas de Laravel (`app/Console/Kernel.php` o `routes/console.php`).
 - Son esenciales para separar la carga de cálculo y peticiones externas del ciclo de vida HTTP normal.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20

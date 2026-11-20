@@ -12,3 +12,7 @@ El módulo `Actions` almacena clases de única responsabilidad utilizadas a lo l
 ## Funcionalidad Técnica
 - Las acciones actúan como servicios invocables (a menudo usando el método mágico `__invoke`).
 - Permiten centralizar reglas complejas (como manejo de Intervention Image o compresión), reduciendo la duplicación de código en todo el proyecto.
+
+
+---
+> Creado: 2026-06-29 · Última revisión: 2026-11-20
