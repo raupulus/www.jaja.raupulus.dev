@@ -78,7 +78,12 @@ class TypeResource extends Resource
                     ->columnSpanFull()
                     ->label('Slug')
                     ->required()
-                    ->unique('types', 'slug', ignoreRecord: true)
+                    ->unique(
+                        'types',
+                        'slug',
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                    )
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
                     ->label('Descripción')

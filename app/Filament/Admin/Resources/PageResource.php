@@ -51,7 +51,12 @@ class PageResource extends Resource
                                 ->label('Slug')
                                 ->required()
                                 ->maxLength(255)
-                                ->unique(Page::class, 'slug', ignoreRecord: true)
+                                ->unique(
+                                    Page::class,
+                                    'slug',
+                                    ignoreRecord: true,
+                                    modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                                )
                                 ->rules(['alpha_dash'])
                                 ->helperText('URL amigable para la página'),
 

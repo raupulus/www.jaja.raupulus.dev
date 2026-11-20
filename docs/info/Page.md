@@ -16,7 +16,7 @@ El módulo `Page` es un mini-CMS integrado destinado a gestionar páginas inform
    - Las páginas generadas insertan automáticamente metadatos personalizados en el layout `head.blade.php` (`og_type="article"`, `description` recortada a 155 caracteres), optimizando la previsualización en redes sociales y la indexación por parte de motores de búsqueda.
    - `pages/index.blade.php` emite JSON-LD `CollectionPage` + `BreadcrumbList` (con jerarquía `h1 → h2` y anchor texts descriptivos `Leer {título}`), y `pages/show.blade.php` emite `WebPage` + `BreadcrumbList`.
 4. **Filament Resource e Imágenes**:
-   - Son gestionadas desde `Admin/PageResource` empleando `MarkdownEditor` y un esquema responsive (`columns(['default' => 1, 'lg' => 3])`), filtro por estado (`published`/`draft`), columna de palabras clave ocultable y `ActionGroup` en tabla.
+   - Son gestionadas desde `Admin/PageResource` empleando `MarkdownEditor` y un esquema responsive (`columns(['default' => 1, 'lg' => 3])`), filtro por estado (`published`/`draft`), columna de palabras clave ocultable, `ActionGroup` en tabla e índice único parcial por `slug` (`WHERE deleted_at IS NULL`) alineado con validación en Filament.
    - Las subidas de imagen limitan tamaño a `2048 KB` (`JPEG`, `PNG`, `WebP`) y, al actualizar la imagen o eliminar una página, `DeletesStoredImages` borra el fichero previo de `Storage::disk('public')`.
 
 

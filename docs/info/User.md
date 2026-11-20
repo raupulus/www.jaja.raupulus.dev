@@ -10,7 +10,7 @@ El módulo `User` gestiona la autenticación, roles básicos y perfiles público
 1. **Autenticación y Validación en Panel**:
    - Gestionada a través de Laravel Sanctum para la emisión y verificación de tokens en la API.
    - Existen dos puntos de entrada web: `/admin/login` para administradores y `/panel/login` (o `/login`) para usuarios generales.
-   - En `Admin/UserResource`, el campo `email` valida unicidad ignorando el registro actual (`unique(ignoreRecord: true)`) y el avatar admite `JPEG`, `PNG` o `WebP` hasta `2048 KB`.
+   - En `Admin/UserResource`, el campo `email` valida unicidad solo frente a usuarios activos (`unique(ignoreRecord: true)` con `whereNull('deleted_at')`, respaldado en BD por el índice único parcial `users_email_unique_active`) y el avatar admite `JPEG`, `PNG` o `WebP` hasta `2048 KB`.
    - `User` utiliza `DeletesStoredImages` para eliminar automáticamente avatares anteriores o al ejecutar `forceDelete()`, preservando `images/default/avatar.webp`.
 2. **Sistema de Roles y Control de Acceso**:
    - El modelo carece de un paquete complejo de roles y permisos (como Spatie) por simplicidad de negocio.

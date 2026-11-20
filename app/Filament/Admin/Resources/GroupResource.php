@@ -101,7 +101,12 @@ class GroupResource extends Resource
                     ->columnSpanFull()
                     ->label('Slug')
                     ->required()
-                    ->unique('groups', 'slug', ignoreRecord: true)
+                    ->unique(
+                        'groups',
+                        'slug',
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                    )
                     ->maxLength(255),
 
                 TextArea::make('description')

@@ -33,5 +33,10 @@ Registro de decisiones deliberadas del proyecto verificadas en el código, para 
 - **Decisión**: Estandarizar el dominio canónico público en `https://jaja.raupulus.dev` (sin `www.`), redirigiendo `301` desde `www.jaja.raupulus.dev` en `apache.conf` y alineando `robots.txt` (`Sitemap`) y `llms.txt`. Mantener `public/llms.txt` limitado exclusivamente a rutas públicas reales y endpoints públicos de `/api/v1/random`.
 - **Motivo**: Evitar contenido duplicado entre subdominios, preservar la autoridad SEO y no exponer rutas internas ni obsoletas a rastreadores e integraciones LLM.
 
+## 7. Índices de claves foráneas e índices únicos parciales `WHERE deleted_at IS NULL`
+- **Dónde**: `database/migrations/2026_11_20_120000_add_missing_foreign_key_indexes.php`, `database/migrations/2026_11_20_120100_replace_unique_constraints_with_partial_soft_delete_indexes.php` y formularios Filament (`UserResource`, `CategoryResource`, `TypeResource`, `GroupResource`, `PageResource`, `ContentResource`).
+- **Decisión**: Añadir de forma puramente aditiva los índices sobre claves foráneas y columnas frecuentes (`content_categories`, `content_options`, `suggestions`, `suggestion_options`, `suggestion_categories`, `collaborators`, `collaborator_projects`, `reports`, `contents`) y sustituir las restricciones `unique` estándar en tablas con `SoftDeletes` (`users.email`, `categories.slug`, `types.slug`, `groups.slug`, `pages.slug`) por índices únicos parciales `WHERE deleted_at IS NULL` (compatibles con PostgreSQL y SQLite), alineando la regla `unique` en Filament con `whereNull('deleted_at')`.
+- **Motivo**: Evitar *Sequential Scans* en joins frecuentes en PostgreSQL y permitir reutilizar un `email` o `slug` tras un borrado lógico sin provocar errores `500 UniqueConstraintViolationException`, manteniendo reversibilidad sin pérdida de datos en producción.
+
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

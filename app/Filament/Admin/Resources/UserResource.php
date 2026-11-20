@@ -80,7 +80,10 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->unique(ignoreRecord: true)
+                    ->unique(
+                        ignoreRecord: true,
+                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                    )
                     ->label('Email')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nick')
