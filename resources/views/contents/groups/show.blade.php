@@ -8,6 +8,45 @@
     @vite(['resources/css/social_icons.css'])
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => $group->title,
+            'description' => $group->description,
+            'url' => route('content.group.content.random', $group->slug),
+            'inLanguage' => 'es',
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Grupos',
+                    'item' => route('content.groups.index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => $group->title,
+                    'item' => route('content.group.content.random', $group->slug),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
     <div class="text-left">
         <a href="{{route('content.groups.index')}}">

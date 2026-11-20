@@ -31,6 +31,37 @@
 
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'WebSite',
+            '@id' => route('index') . '#website',
+            'name' => config('app.name'),
+            'url' => route('index'),
+            'inLanguage' => 'es',
+            'description' => 'Comunidad abierta en español para compartir chistes, adivinanzas y preguntas tipo quiz, con API gratuita y bots comunitarios.',
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'Organization',
+            'name' => config('app.name'),
+            'url' => route('index'),
+            'logo' => asset('images/social/jaja-project-logo-social.jpg'),
+            'sameAs' => [
+                'https://t.me/jajaproject',
+                'https://mas.to/@jajupulus',
+                'https://bsky.app/profile/jajupulus.bsky.social',
+                'https://x.com/jajupulus',
+                'https://gitlab.com/raupulus/www.jaja.raupulus.dev',
+                'https://github.com/raupulus/www.jaja.raupulus.dev',
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
 
     <section>

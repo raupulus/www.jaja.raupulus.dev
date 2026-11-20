@@ -8,6 +8,38 @@
     @vite(['resources/css/pages.css'])
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => 'Listado de páginas en ' . config('app.name'),
+            'url' => route('page.index'),
+            'inLanguage' => 'es',
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Páginas',
+                    'item' => route('page.index'),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
 
     <div class="page-container">

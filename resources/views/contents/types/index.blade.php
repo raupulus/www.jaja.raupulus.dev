@@ -8,6 +8,38 @@
     @vite(['resources/css/social_icons.css', 'resources/css/horizontal_card.css'])
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => 'Tipos de contenido - ' . config('app.name'),
+            'url' => route('content.types.index'),
+            'inLanguage' => 'es',
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Tipos',
+                    'item' => route('content.types.index'),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
     <h1 class="text-center">Tipos de contenido</h1>
 

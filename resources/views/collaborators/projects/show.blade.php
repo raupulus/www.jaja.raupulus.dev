@@ -13,6 +13,57 @@
     @vite(['resources/css/page.css', 'resources/css/projects.css'])
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => array_filter([
+            '@context' => 'https://schema.org',
+            '@type' => 'SoftwareApplication',
+            'name' => $project->title,
+            'description' => $project->excerpt,
+            'url' => route('collaborator.project.show', [$collaborator->nick, $project->slug]),
+            'applicationCategory' => $project->type,
+            'image' => $project->urlImage,
+            'author' => [
+                '@type' => 'Person',
+                'name' => $collaborator->name,
+                'url' => route('collaborator.show', $collaborator->nick),
+            ],
+        ]),
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Colaboradores',
+                    'item' => route('collaborator.index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => $collaborator->name,
+                    'item' => route('collaborator.show', $collaborator->nick),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 4,
+                    'name' => $project->title,
+                    'item' => route('collaborator.project.show', [$collaborator->nick, $project->slug]),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
     <div class="page-container">
         <div class="text-left">

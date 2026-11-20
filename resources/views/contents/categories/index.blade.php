@@ -8,6 +8,38 @@
     @vite(['resources/css/social_icons.css', 'resources/css/grid_categories.css'])
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => 'Categorías de contenido - ' . config('app.name'),
+            'url' => route('content.categories.index'),
+            'inLanguage' => 'es',
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Categorías',
+                    'item' => route('content.categories.index'),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
     <h1 class="text-center">Categorías de contenido</h1>
 

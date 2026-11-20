@@ -93,4 +93,7 @@
 
     {{-- Additional Head Content --}}
     @yield('head')
+
+    {{-- Structured Data (JSON-LD) --}}
+    @stack('jsonld')
 </head>

@@ -12,8 +12,9 @@ El módulo `Page` es un mini-CMS integrado destinado a gestionar páginas inform
 2. **Sistema de Enrutado**:
    - El enrutamiento capta el `slug` guardado en la base de datos (ej. `/pagina/normas`) y renderiza la vista pública.
    - Existe una ruta índice para listar todas las páginas creadas (`/pages/index`).
-3. **SEO y Metadatos**:
+3. **SEO, Metadatos y Datos Estructurados**:
    - Las páginas generadas insertan automáticamente metadatos personalizados en el layout `head.blade.php`, optimizando la previsualización en redes sociales y la indexación por parte de motores de búsqueda.
+   - `pages/index.blade.php` emite JSON-LD `CollectionPage` + `BreadcrumbList`, y `pages/show.blade.php` emite `WebPage` + `BreadcrumbList`.
 4. **Filament Resource**:
    - Son gestionadas desde el panel de administrador empleando editores de texto enriquecido provistos por Filament (como Trix o RichEditor).
 

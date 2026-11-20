@@ -17,6 +17,7 @@ Este módulo gestiona el directorio de colaboradores de código o software abier
    - Se generan páginas dinámicas para los colaboradores con el listado de todos sus proyectos activos.
    - En `CollaboratorController::showProject()`, además de resolver las rutas enlazadas, se verifica que el proyecto pertenezca al colaborador de la URL y tenga `status === 'published'` (devolviendo `404` en caso contrario).
    - Cada proyecto posee su propia página individual, lo cual fomenta un mejor SEO al generar más contenido indexado internamente.
+   - Los listados, perfiles y fichas de proyecto emiten datos estructurados JSON-LD (`CollectionPage`, `ProfilePage`/`Person`, `SoftwareApplication` y `BreadcrumbList`).
 3. **Relaciones**:
    - `Collaborator` `hasMany` `CollaboratorProject`.
    - `CollaboratorProject` `belongsTo` `Collaborator`.

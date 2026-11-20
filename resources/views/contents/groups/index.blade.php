@@ -8,6 +8,59 @@
     @vite(['resources/css/social_icons.css', 'resources/css/horizontal_card.css'])
 @endsection
 
+@push('jsonld')
+    @php
+        $groupsUrl = isset($type)
+            ? route('content.type.group.index', $type->slug)
+            : route('content.groups.index');
+        $breadcrumbItems = [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Inicio',
+                'item' => route('index'),
+            ],
+        ];
+        if (isset($type)) {
+            $breadcrumbItems[] = [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Tipos',
+                'item' => route('content.types.index'),
+            ];
+            $breadcrumbItems[] = [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => 'Grupos de ' . $type->name,
+                'item' => $groupsUrl,
+            ];
+        } else {
+            $breadcrumbItems[] = [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Grupos',
+                'item' => $groupsUrl,
+            ];
+        }
+    @endphp
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'CollectionPage',
+            'name' => isset($type) ? 'Grupos de ' . $type->name : 'Grupos de contenido',
+            'url' => $groupsUrl,
+            'inLanguage' => 'es',
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => $breadcrumbItems,
+        ],
+    ])
+@endpush
+
 @section('content')
     <h1 class="text-center">Grupos de contenido</h1>
 

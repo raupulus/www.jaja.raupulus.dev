@@ -9,6 +9,48 @@
     @section('twitter_image', $page->urlImage)
 @endif
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => array_filter([
+            '@context' => 'https://schema.org',
+            '@type' => 'WebPage',
+            'name' => $page->title,
+            'description' => $page->excerpt,
+            'url' => route('page.show', $page->slug),
+            'inLanguage' => 'es',
+            'datePublished' => optional($page->created_at)->toAtomString(),
+            'dateModified' => optional($page->updated_at ?? $page->created_at)->toAtomString(),
+            'image' => $page->urlImage,
+        ]),
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Páginas',
+                    'item' => route('page.index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => $page->title,
+                    'item' => route('page.show', $page->slug),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('css')
     @vite(['resources/css/page.css', 'resources/css/social_icons.css'])
 

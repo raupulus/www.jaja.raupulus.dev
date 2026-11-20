@@ -13,6 +13,52 @@
     @vite(['resources/css/projects.css'])
 @endsection
 
+@push('jsonld')
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'ProfilePage',
+            'url' => route('collaborator.show', $collaborator->nick),
+            'inLanguage' => 'es',
+            'mainEntity' => array_filter([
+                '@type' => 'Person',
+                'name' => $collaborator->name,
+                'alternateName' => '@' . $collaborator->nick,
+                'description' => $collaborator->description,
+                'url' => route('collaborator.show', $collaborator->nick),
+                'image' => $collaborator->urlImage,
+                'sameAs' => array_values(array_filter([$collaborator->website, $collaborator->url_repositories])),
+            ]),
+        ],
+    ])
+    @include('partials._jsonld', [
+        'schema' => [
+            '@context' => 'https://schema.org',
+            '@type' => 'BreadcrumbList',
+            'itemListElement' => [
+                [
+                    '@type' => 'ListItem',
+                    'position' => 1,
+                    'name' => 'Inicio',
+                    'item' => route('index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 2,
+                    'name' => 'Colaboradores',
+                    'item' => route('collaborator.index'),
+                ],
+                [
+                    '@type' => 'ListItem',
+                    'position' => 3,
+                    'name' => $collaborator->name,
+                    'item' => route('collaborator.show', $collaborator->nick),
+                ],
+            ],
+        ],
+    ])
+@endpush
+
 @section('content')
     <div class="page-container">
         <div class="page-header">
