@@ -73,9 +73,9 @@ Route::get('/colaborador/{collaborator:nick}/project/{project:slug}', [Collabora
  * Páginas Administración
  ************************************************/
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'isAdmin']], function () {
-    Route::get('/action/generate/sitemap', [AdminController::class, 'generateSitemap'])
+    Route::post('/action/generate/sitemap', [AdminController::class, 'generateSitemap'])
         ->name('admin.action.generate.sitemap');
 
-    Route::get('/action/generate/stats', [AdminController::class, 'generateStats'])
+    Route::post('/action/generate/stats', [AdminController::class, 'generateStats'])
         ->name('admin.action.generate.stats');
 });

@@ -63,6 +63,10 @@ class AccessControlAndSecurityTest extends TestCase
 
         $this->actingAs($this->regularUser)
             ->get('/admin/action/generate/sitemap')
+            ->assertStatus(405);
+
+        $this->actingAs($this->regularUser)
+            ->post('/admin/action/generate/sitemap')
             ->assertStatus(403);
 
         $this->actingAs($this->regularUser)

@@ -23,6 +23,8 @@ class SuggestionResource extends Resource
     protected static ?string $pluralLabel = 'Sugerencias';
 
     protected static ?string $navigationLabel = 'Sugerencias';
+    protected static ?string $navigationGroup = 'Moderación';
+    protected static ?string $recordTitleAttribute = 'title';
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-on-square-stack';
 
     public static function form(Form $form): Form
@@ -105,6 +107,7 @@ class SuggestionResource extends Resource
                     ->relationship('type', 'name')
                     ->required()
                     ->preload()
+                    ->live()
                     ->afterStateUpdated(function (Forms\Set $set) {
                         ## Cuando cambia el tipo, reseteo el grupo
                         $set('group_id', null);
@@ -190,7 +193,6 @@ class SuggestionResource extends Resource
                 Tables\Columns\ImageColumn::make('image_path')->label('Imagen'),
                 Tables\Columns\TextColumn::make('type.name')
                     ->label('Tipo')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nick')
                     ->label('Nick')

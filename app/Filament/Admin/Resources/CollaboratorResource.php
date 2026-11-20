@@ -33,7 +33,7 @@ class CollaboratorResource extends Resource
 
     protected static ?string $navigationGroup = 'Administración';
 
-    protected static ?string $recordTitleAttribute = 'title';
+    protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
@@ -105,7 +105,6 @@ class CollaboratorResource extends Resource
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Usuario')
-                    ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
@@ -113,7 +112,6 @@ class CollaboratorResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nick')
                     ->label('Nick')
-                    ->searchable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('website')
                     ->label('Sitio Web')

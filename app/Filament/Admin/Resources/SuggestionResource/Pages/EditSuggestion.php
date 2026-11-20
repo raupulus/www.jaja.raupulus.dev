@@ -20,9 +20,12 @@ class EditSuggestion extends EditRecord
                 ->action(fn () => $this->record->approve())
                 ->color('success')
                 ->icon('heroicon-o-check')
+                ->requiresConfirmation()
+                ->modalHeading('Confirmar aprobación de sugerencia')
+                ->modalDescription('Se creará una entrada publicada en el módulo de contenidos con estos datos.')
                 ->visible(function () {
                     return $this->record->deleted_at === null &&
-                        !$this->record->is_approved; // Si tienes un campo de estado de aprobación
+                        $this->record->approved_at === null;
                 }),
 
         ];

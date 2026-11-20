@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Admin\Pages\Dashboard as AdminDashboard;
 use App\Filament\Admin\Widgets\UserContributorsChart;
 use App\Http\Middleware\AdminMiddleware;
 use Filament\Http\Middleware\Authenticate;
@@ -9,8 +10,6 @@ use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Navigation\NavigationGroup;
-use Filament\Navigation\NavigationItem;
-use Filament\Pages;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
@@ -35,7 +34,7 @@ class AdminPanelProvider extends PanelProvider
             ->discoverResources(in: app_path('Filament/Admin/Resources'), for: 'App\\Filament\\Admin\\Resources')
             ->discoverPages(in: app_path('Filament/Admin/Pages'), for: 'App\\Filament\\Admin\\Pages')
             ->pages([
-                Pages\Dashboard::class,
+                AdminDashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([
@@ -62,31 +61,13 @@ class AdminPanelProvider extends PanelProvider
             ->navigationGroups([
                 NavigationGroup::make()
                     ->label('Contenidos')
-                    //->icon('heroicon-o-pencil')
+                    ->collapsible(false),
+                NavigationGroup::make()
+                    ->label('Moderación')
                     ->collapsible(false),
                 NavigationGroup::make()
                     ->label('Administración')
-                    //->icon('heroicon-o-pencil')
                     ->collapsible(false),
-                NavigationGroup::make()
-                    ->label('Acciones')
-                    //->icon('heroicon-o-pencil')
-                    ->collapsible(false),
-            ])
-            ->navigationItems([
-                NavigationItem::make('Generar Sitemap')
-                ->url(fn() => route('admin.action.generate.sitemap'))
-                ->icon('heroicon-o-star')
-                ->group('Acciones')
-                ->sort(4)
-                ,
-                NavigationItem::make('Limpiar Stats')
-                    ->url(fn() => route('admin.action.generate.stats'))
-                    ->icon('heroicon-o-play')
-                    ->group('Acciones')
-                    ->sort(5)
-                    //->openUrlInNewTab()
-                ,
             ])
             ->login()
             //->registration()
