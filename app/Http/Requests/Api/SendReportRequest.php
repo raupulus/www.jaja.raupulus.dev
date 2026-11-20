@@ -27,7 +27,7 @@ class SendReportRequest extends FormRequest
         return [
             'content_id' => 'required|integer|exists:contents,id',
             'title' => 'required|string|max:255',
-            'type' => 'nullable|string|in:' . implode(',', array_keys(Report::getTypes())),
+            'type' => 'nullable|string|in:'.implode(',', array_keys(Report::getTypes())),
             'description' => 'nullable|string|max:1024',
             'additional_info' => 'nullable|string|max:1024',
             'reporter_name' => 'nullable|string|max:255',
@@ -96,6 +96,7 @@ class SendReportRequest extends FormRequest
     private function getFirstAdminUser(): ?int
     {
         $admin = User::where('role_id', 1)->first();
+
         return $admin ? $admin->id : null;
     }
 

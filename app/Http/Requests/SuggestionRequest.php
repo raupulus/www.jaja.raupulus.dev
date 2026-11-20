@@ -14,11 +14,11 @@ use Illuminate\Validation\Validator;
 /**
  * Request para envíos de sugerencia de contenido
  *
- * @param int $type_id Id del tipo de contenido asociado
- * @param string $nick Nombre del usuario en las redes sociales con formato de username o nick
- * @param string $title Título principal del contenido
- * @param string $content Contenido
- * @param array $options Opciones para quiz (solo requerido si type_id es quiz)
+ * @param  int  $type_id  Id del tipo de contenido asociado
+ * @param  string  $nick  Nombre del usuario en las redes sociales con formato de username o nick
+ * @param  string  $title  Título principal del contenido
+ * @param  string  $content  Contenido
+ * @param  array  $options  Opciones para quiz (solo requerido si type_id es quiz)
  */
 class SuggestionRequest extends FormRequest
 {
@@ -37,10 +37,10 @@ class SuggestionRequest extends FormRequest
     {
         $validator->after(function (Validator $validator) {
             $ip = IpHelper::getClientIp($this);
-            $throttleKey = 'suggestions:' . $ip;
+            $throttleKey = 'suggestions:'.$ip;
 
             // Si hay demasiados intentos, añado un error de validación
-            if (!RateLimiter::attempt($throttleKey, 1, fn() => true, 10)) {
+            if (! RateLimiter::attempt($throttleKey, 1, fn () => true, 10)) {
                 $seconds = RateLimiter::availableIn($throttleKey);
                 $validator->errors()->add(
                     'throttle',
@@ -58,12 +58,12 @@ class SuggestionRequest extends FormRequest
      */
     private function validateQuizOptions(Validator $validator): void
     {
-        if (!$this->type_id) {
+        if (! $this->type_id) {
             return;
         }
 
         $type = Type::find($this->type_id);
-        if (!$type || $type->slug !== 'quiz') {
+        if (! $type || $type->slug !== 'quiz') {
             return;
         }
 
@@ -75,11 +75,12 @@ class SuggestionRequest extends FormRequest
                 'options',
                 'Para preguntas tipo quiz debes añadir al menos 2 respuestas.'
             );
+
             return;
         }
 
         // Verificar que hay exactamente una respuesta correcta
-        $correctAnswers = array_filter($options, fn($option) => $option['is_correct'] ?? false);
+        $correctAnswers = array_filter($options, fn ($option) => $option['is_correct'] ?? false);
         if (count($correctAnswers) !== 1) {
             $validator->errors()->add(
                 'options',
@@ -101,7 +102,7 @@ class SuggestionRequest extends FormRequest
     protected function passedValidation()
     {
         $ip = IpHelper::getClientIp($this);
-        $throttleKey = 'suggestions:' . $ip;
+        $throttleKey = 'suggestions:'.$ip;
         RateLimiter::clear($throttleKey);
 
         if (! Auth::check()) {
@@ -167,7 +168,7 @@ class SuggestionRequest extends FormRequest
                 'image',
                 'mimes:webp,jpeg,jpg,png',
                 'mimetypes:image/webp,image/jpeg,image/png',
-                'max:2048'
+                'max:2048',
             ],
             'ip_address' => 'nullable|ip',
             'user_agent' => 'nullable|string|max:255',
@@ -192,11 +193,12 @@ class SuggestionRequest extends FormRequest
      */
     private function isQuizType(): bool
     {
-        if (!$this->type_id) {
+        if (! $this->type_id) {
             return false;
         }
 
         $type = Type::find($this->type_id);
+
         return $type && $type->slug === 'quiz';
     }
 

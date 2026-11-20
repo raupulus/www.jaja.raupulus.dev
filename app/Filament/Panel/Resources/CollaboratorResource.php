@@ -146,6 +146,6 @@ class CollaboratorResource extends Resource
 
     public static function canDelete($record): bool
     {
-        return false; ## Los usuarios no pueden eliminar su perfil desde aquí
+        return false; // # Los usuarios no pueden eliminar su perfil desde aquí
     }
 }

@@ -46,12 +46,12 @@ class ImageSanitizationAndCleanupTest extends TestCase
         $color = imagecolorallocate($gdImage, 0, 188, 212);
         imagefilledrectangle($gdImage, 0, 0, 3199, 1599, $color);
 
-        $tempPath = sys_get_temp_dir() . '/jaja_test_' . uniqid() . '.jpg';
+        $tempPath = sys_get_temp_dir().'/jaja_test_'.uniqid().'.jpg';
         imagejpeg($gdImage, $tempPath, 90);
         imagedestroy($gdImage);
 
         try {
-            $converter = new ConvertImageToWebp();
+            $converter = new ConvertImageToWebp;
             $storedPath = $converter($tempPath, 'test-uploads');
 
             $this->assertStringStartsWith('test-uploads/', $storedPath);
@@ -80,7 +80,7 @@ class ImageSanitizationAndCleanupTest extends TestCase
             'description' => 'Chistes',
         ]);
 
-        $request = new SuggestionRequest();
+        $request = new SuggestionRequest;
         $request->merge(['type_id' => $type->id]);
         $rules = $request->rules();
 

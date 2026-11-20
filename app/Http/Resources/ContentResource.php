@@ -15,9 +15,9 @@ class ContentResource extends JsonResource
             'content' => $this->content,
             'urlImage' => $this->image ? $this->urlImage : null,
             'uploader' => $this->uploader,
-            //'group' => new GroupResource($this->whenLoaded('group')),
-            //'categories' => CategoryResource::collection($this->whenLoaded('categories')),
-            //'user' => new UserResource($this->whenLoaded('user')),
+            // 'group' => new GroupResource($this->whenLoaded('group')),
+            // 'categories' => CategoryResource::collection($this->whenLoaded('categories')),
+            // 'user' => new UserResource($this->whenLoaded('user')),
             'options' => ContentOptionResource::collection($this->whenLoaded('options')),
         ];
     }

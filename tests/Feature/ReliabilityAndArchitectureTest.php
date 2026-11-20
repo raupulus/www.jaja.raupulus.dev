@@ -167,7 +167,7 @@ class ReliabilityAndArchitectureTest extends TestCase
         TrustProxies::flushState();
         config(['trustedproxy.proxies' => null]);
 
-        $trustProxies = new TrustProxies();
+        $trustProxies = new TrustProxies;
 
         $untrustedRequest = Request::create('/api/v1/random', 'GET', [], [], [], [
             'REMOTE_ADDR' => '198.51.100.10',
@@ -215,7 +215,7 @@ class ReliabilityAndArchitectureTest extends TestCase
 
     public function test_all_log_calls_use_english_and_no_hardcoded_excluded_group_queries_remain(): void
     {
-        $finder = (new Finder())->files()->in(app_path())->name('*.php');
+        $finder = (new Finder)->files()->in(app_path())->name('*.php');
 
         $spanishLogPatterns = [
             'Error en ',
@@ -230,7 +230,7 @@ class ReliabilityAndArchitectureTest extends TestCase
             $relativePath = $file->getRelativePathname();
 
             foreach ($spanishLogPatterns as $forbidden) {
-                if (preg_match('/Log::(?:debug|info|notice|warning|error|critical|alert|emergency)\s*\([^\n]*' . preg_quote($forbidden, '/') . '/u', $content) === 1) {
+                if (preg_match('/Log::(?:debug|info|notice|warning|error|critical|alert|emergency)\s*\([^\n]*'.preg_quote($forbidden, '/').'/u', $content) === 1) {
                     $this->fail("Found disallowed log pattern '{$forbidden}' in app/{$relativePath}");
                 }
             }

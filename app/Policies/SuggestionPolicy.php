@@ -5,6 +5,4 @@ namespace App\Policies;
 /**
  * Policy para el modelo Suggestion.
  */
-class SuggestionPolicy extends AdminOnlyPolicy
-{
-}
+class SuggestionPolicy extends AdminOnlyPolicy {}

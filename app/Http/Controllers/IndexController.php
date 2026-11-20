@@ -5,11 +5,8 @@ namespace App\Http\Controllers;
 use App\Actions\ConvertImageToWebp;
 use App\Helpers\StatsHelper;
 use App\Http\Requests\SuggestionRequest;
-use App\Models\Category;
 use App\Models\Content;
-use App\Models\Group;
 use App\Models\Suggestion;
-use App\Models\Type;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
@@ -25,8 +22,6 @@ class IndexController extends Controller
 {
     /**
      * Página principal.
-     *
-     * @return View
      */
     public function index(): View
     {
@@ -55,9 +50,6 @@ class IndexController extends Controller
 
     /**
      * Procesa el envío de una sugerencia de contenido.
-     *
-     * @param SuggestionRequest $request
-     * @return RedirectResponse
      */
     public function sendSuggestion(SuggestionRequest $request): RedirectResponse
     {
@@ -76,7 +68,7 @@ class IndexController extends Controller
                 $fullTempPath = Storage::disk('public')->path($tempPath);
 
                 try {
-                    $convertToWebp = new ConvertImageToWebp();
+                    $convertToWebp = new ConvertImageToWebp;
                     $webpPath = $convertToWebp($fullTempPath, 'suggestion-images');
                 } finally {
                     Storage::disk('public')->delete($tempPath);
@@ -109,8 +101,6 @@ class IndexController extends Controller
 
     /**
      * Login con redirección al panel para usuarios
-     *
-     * @return RedirectResponse
      */
     public function login(): RedirectResponse
     {

@@ -29,8 +29,6 @@ class ContentResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-
-
     public static function form(Form $form): Form
     {
         return $form
@@ -83,6 +81,7 @@ class ContentResource extends Resource
                                 if (empty($state)) {
                                     return [1];
                                 }
+
                                 return $state;
                             })
                             ->columnSpanFull(),
@@ -95,7 +94,7 @@ class ContentResource extends Resource
                             ->default(false)
                             ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
                             ->extraAttributes([
-                                'class' => 'border-red-500'
+                                'class' => 'border-red-500',
                             ]),
 
                         Forms\Components\Checkbox::make('is_ai')
@@ -103,7 +102,7 @@ class ContentResource extends Resource
                             ->default(false)
                             ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
                             ->extraAttributes([
-                                'class' => 'border-orange-500'
+                                'class' => 'border-orange-500',
                             ]),
                     ])
                     ->columns(['default' => 1, 'md' => 2]),
@@ -232,6 +231,4 @@ class ContentResource extends Resource
     {
         return $record->user_id === auth()->id();
     }
-
-
 }

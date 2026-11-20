@@ -43,7 +43,7 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
         'nick',
         'email',
         'password',
-        'avatar'
+        'avatar',
     ];
 
     /**
@@ -71,33 +71,26 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     /**
      * Relación con el colaborador del usuario.
-     *
-     * @return HasOne
      */
     public function collaborator(): HasOne
     {
         return $this->hasOne(Collaborator::class, 'user_id', 'id');
     }
 
-
     /**
      * Devuelve la url hacia el avatar del usuario.
-     *
-     * @return string
      */
     public function getUrlImageAttribute(): string
     {
-        if (!$this->avatar || ($this->avatar === 'images/default/avatar.webp')) {
+        if (! $this->avatar || ($this->avatar === 'images/default/avatar.webp')) {
             return asset('images/default/avatar.webp');
         }
 
-        return asset('storage/' . $this->avatar);
+        return asset('storage/'.$this->avatar);
     }
 
     /**
      * Es administrador este usuario.
-     *
-     * @return bool
      */
     public function getIsAdminAttribute(): bool
     {
@@ -105,7 +98,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
     }
 
     /** Filament Panel **/
-
     public function getFilamentAvatarUrl(): ?string
     {
         return $this->urlImage;
@@ -113,9 +105,6 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
 
     /**
      * Determina si el usuario puede acceder a cada panel de Filament.
-     *
-     * @param Panel $panel
-     * @return bool
      */
     public function canAccessPanel(Panel $panel): bool
     {
@@ -125,5 +114,4 @@ class User extends Authenticatable implements FilamentUser, HasAvatar
             default => false,
         };
     }
-
 }

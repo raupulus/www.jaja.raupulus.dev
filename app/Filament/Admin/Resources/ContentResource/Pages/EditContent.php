@@ -45,13 +45,13 @@ class EditContent extends EditRecord
                     } catch (\Exception $e) {
                         Notification::make()
                             ->title('Error al publicar')
-                            ->body('Error: ' . $e->getMessage())
+                            ->body('Error: '.$e->getMessage())
                             ->danger()
                             ->send();
                     }
                 })
                 ->visible(function () {
-                    ## Solo muestro botón en contenido apto para publicar
+                    // # Solo muestro botón en contenido apto para publicar
                     return $this->record->isPublicSafe();
                 }),
         ];

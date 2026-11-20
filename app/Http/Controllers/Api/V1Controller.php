@@ -43,6 +43,7 @@ class V1Controller extends Controller
      * Se puede filtrar para obtener chistes a partir de un ID específico o excluir grupos concretos.
      *
      * @group 📚 Contenidos
+     *
      * @authenticated
      *
      * @queryParam after_id integer ID a partir del cual se desean obtener los chistes. Example: 0
@@ -82,9 +83,6 @@ class V1Controller extends Controller
      *     }
      *   }
      * }
-     *
-     * @param ContentListRequest $request
-     * @return JsonResponse
      */
     public function list(ContentListRequest $request): JsonResponse
     {
@@ -103,7 +101,7 @@ class V1Controller extends Controller
             }
 
             $excludedGroups = $request->getExcludedGroups();
-            if (!empty($excludedGroups)) {
+            if (! empty($excludedGroups)) {
                 $query->whereNotIn('group_id', $excludedGroups);
             }
 
@@ -132,6 +130,7 @@ class V1Controller extends Controller
      * Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.
      *
      * @group 📚 Contenidos
+     *
      * @unauthenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -163,19 +162,14 @@ class V1Controller extends Controller
      *     "limit": 1
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron contenidos"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener chistes aleatorios"
      * }
-     *
-     * @param ContentRandomRequest $request
-     * @return JsonResponse
      */
     public function random(ContentRandomRequest $request): JsonResponse
     {
@@ -187,16 +181,16 @@ class V1Controller extends Controller
                 ->inRandomOrder();
             $count = $contentsQuery->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse('No se encontraron contenidos', 404);
             }
 
             $contents = $contentsQuery->limit($limit)->get();
 
             if ($contents->count() > 1) {
-                $message = 'Se obtuvieron ' . $contents->count() . ' contenidos aleatorios';
+                $message = 'Se obtuvieron '.$contents->count().' contenidos aleatorios';
             } else {
-                $message = 'Se obtuvo ' . $contents->count() . ' contenido aleatorio';
+                $message = 'Se obtuvo '.$contents->count().' contenido aleatorio';
             }
 
             return $this->collectionResponse(
@@ -225,6 +219,7 @@ class V1Controller extends Controller
      * Este endpoint al ser público está limitado a máximo 5 elementos por petición y a 10 peticiones por minuto.
      *
      * @group 📚 Contenidos
+     *
      * @unauthenticated
      *
      * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
@@ -258,20 +253,14 @@ class V1Controller extends Controller
      *     "limit": 1
      *   }
      * }
-     *
      * @response 404 {
      * "success": false,
      * "message": "No se encontraron contenidos"
      * }
-     *
      * @response 500 {
      * "success": false,
      * "message": "Error al obtener chistes aleatorios"
      * }
-     *
-     * @param ContentRandomRequest $request
-     * @param Type $type
-     * @return JsonResponse
      */
     public function randomFromType(ContentRandomRequest $request, Type $type): JsonResponse
     {
@@ -285,16 +274,16 @@ class V1Controller extends Controller
 
             $count = $contentsQuery->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse('No se encontraron contenidos', 404);
             }
 
             $contents = $contentsQuery->limit($limit)->get();
 
             if ($contents->count() > 1) {
-                $message = 'Se obtuvieron ' . $contents->count() . ' contenidos aleatorios';
+                $message = 'Se obtuvieron '.$contents->count().' contenidos aleatorios';
             } else {
-                $message = 'Se obtuvo ' . $contents->count() . ' contenido aleatorio';
+                $message = 'Se obtuvo '.$contents->count().' contenido aleatorio';
             }
 
             return $this->collectionResponse(
@@ -322,6 +311,7 @@ class V1Controller extends Controller
      * Útil para utilizar el slug del tipo que necesites y filtrar en otros endpoints.
      *
      * @group 🏷️ Categorías, Grupos y Tipos
+     *
      * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -349,18 +339,14 @@ class V1Controller extends Controller
      *     "total_items": 1
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron tipos de contenido"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener la lista de tipos"
      * }
-     *
-     * @return JsonResponse
      */
     public function typesIndex(): JsonResponse
     {
@@ -369,13 +355,13 @@ class V1Controller extends Controller
                 ->orderByDesc('name')
                 ->get();
 
-            if (!$types->count()) {
+            if (! $types->count()) {
                 return $this->errorResponse('No se encontraron tipos de contenido', 404);
             }
 
             return $this->successResponse(
                 TypeResource::collection($types),
-                'Se obtuvieron ' . $types->count() . ' tipos',
+                'Se obtuvieron '.$types->count().' tipos',
                 200,
                 [
                     'total_items' => $types->count(),
@@ -397,6 +383,7 @@ class V1Controller extends Controller
      * Devuelve la lista de grupos de contenido que existen paginados.
      *
      * @group 🏷️ Categorías, Grupos y Tipos
+     *
      * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -440,24 +427,18 @@ class V1Controller extends Controller
      *     }
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "La página solicitada no existe. Última página disponible: 2"
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron grupos de contenido"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener la lista de grupos"
      * }
-     *
-     * @param PaginationRequest $request
-     * @return JsonResponse
      */
     public function groupsIndex(PaginationRequest $request): JsonResponse
     {
@@ -471,21 +452,21 @@ class V1Controller extends Controller
 
             if ($page > $groups->lastPage() && $groups->total() > 0) {
                 return $this->errorResponse(
-                    'La página solicitada no existe. Última página disponible: ' . $groups->lastPage(),
+                    'La página solicitada no existe. Última página disponible: '.$groups->lastPage(),
                     404
                 );
             }
 
             $count = $groups->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse('No se encontraron grupos de contenido', 404);
             }
 
             if ($count > 1) {
-                $message = 'Se obtuvieron ' . $count . ' grupos de contenido';
+                $message = 'Se obtuvieron '.$count.' grupos de contenido';
             } else {
-                $message = 'Se obtuvo ' . $count . ' grupo de contenido';
+                $message = 'Se obtuvo '.$count.' grupo de contenido';
             }
 
             return $this->collectionPaginatedResponse(
@@ -509,6 +490,7 @@ class V1Controller extends Controller
      * Devuelve la lista de categorías disponibles paginadas.
      *
      * @group 🏷️ Categorías, Grupos y Tipos
+     *
      * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -554,24 +536,18 @@ class V1Controller extends Controller
      *     }
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se han encontrado categorías"
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "La página solicitada no existe. Última página disponible: 5"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener la lista de categorías"
      * }
-     *
-     * @param PaginationRequest $request
-     * @return JsonResponse
      */
     public function categoriesIndex(PaginationRequest $request): JsonResponse
     {
@@ -585,21 +561,21 @@ class V1Controller extends Controller
 
             if ($page > $categories->lastPage() && $categories->total() > 0) {
                 return $this->errorResponse(
-                    'La página solicitada no existe. Última página disponible: ' . $categories->lastPage(),
+                    'La página solicitada no existe. Última página disponible: '.$categories->lastPage(),
                     404
                 );
             }
 
             $count = $categories->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse('No se han encontrado categorías', 404);
             }
 
             if ($count > 1) {
-                $message = 'Se obtuvieron ' . $count . ' categorías de ' . $categories->total() . ', página ' . $page . '.';
+                $message = 'Se obtuvieron '.$count.' categorías de '.$categories->total().', página '.$page.'.';
             } else {
-                $message = 'Se obtuvo ' . $count . ' categoría de ' . $categories->total() . ', página ' . $page . '.';
+                $message = 'Se obtuvo '.$count.' categoría de '.$categories->total().', página '.$page.'.';
             }
 
             return $this->collectionPaginatedResponse(
@@ -623,7 +599,9 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio de un tipo concreto recibido.
      *
      * @group 📚 Contenidos
+     *
      * @authenticated
+     *
      * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -657,19 +635,16 @@ class V1Controller extends Controller
      *     "total_items": 10
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron contenidos para el tipo especificado"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener contenidos del tipo especificado"
      * }
      *
-     * @param Type $type Tipo de contenido por el que se filtra.
-     * @return JsonResponse
+     * @param  Type  $type  Tipo de contenido por el que se filtra.
      */
     public function getContentRandomFromType(ContentRandomFromTypeRequest $request, Type $type): JsonResponse
     {
@@ -684,7 +659,7 @@ class V1Controller extends Controller
 
             $count = $contents->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el tipo especificado',
                     404
@@ -692,13 +667,13 @@ class V1Controller extends Controller
             }
 
             if ($count > 1 && $limit > 1) {
-                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' de ' . $count . ' contenidos totales para este tipo.';
-            } else if ($count > 1 && $limit == 1) {
-                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $count . ' contenidos totales para este tipo.';
-            } else if ($count == 1 && $limit > 1) {
-                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' de ' . $count . ' contenido total para este tipo.';
+                $message = 'Se devuelven '.$limit.' contenidos aleatorios para el tipo '.$type->name.' de '.$count.' contenidos totales para este tipo.';
+            } elseif ($count > 1 && $limit == 1) {
+                $message = 'Se devuelve '.$limit.' contenido aleatorio para el tipo '.$type->name.' de '.$count.' contenidos totales para este tipo.';
+            } elseif ($count == 1 && $limit > 1) {
+                $message = 'Se devuelven '.$limit.' contenidos aleatorios para el tipo '.$type->name.' de '.$count.' contenido total para este tipo.';
             } else {
-                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' de ' . $count . ' contenido total para este tipo.';
+                $message = 'Se devuelve '.$limit.' contenido aleatorio para el tipo '.$type->name.' de '.$count.' contenido total para este tipo.';
             }
 
             return $this->collectionResponse(
@@ -726,6 +701,7 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio que pertenezca al tipo y categoría recibido.
      *
      * @group 📚 Contenidos
+     *
      * @authenticated
      *
      * @urlParam type_slug string required El slug del tipo de contenido [chistes|adivinanzas|quiz]. Example: chistes
@@ -766,33 +742,28 @@ class V1Controller extends Controller
      *     "total_items": 4
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "Categoría no encontrada"
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron contenidos para el tipo y categoría especificados"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener contenidos del tipo especificado"
      * }
      *
-     * @param ContentRandomFromTypeAndCategoryRequest $request
-     * @param Type $type Tipo de elemento por el que se filtra.
-     * @param string $categorySlug Slug de la Categoría por la que se filtra.
-     * @return JsonResponse
+     * @param  Type  $type  Tipo de elemento por el que se filtra.
+     * @param  string  $categorySlug  Slug de la Categoría por la que se filtra.
      */
     public function getContentRandomFromCategory(ContentRandomFromTypeAndCategoryRequest $request, Type $type, string $categorySlug): JsonResponse
     {
         try {
             $category = Category::where('slug', $categorySlug)->first();
 
-            if (!$category) {
+            if (! $category) {
                 return $this->errorResponse('Categoría no encontrada', 404);
             }
 
@@ -806,7 +777,7 @@ class V1Controller extends Controller
 
             $count = $contents->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el tipo y categoría especificados',
                     404
@@ -814,13 +785,13 @@ class V1Controller extends Controller
             }
 
             if ($count > 1 && $limit > 1) {
-                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenidos totales.';
-            } else if ($count > 1 && $limit == 1) {
-                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenidos totales.';
-            } else if ($count == 1 && $limit > 1) {
-                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenido total.';
+                $message = 'Se devuelven '.$limit.' contenidos aleatorios para el tipo '.$type->name.' y la categoría '.$category->title.' de '.$count.' contenidos totales.';
+            } elseif ($count > 1 && $limit == 1) {
+                $message = 'Se devuelve '.$limit.' contenido aleatorio para el tipo '.$type->name.' y la categoría '.$category->title.' de '.$count.' contenidos totales.';
+            } elseif ($count == 1 && $limit > 1) {
+                $message = 'Se devuelven '.$limit.' contenidos aleatorios para el tipo '.$type->name.' y la categoría '.$category->title.' de '.$count.' contenido total.';
             } else {
-                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el tipo ' . $type->name . ' y la categoría ' . $category->title . ' de ' . $count . ' contenido total.';
+                $message = 'Se devuelve '.$limit.' contenido aleatorio para el tipo '.$type->name.' y la categoría '.$category->title.' de '.$count.' contenido total.';
             }
 
             return $this->collectionResponse(
@@ -850,6 +821,7 @@ class V1Controller extends Controller
      * Contenido aleatorio que pertenecen al grupo recibido.
      *
      * @group 📚 Contenidos
+     *
      * @authenticated
      *
      * @urlParam group_slug string required El slug del grupo de contenido. Example: chistes-devs
@@ -885,20 +857,16 @@ class V1Controller extends Controller
      *     "total_items": 12
      *   }
      * }
-     *
      * @response 404 {
      *   "success": false,
      *   "message": "No se encontraron contenidos para el grupo especificado"
      * }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al obtener contenidos del tipo especificado"
      * }
      *
-     * @param ContentRandomFromGroupRequest $request
-     * @param Group $group Grupo por el que se filtra.
-     * @return JsonResponse
+     * @param  Group  $group  Grupo por el que se filtra.
      */
     public function getContentRandomFromGroup(ContentRandomFromGroupRequest $request, Group $group): JsonResponse
     {
@@ -912,7 +880,7 @@ class V1Controller extends Controller
 
             $count = $contents->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el grupo especificado',
                     404
@@ -920,13 +888,13 @@ class V1Controller extends Controller
             }
 
             if ($count > 1 && $limit > 1) {
-                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el grupo ' . $group->title . ' de ' . $count . ' contenidos totales';
-            } else if ($count > 1 && $limit == 1) {
-                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $count . ' contenidos totales.';
-            } else if ($count == 1 && $limit > 1) {
-                $message = 'Se devuelven ' . $limit . ' contenidos aleatorios para el grupo ' . $group->title . ' de ' . $count . ' contenido total.';
+                $message = 'Se devuelven '.$limit.' contenidos aleatorios para el grupo '.$group->title.' de '.$count.' contenidos totales';
+            } elseif ($count > 1 && $limit == 1) {
+                $message = 'Se devuelve '.$limit.' contenido aleatorio para el grupo '.$group->title.' de '.$count.' contenidos totales.';
+            } elseif ($count == 1 && $limit > 1) {
+                $message = 'Se devuelven '.$limit.' contenidos aleatorios para el grupo '.$group->title.' de '.$count.' contenido total.';
             } else {
-                $message = 'Se devuelve ' . $limit . ' contenido aleatorio para el grupo ' . $group->title . ' de ' . $count . ' contenido total.';
+                $message = 'Se devuelve '.$limit.' contenido aleatorio para el grupo '.$group->title.' de '.$count.' contenido total.';
             }
 
             return $this->collectionResponse(
@@ -955,6 +923,7 @@ class V1Controller extends Controller
      * Se permiten máximo 10 sugerencias en 1 minuto.
      *
      * @group 💡 Sugerencias
+     *
      * @authenticated
      *
      * @responseField success boolean Indica si la operación fue exitosa
@@ -965,14 +934,10 @@ class V1Controller extends Controller
      *     "data": null,
      *     "message": "La sugerencia ha sido enviada correctamente."
      *   }
-     *
      * @response 500 {
      *   "success": false,
      *   "message": "Error al añadir sugerencia, si persiste contacta con el administrador"
      * }
-     *
-     * @param SendSuggestionRequest $request
-     * @return JsonResponse
      */
     public function sendSuggestion(SendSuggestionRequest $request): JsonResponse
     {
@@ -1013,13 +978,13 @@ class V1Controller extends Controller
         }
     }
 
-
     /**
      * Envía un reporte sobre contenido de la plataforma
      *
      * Se permiten máximo 10 reportes en 1 minuto por usuario.
      *
      * @group 🚨 Reportes
+     *
      * @authenticated
      *
      * @bodyParam content_id integer required ID del contenido a reportar. Example: 123
@@ -1046,7 +1011,6 @@ class V1Controller extends Controller
      *     },
      *     "message": "El reporte ha sido enviado correctamente y será revisado por nuestro equipo."
      * }
-     *
      * @response 422 {
      *     "success": false,
      *     "message": "Error de validación",
@@ -1055,14 +1019,10 @@ class V1Controller extends Controller
      *         "title": ["El título del reporte es requerido."]
      *     }
      * }
-     *
      * @response 500 {
      *     "success": false,
      *     "message": "Error al enviar el reporte, si persiste contacta con el administrador"
      * }
-     *
-     * @param SendReportRequest $request
-     * @return JsonResponse
      */
     public function sendReport(SendReportRequest $request): JsonResponse
     {
@@ -1106,7 +1066,7 @@ class V1Controller extends Controller
             return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
 
         } catch (\Exception $e) {
-            Log::error('Error creating report: ' . $e->getMessage(), [
+            Log::error('Error creating report: '.$e->getMessage(), [
                 'user_id' => Auth::id(),
                 'content_id' => $request->input('content_id'),
                 'exception' => $e->getTraceAsString(),
@@ -1122,6 +1082,7 @@ class V1Controller extends Controller
      * Devuelve un contenido aleatorio de entre todos los que pertenezcan a un usuario.
      *
      * @group 📚 Contenidos
+     *
      * @authenticated
      *
      * @urlParam nick string required El nick del usuario para filtrar por su contenido. Example: raupulus
@@ -1155,19 +1116,16 @@ class V1Controller extends Controller
      *     "total_items": 2
      *   }
      * }
-     *
      * @response 404 {
      * "success": false,
      * "message": "No se encontraron contenidos para el usuario especificado"
      * }
-     *
      * @response 500 {
      * "success": false,
      * "message": "Error al obtener contenidos del usuario especificado"
      * }
      *
-     * @param string $nick Nick del usuario para filtrar el contenido
-     * @return JsonResponse
+     * @param  string  $nick  Nick del usuario para filtrar el contenido
      */
     public function getContentRandomFromUser(string $nick): JsonResponse
     {
@@ -1178,7 +1136,7 @@ class V1Controller extends Controller
                 ->with(['options' => fn ($q) => $q->orderBy('order'), 'user:id,nick'])
                 ->where(function ($query) use ($user_id, $nick) {
                     if ($user_id) {
-                        return $query->where('uploaded_by', 'like', '%' . $nick . '%')
+                        return $query->where('uploaded_by', 'like', '%'.$nick.'%')
                             ->orWhere('user_id', $user_id);
                     }
 
@@ -1188,7 +1146,7 @@ class V1Controller extends Controller
 
             $count = $contents->count();
 
-            if (!$count) {
+            if (! $count) {
                 return $this->errorResponse(
                     'No se encontraron contenidos para el usuario especificado',
                     404
@@ -1196,9 +1154,9 @@ class V1Controller extends Controller
             }
 
             if ($count > 1) {
-                $message = 'Se devuelven ' . $count . ' contenidos aleatorios para el usuario @' . $nick;
+                $message = 'Se devuelven '.$count.' contenidos aleatorios para el usuario @'.$nick;
             } else {
-                $message = 'Se devuelve ' . $count . ' contenidos aleatorios para el usuario @' . $nick;
+                $message = 'Se devuelve '.$count.' contenidos aleatorios para el usuario @'.$nick;
             }
 
             return $this->collectionResponse(
@@ -1220,5 +1178,4 @@ class V1Controller extends Controller
         }
 
     }
-
 }

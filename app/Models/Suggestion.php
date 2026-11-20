@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
+use App\Services\CacheInvalidationService;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -36,11 +37,8 @@ class Suggestion extends Model
         return ['image_path' => null];
     }
 
-
     /**
      * Relación con el tipo de contenido.
-     *
-     * @return BelongsTo
      */
     public function type(): BelongsTo
     {
@@ -49,8 +47,6 @@ class Suggestion extends Model
 
     /**
      * Relación con la categoría del contenido.
-     *
-     * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {
@@ -59,8 +55,6 @@ class Suggestion extends Model
 
     /**
      * Relación con el grupo al que pertenece el contenido.
-     *
-     * @return BelongsTo
      */
     public function group(): BelongsTo
     {
@@ -69,8 +63,6 @@ class Suggestion extends Model
 
     /**
      * Relación con las opciones asociadas al contenido.
-     *
-     * @return HasMany
      */
     public function options(): HasMany
     {
@@ -85,20 +77,20 @@ class Suggestion extends Model
         parent::boot();
 
         static::created(function ($suggestion) {
-            ## Aseguro que siempre tenga la categoría General si no hay categorías
+            // # Aseguro que siempre tenga la categoría General si no hay categorías
             if ($suggestion->categories()->count() === 0) {
                 $suggestion->categories()->attach(1);
             }
         });
 
-        ## Evento ejecutado antes de hacer un softDelete
+        // # Evento ejecutado antes de hacer un softDelete
         static::deleting(function ($suggestion) {
             if ($suggestion->image_path) {
                 $suggestion->deleteImage();
             }
         });
 
-        ## Evento ejecutado antes de hacer un forceDelete
+        // # Evento ejecutado antes de hacer un forceDelete
         static::forceDeleting(function ($suggestion) {
             if ($suggestion->image_path) {
                 $suggestion->deleteImage();
@@ -106,21 +98,16 @@ class Suggestion extends Model
         });
     }
 
-
     /**
      * Devuelve la url hacia la imagen o null si no tuviera.
-     *
-     * @return string|null
      */
-    public function getUrlImageAttribute(): string|null
+    public function getUrlImageAttribute(): ?string
     {
-        return $this->image_path ? asset('storage' . $this->image_path) : null;
+        return $this->image_path ? asset('storage'.$this->image_path) : null;
     }
 
     /**
      * Aprobar sugerencias de contenido de forma atómica.
-     *
-     * @return bool
      */
     public function approve(): bool
     {
@@ -167,7 +154,7 @@ class Suggestion extends Model
 
                 $content->categories()->syncWithoutDetaching($categories);
 
-                ## Copio las opciones solo si es tipo quiz
+                // # Copio las opciones solo si es tipo quiz
                 if ($this->type?->slug === 'quiz') {
                     $suggestionOptions = $this->options()->orderBy('order')->get();
 
@@ -179,10 +166,10 @@ class Suggestion extends Model
                             'order' => $suggestionOption->order,
                         ]);
 
-                        ## Copio la imagen de la opción si existe
+                        // # Copio la imagen de la opción si existe
                         if ($suggestionOption->image_path && Storage::disk('public')->exists($suggestionOption->image_path)) {
                             $optionFilename = basename($suggestionOption->image_path);
-                            $contentOptionImagePath = 'content-option-images/' . $contentOption->id . '_' . $optionFilename;
+                            $contentOptionImagePath = 'content-option-images/'.$contentOption->id.'_'.$optionFilename;
 
                             Storage::disk('public')->makeDirectory('content-option-images');
                             Storage::disk('public')->copy($suggestionOption->image_path, $contentOptionImagePath);
@@ -201,7 +188,7 @@ class Suggestion extends Model
 
                 if ($this->image_path && Storage::disk('public')->exists($this->image_path)) {
                     $filename = basename($this->image_path);
-                    $contentImagePath = 'content-images/' . $content->id . '_' . $filename;
+                    $contentImagePath = 'content-images/'.$content->id.'_'.$filename;
 
                     Storage::disk('public')->makeDirectory('content-images');
                     Storage::disk('public')->copy($this->image_path, $contentImagePath);
@@ -234,7 +221,7 @@ class Suggestion extends Model
             }
         }
 
-        \App\Services\CacheInvalidationService::forSuggestion();
+        CacheInvalidationService::forSuggestion();
 
         return true;
     }
@@ -244,7 +231,7 @@ class Suggestion extends Model
      */
     public function deleteImage(): bool
     {
-        if (!$this->image_path) {
+        if (! $this->image_path) {
             return false;
         }
 

@@ -31,7 +31,7 @@ return new class extends Migration
                 'violence',
                 'harassment',
                 'misinformation',
-                'other'
+                'other',
             ])->default('other');
 
             $table->string('title')->nullable()->comment('Título');
@@ -43,14 +43,14 @@ return new class extends Migration
                 'reviewing',
                 'resolved',
                 'rejected',
-                'closed'
+                'closed',
             ])->default('pending');
 
             $table->enum('priority', [
                 'low',
                 'medium',
                 'high',
-                'critical'
+                'critical',
             ])->default('medium');
 
             $table->foreignId('assigned_to')->nullable()->constrained('users')->nullOnDelete()->comment('ID del admin asignado');

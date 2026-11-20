@@ -3,7 +3,6 @@
 namespace App\Filament\Panel\Resources\CollaboratorResource\Pages;
 
 use App\Filament\Panel\Resources\CollaboratorResource;
-use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListCollaborators extends ListRecords
@@ -12,14 +11,14 @@ class ListCollaborators extends ListRecords
 
     public function mount(): void
     {
-        ## Busco colaborador
+        // # Busco colaborador
         $collaborator = $this->getResource()::getEloquentQuery()->where('user_id', auth()->id())->first();
 
         if ($collaborator) {
-            ## Si existe, redirijo a editar
+            // # Si existe, redirijo a editar
             $this->redirect($this->getResource()::getUrl('edit', ['record' => $collaborator]));
         } else {
-            ## Si no existe, redirijo a crear
+            // # Si no existe, redirijo a crear
             $this->redirect($this->getResource()::getUrl('create'));
         }
     }

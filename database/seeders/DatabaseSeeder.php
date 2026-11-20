@@ -22,8 +22,6 @@ class DatabaseSeeder extends Seeder
             PageSeeder::class,
         ]);
 
-
-
         // User::factory(10)->create();
 
         /*

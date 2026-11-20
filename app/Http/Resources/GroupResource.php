@@ -13,8 +13,8 @@ class GroupResource extends JsonResource
             'title' => $this->title,
             'slug' => $this->slug,
             'urlImage' => $this->image ? $this->urlImage : null,
-            //'type' => new TypeResource($this->whenLoaded('type')),
-            //'contents' => ContentResource::collection($this->whenLoaded('contents')),
+            // 'type' => new TypeResource($this->whenLoaded('type')),
+            // 'contents' => ContentResource::collection($this->whenLoaded('contents')),
         ];
     }
 }

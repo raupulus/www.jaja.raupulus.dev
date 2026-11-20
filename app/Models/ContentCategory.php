@@ -9,7 +9,4 @@ use Illuminate\Database\Eloquent\Model;
  *
  * Tabla pivot que relaciona contenidos con categorías.
  */
-class ContentCategory extends Model
-{
-
-}
+class ContentCategory extends Model {}

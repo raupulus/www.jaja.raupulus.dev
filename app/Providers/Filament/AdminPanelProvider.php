@@ -41,9 +41,9 @@ class AdminPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Admin/Widgets'), for: 'App\\Filament\\Admin\\Widgets')
             ->widgets([
                 UserContributorsChart::class,
-                //Widgets\AccountWidget::class,
-                //Widgets\FilamentInfoWidget::class,
-                //Widgets\StatsOverviewWidget::class,
+                // Widgets\AccountWidget::class,
+                // Widgets\FilamentInfoWidget::class,
+                // Widgets\StatsOverviewWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -94,10 +94,9 @@ class AdminPanelProvider extends PanelProvider
                     ->openUrlInNewTab(),
             ])
             ->login()
-            //->registration()
-            //->passwordReset()
+            // ->registration()
+            // ->passwordReset()
             ->emailVerification()
-            ->profile()
-            ;
+            ->profile();
     }
 }

@@ -18,8 +18,6 @@ class ContentController extends Controller
 {
     /**
      * Listado de tipos
-     *
-     * @return View
      */
     public function typesIndex(): View
     {
@@ -42,8 +40,6 @@ class ContentController extends Controller
 
     /**
      * Método groupsIndex.
-     *
-     * @return View
      */
     public function groupsIndex(): View
     {
@@ -64,17 +60,14 @@ class ContentController extends Controller
 
     /**
      * Listado de grupos dentro de un tipo
-     *
-     * @param Type $type
-     * @return View
      */
     public function gruposByTypeIndex(Type $type): View
     {
-        if (!$type?->id) {
+        if (! $type?->id) {
             abort(404);
         }
 
-        $groups = Cache::remember('groups_index_by_type_' . $type->id, 60 * 60, function () use ($type) {
+        $groups = Cache::remember('groups_index_by_type_'.$type->id, 60 * 60, function () use ($type) {
             return $type->groups()
                 ->select(['id', 'title', 'slug', 'image', 'description'])
                 ->publicSafe()
@@ -93,8 +86,6 @@ class ContentController extends Controller
 
     /**
      * Listados de categorías
-     *
-     * @return View
      */
     public function categoriesIndex(): View
     {
@@ -113,9 +104,6 @@ class ContentController extends Controller
 
     /**
      * Devuelve contenido aleatorio en base a un grupo recibido
-     *
-     * @param Group $group
-     * @return View
      */
     public function contentRandomFromGroup(Group $group): View
     {
@@ -142,9 +130,6 @@ class ContentController extends Controller
 
     /**
      * Devuelve contenido aleatorio en base a una categoría recibida
-     *
-     * @param Category $category
-     * @return View
      */
     public function contentRandomFromcategory(Category $category): View
     {

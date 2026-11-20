@@ -165,7 +165,7 @@ class ApiV1ContractTest extends TestCase
             ]);
 
         $token = $loginResponse->json('data.token');
-        $headers = ['Authorization' => 'Bearer ' . $token];
+        $headers = ['Authorization' => 'Bearer '.$token];
 
         // 4. Auth user
         $this->withHeaders($headers)
@@ -248,7 +248,7 @@ class ApiV1ContractTest extends TestCase
             ]);
 
         $this->withHeaders($headers)
-            ->getJson('/api/v1/contents/list?exclude_groups[]=' . $this->chistesGroup->id)
+            ->getJson('/api/v1/contents/list?exclude_groups[]='.$this->chistesGroup->id)
             ->assertStatus(200)
             ->assertJsonCount(0, 'data');
 
@@ -338,7 +338,7 @@ class ApiV1ContractTest extends TestCase
 
         foreach ($matches[1] as $anchorId) {
             $this->assertStringContainsString(
-                'id="' . $anchorId . '"',
+                'id="'.$anchorId.'"',
                 (string) $docsHtml,
                 "Broken Scribe docs anchor #{$anchorId} in /pagina/api"
             );

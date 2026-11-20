@@ -15,8 +15,11 @@ class CategoryEmptyContentTest extends TestCase
     use RefreshDatabase;
 
     private Type $type;
+
     private Group $group;
+
     private User $user;
+
     private Category $generalCategory;
 
     protected function setUp(): void

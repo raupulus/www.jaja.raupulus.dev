@@ -15,7 +15,7 @@ class GroupOverview extends BaseWidget
 
     protected static ?int $sort = 3;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getStats(): array
     {
@@ -31,11 +31,10 @@ class GroupOverview extends BaseWidget
             ->where('types.slug', 'quiz')
             ->count();
 
-
         return [
-            //Stat::make('Grupos', Group::count()),
-            //Stat::make('Creados esta Semana', Group::where('created_at', '>=', (Carbon::now())->startOfWeek())->count()),
-            //Stat::make('Creados Hoy', Group::where('created_at', '>=', (Carbon::now()->startOfDay()))->count()),
+            // Stat::make('Grupos', Group::count()),
+            // Stat::make('Creados esta Semana', Group::where('created_at', '>=', (Carbon::now())->startOfWeek())->count()),
+            // Stat::make('Creados Hoy', Group::where('created_at', '>=', (Carbon::now()->startOfDay()))->count()),
 
             Stat::make('Grupos de Chistes', $groupsByChistes),
             Stat::make('Grupos de Adivinanzas', $groupsByAdivinanzas),

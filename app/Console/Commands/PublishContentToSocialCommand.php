@@ -30,15 +30,16 @@ class PublishContentToSocialCommand extends Command
     {
         $this->info('Buscando contenido para publicar en redes sociales...');
 
-        ## Busco el contenido con menor fecha o null para el campo last_social_published del contenido
+        // # Busco el contenido con menor fecha o null para el campo last_social_published del contenido
         $content = Content::with('categories')
             ->publicSafe()
             ->orderByRaw('last_social_published IS NULL DESC')
             ->orderBy('last_social_published', 'asc')
             ->first();
 
-        if (!$content) {
+        if (! $content) {
             $this->warn('No se encontró contenido para publicar.');
+
             return self::SUCCESS;
         }
 
@@ -49,7 +50,7 @@ class PublishContentToSocialCommand extends Command
 
             $this->info('Contenido publicado exitosamente.');
         } catch (\Exception $e) {
-            $this->error('Error al publicar contenido: ' . $e->getMessage());
+            $this->error('Error al publicar contenido: '.$e->getMessage());
 
             Log::error('PublishContentToSocialCommand: Failed to publish content to social media', [
                 'content_id' => $content->id,

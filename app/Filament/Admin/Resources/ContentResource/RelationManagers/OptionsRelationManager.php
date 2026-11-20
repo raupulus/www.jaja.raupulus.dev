@@ -7,9 +7,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class OptionsRelationManager extends RelationManager
 {
@@ -20,9 +18,11 @@ class OptionsRelationManager extends RelationManager
     protected static ?string $title = 'Opciones';
 
     protected static ?string $label = 'Opción';
+
     protected static ?string $pluralLabel = 'Opciones';
 
     protected static ?string $modelLabel = 'Opción';
+
     protected static ?string $pluralModelLabel = 'Opciones';
 
     protected static ?string $icon = 'heroicon-o-check-circle';
@@ -76,13 +76,13 @@ class OptionsRelationManager extends RelationManager
             ->headerActions([
                 Tables\Actions\CreateAction::make()
                     ->mutateFormDataUsing(function (array $data): array {
-                        ## Al crear asigna el siguiente orden secuencial automáticamente
+                        // # Al crear asigna el siguiente orden secuencial automáticamente
                         $maxOrder = $this->getOwnerRecord()
                             ->options()
                             ->max('order') ?? 0;
                         $data['order'] = $maxOrder + 1;
 
-                        ## En caso de ser marcada como correcta, desmarcar las demás
+                        // # En caso de ser marcada como correcta, desmarcar las demás
                         if ($data['is_correct'] ?? false) {
                             $this->getOwnerRecord()
                                 ->options()
@@ -95,8 +95,8 @@ class OptionsRelationManager extends RelationManager
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->mutateFormDataUsing(function (array $data, Model $record): array {
-                        ## En caso de ser marcada como correcta, desmarcar las demás (excluyo la actual)
-                        if (($data['is_correct'] ?? false) && !$record->is_correct) {
+                        // # En caso de ser marcada como correcta, desmarcar las demás (excluyo la actual)
+                        if (($data['is_correct'] ?? false) && ! $record->is_correct) {
                             $this->getOwnerRecord()
                                 ->options()
                                 ->where('id', '!=', $record->id)
@@ -107,7 +107,7 @@ class OptionsRelationManager extends RelationManager
                     }),
                 Tables\Actions\DeleteAction::make()
                     ->after(function () {
-                        ## Reajusto el orden después de eliminar
+                        // # Reajusto el orden después de eliminar
                         $options = $this->getOwnerRecord()
                             ->options()
                             ->orderBy('order')
@@ -122,7 +122,7 @@ class OptionsRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make()
                         ->after(function () {
-                            ## Reajusto el orden después de eliminar por lote
+                            // # Reajusto el orden después de eliminar por lote
                             $options = $this->getOwnerRecord()
                                 ->options()
                                 ->orderBy('order')

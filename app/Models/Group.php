@@ -34,8 +34,6 @@ class Group extends Model
 
     /**
      * Relación con el tipo del grupo
-     *
-     * @return BelongsTo
      */
     public function type(): BelongsTo
     {
@@ -44,8 +42,6 @@ class Group extends Model
 
     /**
      * Relación con los contenidos del grupo.
-     *
-     * @return HasMany
      */
     public function contents(): HasMany
     {
@@ -55,7 +51,7 @@ class Group extends Model
     /**
      * Obtiene el último contenido subido para este grupo
      *
-     * @return \App\Models\Content|null
+     * @return Content|null
      */
     public function getLastContentAttribute()
     {
@@ -64,8 +60,6 @@ class Group extends Model
 
     /**
      * Obtiene un mensaje sobre la última actualización de contenido
-     *
-     * @return string
      */
     public function getLastUpdateMessageAttribute(): string
     {
@@ -78,26 +72,26 @@ class Group extends Model
             $lastContentDate = Carbon::parse($this->last_content_date);
         } else {
             $lastContent = $this->last_content;
-            if (!$lastContent) {
+            if (! $lastContent) {
                 return '¡Sé el primero en subir contenido!';
             }
             $lastContentDate = Carbon::parse($lastContent->created_at);
         }
 
-        if (!$lastContentDate) {
+        if (! $lastContentDate) {
             return '¡Sé el primero en subir contenido!';
         }
 
         $now = Carbon::now();
 
-        ## Si es contenido del futuro, tratar como muy reciente
+        // # Si es contenido del futuro, tratar como muy reciente
         if ($lastContentDate->isFuture()) {
             return 'Hace unos momentos';
         }
 
         $diff = $lastContentDate->diffForHumans($now, true);
 
-        ##Si es más de 5 días, muestro mensaje especial
+        // #Si es más de 5 días, muestro mensaje especial
         if ($now->diffInDays($lastContentDate) > 5) {
             return 'Hace demasiado tiempo, ¡sube el tuyo!';
         }
@@ -105,19 +99,16 @@ class Group extends Model
         return "Hace {$diff}";
     }
 
-
     /**
      * Devuelve la url hacia la imagen.
-     *
-     * @return string
      */
     public function getUrlImageAttribute(): string
     {
-        if (!$this->image || ($this->image === 'images/default/group.webp')) {
+        if (! $this->image || ($this->image === 'images/default/group.webp')) {
             return asset('images/default/group.webp');
         }
 
-        return asset('storage/' . $this->image);
+        return asset('storage/'.$this->image);
     }
 
     /**

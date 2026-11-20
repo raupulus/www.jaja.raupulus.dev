@@ -19,7 +19,8 @@ class Category extends Model
     use SoftDeletes;
 
     protected $table = 'categories';
-    protected $fillable = ['title', 'slug', 'description', 'image', ];
+
+    protected $fillable = ['title', 'slug', 'description', 'image'];
 
     /**
      * Atributos de imagen gestionados en Storage::disk('public').
@@ -31,22 +32,16 @@ class Category extends Model
         return ['image' => 'images/default/category.webp'];
     }
 
-
     /**
      * Relación con los contenidos de una categoría.
-     *
-     * @return BelongsToMany
      */
     public function contents(): BelongsToMany
     {
         return $this->belongsToMany(Content::class, 'content_categories');
     }
 
-
     /**
      * Relación con las sugerencias de una categoría.
-     *
-     * @return BelongsToMany
      */
     public function suggestions(): BelongsToMany
     {
@@ -55,16 +50,14 @@ class Category extends Model
 
     /**
      * Devuelve la url hacia la imagen.
-     *
-     * @return string
      */
     public function getUrlImageAttribute(): string
     {
-        if (!$this->image || ($this->image === 'images/default/category.webp')) {
+        if (! $this->image || ($this->image === 'images/default/category.webp')) {
             return asset('images/default/category.webp');
         }
 
-        return asset('storage/' . $this->image);
+        return asset('storage/'.$this->image);
     }
 
     /**

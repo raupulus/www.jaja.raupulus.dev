@@ -3,7 +3,7 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\UserResource\Pages;
-use App\Filament\Admin\Resources\UserResource\RelationManagers;
+use App\Filament\Support\WebpImageUpload;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Hash;
-use App\Filament\Support\WebpImageUpload;
+use Illuminate\Validation\Rules\Unique;
 
 class UserResource extends Resource
 {
@@ -50,7 +50,7 @@ class UserResource extends Resource
                     ->required()
                     ->unique(
                         ignoreRecord: true,
-                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                        modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                     )
                     ->label('Email')
                     ->maxLength(255),

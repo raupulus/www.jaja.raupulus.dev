@@ -12,6 +12,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rules\Unique;
 
 class GroupResource extends Resource
 {
@@ -20,6 +21,7 @@ class GroupResource extends Resource
     protected static ?string $navigationLabel = 'Grupos';
 
     protected static ?string $label = 'Grupo';
+
     protected static ?string $navigationGroup = 'Contenidos';
 
     protected static ?string $recordTitleAttribute = 'title';
@@ -73,15 +75,14 @@ class GroupResource extends Resource
                         'groups',
                         'slug',
                         ignoreRecord: true,
-                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                        modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                     )
                     ->maxLength(255),
 
-                TextArea::make('description')
+                Textarea::make('description')
                     ->columnSpanFull()
                     ->label('Descripción')
-                    ->maxLength(255)
-                ,
+                    ->maxLength(255),
 
             ]);
     }
@@ -97,7 +98,7 @@ class GroupResource extends Resource
                         return $record->contents()->whereNull('deleted_at')->count();
                     })
                     ->badge()
-                    ->color(fn($state) => match (true) {
+                    ->color(fn ($state) => match (true) {
                         $state === 0 => 'gray',
                         $state <= 5 => 'warning',
                         $state <= 20 => 'success',

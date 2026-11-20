@@ -61,7 +61,7 @@ class StatsCommand extends Command
             return self::SUCCESS;
 
         } catch (\Exception $e) {
-            $this->error('Error durante la actualización de estadísticas: ' . $e->getMessage());
+            $this->error('Error durante la actualización de estadísticas: '.$e->getMessage());
 
             Log::error('StatsCommand: Failed to update platform statistics', [
                 'message' => $e->getMessage(),

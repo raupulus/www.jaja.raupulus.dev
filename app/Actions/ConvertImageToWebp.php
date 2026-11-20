@@ -17,10 +17,10 @@ class ConvertImageToWebp
     /**
      * Convierte la imagen recibida a WebP en almacenamiento público sin metadatos EXIF.
      *
-     * @param string $path Ruta absoluta del fichero temporal/origen
-     * @param string|null $directory Subdirectorio destino en el disco public
-     * @param int $maxDimension Dimensión máxima permitida en ancho o alto (px)
-     * @param int $quality Calidad de compresión WebP (1-100)
+     * @param  string  $path  Ruta absoluta del fichero temporal/origen
+     * @param  string|null  $directory  Subdirectorio destino en el disco public
+     * @param  int  $maxDimension  Dimensión máxima permitida en ancho o alto (px)
+     * @param  int  $quality  Calidad de compresión WebP (1-100)
      * @return string Ruta relativa en el disco public o la ruta original si falla
      */
     public function __invoke(string $path, ?string $directory = null, int $maxDimension = 2560, int $quality = 85): string
@@ -34,7 +34,7 @@ class ConvertImageToWebp
                 return $path;
             }
 
-            $manager = new ImageManager(new Driver());
+            $manager = new ImageManager(new Driver);
             $image = $manager->read($path);
 
             // Aplica orientación física EXIF y limita resolución máxima manteniendo proporción
@@ -43,7 +43,7 @@ class ConvertImageToWebp
             $targetDirectory = trim($directory ?? 'general', '/');
             $targetDirectory = $targetDirectory !== '' ? $targetDirectory : 'general';
 
-            $newFileName = $targetDirectory . '/' . time() . '_' . Str::random(10) . '.webp';
+            $newFileName = $targetDirectory.'/'.time().'_'.Str::random(10).'.webp';
 
             // Re-codifica a WebP eliminando explícitamente metadatos EXIF/IPTC
             $encoded = $image->encode(new WebpEncoder(quality: $quality, strip: true));

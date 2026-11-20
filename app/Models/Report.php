@@ -148,8 +148,6 @@ class Report extends Model
 
     /**
      * Método getStatuses.
-     *
-     * @return array
      */
     public static function getStatuses(): array
     {
@@ -164,8 +162,6 @@ class Report extends Model
 
     /**
      * Método getPriorities.
-     *
-     * @return array
      */
     public static function getPriorities(): array
     {

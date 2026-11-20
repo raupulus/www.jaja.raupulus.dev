@@ -14,7 +14,6 @@ use Illuminate\Http\Exceptions\HttpResponseException;
  * @property string $password Contraseña del usuario
  * @property string $device_name Nombre del dispositivo para generar el token y asociarlo a este
  */
-
 class UserLoginRequest extends FormRequest
 {
     use ApiResponseTrait;
@@ -98,8 +97,7 @@ class UserLoginRequest extends FormRequest
             'device_name' => [
                 'description' => 'Nombre del dispositivo para generar el token y asociarlo a este',
                 'example' => 'Mi iPhone 13 Pro',
-            ]
+            ],
         ];
     }
-
 }

@@ -6,7 +6,11 @@ use App\Filament\Admin\Pages\Dashboard as AdminDashboard;
 use App\Filament\Admin\Resources\CollaboratorResource;
 use App\Filament\Admin\Resources\SuggestionResource;
 use App\Filament\Admin\Resources\UserResource\Pages\EditUser;
+use App\Filament\Admin\Widgets\ContentOverview;
+use App\Filament\Admin\Widgets\GroupOverview;
+use App\Filament\Admin\Widgets\SuggestionOverview;
 use App\Filament\Admin\Widgets\UserContributorsChart;
+use App\Filament\Admin\Widgets\UserOverview;
 use App\Models\Category;
 use App\Models\Collaborator;
 use App\Models\Content;
@@ -201,7 +205,7 @@ class FilamentPanelsUxTest extends TestCase
         Filament::setCurrentPanel(Filament::getPanel('admin'));
 
         // role_id sigue fuera de $fillable para evitar mass-assignment
-        $this->assertNotContains('role_id', (new User())->getFillable());
+        $this->assertNotContains('role_id', (new User)->getFillable());
 
         // Promover usuario normal a administrador
         Livewire::test(EditUser::class, ['record' => $this->regularUser->getRouteKey()])
@@ -267,7 +271,7 @@ class FilamentPanelsUxTest extends TestCase
 
         Cache::flush();
 
-        $chart = new UserContributorsChart();
+        $chart = new UserContributorsChart;
         $method = new \ReflectionMethod($chart, 'getData');
         $method->setAccessible(true);
         $chartData = $method->invoke($chart);
@@ -285,10 +289,10 @@ class FilamentPanelsUxTest extends TestCase
         $this->assertStringContainsString('ActionGroup::make', $reportResource);
 
         foreach ([
-            \App\Filament\Admin\Widgets\ContentOverview::class,
-            \App\Filament\Admin\Widgets\SuggestionOverview::class,
-            \App\Filament\Admin\Widgets\GroupOverview::class,
-            \App\Filament\Admin\Widgets\UserOverview::class,
+            ContentOverview::class,
+            SuggestionOverview::class,
+            GroupOverview::class,
+            UserOverview::class,
             \App\Filament\Panel\Widgets\ContentOverview::class,
         ] as $widgetClass) {
             $reflection = new \ReflectionClass($widgetClass);
@@ -298,7 +302,7 @@ class FilamentPanelsUxTest extends TestCase
             $spanProp->setAccessible(true);
 
             $this->assertNotNull($sortProp->getValue(null), "Widget {$widgetClass} must declare \$sort");
-            $this->assertSame('full', $spanProp->getValue(new $widgetClass()), "Widget {$widgetClass} must use full columnSpan");
+            $this->assertSame('full', $spanProp->getValue(new $widgetClass), "Widget {$widgetClass} must use full columnSpan");
         }
     }
 }

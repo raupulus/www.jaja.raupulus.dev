@@ -119,8 +119,8 @@ class AccessibilityAndPrivacyTest extends TestCase
         ];
 
         foreach ($expectedAssociations as $controlId) {
-            $this->assertStringContainsString('id="' . $controlId . '"', $homeHtml);
-            $this->assertStringContainsString('for="' . $controlId . '"', $homeHtml);
+            $this->assertStringContainsString('id="'.$controlId.'"', $homeHtml);
+            $this->assertStringContainsString('for="'.$controlId.'"', $homeHtml);
         }
 
         $this->assertStringContainsString('<label for="content-image" id="image-preview-container">', $homeHtml);

@@ -31,8 +31,6 @@ class SuggestionOption extends Model
 
     /**
      * Relación con el contenido asociado.
-     *
-     * @return BelongsTo
      */
     public function suggestion(): BelongsTo
     {
@@ -41,11 +39,9 @@ class SuggestionOption extends Model
 
     /**
      * Devuelve la url hacia la imagen si tuviera.
-     *
-     * @return string|null
      */
     public function getUrlImageAttribute(): ?string
     {
-        return $this->image_path ? asset('storage/' . $this->image_path) : null;
+        return $this->image_path ? asset('storage/'.$this->image_path) : null;
     }
 }

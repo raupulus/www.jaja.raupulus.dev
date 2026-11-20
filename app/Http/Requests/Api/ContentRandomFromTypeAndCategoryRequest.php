@@ -10,7 +10,7 @@ use Illuminate\Http\Exceptions\HttpResponseException;
 /**
  * Paginación de resultados
  *
- * @param int $limit Cantidad de resultados que se desea obtener
+ * @param  int  $limit  Cantidad de resultados que se desea obtener
  */
 class ContentRandomFromTypeAndCategoryRequest extends FormRequest
 {
@@ -76,5 +76,4 @@ class ContentRandomFromTypeAndCategoryRequest extends FormRequest
             ],
         ];
     }
-
 }

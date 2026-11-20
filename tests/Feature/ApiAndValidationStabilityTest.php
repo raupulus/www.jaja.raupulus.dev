@@ -169,7 +169,7 @@ class ApiAndValidationStabilityTest extends TestCase
 
         $tooManyGroups = range(1, 51);
 
-        $this->getJson('/api/v1/contents/list?' . http_build_query(['exclude_groups' => $tooManyGroups]))
+        $this->getJson('/api/v1/contents/list?'.http_build_query(['exclude_groups' => $tooManyGroups]))
             ->assertStatus(422)
             ->assertJsonPath('success', false);
     }

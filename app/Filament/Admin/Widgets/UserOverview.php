@@ -3,7 +3,6 @@
 namespace App\Filament\Admin\Widgets;
 
 use App\Models\Content;
-use App\Models\Group;
 use App\Models\User;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
@@ -16,7 +15,7 @@ class UserOverview extends BaseWidget
 
     protected static ?int $sort = 4;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     protected function getStats(): array
     {

@@ -12,11 +12,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class SuggestionCategory extends Model
 {
-
     /**
      * Devuelve todas las sugerencias asociadas a una categoría.
-     *
-     * @return HasMany
      */
     public function suggestions(): HasMany
     {

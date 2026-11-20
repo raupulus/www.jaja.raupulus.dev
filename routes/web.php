@@ -1,17 +1,16 @@
 <?php
 
-use App\Http\Controllers\IndexController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CollaboratorController;
+use App\Http\Controllers\ContentController;
+use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PageController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ContentController;
 
 /*************************************************
  * Autenticación
  ************************************************/
 Route::get('/login', [IndexController::class, 'login'])->name('login');
-
 
 /*************************************************
  * Páginas principales
@@ -28,30 +27,29 @@ Route::get('/pagina/{page:slug}', [PageController::class, 'show'])->name('page.s
  * Contenidos
  ************************************************/
 
-## Tipos de grupos
+// # Tipos de grupos
 Route::get('/tipos', [ContentController::class, 'typesIndex'])
     ->name('content.types.index');
 
-## Listado de todos los grupos
+// # Listado de todos los grupos
 Route::get('/grupos', [ContentController::class, 'groupsIndex'])
     ->name('content.groups.index');
 
-## Listado de todos los grupos para un contenido
+// # Listado de todos los grupos para un contenido
 Route::get('/{type:slug}/grupos', [ContentController::class, 'gruposByTypeIndex'])
     ->name('content.type.group.index');
 
-## Muestra un contenido aleatorio en base a un grupo
+// # Muestra un contenido aleatorio en base a un grupo
 Route::get('/grupo/{group:slug}/random', [ContentController::class, 'contentRandomFromGroup'])
     ->name('content.group.content.random');
 
-## Listado de todas las categorías
+// # Listado de todas las categorías
 Route::get('/categorias', [ContentController::class, 'categoriesIndex'])
     ->name('content.categories.index');
 
-## Muestra un contenido aleatorio en base a una categoría
+// # Muestra un contenido aleatorio en base a una categoría
 Route::get('/categoria/{category:slug}/random', [ContentController::class, 'contentRandomFromcategory'])
     ->name('content.categoria.content.random');
-
 
 /*************************************************
  * Solicitudes
@@ -67,7 +65,6 @@ Route::post('/suggestion/send', [IndexController::class, 'sendSuggestion'])
 Route::get('/colaboradores', [CollaboratorController::class, 'index'])->name('collaborator.index');
 Route::get('/colaborador/{collaborator:nick}', [CollaboratorController::class, 'show'])->name('collaborator.show');
 Route::get('/colaborador/{collaborator:nick}/project/{project:slug}', [CollaboratorController::class, 'showProject'])->name('collaborator.project.show');
-
 
 /*************************************************
  * Páginas Administración

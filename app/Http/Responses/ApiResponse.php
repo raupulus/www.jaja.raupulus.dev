@@ -10,27 +10,20 @@ class ApiResponse
 {
     /**
      * Respuesta con éxito.
-     *
-     * @param mixed|null $data
-     * @param string $message
-     * @param int $status
-     * @param array $meta
-     * @return JsonResponse
      */
     public static function success(
-        mixed  $data = null,
+        mixed $data = null,
         string $message = 'Operación Exitosa',
-        int    $status = 200,
-        array  $meta = []
-    ): JsonResponse
-    {
+        int $status = 200,
+        array $meta = []
+    ): JsonResponse {
         $response = [
             'success' => true,
             'data' => $data,
             'message' => $message,
         ];
 
-        if (!empty($meta)) {
+        if (! empty($meta)) {
             $response['meta'] = $meta;
         }
 
@@ -39,37 +32,28 @@ class ApiResponse
 
     /**
      * Respuesta con error.
-     *
-     * @param string $message
-     * @param int $status
-     * @param mixed|null $errors
-     * @param array|null $meta
-     * @param array|null $debug
-     *
-     * @return JsonResponse
      */
     public static function error(
         string $message = 'Error en la operación',
-        int    $status = 400,
-        mixed  $errors = null,
-        array|null  $meta = [],
-        array|null  $debug = []
-    ): JsonResponse
-    {
+        int $status = 400,
+        mixed $errors = null,
+        ?array $meta = [],
+        ?array $debug = []
+    ): JsonResponse {
         $response = [
             'success' => false,
             'message' => $message,
         ];
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $response['errors'] = $errors;
         }
 
-        if (!empty($meta)) {
+        if (! empty($meta)) {
             $response['meta'] = $meta;
         }
 
-        if (!empty($debug) && config('app.debug')) {
+        if (! empty($debug) && config('app.debug')) {
             $response['debug'] = array_merge(
                 ['request' => request()->except(['password', 'password_confirmation', 'current_password', 'token', 'access_token'])],
                 $debug
@@ -81,49 +65,37 @@ class ApiResponse
 
     /**
      * Respuesta con paginación.
-     *
-     * @param LengthAwarePaginator $paginator
-     * @param string $message
-     * @param array $meta
-     * @return JsonResponse
      */
     public static function paginated(
         LengthAwarePaginator $paginator,
-        string               $message = 'Datos Obtenidos con éxito.',
-        array                $meta = []
-    ): JsonResponse
-    {
+        string $message = 'Datos Obtenidos con éxito.',
+        array $meta = []
+    ): JsonResponse {
         return self::success($paginator->items(), $message, 200, array_merge($meta, [
-                'pagination' => [
-                    'current_page' => $paginator->currentPage(),
-                    'per_page' => $paginator->perPage(),
-                    'total' => $paginator->total(),
-                    'last_page' => $paginator->lastPage(),
-                    'from' => $paginator->firstItem(),
-                    'to' => $paginator->lastItem(),
-                    'has_more_pages' => $paginator->hasMorePages(),
-                    'has_previous_page' => $paginator->currentPage() > 1,
-                    'next_page_url' => $paginator->nextPageUrl(),
-                    'prev_page_url' => $paginator->previousPageUrl(),
-                ]
-            ])
+            'pagination' => [
+                'current_page' => $paginator->currentPage(),
+                'per_page' => $paginator->perPage(),
+                'total' => $paginator->total(),
+                'last_page' => $paginator->lastPage(),
+                'from' => $paginator->firstItem(),
+                'to' => $paginator->lastItem(),
+                'has_more_pages' => $paginator->hasMorePages(),
+                'has_previous_page' => $paginator->currentPage() > 1,
+                'next_page_url' => $paginator->nextPageUrl(),
+                'prev_page_url' => $paginator->previousPageUrl(),
+            ],
+        ])
         );
     }
 
     /**
      * Respuesta con colección de recursos.
-     *
-     * @param JsonResource $collection
-     * @param string $message
-     * @param array $meta
-     * @return JsonResponse
      */
     public static function collection(
         JsonResource $collection,
-        string       $message = 'Datos Obtenidos con éxito.',
-        array        $meta = []
-    ): JsonResponse
-    {
+        string $message = 'Datos Obtenidos con éxito.',
+        array $meta = []
+    ): JsonResponse {
         return self::success($collection->resolve(), $message, 200, $meta);
     }
 
@@ -132,8 +104,7 @@ class ApiResponse
         JsonResource $collection,
         string $message = 'Datos Obtenidos con éxito.',
         array $meta = []
-    ): JsonResponse
-    {
+    ): JsonResponse {
         return self::success($collection->resolve(), $message, 200, array_merge($meta, [
             'pagination' => [
                 'current_page' => $paginator->currentPage(),
@@ -146,8 +117,7 @@ class ApiResponse
                 'has_previous_page' => $paginator->currentPage() > 1,
                 'next_page_url' => $paginator->nextPageUrl(),
                 'prev_page_url' => $paginator->previousPageUrl(),
-            ]
+            ],
         ]));
     }
-
 }

@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Modelo Content
@@ -44,8 +44,6 @@ class Content extends Model
 
     /**
      * Método casts.
-     *
-     * @return array
      */
     protected function casts(): array
     {
@@ -61,24 +59,23 @@ class Content extends Model
     {
         parent::boot();
 
-        ## Evento que se ejecuta después de crear un contenido
+        // # Evento que se ejecuta después de crear un contenido
         static::created(function ($content) {
             if ($content->categories()->count() === 0) {
                 $content->categories()->attach(1); // ID 1 = General
             }
         });
 
-        ## Evento que se ejecuta después de actualizar un contenido
+        // # Evento que se ejecuta después de actualizar un contenido
         static::updated(function ($content) {
             if ($content->categories()->count() === 0) {
                 $content->categories()->attach(1); // ID 1 = General
             }
         });
 
-
-        ## Evento que se ejecuta antes de crear un nuevo registro
+        // # Evento que se ejecuta antes de crear un nuevo registro
         static::creating(function ($content) {
-            ## Si no se ha asignado un user_id, asignar el del usuario logueado
+            // # Si no se ha asignado un user_id, asignar el del usuario logueado
             if (empty($content->user_id) && auth()->check()) {
                 $content->user_id = auth()->id();
             }
@@ -96,8 +93,6 @@ class Content extends Model
 
     /**
      * Relación con el Propietario del contenido.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -106,8 +101,6 @@ class Content extends Model
 
     /**
      * Relación con el Grupo al que pertenece el contenido.
-     *
-     * @return BelongsTo
      */
     public function group(): BelongsTo
     {
@@ -116,8 +109,6 @@ class Content extends Model
 
     /**
      * Relación con las categorías del contenido.
-     *
-     * @return BelongsToMany
      */
     public function categories(): BelongsToMany
     {
@@ -126,8 +117,6 @@ class Content extends Model
 
     /**
      * Relación con las opciones asociadas al contenido.
-     *
-     * @return HasMany
      */
     public function options(): HasMany
     {
@@ -250,36 +239,29 @@ class Content extends Model
 
     /**
      * Devuelve el contenido en HTML con saltos de línea convertidos a <br />
-     *
-     * @return string
      */
     public function getFormattedHtmlContentAttribute(): string
     {
         return nl2br(e($this->content));
     }
 
-
     /**
      * Devuelve el nick del usuario que ha subido el contenido
-     *
-     * @return string
      */
     public function getUploaderAttribute(): string
     {
-        return '@' . ($this->uploaded_by ?? $this->user?->nick ?? 'SinAsignar');
+        return '@'.($this->uploaded_by ?? $this->user?->nick ?? 'SinAsignar');
     }
 
     /**
      * Devuelve la url hacia la imagen.
-     *
-     * @return string
      */
     public function getUrlImageAttribute(): string
     {
-        if (!$this->image || ($this->image === 'images/default/content.webp')) {
+        if (! $this->image || ($this->image === 'images/default/content.webp')) {
             return asset('images/default/content.webp');
         }
 
-        return asset('storage/' . $this->image);
+        return asset('storage/'.$this->image);
     }
 }

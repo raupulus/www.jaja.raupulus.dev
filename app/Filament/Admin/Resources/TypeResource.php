@@ -3,7 +3,6 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\TypeResource\Pages;
-use App\Filament\Admin\Resources\TypeResource\RelationManagers;
 use App\Filament\Support\WebpImageUpload;
 use App\Models\Type;
 use Filament\Forms;
@@ -13,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Unique;
 
 class TypeResource extends Resource
 {
@@ -27,7 +27,6 @@ class TypeResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
-
 
     public static function form(Form $form): Form
     {
@@ -51,7 +50,7 @@ class TypeResource extends Resource
                         'types',
                         'slug',
                         ignoreRecord: true,
-                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                        modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                     )
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
@@ -133,7 +132,7 @@ class TypeResource extends Resource
         return [
             'index' => Pages\ListTypes::route('/'),
             'create' => Pages\CreateType::route('/create'),
-            //'view' => Pages\ViewType::route('/{record}'),
+            // 'view' => Pages\ViewType::route('/{record}'),
             'edit' => Pages\EditType::route('/{record}/edit'),
         ];
     }

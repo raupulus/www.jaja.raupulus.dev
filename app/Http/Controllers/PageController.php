@@ -15,8 +15,6 @@ class PageController extends Controller
 {
     /**
      * Listado de todas las páginas
-     *
-     * @return View
      */
     public function index(): View
     {
@@ -33,13 +31,10 @@ class PageController extends Controller
 
     /**
      * Muestra una página individual
-     *
-     * @param Page $page
-     * @return View
      */
     public function show(Page $page): View
     {
-        if (!$page->id || ($page->status !== 'published')) {
+        if (! $page->id || ($page->status !== 'published')) {
             abort(404);
         }
 

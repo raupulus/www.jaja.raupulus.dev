@@ -3,7 +3,6 @@
 namespace App\Filament\Panel\Resources\ContentResource\Pages;
 
 use App\Filament\Panel\Resources\ContentResource;
-use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateContent extends CreateRecord
@@ -13,6 +12,7 @@ class CreateContent extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = auth()->id();
+
         return $data;
     }
 

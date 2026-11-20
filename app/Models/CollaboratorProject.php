@@ -32,8 +32,6 @@ class CollaboratorProject extends Model
 
     /**
      * Relación con el colaborador.
-     *
-     * @return BelongsTo
      */
     public function collaborator(): BelongsTo
     {
@@ -42,22 +40,18 @@ class CollaboratorProject extends Model
 
     /**
      * Devuelve la url hacia la imagen si la tuviera.
-     *
-     * @return string|null
      */
     public function getUrlImageAttribute(): ?string
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        return $this->image ? asset('storage/'.$this->image) : null;
     }
 
     /**
      * Parsea el contenido en markdown y lo devuelve en formato HTML
-     *
-     * @return string
      */
     public function getHtmlContent(): string
     {
-        $parsedown = new \Parsedown();
+        $parsedown = new \Parsedown;
         $parsedown->setSafeMode(true);
 
         return $parsedown->text($this->content);

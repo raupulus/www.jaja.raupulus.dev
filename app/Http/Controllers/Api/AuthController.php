@@ -33,6 +33,7 @@ class AuthController extends Controller
      * Bearer 5|dpsZX6OKLdrx1wYDfJqyMjg3kdAGdrmzDU4gMkJ1be4af09b
      *
      * @group 🔐 Autenticación
+     *
      * @unauthenticated
      *
      * @response 200 {
@@ -49,7 +50,6 @@ class AuthController extends Controller
      *   },
      *   "message": "Login exitoso"
      * }
-     *
      * @response 401 {
      *   "success": false,
      *   "message": "Las credenciales proporcionadas son incorrectas."
@@ -66,21 +66,21 @@ class AuthController extends Controller
      * @responseField data.user.email string Email del usuario (incluido al ser el propio usuario)
      * @responseField data.user.email_verified_at string Fecha de verificación del email ISO 8601
      *
-     * @param UserLoginRequest $request Request validado con email, password y device_name
-     * @return JsonResponse
+     * @param  UserLoginRequest  $request  Request validado con email, password y device_name
+     *
      * @throws ValidationException Si los datos no son válidos
      */
     public function login(UserLoginRequest $request): JsonResponse
     {
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (! $user || ! Hash::check($request->password, $user->password)) {
             return $this->errorResponse(__('auth.failed'), 401);
         }
 
         return $this->successResponse([
             'token' => $user->createToken($request->device_name)->plainTextToken,
-            'user' => new UserResource($user)
+            'user' => new UserResource($user),
         ], 'Login exitoso');
     }
 
@@ -90,6 +90,7 @@ class AuthController extends Controller
      * Cierra la sesión de un usuario e invalida el token de acceso utilizado en ese momento
      *
      * @group 🔐 Autenticación
+     *
      * @authenticated
      *
      * @response 200 {
@@ -101,9 +102,6 @@ class AuthController extends Controller
      * @responseField success boolean Indica si la operación fue exitosa
      * @responseField message string Mensaje descriptivo de la operación
      * @responseField data null No se devuelven datos adicionales
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function logout(Request $request): JsonResponse
     {
@@ -118,6 +116,7 @@ class AuthController extends Controller
      * Devuelve la información del usuario actualmente logueado en la plataforma
      *
      * @group 🔐 Autenticación
+     *
      * @authenticated
      *
      * @response 200 {
@@ -140,9 +139,6 @@ class AuthController extends Controller
      * @responseField data.urlImage string URL completa de la imagen de perfil del usuario
      * @responseField data.email string Email del usuario (solo si es el propio usuario autenticado)
      * @responseField data.email_verified_at string Fecha de verificación del email en formato ISO 8601 (solo si es el propio usuario autenticado)
-     *
-     * @param Request $request
-     * @return JsonResponse
      */
     public function user(Request $request): JsonResponse
     {

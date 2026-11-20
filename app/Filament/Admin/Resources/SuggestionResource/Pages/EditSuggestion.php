@@ -30,5 +30,4 @@ class EditSuggestion extends EditRecord
 
         ];
     }
-
 }

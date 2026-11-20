@@ -13,6 +13,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Validation\Rules\Unique;
 
 class ContentResource extends Resource
 {
@@ -82,7 +83,7 @@ class ContentResource extends Resource
                                         'groups',
                                         'slug',
                                         ignoreRecord: true,
-                                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                                        modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                                     )
                                     ->maxLength(255),
                                 Forms\Components\Select::make('type_id')
@@ -102,16 +103,17 @@ class ContentResource extends Resource
                             ->searchable()
                             ->default([1])
                             ->afterStateUpdated(function ($state, Forms\Set $set) {
-                                ## Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
+                                // # Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
                                 if (empty($state)) {
                                     $set('categories', [1]);
                                 }
                             })
                             ->dehydrateStateUsing(function ($state) {
-                                ## Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
+                                // # Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
                                 if (empty($state)) {
                                     return [1];
                                 }
+
                                 return $state;
                             })
                             ->columnSpanFull()
@@ -129,7 +131,7 @@ class ContentResource extends Resource
                                         'categories',
                                         'slug',
                                         ignoreRecord: true,
-                                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                                        modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                                     )
                                     ->maxLength(255),
                                 Forms\Components\Textarea::make('description')
@@ -148,7 +150,7 @@ class ContentResource extends Resource
                             ->default(false)
                             ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
                             ->extraAttributes([
-                                'class' => 'border-red-500'
+                                'class' => 'border-red-500',
                             ]),
 
                         Forms\Components\Checkbox::make('is_ai')
@@ -156,7 +158,7 @@ class ContentResource extends Resource
                             ->default(false)
                             ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
                             ->extraAttributes([
-                                'class' => 'border-orange-500'
+                                'class' => 'border-orange-500',
                             ]),
                     ])
                     ->columns(['default' => 1, 'md' => 2]),
@@ -258,13 +260,13 @@ class ContentResource extends Resource
                             } catch (\Exception $e) {
                                 Notification::make()
                                     ->title('Error al publicar')
-                                    ->body('Error: ' . $e->getMessage())
+                                    ->body('Error: '.$e->getMessage())
                                     ->danger()
                                     ->send();
                             }
                         })
                         ->visible(function (Content $record) {
-                            ## Solo muestro contenido apto para redes sociales
+                            // # Solo muestro contenido apto para redes sociales
                             return $record->isPublicSafe();
                         }),
                 ])
@@ -298,7 +300,7 @@ class ContentResource extends Resource
             'index' => Pages\ListContents::route('/'),
             'create' => Pages\CreateContent::route('/create'),
             'edit' => Pages\EditContent::route('/{record}/edit'),
-            //'view' => Pages\ViewContent::route('/{record}'),
+            // 'view' => Pages\ViewContent::route('/{record}'),
         ];
     }
 }

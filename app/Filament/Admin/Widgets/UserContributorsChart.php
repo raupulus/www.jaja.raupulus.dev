@@ -13,7 +13,7 @@ class UserContributorsChart extends ChartWidget
 
     protected static ?int $sort = 5;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     /**
      * Paleta fija y accesible de colores para la gráfica circular.
@@ -43,7 +43,7 @@ class UserContributorsChart extends ChartWidget
 
         foreach ($contributors as $index => $contributor) {
             $data[] = $contributor['total'];
-            $labels[] = '@' . $contributor['nick'];
+            $labels[] = '@'.$contributor['nick'];
             $colors[] = self::PALETTE[$index % count(self::PALETTE)];
         }
 

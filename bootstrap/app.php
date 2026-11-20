@@ -1,12 +1,18 @@
 <?php
 
+use App\Http\Middleware\IsAdminMiddleware;
+use App\Http\Middleware\SecurityHeadersMiddleware;
+use App\Http\Middleware\ThrottleWithRealIp;
+use App\Http\Middleware\VerifyRecaptcha;
+use App\Http\Responses\ApiResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use \Laravel\Sanctum\Http\Middleware\CheckAbilities;
-use \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
 use Illuminate\Http\Request;
-use \App\Http\Responses\ApiResponse;
+use Laravel\Sanctum\Http\Middleware\CheckAbilities;
+use Laravel\Sanctum\Http\Middleware\CheckForAnyAbility;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,17 +23,17 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: 'api/v1',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->append(\App\Http\Middleware\SecurityHeadersMiddleware::class);
+        $middleware->append(SecurityHeadersMiddleware::class);
 
         $middleware->alias([
             'abilities' => CheckAbilities::class,
             'ability' => CheckForAnyAbility::class,
-            'recaptcha' => \App\Http\Middleware\VerifyRecaptcha::class,
-            'isAdmin' => \App\Http\Middleware\IsAdminMiddleware::class,
-            'throttle.real.ip' => \App\Http\Middleware\ThrottleWithRealIp::class,
+            'recaptcha' => VerifyRecaptcha::class,
+            'isAdmin' => IsAdminMiddleware::class,
+            'throttle.real.ip' => ThrottleWithRealIp::class,
         ]);
 
-        //$middleware->statefulApi();
+        // $middleware->statefulApi();
     })
     ->withExceptions(function (Exceptions $exceptions) {
         $exceptions->shouldRenderJsonWhen(
@@ -37,7 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->render(function (Throwable $e, Request $request) {
             $wantsJson = $request->is('api/*') || $request->expectsJson();
 
-            if ($e instanceof \Illuminate\Auth\AuthenticationException) {
+            if ($e instanceof AuthenticationException) {
                 if ($wantsJson) {
                     return ApiResponse::error('No autenticado.', 401);
                 }
@@ -45,7 +51,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 return redirect()->guest($e->redirectTo($request) ?? route('login'));
             }
 
-            if ($e instanceof \Symfony\Component\HttpKernel\Exception\NotFoundHttpException && $wantsJson) {
+            if ($e instanceof NotFoundHttpException && $wantsJson) {
                 if (config('app.debug')) {
                     return ApiResponse::error($e->getMessage(), 404, null, null, ['trace' => $e->getTrace()]);
                 }

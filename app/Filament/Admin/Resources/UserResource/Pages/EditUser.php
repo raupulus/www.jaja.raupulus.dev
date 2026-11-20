@@ -24,7 +24,7 @@ class EditUser extends EditRecord
 
     protected function mutateFormDataBeforeSave(array $data): array
     {
-        ## Si no se proporciona contraseña, eliminamos el campo para mantener la existente
+        // # Si no se proporciona contraseña, eliminamos el campo para mantener la existente
         if (empty($data['password'])) {
             unset($data['password']);
         }

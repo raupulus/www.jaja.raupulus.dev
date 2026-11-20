@@ -20,7 +20,7 @@ class CacheInvalidationService
      */
     public static function collaboratorShowProjectKey(int $collaboratorId, int $projectId): string
     {
-        return 'page_collaborator_' . $collaboratorId . '_show_project_' . $projectId;
+        return 'page_collaborator_'.$collaboratorId.'_show_project_'.$projectId;
     }
 
     /**
@@ -40,7 +40,7 @@ class CacheInvalidationService
 
         Type::withTrashed()
             ->pluck('id')
-            ->each(static fn (int $typeId) => Cache::forget('groups_index_by_type_' . $typeId));
+            ->each(static fn (int $typeId) => Cache::forget('groups_index_by_type_'.$typeId));
     }
 
     /**
@@ -59,7 +59,7 @@ class CacheInvalidationService
     {
         Cache::forget('types_index');
         Cache::forget('groups_index');
-        Cache::forget('groups_index_by_type_' . $type->id);
+        Cache::forget('groups_index_by_type_'.$type->id);
         Cache::forget('types_and_groups_and_categories_count');
         Cache::forget(self::ADMIN_CONTENT_OVERVIEW_KEY);
     }
@@ -76,12 +76,12 @@ class CacheInvalidationService
         Cache::forget(self::ADMIN_CONTENT_OVERVIEW_KEY);
 
         if ($group->type_id) {
-            Cache::forget('groups_index_by_type_' . $group->type_id);
+            Cache::forget('groups_index_by_type_'.$group->type_id);
         }
 
         $originalTypeId = $group->getOriginal('type_id');
         if ($originalTypeId && (int) $originalTypeId !== (int) $group->type_id) {
-            Cache::forget('groups_index_by_type_' . $originalTypeId);
+            Cache::forget('groups_index_by_type_'.$originalTypeId);
         }
     }
 
@@ -108,8 +108,8 @@ class CacheInvalidationService
     public static function forCollaborator(int $collaboratorId): void
     {
         Cache::forget('page_collaborators_index');
-        Cache::forget('page_collaborator_projects_count_' . $collaboratorId);
-        Cache::forget('page_collaborator_' . $collaboratorId . '_projects');
+        Cache::forget('page_collaborator_projects_count_'.$collaboratorId);
+        Cache::forget('page_collaborator_'.$collaboratorId.'_projects');
 
         CollaboratorProject::where('collaborator_id', $collaboratorId)
             ->pluck('id')

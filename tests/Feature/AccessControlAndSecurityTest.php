@@ -14,6 +14,7 @@ use App\Models\Type;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Http\Client\Factory;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -328,7 +329,7 @@ class AccessControlAndSecurityTest extends TestCase
             ->assertSessionHasErrors('g_recaptcha');
 
         // Error de conexión -> error de validación controlado (sin 500)
-        Http::swap(new \Illuminate\Http\Client\Factory());
+        Http::swap(new Factory);
         Http::fake(function () {
             throw new ConnectionException('Timeout');
         });
@@ -339,7 +340,7 @@ class AccessControlAndSecurityTest extends TestCase
             ->assertSessionHasErrors('g_recaptcha');
 
         // Respuesta válida -> acepta y redirige con éxito
-        Http::swap(new \Illuminate\Http\Client\Factory());
+        Http::swap(new Factory);
         Http::fake([
             'https://www.google.com/recaptcha/api/siteverify' => Http::response([
                 'success' => true,

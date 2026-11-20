@@ -15,17 +15,17 @@ class ThrottleWithRealIp
     {
         $ip = IpHelper::getClientIp($request);
 
-        ## Verifico si la IP está en la lista de exclusión
+        // # Verifico si la IP está en la lista de exclusión
         if ($this->isIpExcluded($ip)) {
             return $next($request);
         }
 
-        $key = 'throttle:' . $ip;
+        $key = 'throttle:'.$ip;
 
-        if (!RateLimiter::attempt($key, $maxAttempts, fn() => true, $decayMinutes * 60)) {
+        if (! RateLimiter::attempt($key, $maxAttempts, fn () => true, $decayMinutes * 60)) {
             $seconds = RateLimiter::availableIn($key);
 
-            ## Si es una petición JSON/API, devuelvo respuesta con ApiResponse
+            // # Si es una petición JSON/API, devuelvo respuesta con ApiResponse
             if ($request->expectsJson()) {
                 return ApiResponse::error(
                     message: "Demasiadas solicitudes. Espera {$seconds} segundos.",
@@ -35,12 +35,12 @@ class ThrottleWithRealIp
                         'retry_after' => $seconds,
                         'limit' => $maxAttempts,
                         'remaining' => 0,
-                        'reset' => now()->addSeconds($seconds)->timestamp
+                        'reset' => now()->addSeconds($seconds)->timestamp,
                     ]
                 );
             }
 
-            ## Para peticiones web, comportamiento similar al middleware throttle original
+            // # Para peticiones web, comportamiento similar al middleware throttle original
             return $this->buildWebResponse($request, $seconds);
         }
 
@@ -54,12 +54,12 @@ class ThrottleWithRealIp
     {
         $excludedIps = $this->getExcludedIps();
 
-        ## Verifico coincidencia exacta
+        // # Verifico coincidencia exacta
         if (in_array($ip, $excludedIps)) {
             return true;
         }
 
-        ## Verifico rangos CIDR
+        // # Verifico rangos CIDR
         /*
         foreach ($excludedIps as $excludedIp) {
             if ($this->ipInRange($ip, $excludedIp)) {
@@ -84,23 +84,23 @@ class ThrottleWithRealIp
      */
     private function ipInRange(string $ip, string $range): bool
     {
-        ## Si no es un rango CIDR, solo comparar exactamente
-        if (!str_contains($range, '/')) {
+        // # Si no es un rango CIDR, solo comparar exactamente
+        if (! str_contains($range, '/')) {
             return $ip === $range;
         }
 
-        list($subnet, $mask) = explode('/', $range);
+        [$subnet, $mask] = explode('/', $range);
 
-        ## Convierto a formato binario para IPv4
+        // # Convierto a formato binario para IPv4
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
             $ip_long = ip2long($ip);
             $subnet_long = ip2long($subnet);
-            $mask_long = -1 << (32 - (int)$mask);
+            $mask_long = -1 << (32 - (int) $mask);
 
             return ($ip_long & $mask_long) === ($subnet_long & $mask_long);
         }
 
-        ## Para IPv6 (implementación básica)
+        // # Para IPv6 (implementación básica)
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
             return false;
         }
@@ -133,7 +133,7 @@ class ThrottleWithRealIp
             'X-RateLimit-Remaining' => $remainingAttempts,
         ]);
 
-        if (!is_null($retryAfter)) {
+        if (! is_null($retryAfter)) {
             $response->headers->add([
                 'Retry-After' => $retryAfter,
                 'X-RateLimit-Reset' => now()->addSeconds($retryAfter)->timestamp,

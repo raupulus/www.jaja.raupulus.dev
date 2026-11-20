@@ -3,7 +3,6 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\CategoryResource\Pages;
-use App\Filament\Admin\Resources\CategoryResource\RelationManagers;
 use App\Filament\Support\WebpImageUpload;
 use App\Models\Category;
 use Filament\Forms;
@@ -13,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Validation\Rules\Unique;
 
 class CategoryResource extends Resource
 {
@@ -27,7 +27,6 @@ class CategoryResource extends Resource
     protected static ?string $recordTitleAttribute = 'title';
 
     protected static ?string $navigationIcon = 'heroicon-o-tag';
-
 
     public static function form(Form $form): Form
     {
@@ -51,7 +50,7 @@ class CategoryResource extends Resource
                         'categories',
                         'slug',
                         ignoreRecord: true,
-                        modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                        modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                     )
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
@@ -132,7 +131,7 @@ class CategoryResource extends Resource
         return [
             'index' => Pages\ListCategories::route('/'),
             'create' => Pages\CreateCategory::route('/create'),
-            //'view' => Pages\ViewCategory::route('/{record}'),
+            // 'view' => Pages\ViewCategory::route('/{record}'),
             'edit' => Pages\EditCategory::route('/{record}/edit'),
         ];
     }

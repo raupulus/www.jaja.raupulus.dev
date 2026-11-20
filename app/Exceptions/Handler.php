@@ -3,8 +3,8 @@
 namespace App\Exceptions;
 
 use App\Http\Responses\ApiResponse;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request; // Asegúrate de importar Request
 use Throwable;
 

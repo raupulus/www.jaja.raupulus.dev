@@ -17,8 +17,6 @@ class CollaboratorController extends Controller
 {
     /**
      * Muestra el listado de colaboradores en la plataforma.
-     *
-     * @return View
      */
     public function index(): View
     {
@@ -34,24 +32,23 @@ class CollaboratorController extends Controller
     /**
      * Muestra un colaborador con todos sus proyectos.
      *
-     * @param Collaborator $collaborator Colaborador
-     * @return View
+     * @param  Collaborator  $collaborator  Colaborador
      */
     public function show(Collaborator $collaborator): View
     {
-        if (!$collaborator?->id) {
+        if (! $collaborator?->id) {
             abort(404);
         }
 
-        $projectsCount = Cache::remember('page_collaborator_projects_count_' . $collaborator->id, 600, function () use ($collaborator) {
+        $projectsCount = Cache::remember('page_collaborator_projects_count_'.$collaborator->id, 600, function () use ($collaborator) {
             return $collaborator?->projects()->where('status', 'published')->count();
         });
 
-        if (!$projectsCount) {
+        if (! $projectsCount) {
             abort(404);
         }
 
-        $projects = Cache::remember('page_collaborator_' . $collaborator->id . '_projects', 600, function () use ($collaborator) {
+        $projects = Cache::remember('page_collaborator_'.$collaborator->id.'_projects', 600, function () use ($collaborator) {
             return $collaborator->projects()->where('status', 'published')->get();
         });
 
@@ -65,9 +62,8 @@ class CollaboratorController extends Controller
     /**
      * Muestra un proyecto concreto de un colaborador
      *
-     * @param Collaborator $collaborator Colaboraor
-     * @param CollaboratorProject $project Proyecto
-     * @return View
+     * @param  Collaborator  $collaborator  Colaboraor
+     * @param  CollaboratorProject  $project  Proyecto
      */
     public function showProject(Collaborator $collaborator, CollaboratorProject $project): View
     {

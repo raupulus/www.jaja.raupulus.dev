@@ -8,6 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class ProjectsRelationManager extends RelationManager
 {
@@ -49,7 +50,7 @@ class ProjectsRelationManager extends RelationManager
                         if ($operation !== 'create') {
                             return;
                         }
-                        $set('slug', \Illuminate\Support\Str::slug($state));
+                        $set('slug', Str::slug($state));
                     }),
                 Forms\Components\TextInput::make('slug')
                     ->label('Slug')
@@ -80,8 +81,7 @@ class ProjectsRelationManager extends RelationManager
                             };
                         },
                     ])
-                    ->helperText('💡 Usa H2 (##) como título principal, H3 (###) para subtítulos, etc. No se permiten H1 (#).')
-                ,
+                    ->helperText('💡 Usa H2 (##) como título principal, H3 (###) para subtítulos, etc. No se permiten H1 (#).'),
 
                 Forms\Components\Select::make('type')
                     ->required()
@@ -118,7 +118,7 @@ class ProjectsRelationManager extends RelationManager
                 Forms\Components\TagsInput::make('keywords')
                     ->label('Palabras Clave')
                     ->helperText('Presiona Enter para agregar una palabra clave')
-                    ->separator(',')
+                    ->separator(','),
 
             ]);
     }

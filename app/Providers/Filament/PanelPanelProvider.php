@@ -39,7 +39,7 @@ class PanelPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Panel/Widgets'), for: 'App\\Filament\\Panel\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                //Widgets\FilamentInfoWidget::class,
+                // Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -80,10 +80,9 @@ class PanelPanelProvider extends PanelProvider
                     ->openUrlInNewTab(),
             ])
             ->login()
-            //->registration()
+            // ->registration()
             ->passwordReset()
             ->emailVerification()
-            ->profile()
-            ;
+            ->profile();
     }
 }

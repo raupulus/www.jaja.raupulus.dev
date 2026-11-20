@@ -97,7 +97,7 @@ class ResponsiveUxAndW3cTest extends TestCase
         $html = $response->getContent();
 
         $this->assertMatchesRegularExpression(
-            '/<option\s+value="' . $quizGroup->id . '"\s+selected/s',
+            '/<option\s+value="'.$quizGroup->id.'"\s+selected/s',
             $html
         );
         $this->assertMatchesRegularExpression(

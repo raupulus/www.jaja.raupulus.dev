@@ -120,7 +120,7 @@ class SeoMetadataAndSitemapTest extends TestCase
         $decoded = [];
         foreach ($matches[1] as $rawJson) {
             $data = json_decode($rawJson, true);
-            $this->assertSame(JSON_ERROR_NONE, json_last_error(), 'JSON-LD inválido: ' . json_last_error_msg());
+            $this->assertSame(JSON_ERROR_NONE, json_last_error(), 'JSON-LD inválido: '.json_last_error_msg());
             $this->assertSame('https://schema.org', $data['@context'] ?? null);
             $decoded[] = $data;
         }
@@ -274,7 +274,7 @@ class SeoMetadataAndSitemapTest extends TestCase
             }
         } finally {
             @unlink($tempPath);
-            @unlink($tempPath . '.bak');
+            @unlink($tempPath.'.bak');
         }
     }
 

@@ -30,8 +30,6 @@ class Page extends Model
 
     /**
      * Devuelve el enlace a la página actual.
-     *
-     * @return string
      */
     public function getUrlAttribute(): string
     {
@@ -40,19 +38,15 @@ class Page extends Model
 
     /**
      * Devuelve la url hacia la imagen principal de la página.
-     *
-     * @return string|null
      */
     public function getUrlImageAttribute(): ?string
     {
-        return $this->image ? asset('storage/' . $this->image) : null;
+        return $this->image ? asset('storage/'.$this->image) : null;
     }
 
-    //TODO: Adaptar cuando implemente generar thumbnails
+    // TODO: Adaptar cuando implemente generar thumbnails
     /**
      * Método getUrlImageThumbnailAttribute.
-     *
-     * @return ?string
      */
     public function getUrlImageThumbnailAttribute(): ?string
     {
@@ -61,15 +55,12 @@ class Page extends Model
 
     /**
      * Parsea el contenido en markdown y lo devuelve en formato HTML
-     *
-     * @return string
      */
     public function getHtmlContent(): string
     {
-        $parsedown = new \Parsedown();
+        $parsedown = new \Parsedown;
         $parsedown->setSafeMode(true);
 
         return $parsedown->text($this->content);
     }
-
 }

@@ -221,7 +221,7 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
         $joke->categories()->sync([$this->techCategory->id]);
 
         $this->getJson('/api/v1/random?limit=5')->assertStatus(200);
-        $this->getJson('/api/v1/random/' . $this->quizType->slug)->assertStatus(200);
+        $this->getJson('/api/v1/random/'.$this->quizType->slug)->assertStatus(200);
 
         Sanctum::actingAs($this->user);
 
@@ -229,10 +229,10 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
         $this->getJson('/api/v1/groups')->assertStatus(200);
         $this->getJson('/api/v1/categories')->assertStatus(200);
         $this->getJson('/api/v1/contents/list')->assertStatus(200);
-        $this->getJson('/api/v1/type/' . $this->quizType->slug . '/content/random')->assertStatus(200);
-        $this->getJson('/api/v1/type/' . $this->quizType->slug . '/category/' . $this->techCategory->slug . '/content/random')->assertStatus(200);
-        $this->getJson('/api/v1/group/' . $this->quizGroup->slug . '/content/random')->assertStatus(200);
-        $this->getJson('/api/v1/user/' . $this->user->nick . '/content/random')->assertStatus(200);
+        $this->getJson('/api/v1/type/'.$this->quizType->slug.'/content/random')->assertStatus(200);
+        $this->getJson('/api/v1/type/'.$this->quizType->slug.'/category/'.$this->techCategory->slug.'/content/random')->assertStatus(200);
+        $this->getJson('/api/v1/group/'.$this->quizGroup->slug.'/content/random')->assertStatus(200);
+        $this->getJson('/api/v1/user/'.$this->user->nick.'/content/random')->assertStatus(200);
 
         $this->postJson('/api/v1/suggestion/send', [
             'nick' => 'tester_api',
@@ -408,7 +408,7 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
         Cache::put('home_contents', 'cached', 60);
         Cache::put('types_index', 'cached', 60);
         Cache::put('groups_index', 'cached', 60);
-        Cache::put('groups_index_by_type_' . $this->chistesType->id, 'cached', 60);
+        Cache::put('groups_index_by_type_'.$this->chistesType->id, 'cached', 60);
         Cache::put('categories_index', 'cached', 60);
         Cache::put(CacheInvalidationService::ADMIN_CONTENT_OVERVIEW_KEY, ['cached'], 60);
 
@@ -423,7 +423,7 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
         $this->assertFalse(Cache::has('home_contents'));
         $this->assertFalse(Cache::has('types_index'));
         $this->assertFalse(Cache::has('groups_index'));
-        $this->assertFalse(Cache::has('groups_index_by_type_' . $this->chistesType->id));
+        $this->assertFalse(Cache::has('groups_index_by_type_'.$this->chistesType->id));
         $this->assertFalse(Cache::has('categories_index'));
         $this->assertFalse(Cache::has(CacheInvalidationService::ADMIN_CONTENT_OVERVIEW_KEY));
 
@@ -448,7 +448,7 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
 
         $projectKey = CacheInvalidationService::collaboratorShowProjectKey($collaborator->id, 999);
         Cache::put($projectKey, 'cached', 60);
-        Cache::put('page_collaborator_' . $collaborator->id . '_projects', 'cached', 60);
+        Cache::put('page_collaborator_'.$collaborator->id.'_projects', 'cached', 60);
 
         $project = CollaboratorProject::create([
             'collaborator_id' => $collaborator->id,
@@ -460,7 +460,7 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
             'repository_type' => 'github',
             'status' => 'published',
         ]);
-        $this->assertFalse(Cache::has('page_collaborator_' . $collaborator->id . '_projects'));
+        $this->assertFalse(Cache::has('page_collaborator_'.$collaborator->id.'_projects'));
 
         Cache::put(CacheInvalidationService::collaboratorShowProjectKey($collaborator->id, $project->id), 'cached', 60);
         $project->update(['excerpt' => 'Resumen actualizado']);

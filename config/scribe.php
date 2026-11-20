@@ -4,25 +4,27 @@ if (in_array(env('APP_ENV'), ['prod', 'production'])) {
     return [];
 }
 
-use Knuckles\Scribe\Extracting\Strategies;
-use Knuckles\Scribe\Config\Defaults;
 use Knuckles\Scribe\Config\AuthIn;
-use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
+use Knuckles\Scribe\Config\Defaults;
+use Knuckles\Scribe\Extracting\Strategies;
+
+use function Knuckles\Scribe\Config\configureStrategy;
+use function Knuckles\Scribe\Config\removeStrategies;
 
 // Only the most common configs are shown. See the https://scribe.knuckles.wtf/laravel/reference/config for all.
 
 return [
     // The HTML <title> for the generated documentation.
-    'title' => config('app.name') . ' API Documentación Oficial',
+    'title' => config('app.name').' API Documentación Oficial',
 
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
     'description' => 'JaJa Project - La mejor comunidad para entretenimiento y compartir el humor',
 
     // The base URL displayed in the docs.
     // If you're using `laravel` type, you can set this to a dynamic string, like '{{ config("app.tenant_url") }}' to get a dynamic base URL.
-    //'base_url' => config("app.url"),
+    // 'base_url' => config("app.url"),
     'base_url' => 'https://jaja.raupulus.dev',
-    //'base_url' => 'http://localhost:8000',
+    // 'base_url' => 'http://localhost:8000',
 
     // Routes to include in the docs
     'routes' => [
@@ -80,7 +82,7 @@ return [
     ],
 
     'external' => [
-        'html_attributes' => []
+        'html_attributes' => [],
     ],
 
     'try_it_out' => [
@@ -126,14 +128,13 @@ return [
     ],
 
     // Text to place in the "Introduction" section, right after the `description`. Markdown and HTML are supported.
-    'intro_text' => <<<INTRO
+    'intro_text' => <<<'INTRO'
 Esta documentación tiene como objetivo proporcionar toda la información necesaria para trabajar con nuestra API REST del proyecto JaJa. La API permite acceder a chistes, adivinanzas y contenido humorístico de manera programática, facilitando la integración con aplicaciones externas, bots de Discord, Telegram u otras plataformas que requieran contenido de entretenimiento.
 
 Para comenzar a utilizar la API, necesitarás autenticarte mediante el endpoint de login con tus credenciales de usuario, lo que te proporcionará un token Bearer que deberás incluir en las cabeceras de autorización de tus peticiones posteriores. Una vez autenticado, podrás acceder a los diferentes endpoints para obtener contenido aleatorio, filtrar por tipos, categorías o grupos específicos, así como consultar la información de tu perfil de usuario. Todos los endpoints devuelven respuestas en formato JSON con una estructura consistente que incluye el estado de la operación, los datos solicitados y metadatos adicionales como información de paginación cuando corresponda.
 
 > **Nota importante:** Mientras navegas por esta documentación, verás ejemplos de código para trabajar con la API en diferentes lenguajes de programación en el área oscura de la derecha (o como parte del contenido en dispositivos móviles). Puedes cambiar el lenguaje utilizado con las pestañas en la parte superior derecha (o desde el menú de navegación en la parte superior izquierda en móviles). Los ejemplos incluyen las cabeceras HTTP necesarias, la estructura de las peticiones y las respuestas esperadas para cada endpoint.
 INTRO,
-
 
     // Example requests for each endpoint will be shown in each of these languages.
     // Supported options are: bash, javascript, php, python
@@ -253,7 +254,7 @@ INTRO,
         ),
         'responseFields' => [
             ...Defaults::RESPONSE_FIELDS_STRATEGIES,
-        ]
+        ],
     ],
 
     // For response calls, API resource responses and transformer responses,

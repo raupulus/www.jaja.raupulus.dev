@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\Page;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PageSeeder extends Seeder
@@ -68,13 +67,13 @@ class PageSeeder extends Seeder
 **Recuerda**: Estamos aquí para divertirnos y crear juntos. ¡Mantengamos este espacio positivo para todos!
 
 *Estas normas pueden actualizarse periódicamente. Te notificaremos de cualquier cambio importante.*',
-                'keywords' => 'normas, reglas, comunidad, respeto, contenido apropiado, moderación, api, convivencia, humor sano'
+                'keywords' => 'normas, reglas, comunidad, respeto, contenido apropiado, moderación, api, convivencia, humor sano',
             ],
             [
                 'title' => 'Política de Privacidad',
                 'slug' => 'politica-de-privacidad',
                 'excerpt' => 'Política de privacidad de JaJa Project. Información sobre cómo tratamos tus datos personales y qué información recopilamos.',
-                'content' => '*Última actualización: ' . date('d/m/Y') . '*
+                'content' => '*Última actualización: '.date('d/m/Y').'*
 
 En **JaJa Project** respetamos tu privacidad y nos comprometemos a proteger tus datos personales. Esta política explica qué información recopilamos y cómo la utilizamos.
 
@@ -136,13 +135,13 @@ Esta política cumple con la normativa aplicable en materia de protección de da
 ---
 
 **Resumen**: En JaJa Project creemos en la privacidad por diseño. Recopilamos solo lo imprescindible para ofrecer nuestro servicio de forma segura.',
-                'keywords' => 'privacidad, datos personales, protección datos, RGPD, cookies, reCAPTCHA, anonimato'
+                'keywords' => 'privacidad, datos personales, protección datos, RGPD, cookies, reCAPTCHA, anonimato',
             ],
             [
                 'title' => 'Política de Cookies',
                 'slug' => 'politica-de-cookies',
                 'excerpt' => 'Información sobre el uso de cookies en JaJa Project. Detalles sobre seguridad y Google reCAPTCHA v3.',
-                'content' => '*Última actualización: ' . date('d/m/Y') . '*
+                'content' => '*Última actualización: '.date('d/m/Y').'*
 
 ## ¿Qué son las Cookies?
 
@@ -212,13 +211,13 @@ Para preguntas específicas sobre cookies, contacta con nosotros a través de nu
 ---
 
 **En resumen**: Utilizamos únicamente cookies de terceros esenciales (reCAPTCHA) para ofrecer un servicio seguro y mejorado.',
-                'keywords' => 'cookies, reCAPTCHA, navegador, privacidad, seguimiento, terceros, configuración'
+                'keywords' => 'cookies, reCAPTCHA, navegador, privacidad, seguimiento, terceros, configuración',
             ],
             [
                 'title' => 'Condiciones de Uso',
                 'slug' => 'condiciones-de-uso',
                 'excerpt' => 'Condiciones de uso de JaJa Project. Términos legales sobre el contenido que compartes y los derechos de la plataforma.',
-                'content' => '*Última actualización: ' . date('d/m/Y') . '*
+                'content' => '*Última actualización: '.date('d/m/Y').'*
 
 ## Aceptación de las Condiciones
 
@@ -335,7 +334,7 @@ Para cuestiones relacionadas con estas condiciones, contacta con nosotros a trav
 ---
 
 **IMPORTANTE**: Al enviar contenido a JaJa Project, cedes irrevocablemente los derechos de distribución y uso comercial, manteniendo únicamente el reconocimiento de autoría cuando sea posible.',
-                'keywords' => 'condiciones uso, cesión derechos, licencia contenido, propiedad intelectual, responsabilidad legal, términos servicio'
+                'keywords' => 'condiciones uso, cesión derechos, licencia contenido, propiedad intelectual, responsabilidad legal, términos servicio',
             ],
             [
                 'title' => 'Agradecimientos',
@@ -432,7 +431,7 @@ Hay muchas formas de formar parte de esta historia:
 ---
 
 **PD**: Si tu bot cuenta mejores chistes que los nuestros, prometemos no tener envidia... bueno, quizá un poquito 😉',
-                'keywords' => 'agradecimientos, comunidad, colaboradores, desarrolladores, bots, moderadores, contribuidores, open source'
+                'keywords' => 'agradecimientos, comunidad, colaboradores, desarrolladores, bots, moderadores, contribuidores, open source',
             ],
             [
                 'title' => 'Sobre Nosotros',
@@ -573,7 +572,7 @@ Somos un grupo diverso de **desarrolladores, diseñadores, community managers y 
 ---
 
 *En JaJa Project creemos que la mejor tecnología es la que conecta personas y genera sonrisas. ¿Te unes a nosotros en esta misión?*',
-                'keywords' => 'sobre nosotros, comunidad, misión, valores, historia, equipo, futuro, colaboración, humor, tecnología'
+                'keywords' => 'sobre nosotros, comunidad, misión, valores, historia, equipo, futuro, colaboración, humor, tecnología',
             ],
             [
                 'title' => 'Documentación API',
@@ -584,14 +583,14 @@ Somos un grupo diverso de **desarrolladores, diseñadores, community managers y 
 ---
 
 *Para acceder a la documentación completa con ejemplos, endpoints, autenticación y casos de uso, visita nuestra documentación técnica detallada en los enlaces más abajo.*',
-                'keywords' => 'API, documentación, endpoints, autenticación, integración, bots, desarrollo, aplicaciones'
+                'keywords' => 'API, documentación, endpoints, autenticación, integración, bots, desarrollo, aplicaciones',
             ],
             [
                 'title' => 'Bot para Twitch',
                 'slug' => 'bot-twitch',
                 'excerpt' => 'Información sobre el desarrollo del bot para twitch de JaJa Project.',
                 'content' => 'Aún no disponible. ¡Estará pronto muahahaha!',
-                'keywords' => 'API, documentación, endpoints, autenticación, integración, bots, desarrollo, aplicaciones'
+                'keywords' => 'API, documentación, endpoints, autenticación, integración, bots, desarrollo, aplicaciones',
             ],
         ];
 
@@ -600,8 +599,8 @@ Somos un grupo diverso de **desarrolladores, diseñadores, community managers y 
                 continue;
             }
 
-            Page::create(array_merge($page,[
-                'status' => 'published'
+            Page::create(array_merge($page, [
+                'status' => 'published',
             ]));
         }
     }

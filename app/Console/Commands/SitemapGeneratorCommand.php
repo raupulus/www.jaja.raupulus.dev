@@ -9,12 +9,12 @@ use App\Models\Content;
 use App\Models\Group;
 use App\Models\Page;
 use App\Models\Type;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
-use Carbon\Carbon;
 
 class SitemapGeneratorCommand extends Command
 {
@@ -26,12 +26,14 @@ class SitemapGeneratorCommand extends Command
     protected $description = 'Genera el sitemap del sitio completo con metadatos optimizados';
 
     private const CACHE_KEY = 'sitemap_generation_lock';
+
     private const CACHE_TTL = 3600; // 1 hora
 
     public function handle()
     {
-        if (!$this->option('force') && Cache::has(self::CACHE_KEY)) {
+        if (! $this->option('force') && Cache::has(self::CACHE_KEY)) {
             $this->warn('Generación de sitemap ya en progreso o reciente. Use --force para omitir.');
+
             return self::SUCCESS;
         }
 
@@ -52,6 +54,7 @@ class SitemapGeneratorCommand extends Command
             return self::SUCCESS;
         } catch (\Exception $e) {
             $this->handleError($e);
+
             return self::FAILURE;
         } finally {
             Cache::forget(self::CACHE_KEY);
@@ -79,7 +82,7 @@ class SitemapGeneratorCommand extends Command
             ? Carbon::createFromTimestamp(filemtime($docsFile))
             : Carbon::now();
 
-        ## URLs estáticas con prioridades, frecuencia y fecha real de modificación
+        // # URLs estáticas con prioridades, frecuencia y fecha real de modificación
         $staticUrls = [
             ['url' => route('index'), 'priority' => 1.0, 'changefreq' => 'daily', 'lastmod' => $contentModAt],
             ['url' => route('page.index'), 'priority' => 0.8, 'changefreq' => 'weekly', 'lastmod' => $pageModAt],
@@ -210,7 +213,7 @@ class SitemapGeneratorCommand extends Command
         $collaborators = Collaborator::getCollaboratorsVerified();
 
         foreach ($collaborators as $collaborator) {
-            ## Agregar perfil del colaborador
+            // # Agregar perfil del colaborador
             $sitemap->add(
                 Url::create(route('collaborator.show', $collaborator->nick))
                     ->setPriority(0.8)
@@ -219,7 +222,7 @@ class SitemapGeneratorCommand extends Command
             );
             $collaboratorCount++;
 
-            ## Agrego proyectos del colaborador
+            // # Agrego proyectos del colaborador
             $projects = $collaborator->projects()
                 ->where('status', 'published')
                 ->get();
@@ -244,7 +247,7 @@ class SitemapGeneratorCommand extends Command
         $this->info('💾 Escribiendo sitemap a archivo...');
 
         $sitemapPath = $this->option('output') ?: public_path('sitemap.xml');
-        $backupPath = $sitemapPath . '.bak';
+        $backupPath = $sitemapPath.'.bak';
 
         // Creo backup del sitemap anterior si existe
         if (file_exists($sitemapPath)) {
@@ -252,7 +255,7 @@ class SitemapGeneratorCommand extends Command
                 copy($sitemapPath, $backupPath);
                 $this->info('   ✓ Backup del sitemap anterior creado');
             } catch (\Exception $e) {
-                $this->warn('   ⚠️ No se pudo crear el backup: ' . $e->getMessage());
+                $this->warn('   ⚠️ No se pudo crear el backup: '.$e->getMessage());
                 Log::warning('SitemapGeneratorCommand: Failed to create sitemap backup', [
                     'error' => $e->getMessage(),
                     'sitemap_path' => $sitemapPath,
@@ -262,31 +265,31 @@ class SitemapGeneratorCommand extends Command
         }
 
         try {
-            ## Si el sitemap existe, vacío su contenido en lugar de eliminarlo
+            // # Si el sitemap existe, vacío su contenido en lugar de eliminarlo
             if (file_exists($sitemapPath)) {
-                if (!is_writable($sitemapPath)) {
+                if (! is_writable($sitemapPath)) {
                     throw new \Exception('El archivo sitemap.xml no tiene permisos de escritura');
                 }
 
-                ## Vacío el contenido del archivo existente
+                // # Vacío el contenido del archivo existente
                 file_put_contents($sitemapPath, '');
                 $this->info('   ✓ Contenido del sitemap anterior vaciado');
             }
 
             $sitemap->writeToFile($sitemapPath);
 
-            ## Verifico que el archivo se escribió correctamente
-            if (!file_exists($sitemapPath) || filesize($sitemapPath) === 0) {
+            // # Verifico que el archivo se escribió correctamente
+            if (! file_exists($sitemapPath) || filesize($sitemapPath) === 0) {
                 throw new \Exception('El archivo sitemap.xml está vacío o no se pudo crear');
             }
 
-            ## Elimino backup si todo salió bien
+            // # Elimino backup si todo salió bien
             if (file_exists($backupPath)) {
                 try {
                     unlink($backupPath);
                     $this->info('   ✓ Backup temporal eliminado');
                 } catch (\Exception $e) {
-                    $this->warn('   ⚠️ No se pudo eliminar el backup temporal: ' . $e->getMessage());
+                    $this->warn('   ⚠️ No se pudo eliminar el backup temporal: '.$e->getMessage());
                     Log::warning('SitemapGeneratorCommand: Failed to remove temporary sitemap backup', [
                         'error' => $e->getMessage(),
                         'backup_path' => $backupPath,
@@ -297,20 +300,20 @@ class SitemapGeneratorCommand extends Command
             $this->info('   ✓ Sitemap escrito correctamente');
 
         } catch (\Exception $e) {
-            ## Restauro backup si algo sale mal y si existe
+            // # Restauro backup si algo sale mal y si existe
             if (file_exists($backupPath)) {
                 try {
                     copy($backupPath, $sitemapPath);
                     $this->info('   ✓ Sitemap restaurado desde backup');
 
-                    ## Intento eliminar el backup después de restaurar
+                    // # Intento eliminar el backup después de restaurar
                     try {
                         unlink($backupPath);
                     } catch (\Exception $unlinkError) {
-                        $this->warn('   ⚠️ No se pudo eliminar el backup después de restaurar: ' . $unlinkError->getMessage());
+                        $this->warn('   ⚠️ No se pudo eliminar el backup después de restaurar: '.$unlinkError->getMessage());
                     }
                 } catch (\Exception $restoreError) {
-                    $this->error('   ❌ No se pudo restaurar el backup: ' . $restoreError->getMessage());
+                    $this->error('   ❌ No se pudo restaurar el backup: '.$restoreError->getMessage());
                     Log::error('SitemapGeneratorCommand: Failed to restore sitemap backup', [
                         'restore_error' => $restoreError->getMessage(),
                         'original_error' => $e->getMessage(),
@@ -326,7 +329,7 @@ class SitemapGeneratorCommand extends Command
 
     private function handleError(\Exception $e): void
     {
-        $this->error('❌ Error al generar el sitemap: ' . $e->getMessage());
+        $this->error('❌ Error al generar el sitemap: '.$e->getMessage());
 
         Log::error('SitemapGeneratorCommand: Failed to generate sitemap', [
             'message' => $e->getMessage(),

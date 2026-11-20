@@ -45,8 +45,6 @@ class Collaborator extends Model
 
     /**
      * Usuario asociado al colaborador.
-     *
-     * @return BelongsTo
      */
     public function user(): BelongsTo
     {
@@ -55,8 +53,6 @@ class Collaborator extends Model
 
     /**
      * Proyectos asociados al colaborador.
-     *
-     * @return HasMany
      */
     public function projects(): HasMany
     {
@@ -65,14 +61,11 @@ class Collaborator extends Model
 
     /**
      * Devuelve la url hacia la imagen si la tuviera.
-     *
-     * @return string
      */
     public function getUrlImageAttribute(): string
     {
-        return $this->image ? asset('storage/' . $this->image) : asset('images/default/avatar.webp');
+        return $this->image ? asset('storage/'.$this->image) : asset('images/default/avatar.webp');
     }
-
 
     /**
      * Devuelve los colaboradores con proyectos verificados.

@@ -3,7 +3,6 @@
 namespace App\Filament\Admin\Resources;
 
 use App\Filament\Admin\Resources\PageResource\Pages;
-use App\Filament\Admin\Resources\PageResource\RelationManagers;
 use App\Filament\Support\WebpImageUpload;
 use App\Models\Page;
 use Filament\Forms;
@@ -12,6 +11,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Unique;
 
 class PageResource extends Resource
 {
@@ -44,7 +45,7 @@ class PageResource extends Resource
                                     if ($operation !== 'create') {
                                         return;
                                     }
-                                    $set('slug', \Illuminate\Support\Str::slug($state));
+                                    $set('slug', Str::slug($state));
                                 }),
 
                             Forms\Components\TextInput::make('slug')
@@ -55,7 +56,7 @@ class PageResource extends Resource
                                     Page::class,
                                     'slug',
                                     ignoreRecord: true,
-                                    modifyRuleUsing: fn (\Illuminate\Validation\Rules\Unique $rule) => $rule->whereNull('deleted_at')
+                                    modifyRuleUsing: fn (Unique $rule) => $rule->whereNull('deleted_at')
                                 )
                                 ->rules(['alpha_dash'])
                                 ->helperText('URL amigable para la página'),
@@ -77,13 +78,12 @@ class PageResource extends Resource
                                 ->columnSpanFull()
                                 ->helperText('Breve descripción de la página'),
 
-
                         ])
                         ->columns(['default' => 1, 'md' => 2]),
 
                     Forms\Components\Section::make('Contenido')
                         ->schema([
-                            Forms\Components\MarkdownEditor::make('content')
+                            MarkdownEditor::make('content')
                                 ->label('Contenido')
                                 ->toolbarButtons([
                                     'attachFiles',
@@ -110,8 +110,7 @@ class PageResource extends Resource
                                         };
                                     },
                                 ])
-                                ->helperText('💡 Usa H2 (##) como título principal, H3 (###) para subtítulos, etc. No se permiten H1 (#).')
-                            ,
+                                ->helperText('💡 Usa H2 (##) como título principal, H3 (###) para subtítulos, etc. No se permiten H1 (#).'),
                         ]),
                 ])
                     ->columnSpan(['default' => 1, 'lg' => 2]),
@@ -126,13 +125,12 @@ class PageResource extends Resource
                                 ->imageResizeMode('crop'),
 
                             Forms\Components\Section::make('SEO')
-                            ->schema([
-                                Forms\Components\TagsInput::make('keywords')
-                                ->label('Palabras Clave')
-                                ->helperText('Presiona Enter para agregar una palabra clave')
-                                ->separator(',')
-                                ,
-                            ])
+                                ->schema([
+                                    Forms\Components\TagsInput::make('keywords')
+                                        ->label('Palabras Clave')
+                                        ->helperText('Presiona Enter para agregar una palabra clave')
+                                        ->separator(','),
+                                ]),
                         ]),
 
                 ])->columnSpan(['default' => 1, 'lg' => 1]),
@@ -176,7 +174,6 @@ class PageResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-
 
             ])
             ->defaultSort('created_at', 'desc')

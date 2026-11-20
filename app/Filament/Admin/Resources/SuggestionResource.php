@@ -20,11 +20,15 @@ class SuggestionResource extends Resource
     protected static ?string $model = Suggestion::class;
 
     protected static ?string $label = 'Sugerencia';
+
     protected static ?string $pluralLabel = 'Sugerencias';
 
     protected static ?string $navigationLabel = 'Sugerencias';
+
     protected static ?string $navigationGroup = 'Moderación';
+
     protected static ?string $recordTitleAttribute = 'title';
+
     protected static ?string $navigationIcon = 'heroicon-o-arrow-down-on-square-stack';
 
     public static function form(Form $form): Form
@@ -60,7 +64,7 @@ class SuggestionResource extends Resource
                             ->preload()
                             ->live()
                             ->afterStateUpdated(function (Forms\Set $set) {
-                                ## Cuando cambia el tipo, reseteo el grupo
+                                // # Cuando cambia el tipo, reseteo el grupo
                                 $set('group_id', null);
                             }),
 
@@ -74,7 +78,7 @@ class SuggestionResource extends Resource
                                     return [];
                                 }
 
-                                ## Grupos que pertenecen al tipo seleccionado
+                                // # Grupos que pertenecen al tipo seleccionado
                                 return Group::where('type_id', $typeId)
                                     ->pluck('title', 'id')
                                     ->toArray();
@@ -94,6 +98,7 @@ class SuggestionResource extends Resource
                                 if (empty($state) || $state === null || (is_array($state) && count($state) === 0)) {
                                     return [1];
                                 }
+
                                 return $state;
                             })
                             ->afterStateUpdated(function ($state, Forms\Set $set) {
@@ -109,7 +114,7 @@ class SuggestionResource extends Resource
                             ->default(false)
                             ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
                             ->extraAttributes([
-                                'class' => 'border-red-500'
+                                'class' => 'border-red-500',
                             ]),
 
                         Forms\Components\Checkbox::make('is_ai')
@@ -117,7 +122,7 @@ class SuggestionResource extends Resource
                             ->default(false)
                             ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
                             ->extraAttributes([
-                                'class' => 'border-orange-500'
+                                'class' => 'border-orange-500',
                             ]),
                     ])
                     ->columns(['default' => 1, 'md' => 2]),
@@ -204,7 +209,7 @@ class SuggestionResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                //Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
@@ -232,7 +237,7 @@ class SuggestionResource extends Resource
     {
         return [
             'index' => Pages\ListSuggestions::route('/'),
-            //'create' => Pages\CreateSuggestion::route('/create'),
+            // 'create' => Pages\CreateSuggestion::route('/create'),
             'edit' => Pages\EditSuggestion::route('/{record}/edit'),
         ];
     }

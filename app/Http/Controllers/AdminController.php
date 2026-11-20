@@ -17,8 +17,6 @@ class AdminController extends Controller
 {
     /**
      * Acción para generar el sitemap de nuevo.
-     *
-     * @return RedirectResponse
      */
     public function generateSitemap(): RedirectResponse
     {
@@ -62,8 +60,6 @@ class AdminController extends Controller
 
     /**
      * Acción para generar las estadísticas de nuevo.
-     *
-     * @return RedirectResponse
      */
     public function generateStats(): RedirectResponse
     {

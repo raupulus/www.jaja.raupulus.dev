@@ -31,7 +31,7 @@ class WebpImageUpload
 
                 try {
                     $tempFile = $state->getRealPath();
-                    $converter = new ConvertImageToWebp();
+                    $converter = new ConvertImageToWebp;
                     $newPath = $converter($tempFile, $directory);
 
                     if ($newPath && $newPath !== $tempFile) {

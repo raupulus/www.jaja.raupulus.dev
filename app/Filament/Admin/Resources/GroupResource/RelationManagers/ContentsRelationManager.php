@@ -8,8 +8,6 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContentsRelationManager extends RelationManager
 {
@@ -18,10 +16,12 @@ class ContentsRelationManager extends RelationManager
     protected static ?string $title = 'Entradas';
 
     protected static ?string $label = 'Entrada';
-    protected static ?string $pluralLabel = 'Entradas';
-    protected static ?string $recordTitleAttribute = 'title';
-    protected static ?string $icon = 'heroicon-o-document-text';
 
+    protected static ?string $pluralLabel = 'Entradas';
+
+    protected static ?string $recordTitleAttribute = 'title';
+
+    protected static ?string $icon = 'heroicon-o-document-text';
 
     public function form(Form $form): Form
     {
@@ -51,27 +51,27 @@ class ContentsRelationManager extends RelationManager
                     ->searchable()
                     ->default([1])
                     ->afterStateUpdated(function ($state, Forms\Set $set) {
-                        ## Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
+                        // # Si no hay categorías seleccionadas, asigno la categoría "General" con id 1
                         if (empty($state)) {
                             $set('categories', [1]);
                         }
                     })
                     ->dehydrateStateUsing(function ($state) {
-                        ## Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
+                        // # Si no hay categorías seleccionadas, asigno la categoría "General" por defecto
                         if (empty($state)) {
                             return [1];
                         }
+
                         return $state;
                     })
-                    ->columnSpanFull()
-                    ,
+                    ->columnSpanFull(),
 
                 Forms\Components\Checkbox::make('is_adult')
                     ->label('Contenido Adulto')
                     ->default(false)
                     ->helperText('⚠️ ADVERTENCIA: Subir contenido adulto sin marcar esta casilla puede ser motivo de baneo permanente de la plataforma.')
                     ->extraAttributes([
-                        'class' => 'border-red-500'
+                        'class' => 'border-red-500',
                     ]),
 
                 Forms\Components\Checkbox::make('is_ai')
@@ -79,7 +79,7 @@ class ContentsRelationManager extends RelationManager
                     ->default(false)
                     ->helperText('🤖 IMPORTANTE: Subir contenido generado por IA sin marcar esta casilla puede resultar en la suspensión de tu cuenta.')
                     ->extraAttributes([
-                        'class' => 'border-orange-500'
+                        'class' => 'border-orange-500',
                     ]),
 
             ]);

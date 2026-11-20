@@ -14,7 +14,7 @@ class UserResource extends JsonResource
             'nick' => $this->nick,
             'urlImage' => $this->urlImage,
 
-            ## Si es el usuario logueado incluyo información más sensible
+            // # Si es el usuario logueado incluyo información más sensible
             $this->mergeWhen($request->user()?->id === $this->id, [
                 'email' => $this->email,
                 'email_verified_at' => $this->email_verified_at,

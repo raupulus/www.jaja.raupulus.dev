@@ -3,9 +3,9 @@
 namespace App\Http\Requests\Api;
 
 use App\Http\Traits\ApiResponseTrait;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
-use Illuminate\Contracts\Validation\Validator;
 
 class ContentListRequest extends FormRequest
 {
