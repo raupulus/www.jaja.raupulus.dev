@@ -57,6 +57,9 @@ class OptionsRelationManager extends RelationManager
                     ->width('50px'),
                 Tables\Columns\TextColumn::make('value')
                     ->label('Valor')
+                    ->limit(80)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable(),
                 Tables\Columns\BooleanColumn::make('is_correct')
                     ->label('Correcta')

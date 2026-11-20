@@ -11,7 +11,27 @@ class UserContributorsChart extends ChartWidget
 
     protected static ?string $pollingInterval = null;
 
+    protected static ?int $sort = 5;
+
     protected int | string | array $columnSpan = 'full';
+
+    /**
+     * Paleta fija y accesible de colores para la gráfica circular.
+     *
+     * @var list<string>
+     */
+    public const PALETTE = [
+        '#00bcd4',
+        '#f59e0b',
+        '#10b981',
+        '#6366f1',
+        '#ec4899',
+        '#14b8a6',
+        '#f97316',
+        '#8b5cf6',
+        '#84cc16',
+        '#06b6d4',
+    ];
 
     protected function getData(): array
     {
@@ -21,10 +41,10 @@ class UserContributorsChart extends ChartWidget
         $labels = [];
         $colors = [];
 
-        foreach ($contributors as $contributor) {
+        foreach ($contributors as $index => $contributor) {
             $data[] = $contributor['total'];
             $labels[] = '@' . $contributor['nick'];
-            $colors[] = $this->generateRandomColor();
+            $colors[] = self::PALETTE[$index % count(self::PALETTE)];
         }
 
         return [
@@ -33,9 +53,6 @@ class UserContributorsChart extends ChartWidget
                     'label' => 'Contribuciones por usuario',
                     'data' => $data,
                     'backgroundColor' => $colors,
-                    //'borderColor' => $colors,
-                    //'borderWidth' => 1,
-
                 ],
             ],
             'labels' => $labels,
@@ -44,16 +61,6 @@ class UserContributorsChart extends ChartWidget
 
     protected function getType(): string
     {
-        //https://filamentphp.com/docs/3.x/widgets/charts
         return 'pie';
     }
-
-    /**
-     * Genera un color hexadecimal aleatorio
-     */
-    private function generateRandomColor(): string
-    {
-        return sprintf('#%06X', mt_rand(0, 0xFFFFFF));
-    }
-
 }

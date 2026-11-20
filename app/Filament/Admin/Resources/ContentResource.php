@@ -196,11 +196,16 @@ class ContentResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
-                    ->limit(100)
+                    ->limit(60)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('content')
                     ->label('Contenido')
+                    ->limit(80)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -239,45 +244,48 @@ class ContentResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('publish_social')
-                    ->label('Publicar')
-                    ->icon('heroicon-o-share')
-                    ->color('success')
-                    ->requiresConfirmation()
-                    ->modalHeading('Confirmar publicación en redes sociales')
-                    ->modalDescription(function (Content $record) {
-                        $lastPublished = $record->last_social_published
-                            ? $record->last_social_published->diffForHumans()
-                            : 'Nunca';
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\Action::make('publish_social')
+                        ->label('Publicar')
+                        ->icon('heroicon-o-share')
+                        ->color('success')
+                        ->requiresConfirmation()
+                        ->modalHeading('Confirmar publicación en redes sociales')
+                        ->modalDescription(function (Content $record) {
+                            $lastPublished = $record->last_social_published
+                                ? $record->last_social_published->diffForHumans()
+                                : 'Nunca';
 
-                        return "¿Estás seguro de que quieres publicar este contenido en redes sociales?\n\nÚltima publicación: {$lastPublished}";
-                    })
+                            return "¿Estás seguro de que quieres publicar este contenido en redes sociales?\n\nÚltima publicación: {$lastPublished}";
+                        })
+                        ->modalSubmitActionLabel('Publicar')
+                        ->action(function (Content $record) {
+                            try {
+                                PublishToSocialHelper::publishContent($record);
 
-                    ->modalSubmitActionLabel('Publicar')
-                    ->action(function (Content $record) {
-                        try {
-                            PublishToSocialHelper::publishContent($record);
+                                Notification::make()
+                                    ->title('Contenido publicado')
+                                    ->body('El contenido se ha publicado exitosamente en redes sociales.')
+                                    ->success()
+                                    ->send();
 
-                            Notification::make()
-                                ->title('Contenido publicado')
-                                ->body('El contenido se ha publicado exitosamente en redes sociales.')
-                                ->success()
-                                ->send();
-
-                        } catch (\Exception $e) {
-                            Notification::make()
-                                ->title('Error al publicar')
-                                ->body('Error: ' . $e->getMessage())
-                                ->danger()
-                                ->send();
-                        }
-                    })
-                    ->visible(function (Content $record) {
-                        ## Solo muestro contenido que no es para adultos
-                        return !in_array($record->group_id, [4, 14]) && !$record->is_adult;
-                    }),
+                            } catch (\Exception $e) {
+                                Notification::make()
+                                    ->title('Error al publicar')
+                                    ->body('Error: ' . $e->getMessage())
+                                    ->danger()
+                                    ->send();
+                            }
+                        })
+                        ->visible(function (Content $record) {
+                            ## Solo muestro contenido que no es para adultos
+                            return !in_array($record->group_id, [4, 14]) && !$record->is_adult;
+                        }),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

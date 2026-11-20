@@ -114,6 +114,8 @@ class CollaboratorResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
+                    ->limit(40)
+                    ->wrap()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nick')
@@ -121,9 +123,14 @@ class CollaboratorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('website')
                     ->label('Sitio Web')
+                    ->limit(40)
+                    ->tooltip(fn ($state) => $state)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
+                    ->limit(50)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')

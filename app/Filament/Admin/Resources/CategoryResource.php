@@ -91,10 +91,15 @@ class CategoryResource extends Resource
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
+                    ->limit(50)
+                    ->wrap()
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
+                    ->limit(60)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('slug')
                     ->label('Slug')
@@ -121,8 +126,12 @@ class CategoryResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

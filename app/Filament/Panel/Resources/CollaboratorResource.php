@@ -106,6 +106,8 @@ class CollaboratorResource extends Resource
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
+                    ->limit(40)
+                    ->wrap()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('nick')
@@ -113,11 +115,15 @@ class CollaboratorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('website')
                     ->label('Sitio Web')
+                    ->limit(40)
+                    ->tooltip(fn ($state) => $state)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('description')
                     ->label('Descripción')
                     ->searchable()
-                    ->limit(50),
+                    ->limit(50)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state),
             ])
             ->filters([
                 //

@@ -14,6 +14,10 @@ class UserOverview extends BaseWidget
 
     protected static ?string $pollingInterval = null;
 
+    protected static ?int $sort = 4;
+
+    protected int | string | array $columnSpan = 'full';
+
     protected function getStats(): array
     {
         $users = User::count();

@@ -134,6 +134,8 @@ class GroupResource extends Resource
                     ->sortable(false),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
+                    ->limit(50)
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type.name')
                     ->label('Tipo')
@@ -167,8 +169,12 @@ class GroupResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

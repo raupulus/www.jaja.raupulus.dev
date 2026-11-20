@@ -155,11 +155,16 @@ class ContentResource extends Resource
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
-                    ->limit(100)
+                    ->limit(60)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('content')
                     ->label('Contenido')
+                    ->limit(80)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -198,8 +203,12 @@ class ContentResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

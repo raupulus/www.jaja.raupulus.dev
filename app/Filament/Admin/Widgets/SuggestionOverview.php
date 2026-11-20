@@ -11,6 +11,10 @@ class SuggestionOverview extends BaseWidget
 {
     protected ?string $heading = 'Estadísticas de Sugerencias';
 
+    protected static ?int $sort = 2;
+
+    protected int | string | array $columnSpan = 'full';
+
     protected function getStats(): array
     {
         $pending = Suggestion::whereNull('approved_at')->count();

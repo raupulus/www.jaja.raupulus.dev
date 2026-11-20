@@ -74,7 +74,7 @@ class PageResource extends Resource
 
 
                         ])
-                        ->columns(2),
+                        ->columns(['default' => 1, 'md' => 2]),
 
                     Forms\Components\Section::make('Contenido')
                         ->schema([
@@ -109,7 +109,7 @@ class PageResource extends Resource
                             ,
                         ]),
                 ])
-                    ->columnSpan(['lg' => 2]),
+                    ->columnSpan(['default' => 1, 'lg' => 2]),
 
                 Forms\Components\Group::make([
                     Forms\Components\Section::make('Imagen')
@@ -157,8 +157,8 @@ class PageResource extends Resource
                             ])
                         ]),
 
-                ])->columnSpan(['lg' => 1]),
-            ])->columns(3);
+                ])->columnSpan(['default' => 1, 'lg' => 1]),
+            ])->columns(['default' => 1, 'lg' => 3]);
     }
 
     public static function table(Table $table): Table
@@ -167,15 +167,23 @@ class PageResource extends Resource
             ->columns([
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('title')
+                    ->limit(50)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->sortable()
                     ->searchable()
                     ->label('Título'),
                 Tables\Columns\TextColumn::make('excerpt')
-                    ->limit(80)
+                    ->limit(60)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->sortable()
                     ->searchable()
                     ->label('Descripción'),
-                Tables\Columns\TextColumn::make('keywords')->label('Palabras Clave'),
+                Tables\Columns\TextColumn::make('keywords')
+                    ->label('Palabras Clave')
+                    ->limit(40)
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\SelectColumn::make('status')->label('Estado')->options([
                     'published' => 'Publicado',
                     'draft' => 'Borrador',
@@ -203,8 +211,12 @@ class PageResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

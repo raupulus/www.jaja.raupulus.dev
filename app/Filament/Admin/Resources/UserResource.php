@@ -134,6 +134,9 @@ class UserResource extends Resource
                     ->label('Avatar'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nombre')
+                    ->limit(35)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nick')
@@ -142,6 +145,9 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->label('Email')
+                    ->limit(35)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('role_id')
@@ -153,7 +159,8 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('email_verified_at')
                     ->label('Verificado')
                     ->dateTime()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')
                     ->dateTime()
@@ -181,8 +188,12 @@ class UserResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

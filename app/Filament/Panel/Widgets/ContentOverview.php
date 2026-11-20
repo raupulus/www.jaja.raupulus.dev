@@ -9,6 +9,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class ContentOverview extends BaseWidget
 {
+    protected ?string $heading = 'Mis Estadísticas de Contenidos';
+
+    protected static ?int $sort = 1;
+
+    protected int | string | array $columnSpan = 'full';
     protected function getStats(): array
     {
         return [

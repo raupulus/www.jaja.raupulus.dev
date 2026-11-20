@@ -52,7 +52,7 @@ class ReportResource extends Resource
                             ->maxLength(45)
                             ->disabled(),
                     ])
-                    ->columns(2),
+                    ->columns(['default' => 1, 'md' => 2]),
 
                 Forms\Components\Section::make('Contenido Reportado')
                     ->schema([
@@ -75,7 +75,7 @@ class ReportResource extends Resource
                             ->required()
                             ->default('medium'),
                     ])
-                    ->columns(2),
+                    ->columns(['default' => 1, 'md' => 2]),
 
                 Forms\Components\Section::make('Detalles del Reporte')
                     ->schema([
@@ -115,7 +115,7 @@ class ReportResource extends Resource
                             ->label('Fecha de Resolución')
                             ->disabled(),
                     ])
-                    ->columns(2),
+                    ->columns(['default' => 1, 'md' => 2]),
             ]);
     }
 
@@ -125,17 +125,22 @@ class ReportResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('reporter_name')
                     ->label('Informante')
+                    ->limit(40)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('reportable_type')
                     ->label('Tipo de Contenido')
                     ->formatStateUsing(fn (string $state): string => class_basename($state))
-                    ->badge(),
+                    ->badge()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('type')
                     ->label('Tipo de Reporte')
@@ -217,36 +222,40 @@ class ReportResource extends Resource
                     ->nullable(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
 
-                Tables\Actions\Action::make('mark_resolved')
-                    ->label('Marcar como Resuelto')
-                    ->icon('heroicon-o-check-circle')
-                    ->color('success')
-                    ->visible(fn (Report $record): bool => $record->status !== 'resolved')
-                    ->form([
-                        Forms\Components\Textarea::make('admin_notes')
-                            ->label('Notas del Administrador')
-                            ->required(),
-                    ])
-                    ->action(function (array $data, Report $record): void {
-                        $record->markAsResolved($data['admin_notes']);
-                    }),
+                    Tables\Actions\Action::make('mark_resolved')
+                        ->label('Marcar como Resuelto')
+                        ->icon('heroicon-o-check-circle')
+                        ->color('success')
+                        ->visible(fn (Report $record): bool => $record->status !== 'resolved')
+                        ->form([
+                            Forms\Components\Textarea::make('admin_notes')
+                                ->label('Notas del Administrador')
+                                ->required(),
+                        ])
+                        ->action(function (array $data, Report $record): void {
+                            $record->markAsResolved($data['admin_notes']);
+                        }),
 
-                Tables\Actions\Action::make('mark_rejected')
-                    ->label('Rechazar')
-                    ->icon('heroicon-o-x-circle')
-                    ->color('danger')
-                    ->visible(fn (Report $record): bool => $record->status !== 'rejected')
-                    ->form([
-                        Forms\Components\Textarea::make('admin_notes')
-                            ->label('Razón del Rechazo')
-                            ->required(),
-                    ])
-                    ->action(function (array $data, Report $record): void {
-                        $record->markAsRejected($data['admin_notes']);
-                    }),
+                    Tables\Actions\Action::make('mark_rejected')
+                        ->label('Rechazar')
+                        ->icon('heroicon-o-x-circle')
+                        ->color('danger')
+                        ->visible(fn (Report $record): bool => $record->status !== 'rejected')
+                        ->form([
+                            Forms\Components\Textarea::make('admin_notes')
+                                ->label('Razón del Rechazo')
+                                ->required(),
+                        ])
+                        ->action(function (array $data, Report $record): void {
+                            $record->markAsRejected($data['admin_notes']);
+                        }),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

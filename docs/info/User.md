@@ -22,6 +22,7 @@ El módulo `User` gestiona la autenticación, roles básicos y perfiles público
    - Los usuarios que aportan contenido se vinculan mediante el campo "nick" de las sugerencias.
    - Tienen estadísticas asociadas, las cuales son calculadas periódicamente por comandos en el cron. Estos cálculos excluyen el contenido eliminado y el asociado al modelo `Report`.
    - Aparecen listados dinámicamente en la página de agradecimientos si han aportado gran cantidad de contenido.
+   - `UserContributorsChart` utiliza una paleta fija accesible (`PALETTE`) con `$columnSpan = 'full'` y `$sort = 5`, y `UserOverview` etiqueta en español (`Aportantes`) con ancho completo y `$sort = 4`.
 4. **Relaciones**:
    - Tienen relación con las tablas de tokens de acceso personal de Sanctum.
    - Poseen relación implícita con `Content` para calcular las estadísticas y aportes.

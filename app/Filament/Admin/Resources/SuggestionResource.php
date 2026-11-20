@@ -179,11 +179,18 @@ class SuggestionResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
+                    ->limit(50)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('ip_address')->label('IP'),
+                Tables\Columns\TextColumn::make('ip_address')
+                    ->label('IP')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('user_agent')
                     ->label('Agente de Usuario')
+                    ->limit(40)
+                    ->tooltip(fn ($state) => $state)
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Fecha de Creación')

@@ -12,6 +12,10 @@ class ContentOverview extends BaseWidget
 {
     protected ?string $heading = 'Estadísticas de Contenidos';
 
+    protected static ?int $sort = 1;
+
+    protected int | string | array $columnSpan = 'full';
+
     protected function getStats(): array
     {
         ## Array para estadísticas de contenidos creados en el último mes

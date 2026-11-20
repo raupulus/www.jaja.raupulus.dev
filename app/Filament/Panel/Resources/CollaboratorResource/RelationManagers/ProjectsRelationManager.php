@@ -157,6 +157,9 @@ class ProjectsRelationManager extends RelationManager
                 Tables\Columns\ImageColumn::make('image')->label('Imagen'),
                 Tables\Columns\TextColumn::make('title')
                     ->label('Título')
+                    ->limit(50)
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('type')
@@ -173,7 +176,9 @@ class ProjectsRelationManager extends RelationManager
                 Tables\Columns\TextColumn::make('excerpt')
                     ->label('Resumen')
                     ->limit(50)
-                    ->toggleable(isToggledHiddenByDefault: false),
+                    ->wrap()
+                    ->tooltip(fn ($state) => $state)
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label('Estado')
@@ -227,9 +232,12 @@ class ProjectsRelationManager extends RelationManager
                     ->label('Nuevo Proyecto'),
             ])
             ->actions([
-                //Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ])
+                    ->label('Acciones')
+                    ->icon('heroicon-m-ellipsis-vertical'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -13,6 +13,10 @@ class GroupOverview extends BaseWidget
 
     protected static ?string $pollingInterval = null;
 
+    protected static ?int $sort = 3;
+
+    protected int | string | array $columnSpan = 'full';
+
     protected function getStats(): array
     {
         $groupsByChistes = Group::leftJoin('types', 'groups.type_id', '=', 'types.id')
