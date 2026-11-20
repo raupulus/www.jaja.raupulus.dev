@@ -43,6 +43,13 @@
 
 @section('content')
     <div class="page-container">
+        @include('partials._breadcrumbs', [
+            'items' => [
+                ['label' => 'Inicio', 'url' => route('index')],
+                ['label' => 'Colaboradores'],
+            ],
+        ])
+
         <div class="page-header">
             <h1 class="page-title">Colaboradores de Desarrollo</h1>
             <p class="page-description">

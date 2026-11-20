@@ -77,11 +77,24 @@
 @endpush
 
 @section('content')
+    @php
+        $breadcrumbs = [
+            ['label' => 'Inicio', 'url' => route('index')],
+        ];
+        if (isset($type)) {
+            $breadcrumbs[] = ['label' => 'Tipos', 'url' => route('content.types.index')];
+            $breadcrumbs[] = ['label' => 'Grupos de ' . $type->name];
+        } else {
+            $breadcrumbs[] = ['label' => 'Grupos'];
+        }
+    @endphp
+    @include('partials._breadcrumbs', ['items' => $breadcrumbs])
+
     <h1 class="text-center">{{ $groupsHeading }}</h1>
 
-    @foreach($groups as $group)
+    @forelse($groups as $group)
 
-        <div class="card-resume-horizontal">
+        <article class="card-resume-horizontal">
             <div class="card-resume-left">
                 <h2 class="card-resume-title">{{$group->title}}</h2>
 
@@ -110,9 +123,15 @@
                     </a>
                 @endif
             </div>
-        </div>
+        </article>
 
-    @endforeach
+    @empty
+        <div class="empty-state">
+            <h2>No hay grupos de contenido disponibles todavía</h2>
+            <p>Puedes enviar nuevas aportaciones desde la portada para inaugurar este listado.</p>
+            <a href="{{ route('index') }}" class="btn btn--outline">Volver a Inicio</a>
+        </div>
+    @endforelse
 
     {{-- Call to action - Añadir bot de discord a servidor --}}
     <div class="btn-dc-bot-container">

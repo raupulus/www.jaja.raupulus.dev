@@ -62,8 +62,16 @@
 
 @section('content')
     <div class="page-container">
+        @include('partials._breadcrumbs', [
+            'items' => [
+                ['label' => 'Inicio', 'url' => route('index')],
+                ['label' => 'Colaboradores', 'url' => route('collaborator.index')],
+                ['label' => $collaborator->name],
+            ],
+        ])
+
         <div class="page-header">
-            <h1 class="page-title">Colaborador {{$collaborator->name . '(@' . $collaborator->nick . ')'}}</h1>
+            <h1 class="page-title">Colaborador {{$collaborator->name . ' (@' . $collaborator->nick . ')'}}</h1>
             <div>
                 <img src="{{$collaborator->urlImage}}" alt="{{$collaborator->name}}" class="collaborator-avatar-lg" width="140" height="140">
             </div>

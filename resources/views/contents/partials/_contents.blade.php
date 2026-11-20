@@ -8,10 +8,16 @@
         $contentHeadingTag = ! empty($contents_title) ? 'h3' : 'h2';
     @endphp
 
-    @foreach($contents as $content)
+    @forelse($contents as $content)
 
         @include('contents.partials._content', ['contentHeadingTag' => $contentHeadingTag])
 
-    @endforeach
+    @empty
+        <div class="empty-state">
+            <{{ $contentHeadingTag }}>No hay contenidos disponibles en esta sección</{{ $contentHeadingTag }}>
+            <p>Sé el primero en aportar un chiste, adivinanza o pregunta quiz desde la portada.</p>
+            <a href="{{ route('index') }}" class="btn btn--outline">Enviar una sugerencia</a>
+        </div>
+    @endforelse
 
 </section>

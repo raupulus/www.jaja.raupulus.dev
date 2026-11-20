@@ -62,6 +62,14 @@
 
 @section('content')
     <div class="page-container">
+        @include('partials._breadcrumbs', [
+            'items' => [
+                ['label' => 'Inicio', 'url' => route('index')],
+                ['label' => 'Páginas', 'url' => route('page.index')],
+                ['label' => $page->title],
+            ],
+        ])
+
         <div class="page-header">
             <h1 class="page-title">{{ $page->title }}</h1>
 

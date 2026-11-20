@@ -67,12 +67,14 @@
 
 @section('content')
     <div class="page-container">
-        <div class="text-left">
-            <a href="{{route('collaborator.show', $collaborator->nick)}}">
-                <span class="icon-back"><-</span>
-                Volver a los proyectos
-            </a>
-        </div>
+        @include('partials._breadcrumbs', [
+            'items' => [
+                ['label' => 'Inicio', 'url' => route('index')],
+                ['label' => 'Colaboradores', 'url' => route('collaborator.index')],
+                ['label' => $collaborator->name, 'url' => route('collaborator.show', $collaborator->nick)],
+                ['label' => $project->title],
+            ],
+        ])
 
         <div class="page-header">
             <h1 class="page-title">Proyecto {{$project->title}}</h1>
@@ -85,7 +87,7 @@
             </p>
 
             <p>
-                Colaborador: {{$collaborator->name . '(@' . $collaborator->nick . ')'}}
+                Colaborador: {{$collaborator->name . ' (@' . $collaborator->nick . ')'}}
             </p>
 
             {{-- Palabras clave como badges individuales --}}
@@ -100,7 +102,7 @@
             @endif
 
             <p>
-                {{$collaborator->description}}
+                {{$project->excerpt}}
             </p>
 
             @if($project->image)

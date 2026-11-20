@@ -41,11 +41,18 @@
 @endpush
 
 @section('content')
+    @include('partials._breadcrumbs', [
+        'items' => [
+            ['label' => 'Inicio', 'url' => route('index')],
+            ['label' => 'Tipos'],
+        ],
+    ])
+
     <h1 class="text-center">Tipos de contenido</h1>
 
-    @foreach($types as $type)
+    @forelse($types as $type)
 
-        <div class="card-resume-horizontal">
+        <article class="card-resume-horizontal">
             <div class="card-resume-left">
                 <h2 class="card-resume-title">{{$type->name}}</h2>
 
@@ -69,9 +76,15 @@
                 <span class="card-resume-badge">{{$type->groups_count}}</span>
                 <a href="{{route('content.type.group.index', $type->slug)}}" class="card-resume-button">Ver grupos de {{$type->name}}</a>
             </div>
-        </div>
+        </article>
 
-    @endforeach
+    @empty
+        <div class="empty-state">
+            <h2>Todavía no hay tipos de contenido disponibles</h2>
+            <p>Estamos preparando nuevas categorías y secciones para la comunidad.</p>
+            <a href="{{ route('index') }}" class="btn btn--outline">Volver a Inicio</a>
+        </div>
+    @endforelse
 
     {{-- Call to action - Añadir bot de discord a servidor --}}
     <div class="btn-dc-bot-container">

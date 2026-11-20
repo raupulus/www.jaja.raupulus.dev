@@ -48,12 +48,13 @@
 @endpush
 
 @section('content')
-    <div class="text-left">
-        <a href="{{route('content.categories.index')}}">
-            <span class="icon-back"><-</span>
-            Ir a las Categorías
-        </a>
-    </div>
+    @include('partials._breadcrumbs', [
+        'items' => [
+            ['label' => 'Inicio', 'url' => route('index')],
+            ['label' => 'Categorías', 'url' => route('content.categories.index')],
+            ['label' => $category->title],
+        ],
+    ])
 
     <div>
         <div>

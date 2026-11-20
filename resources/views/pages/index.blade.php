@@ -43,14 +43,21 @@
 @section('content')
 
     <div class="page-container">
+        @include('partials._breadcrumbs', [
+            'items' => [
+                ['label' => 'Inicio', 'url' => route('index')],
+                ['label' => 'Páginas'],
+            ],
+        ])
+
         <div class="page-header">
             <h1 class="page-title">Listado de páginas en {{config('app.name')}}</h1>
         </div>
 
         <section>
-            @foreach($pages as $page)
+            @forelse($pages as $page)
 
-                <div class="card card-content {{ $page->image ? '' : 'card-content--no-image' }}">
+                <article class="card card-content {{ $page->image ? '' : 'card-content--no-image' }}">
                     @if ($page->image)
                         <div class="card-content-image">
                             <img src="{{$page->urlImageThumbnail}}" title="{{$page->title}}" alt="{{$page->title}}" width="120" height="120" loading="lazy" decoding="async"/>
@@ -76,11 +83,15 @@
                             Leer {{$page->title}}
                         </a>
                     </div>
+                </article>
 
-
+            @empty
+                <div class="empty-state">
+                    <h2>Todavía no hay páginas publicadas</h2>
+                    <p>Consulta la portada principal para explorar el contenido de la comunidad.</p>
+                    <a href="{{ route('index') }}" class="btn btn--outline">Volver a Inicio</a>
                 </div>
-
-            @endforeach
+            @endforelse
         </section>
     </div>
 

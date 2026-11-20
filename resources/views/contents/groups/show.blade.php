@@ -48,12 +48,13 @@
 @endpush
 
 @section('content')
-    <div class="text-left">
-        <a href="{{route('content.groups.index')}}">
-            <span class="icon-back"><-</span>
-            Ir a los Grupos
-        </a>
-    </div>
+    @include('partials._breadcrumbs', [
+        'items' => [
+            ['label' => 'Inicio', 'url' => route('index')],
+            ['label' => 'Grupos', 'url' => route('content.groups.index')],
+            ['label' => $group->title],
+        ],
+    ])
 
     <div>
         <div>

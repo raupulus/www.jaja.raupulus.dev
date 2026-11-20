@@ -41,12 +41,19 @@
 @endpush
 
 @section('content')
+    @include('partials._breadcrumbs', [
+        'items' => [
+            ['label' => 'Inicio', 'url' => route('index')],
+            ['label' => 'Categorías'],
+        ],
+    ])
+
     <h1 class="text-center">Categorías de contenido</h1>
 
-    <section class="category-grid">
-        @foreach($categories as $category)
-            <a href="{{route('content.categoria.content.random', $category->slug)}}" class="category-card">
-                <div class="category-card">
+    @if($categories->isNotEmpty())
+        <section class="category-grid">
+            @foreach($categories as $category)
+                <a href="{{route('content.categoria.content.random', $category->slug)}}" class="category-card">
                     <div class="category-card-content {{ $category->image ? '' : 'no-image' }}">
                         @if($category->image)
                             <div class="category-card-image">
@@ -66,10 +73,16 @@
                             @endif
                         </div>
                     </div>
-                </div>
-            </a>
-        @endforeach
-    </section>
+                </a>
+            @endforeach
+        </section>
+    @else
+        <div class="empty-state">
+            <h2>No hay categorías con contenido disponible todavía</h2>
+            <p>Vuelve pronto o envía tu propia sugerencia desde la página principal.</p>
+            <a href="{{ route('index') }}" class="btn btn--outline">Volver a Inicio</a>
+        </div>
+    @endif
 
     {{-- Call to action - Añadir bot de discord a servidor --}}
     <div class="btn-dc-bot-container">
