@@ -21,7 +21,7 @@
             <p>
                 Imposible de contar
                 <br />
-                ¡Pero subiendo cada día! 😄😄😄
+                ¡Pero subiendo cada día! <span aria-hidden="true">😄😄😄</span>
             </p>
             <div class="stats-value">999999999.99</div>
         </div>

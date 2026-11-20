@@ -5,9 +5,11 @@
 
 <body>
 
+<a href="#main-content" class="skip-link visually-hidden">Saltar al contenido principal</a>
+
 @include('layouts.navbar')
 
-<main class="main-content">
+<main id="main-content" class="main-content" tabindex="-1">
     <div class="container">
 
         @if(session('success'))

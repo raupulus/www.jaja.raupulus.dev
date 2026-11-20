@@ -4,10 +4,10 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 
 ## Layouts (`resources/views/layouts/`)
 
-- `master.blade.php` — Layout principal de las vistas públicas.
+- `master.blade.php` — Layout principal de las vistas públicas con enlace de salto (`.skip-link` hacia `#main-content`) y landmark `<main id="main-content" tabindex="-1">`.
 - `head.blade.php` — Cabecera HTML, `<meta name="color-scheme" content="dark">`, preload de fuentes `Inter` (`400`/`700`), carga de CSS en `<head>` incluyendo `@yield('css')` (sin FOUC), metadatos SEO únicos (`<title>`, `<meta name="description">`, Open Graph `.jpg` con dimensiones y `og:type`, Twitter Cards con `twitter:image:alt`), `theme-color` por defecto (`#00bcd4`) y `@stack('jsonld')` para datos estructurados Schema.org.
 - `navbar.blade.php` — Barra de navegación principal envuelta en `<header class="site-header"><nav aria-label="Navegación principal">` con enlaces directos (`Inicio`, `Grupos`, `Categorías`, `Colaboradores`, `API`, `Acerca de`, `Autor`), `aria-current="page"`, enlace `Admin`/`Panel` dinámico según rol, botón hamburguesa `<button type="button">` y enlaces externos con `rel="noopener noreferrer"`.
-- `footer.blade.php` — Pie de página público con listas semánticas `<ul><li>` y áreas táctiles mínimas de `44px`.
+- `footer.blade.php` — Pie de página público con listas semánticas `<ul><li>`, iconos SVG decorativos (`aria-hidden="true" focusable="false"`, sin animaciones SMIL indefinidas) y áreas táctiles mínimas de `44px`.
 - `footer_meta.blade.php` — Metadatos y scripts globales base en el pie.
 
 ## Parciales y Vistas de Error (`resources/views/partials/`, `resources/views/errors/`)
@@ -47,7 +47,7 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 - `bootstrap.js` — Configuración base (Axios / bootstrap de Laravel).
 - `alerts.js` — Gestión de alertas en la interfaz.
 - `cookies.js` — Lógica del banner de cookies.
-- `navbar.js` — Comportamiento interactivo de la barra de navegación.
+- `navbar.js` — Comportamiento interactivo de la barra de navegación móvil con `aria-expanded`, cierre con `Escape` o clic exterior y atributo `inert` automático cuando el menú está colapsado en pantallas `<= 1024px`.
 - `suggestions_forms.js` — Interactividad del formulario de sugerencias (ej. opciones de quiz).
 
 ---

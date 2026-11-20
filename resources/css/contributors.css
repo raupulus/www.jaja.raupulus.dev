@@ -120,7 +120,12 @@
     font-weight: bold;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
-    animation: contributor-value-pulse 2s infinite ease-in-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .icon-value {
+        animation: contributor-value-pulse 2s 2 ease-in-out;
+    }
 }
 
 /* Nickname del usuario */
@@ -178,8 +183,22 @@
 }
 
 /* Animación de entrada para las secciones */
-.reconocimiento-section {
-    animation: fadeInUp 0.8s ease-out;
+@media (prefers-reduced-motion: no-preference) {
+    .reconocimiento-section {
+        animation: fadeInUp 0.8s ease-out;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .usuario-card,
+    .app-icon {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .usuario-card:hover,
+    .app-icon:hover {
+        transform: none;
+    }
 }
 
 @keyframes fadeInUp {

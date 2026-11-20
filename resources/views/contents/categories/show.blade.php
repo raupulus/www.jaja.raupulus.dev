@@ -71,18 +71,17 @@
         @if($contents->count())
         <div id="box-btn-random">
             <div class="btn-random-content">
-                <a href="{{route('content.categoria.content.random', $category->slug)}}#box-btn-random"
-                   onclick="window.location.reload(); return false;">
-                    <div class="wheel">
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                        <div class="arrow"></div>
-                    </div>
+                <a href="{{route('content.categoria.content.random', $category->slug)}}#box-btn-random">
+                    <span class="wheel" aria-hidden="true">
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                        <span class="arrow"></span>
+                    </span>
                     <span class="text">Aleatorio</span>
                 </a>
             </div>

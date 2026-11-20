@@ -41,6 +41,16 @@
     vertical-align: middle;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+    .footer-icon-heart {
+        transition: transform 0.25s ease;
+    }
+
+    .make-with-love:hover .footer-icon-heart {
+        transform: scale(1.18);
+    }
+}
+
 .make-with-love {
     text-align: center;
     justify-self: center;

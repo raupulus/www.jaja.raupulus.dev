@@ -355,8 +355,21 @@
     }
 }
 
-.card-resume-horizontal.animate-in {
-    animation: slideInFromLeft 0.3s ease-out;
+@media (prefers-reduced-motion: no-preference) {
+    .card-resume-horizontal.animate-in {
+        animation: slideInFromLeft 0.3s ease-out;
+    }
+
+    .card-resume-horizontal.loading::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        animation: loading-shimmer 1.5s 2;
+    }
 }
 
 /* Efecto loading */
@@ -365,15 +378,14 @@
     overflow: hidden;
 }
 
-.card-resume-horizontal.loading::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    animation: loading-shimmer 1.5s infinite;
+@media (prefers-reduced-motion: reduce) {
+    .card-resume-horizontal {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card-resume-horizontal:hover {
+        transform: none;
+    }
 }
 
 @keyframes loading-shimmer {

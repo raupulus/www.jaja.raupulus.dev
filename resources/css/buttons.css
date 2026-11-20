@@ -96,19 +96,38 @@
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 
-/* Animación de pulso opcional para mayor atención */
-.btn-dc-bot::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    background: rgba(88, 101, 242, 0.3);
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    animation: dc-bot-ripple 2s infinite;
-    z-index: -1;
+/* Animación de onda opcional al interactuar */
+@media (prefers-reduced-motion: no-preference) {
+    .btn-dc-bot:hover::after,
+    .btn-dc-bot:focus-visible::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 300px;
+        height: 300px;
+        background: rgba(88, 101, 242, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        animation: dc-bot-ripple 1.4s ease-out;
+        z-index: -1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .btn-dc-bot,
+    .btn-dc-bot::before,
+    .btn-dc-bot img,
+    .btn-random-content a {
+        transition: background-color 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .btn-dc-bot:hover,
+    .btn-dc-bot:hover img,
+    .btn-random-content a:hover,
+    .btn-random-content a:hover .text {
+        transform: none;
+    }
 }
 
 @keyframes dc-bot-ripple {
@@ -186,18 +205,21 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-.btn-random-content a::after {
-    content: '';
-    position: absolute;
-    top: 16px;
-    left: 50%;
-    width: 90px;
-    height: 90px;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
-    border-radius: 50%;
-    transform: translateX(-50%) scale(0);
-    z-index: 0;
-    animation: randomPulse 3s infinite ease-in-out;
+@media (prefers-reduced-motion: no-preference) {
+    .btn-random-content a:hover::after,
+    .btn-random-content a:focus-visible::after {
+        content: '';
+        position: absolute;
+        top: 16px;
+        left: 50%;
+        width: 90px;
+        height: 90px;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+        border-radius: 50%;
+        transform: translateX(-50%) scale(0);
+        z-index: 0;
+        animation: randomPulse 1.5s ease-in-out;
+    }
 }
 
 /* Contenedor de la rueda */
@@ -240,42 +262,76 @@
 
 .btn-random-content a .arrow:nth-child(1) {
     transform: translate(-50%, -50%) rotate(0deg) translateX(15px);
-    animation: rotateArrow1 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(2) {
     transform: translate(-50%, -50%) rotate(45deg) translateX(15px);
-    animation: rotateArrow2 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(3) {
     transform: translate(-50%, -50%) rotate(90deg) translateX(15px);
-    animation: rotateArrow3 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(4) {
     transform: translate(-50%, -50%) rotate(135deg) translateX(15px);
-    animation: rotateArrow4 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(5) {
     transform: translate(-50%, -50%) rotate(180deg) translateX(15px);
-    animation: rotateArrow5 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(6) {
     transform: translate(-50%, -50%) rotate(225deg) translateX(15px);
-    animation: rotateArrow6 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(7) {
     transform: translate(-50%, -50%) rotate(270deg) translateX(15px);
-    animation: rotateArrow7 2s infinite linear;
 }
 
 .btn-random-content a .arrow:nth-child(8) {
     transform: translate(-50%, -50%) rotate(315deg) translateX(15px);
-    animation: rotateArrow8 2s infinite linear;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .btn-random-content a:hover .arrow:nth-child(1),
+    .btn-random-content a:focus-visible .arrow:nth-child(1) {
+        animation: rotateArrow1 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(2),
+    .btn-random-content a:focus-visible .arrow:nth-child(2) {
+        animation: rotateArrow2 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(3),
+    .btn-random-content a:focus-visible .arrow:nth-child(3) {
+        animation: rotateArrow3 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(4),
+    .btn-random-content a:focus-visible .arrow:nth-child(4) {
+        animation: rotateArrow4 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(5),
+    .btn-random-content a:focus-visible .arrow:nth-child(5) {
+        animation: rotateArrow5 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(6),
+    .btn-random-content a:focus-visible .arrow:nth-child(6) {
+        animation: rotateArrow6 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(7),
+    .btn-random-content a:focus-visible .arrow:nth-child(7) {
+        animation: rotateArrow7 1.2s infinite linear;
+    }
+
+    .btn-random-content a:hover .arrow:nth-child(8),
+    .btn-random-content a:focus-visible .arrow:nth-child(8) {
+        animation: rotateArrow8 1.2s infinite linear;
+    }
 }
 
 /* Texto "Random" */

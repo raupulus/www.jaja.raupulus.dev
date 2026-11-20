@@ -85,6 +85,21 @@
     transform: translateY(0);
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .cookie-banner {
+        transition: none;
+    }
+
+    .cookie-accept-btn {
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .cookie-accept-btn:hover,
+    .cookie-accept-btn:active {
+        transform: none;
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .cookie-banner-content {

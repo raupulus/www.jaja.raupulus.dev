@@ -288,8 +288,32 @@
 }
 
 /* Animación de entrada para las secciones de colaboradores */
-.desarrolladores-section {
-    animation: fadeInUp 0.8s ease-out;
+@media (prefers-reduced-motion: no-preference) {
+    .desarrolladores-section {
+        animation: fadeInUp 0.8s ease-out;
+    }
+
+    .desarrollador-card {
+        animation: fadeInScale 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .desarrollador-card:nth-child(1) { animation-delay: 0.1s; }
+    .desarrollador-card:nth-child(2) { animation-delay: 0.2s; }
+    .desarrollador-card:nth-child(3) { animation-delay: 0.3s; }
+    .desarrollador-card:nth-child(4) { animation-delay: 0.4s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .desarrollador-card,
+    .dev-avatar img {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .desarrollador-card:hover,
+    .desarrollador-card:hover .dev-avatar img {
+        transform: none;
+    }
 }
 
 @keyframes fadeInUp {
@@ -302,17 +326,6 @@
         transform: translateY(0);
     }
 }
-
-/* Animación de entrada escalonada para las tarjetas */
-.desarrollador-card {
-    animation: fadeInScale 0.6s ease-out;
-    animation-fill-mode: both;
-}
-
-.desarrollador-card:nth-child(1) { animation-delay: 0.1s; }
-.desarrollador-card:nth-child(2) { animation-delay: 0.2s; }
-.desarrollador-card:nth-child(3) { animation-delay: 0.3s; }
-.desarrollador-card:nth-child(4) { animation-delay: 0.4s; }
 
 @keyframes fadeInScale {
     from {

@@ -10,7 +10,12 @@
     margin: 2rem 0;
     box-shadow: var(--sombra-media);
     border: 1px solid var(--color-borde-oscuro);
-    animation: fadeInUp 0.8s ease-out;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .agradecimientos-section {
+        animation: fadeInUp 0.8s ease-out;
+    }
 }
 
 /* Contenedor para mostrar en grid 3 tarjetas cuadradas */
@@ -63,9 +68,11 @@
     opacity: 0;
 }
 
-.stats-card:hover::before {
-    opacity: 1;
-    animation: shine 0.6s ease;
+@media (prefers-reduced-motion: no-preference) {
+    .stats-card:hover::before {
+        opacity: 1;
+        animation: shine 0.6s ease;
+    }
 }
 
 /* Título de cada tarjeta */
@@ -91,8 +98,23 @@
     font-weight: bold;
     font-variant-numeric: tabular-nums;
     color: var(--color-texto-destacado);
-    animation: countUp 2s ease-out;
     text-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .stats-value {
+        animation: countUp 2s ease-out;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .stats-card {
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stats-card:hover {
+        transform: none;
+    }
 }
 
 /* --- ANIMACIONES --- */
