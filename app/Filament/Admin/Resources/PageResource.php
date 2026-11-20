@@ -123,6 +123,8 @@ class PageResource extends Resource
                                 ->imageEditor()
                                 ->label('Imagen')
                                 ->default(null)
+                                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                ->maxSize(2048)
                                 ->imageResizeTargetHeight(600)
                                 ->imageResizeTargetWidth(1024)
                                 ->imageResizeMode('crop', )

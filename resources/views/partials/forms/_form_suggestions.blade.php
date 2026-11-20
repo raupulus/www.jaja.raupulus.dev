@@ -171,14 +171,14 @@
                             data-answer-pos="{{ $pos }}"
                             aria-pressed="{{ $isCorrect ? 'true' : 'false' }}"
                             aria-label="Marcar respuesta {{ $pos }} como correcta">
-                        <span class="answer-check answer-check-on {{ $isCorrect ? '' : 'hidden' }}" aria-hidden="true">
+                        <span class="answer-check-icon answer-check-on {{ $isCorrect ? '' : 'hidden' }}" aria-hidden="true">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" aria-hidden="true" focusable="false">
                                 <path d="M5 13L9 17L19 7" stroke="#4ade80" stroke-width="2.5" fill="none"/>
                             </svg>
                         </span>
 
-                        <span class="answer-check answer-check-off {{ $isCorrect ? 'hidden' : '' }}" aria-hidden="true">
+                        <span class="answer-check-icon answer-check-off {{ $isCorrect ? 'hidden' : '' }}" aria-hidden="true">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" aria-hidden="true" focusable="false">
                               <path d="M6 6L18 18" stroke="#f87171" stroke-width="2.5"/>

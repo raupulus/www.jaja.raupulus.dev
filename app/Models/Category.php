@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -14,10 +15,21 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Category extends Model
 {
-    use softDeletes;
+    use DeletesStoredImages;
+    use SoftDeletes;
 
     protected $table = 'categories';
     protected $fillable = ['title', 'slug', 'description', 'image', ];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image' => 'images/default/category.webp'];
+    }
 
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Filament\Notifications\Notification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -17,11 +18,22 @@ use Illuminate\Support\Facades\Storage;
  */
 class Suggestion extends Model
 {
-    use softDeletes;
+    use DeletesStoredImages;
+    use SoftDeletes;
 
     protected $table = 'suggestions';
 
     protected $fillable = ['type_id', 'nick', 'title', 'content', 'image_path', 'ip_address', 'user_agent', 'approved_at',  'group_id', 'is_adult', 'is_ai'];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image_path' => null];
+    }
 
 
     /**

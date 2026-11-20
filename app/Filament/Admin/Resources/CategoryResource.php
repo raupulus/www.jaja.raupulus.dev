@@ -42,6 +42,8 @@ class CategoryResource extends Resource
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(2048)
                     ->imageResizeTargetHeight(250)
                     ->imageResizeTargetWidth(250)
                     ->imageResizeMode('crop', )

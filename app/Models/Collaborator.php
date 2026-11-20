@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -14,9 +15,34 @@ use SebastianBergmann\CodeCoverage\Report\Xml\Project;
  */
 class Collaborator extends Model
 {
+    use DeletesStoredImages;
+
     protected $table = 'collaborators';
 
     protected $fillable = ['user_id', 'name', 'nick', 'website', 'image', 'description', 'url_repositories'];
+
+    /**
+     * Elimina también las imágenes de los proyectos asociados cuando se borra el colaborador.
+     */
+    protected static function booted(): void
+    {
+        static::deleting(function (Collaborator $collaborator): void {
+            $collaborator->projects()
+                ->whereNotNull('image')
+                ->pluck('image')
+                ->each(fn (string $imagePath) => $collaborator->deleteStoredImageFile($imagePath));
+        });
+    }
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image' => null];
+    }
 
     /**
      * Usuario asociado al colaborador.

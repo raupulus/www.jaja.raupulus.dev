@@ -27,7 +27,7 @@ Este módulo engloba la forma en la que se clasifica todo el contenido y sugeren
   - En los listados `/categorias` y `/grupos`, únicamente se listan elementos que tengan contenidos públicos activos mediante `hasAvailableContent()`.
   - En las rutas de contenido aleatorio por categoría (`/categoria/{slug}/random`) o por grupo (`/grupo/{slug}/random`), si el elemento no dispone de contenidos aptos para mostrar, el controlador devuelve `404 Not Found` en lugar de una página 200 vacía para evitar penalizaciones por *Soft 404* y *Thin Content* en Google Search Console.
 - **Rutas y SEO**: Existen rutas específicas en el sitemap para listados y cruces (por ejemplo, contenido aleatorio de un grupo o categoría) y todas las vistas de taxonomía emiten Schema.org JSON-LD (`CollectionPage` y `BreadcrumbList`) con jerarquía `h1 → h2` y textos de enlace descriptivos. Asimismo, `ContentController::gruposByTypeIndex()` inyecta `$type` en `contents.groups.index` para diferenciar el `<title>`, `<h1>` y `<meta name="description">` de `/{type}/grupos` respecto a `/grupos`.
-- **Relaciones**: Son modelos maestros utilizados extensamente en `Content` y `Suggestion` bajo relaciones `belongsTo` (para Type y Group) y `belongsToMany` (para Category).
+- **Relaciones y Limpieza de Imágenes**: Son modelos maestros utilizados extensamente en `Content` y `Suggestion` bajo relaciones `belongsTo` (para Type y Group) y `belongsToMany` (para Category). `Type`, `Group` y `Category` integran `DeletesStoredImages` para eliminar imágenes reemplazadas o borradas definitivamente en `Storage::disk('public')` sin afectar sus imágenes por defecto (`images/default/*.webp`), y sus `FileUpload` en Filament limitan tamaño (`2048 KB`) y MIME (`JPEG`, `PNG`, `WebP`).
 
 
 ---

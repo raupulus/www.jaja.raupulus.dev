@@ -42,6 +42,8 @@ class ProjectsRelationManager extends RelationManager
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(2048)
                     ->imageResizeTargetHeight(500)
                     ->imageResizeTargetWidth(800)
                     ->imageResizeMode('crop')

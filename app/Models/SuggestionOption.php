@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,9 +13,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class SuggestionOption extends Model
 {
+    use DeletesStoredImages;
+
     protected $table = 'suggestion_options';
 
     protected $fillable = ['suggestion_id', 'value', 'is_correct', 'image_path', 'order'];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image_path' => null];
+    }
 
     /**
      * Relación con el contenido asociado.

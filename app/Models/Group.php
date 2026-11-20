@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -15,9 +16,21 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Group extends Model
 {
+    use DeletesStoredImages;
+
     protected $table = 'groups';
 
     protected $fillable = ['type_id', 'title', 'slug', 'image', 'description'];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image' => 'images/default/group.webp'];
+    }
 
     /**
      * Relación con el tipo del grupo

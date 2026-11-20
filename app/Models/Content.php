@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -17,11 +18,22 @@ use Illuminate\Database\Eloquent\Builder;
  */
 class Content extends Model
 {
-    use softDeletes;
+    use DeletesStoredImages;
+    use SoftDeletes;
 
     protected $table = 'contents';
 
     protected $fillable = ['user_id', 'group_id', 'title', 'content', 'image', 'uploaded_by', 'last_social_published', 'is_adult', 'is_ai'];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image' => 'images/default/content.webp'];
+    }
 
     /**
      * Método casts.
@@ -62,19 +74,6 @@ class Content extends Model
             ## Si no se ha asignado un user_id, asignar el del usuario logueado
             if (empty($content->user_id) && auth()->check()) {
                 $content->user_id = auth()->id();
-            }
-        });
-
-        ## Evento que se ejecuta antes de hacer un forceDelete (eliminación definitiva)
-        static::forceDeleting(function ($content) {
-            ## Si el contenido tiene una imagen y no es la imagen por defecto
-            if ($content->image && $content->image !== 'images/default/content.webp') {
-                $imagePath = storage_path('app/public/' . $content->image);
-
-                ## Verifico si el archivo existe antes de eliminarlo
-                if (file_exists($imagePath)) {
-                    unlink($imagePath);
-                }
             }
         });
 

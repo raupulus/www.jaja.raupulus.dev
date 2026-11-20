@@ -44,6 +44,8 @@ class ContentResource extends Resource
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(2048)
                     ->imageResizeTargetHeight(768)
                     ->imageResizeTargetWidth(1024)
                     ->imageResizeMode('crop', )

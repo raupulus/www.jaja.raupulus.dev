@@ -11,7 +11,7 @@ Este módulo se compone de tres entidades principales:
 
 ## Funcionalidad Técnica
 1. **Tipos de Contenido**: El modelo `Content` tiene una relación con `Type` y `Group`. Dependiendo del tipo, el comportamiento en la API y el frontend varía (ej. si es quiz, se precargan las `ContentOption`).
-2. **Ciclo de Vida**: Los contenidos generalmente provienen del módulo `Suggestion`. Cuando una sugerencia es aprobada en el panel de Filament, se transforma o traslada a un `Content` definitivo.
+2. **Ciclo de Vida e Imágenes**: Los contenidos generalmente provienen del módulo `Suggestion`. Cuando una sugerencia es aprobada en el panel de Filament, se transforma o traslada a un `Content` definitivo. Mediante el trait `DeletesStoredImages`, `Content` y `ContentOption` eliminan automáticamente en `Storage::disk('public')` sus ficheros físicos al reemplazar la imagen o ejecutar `forceDelete()`, preservando la imagen por defecto `images/default/content.webp`.
 3. **Estadísticas**: El contenido registra interacciones (risas/votos generados) que posteriormente son calculadas mediante comandos asíncronos y mostradas tanto en el panel de administrador como en resúmenes públicos.
 4. **Relaciones Eloquent**:
    - `belongsTo`: Group, Type.

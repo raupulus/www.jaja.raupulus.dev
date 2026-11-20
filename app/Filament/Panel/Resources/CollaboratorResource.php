@@ -53,6 +53,8 @@ class CollaboratorResource extends Resource
                     ->imageEditor()
                     ->label('Imagen')
                     ->default(null)
+                    ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(2048)
                     ->imageResizeTargetHeight(400)
                     ->imageResizeTargetWidth(400)
                     ->imageResizeMode('crop')

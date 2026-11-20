@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -11,9 +12,21 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Page extends Model
 {
+    use DeletesStoredImages;
+
     protected $table = 'pages';
 
     protected $fillable = ['title', 'slug', 'excerpt', 'content', 'image', 'keywords', 'status'];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image' => null];
+    }
 
     /**
      * Devuelve el enlace a la página actual.

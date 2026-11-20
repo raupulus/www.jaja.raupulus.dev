@@ -12,7 +12,8 @@ Este módulo gestiona el directorio de colaboradores de código o software abier
    - Los colaboradores registrados pueden acceder a un panel privado para editar sus propios proyectos o añadir nuevos.
    - Todos los proyectos nuevos o editados por colaboradores entran en un estado de borrador ("draft") por seguridad, hasta que un administrador revise y apruebe la visibilidad.
    - El formulario de `Panel/CollaboratorResource` omite `user_id` del esquema del formulario y `EditCollaborator` descarta cualquier posible envío de `user_id` en `mutateFormDataBeforeSave()`, protegiendo frente a asignación indebida de propiedad.
-   - Los enlaces externos (`website`, `url_repositories` y `url` de proyecto) se validan exclusivamente con esquema `http`/`https` (`url:http,https`).
+   - Los enlaces externos (`website`, `url_repositories` y `url` de proyecto) se validan exclusivamente con esquema `http`/`https` (`url:http,https`) y las subidas de imagen en Filament aceptan `JPEG`, `PNG` o `WebP` con un máximo de `2048 KB`.
+   - Al reemplazar o eliminar un perfil de colaborador o cualquiera de sus proyectos, el trait `DeletesStoredImages` y el hook `deleting` de `Collaborator` borran físicamente las imágenes asociadas en `Storage::disk('public')`.
 2. **Visibilidad Frontend y Anti-IDOR**:
    - Se generan páginas dinámicas para los colaboradores con el listado de todos sus proyectos activos.
    - En `CollaboratorController::showProject()`, además de resolver las rutas enlazadas, se verifica que el proyecto pertenezca al colaborador de la URL y tenga `status === 'published'` (devolviendo `404` en caso contrario).

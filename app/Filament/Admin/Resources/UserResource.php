@@ -48,6 +48,7 @@ class UserResource extends Resource
                     //->imageEditorMode(2)
                     ->label('Avatar')
                     ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                    ->maxSize(2048)
                     ->afterStateUpdated(function (Forms\Components\FileUpload $component, $state) {
                         if ($state instanceof \Livewire\Features\SupportFileUploads\TemporaryUploadedFile) {
                             try {

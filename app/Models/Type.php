@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\DeletesStoredImages;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -16,11 +17,22 @@ use Carbon\Carbon;
  */
 class Type extends Model
 {
-    use softDeletes;
+    use DeletesStoredImages;
+    use SoftDeletes;
 
     protected $table = 'types';
 
     protected $fillable = ['name', 'slug', 'description', 'image'];
+
+    /**
+     * Atributos de imagen gestionados en Storage::disk('public').
+     *
+     * @return array<string, string|null>
+     */
+    protected function storedImageAttributes(): array
+    {
+        return ['image' => 'images/default/type.webp'];
+    }
 
     /**
      * Grupos asociados al tipo.

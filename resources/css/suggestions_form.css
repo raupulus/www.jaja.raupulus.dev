@@ -51,7 +51,7 @@
     background-color: rgba(22, 101, 52, 0.25);
 }
 
-.answer-check:not(.hidden) {
+.answer-check-icon:not(.hidden) {
     display: inline-flex;
     align-items: center;
     justify-content: center;
