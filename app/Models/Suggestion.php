@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Models\Concerns\DeletesStoredImages;
 use App\Services\CacheInvalidationService;
 use Carbon\Carbon;
+use Database\Factories\SuggestionFactory;
 use Filament\Notifications\Notification;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -39,6 +41,10 @@ use Illuminate\Support\Facades\Storage;
 class Suggestion extends Model
 {
     use DeletesStoredImages;
+
+    /** @use HasFactory<SuggestionFactory> */
+    use HasFactory;
+
     use SoftDeletes;
 
     protected $table = 'suggestions';

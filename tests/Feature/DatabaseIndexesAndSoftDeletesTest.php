@@ -66,10 +66,12 @@ class DatabaseIndexesAndSoftDeletesTest extends TestCase
         $this->assertNotSame($deletedUser->id, $activeUser->id);
 
         try {
-            User::factory()->create([
-                'email' => 'reusable@raupulus.dev',
-                'nick' => 'duplicate_active',
-            ]);
+            DB::transaction(static function (): void {
+                User::factory()->create([
+                    'email' => 'reusable@raupulus.dev',
+                    'nick' => 'duplicate_active',
+                ]);
+            });
             $this->fail('Duplicate active email should violate unique partial index');
         } catch (QueryException $e) {
             $this->addToAssertionCount(1);
@@ -90,11 +92,13 @@ class DatabaseIndexesAndSoftDeletesTest extends TestCase
         $this->assertNotSame($deletedCategory->id, $activeCategory->id);
 
         try {
-            Category::create([
-                'title' => 'Categoría duplicada',
-                'slug' => 'cat-reusable',
-                'description' => 'Duplicada',
-            ]);
+            DB::transaction(static function (): void {
+                Category::create([
+                    'title' => 'Categoría duplicada',
+                    'slug' => 'cat-reusable',
+                    'description' => 'Duplicada',
+                ]);
+            });
             $this->fail('Duplicate active category slug should violate unique partial index');
         } catch (QueryException $e) {
             $this->addToAssertionCount(1);
@@ -115,11 +119,13 @@ class DatabaseIndexesAndSoftDeletesTest extends TestCase
         $this->assertNotSame($deletedType->id, $activeType->id);
 
         try {
-            Type::create([
-                'name' => 'Tipo duplicado',
-                'slug' => 'tipo-reusable',
-                'description' => 'Duplicado',
-            ]);
+            DB::transaction(static function (): void {
+                Type::create([
+                    'name' => 'Tipo duplicado',
+                    'slug' => 'tipo-reusable',
+                    'description' => 'Duplicado',
+                ]);
+            });
             $this->fail('Duplicate active type slug should violate unique partial index');
         } catch (QueryException $e) {
             $this->addToAssertionCount(1);
@@ -146,15 +152,17 @@ class DatabaseIndexesAndSoftDeletesTest extends TestCase
         ]);
 
         try {
-            DB::table('groups')->insert([
-                'type_id' => $activeType->id,
-                'title' => 'Grupo duplicado',
-                'slug' => 'grupo-reusable',
-                'description' => 'Duplicado',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'deleted_at' => null,
-            ]);
+            DB::transaction(static function () use ($activeType): void {
+                DB::table('groups')->insert([
+                    'type_id' => $activeType->id,
+                    'title' => 'Grupo duplicado',
+                    'slug' => 'grupo-reusable',
+                    'description' => 'Duplicado',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'deleted_at' => null,
+                ]);
+            });
             $this->fail('Duplicate active group slug should violate unique partial index');
         } catch (QueryException $e) {
             $this->addToAssertionCount(1);
@@ -183,16 +191,18 @@ class DatabaseIndexesAndSoftDeletesTest extends TestCase
         ]);
 
         try {
-            DB::table('pages')->insert([
-                'title' => 'Página duplicada',
-                'slug' => 'pagina-reusable',
-                'excerpt' => 'Resumen',
-                'content' => 'Contenido',
-                'status' => 'draft',
-                'created_at' => now(),
-                'updated_at' => now(),
-                'deleted_at' => null,
-            ]);
+            DB::transaction(static function (): void {
+                DB::table('pages')->insert([
+                    'title' => 'Página duplicada',
+                    'slug' => 'pagina-reusable',
+                    'excerpt' => 'Resumen',
+                    'content' => 'Contenido',
+                    'status' => 'draft',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                    'deleted_at' => null,
+                ]);
+            });
             $this->fail('Duplicate active page slug should violate unique partial index');
         } catch (QueryException $e) {
             $this->addToAssertionCount(1);

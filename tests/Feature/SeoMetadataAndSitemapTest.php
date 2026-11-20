@@ -37,12 +37,7 @@ class SeoMetadataAndSitemapTest extends TestCase
         parent::setUp();
         $this->withoutVite();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
 
         $this->user = User::factory()->create([
             'nick' => 'seo_tester',

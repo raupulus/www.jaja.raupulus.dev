@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Category;
 use App\Models\Content;
 use App\Models\Group;
 use App\Models\Type;
@@ -28,12 +27,7 @@ class ApiAndValidationStabilityTest extends TestCase
         parent::setUp();
         $this->withoutVite();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
 
         $this->admin = User::factory()->create([
             'role_id' => 1,

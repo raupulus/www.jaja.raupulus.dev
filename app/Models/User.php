@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Concerns\DeletesStoredImages;
 use Carbon\Carbon;
+use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
@@ -33,7 +34,10 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
-    use DeletesStoredImages, HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use DeletesStoredImages, HasApiTokens, Notifiable, SoftDeletes;
+
+    /** @use HasFactory<UserFactory> */
+    use HasFactory;
 
     /**
      * Atributos de imagen gestionados en Storage::disk('public').

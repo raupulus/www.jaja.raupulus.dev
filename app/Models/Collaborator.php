@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
+use Database\Factories\CollaboratorFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -26,6 +28,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Collaborator extends Model
 {
     use DeletesStoredImages;
+
+    /** @use HasFactory<CollaboratorFactory> */
+    use HasFactory;
 
     protected $table = 'collaborators';
 

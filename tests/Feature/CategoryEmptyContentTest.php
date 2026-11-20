@@ -28,12 +28,7 @@ class CategoryEmptyContentTest extends TestCase
         $this->withoutVite();
 
         // Crear primero la categoría General con ID 1 (requerida por Content::boot)
-        $this->generalCategory = Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->generalCategory = $this->ensureGeneralCategory();
 
         $this->user = User::factory()->create();
 

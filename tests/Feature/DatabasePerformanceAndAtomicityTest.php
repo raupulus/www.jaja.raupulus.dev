@@ -50,12 +50,7 @@ class DatabasePerformanceAndAtomicityTest extends TestCase
         $this->withoutVite();
         Cache::flush();
 
-        $this->generalCategory = Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->generalCategory = $this->ensureGeneralCategory();
 
         $this->techCategory = Category::create([
             'title' => 'Tecnología',

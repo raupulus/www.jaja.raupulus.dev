@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Concerns\DeletesStoredImages;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Database\Factories\TypeFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -31,6 +33,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Type extends Model
 {
     use DeletesStoredImages;
+
+    /** @use HasFactory<TypeFactory> */
+    use HasFactory;
+
     use SoftDeletes;
 
     protected $table = 'types';

@@ -24,6 +24,7 @@ Este módulo contiene los comandos de consola (Artisan) personalizados que se ej
 - Estos comandos están registrados en `routes/console.php` usando la fachada explícita `Illuminate\Support\Facades\Schedule` y protegidos con `->withoutOverlapping()` (`stats:update`, `sitemap:generate` y las tres ventanas diarias de `content:publish-social`), además de poder lanzarse bajo confirmación (`POST` / modal) desde `App\Filament\Admin\Pages\Dashboard`.
 - Los logs estructurados emitidos vía `Log::warning`/`Log::error` por todos los comandos se registran en **inglés** manteniendo la salida de consola para operadores en español.
 - Son esenciales para separar la carga de cálculo y peticiones externas del ciclo de vida HTTP normal.
+- Verificados en `tests/Feature/FactoriesAndCommandsTest.php` (`stats:update`, `content:publish-social` con `Http::fake()`, `sitemap:generate --output=...`), `tests/Feature/SeoMetadataAndSitemapTest.php` y `tests/Feature/ReliabilityAndArchitectureTest.php` (`schedule:list`).
 
 
 ---

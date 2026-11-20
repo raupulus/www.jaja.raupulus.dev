@@ -26,11 +26,23 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
+            'nick' => Str::substr(Str::slug(fake()->unique()->userName(), '_'), 0, 30),
             'email' => fake()->unique()->safeEmail(),
+            'role_id' => 2,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
+    }
+
+    /**
+     * Indica que el usuario tiene rol administrador.
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role_id' => 1,
+        ]);
     }
 
     /**

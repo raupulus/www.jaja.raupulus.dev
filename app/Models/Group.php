@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Models\Concerns\DeletesStoredImages;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Database\Factories\GroupFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -32,6 +34,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Group extends Model
 {
     use DeletesStoredImages;
+
+    /** @use HasFactory<GroupFactory> */
+    use HasFactory;
 
     protected $table = 'groups';
 

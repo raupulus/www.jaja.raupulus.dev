@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Concerns\DeletesStoredImages;
 use Carbon\Carbon;
+use Database\Factories\CategoryFactory;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -27,6 +29,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Category extends Model
 {
     use DeletesStoredImages;
+
+    /** @use HasFactory<CategoryFactory> */
+    use HasFactory;
+
     use SoftDeletes;
 
     protected $table = 'categories';

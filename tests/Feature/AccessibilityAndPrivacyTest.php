@@ -24,12 +24,7 @@ class AccessibilityAndPrivacyTest extends TestCase
         $this->withoutVite();
         Cache::flush();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
     }
 
     public function test_public_layout_includes_skip_link_main_landmark_and_no_indefinite_smil_animations(): void

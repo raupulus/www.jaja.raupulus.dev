@@ -11,7 +11,6 @@ use App\Filament\Admin\Widgets\GroupOverview;
 use App\Filament\Admin\Widgets\SuggestionOverview;
 use App\Filament\Admin\Widgets\UserContributorsChart;
 use App\Filament\Admin\Widgets\UserOverview;
-use App\Models\Category;
 use App\Models\Collaborator;
 use App\Models\Content;
 use App\Models\Group;
@@ -41,12 +40,7 @@ class FilamentPanelsUxTest extends TestCase
         $this->withoutVite();
         Cache::flush();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
 
         $this->admin = User::factory()->create([
             'role_id' => 1,

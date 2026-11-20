@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Category;
 use App\Models\Collaborator;
 use App\Models\CollaboratorProject;
 use App\Models\Group;
@@ -23,12 +22,7 @@ class ResponsiveUxAndW3cTest extends TestCase
         $this->withoutVite();
         Cache::flush();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
     }
 
     public function test_custom_404_page_renders_integrated_layout_with_noindex(): void

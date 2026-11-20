@@ -33,12 +33,7 @@ class AccessControlAndSecurityTest extends TestCase
         parent::setUp();
         $this->withoutVite();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
 
         $this->admin = User::factory()->create([
             'role_id' => 1,

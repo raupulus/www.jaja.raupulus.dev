@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Helpers\IpHelper;
 use App\Http\Middleware\VerifyRecaptcha;
-use App\Models\Category;
 use App\Models\Content;
 use App\Models\Group;
 use App\Models\Type;
@@ -39,12 +38,7 @@ class ReliabilityAndArchitectureTest extends TestCase
         $this->withoutVite();
         Cache::flush();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
 
         $this->user = User::factory()->create([
             'role_id' => 2,
@@ -80,15 +74,18 @@ class ReliabilityAndArchitectureTest extends TestCase
 
     public function test_content_public_safe_scope_and_helper_respect_config_and_adult_flag(): void
     {
-        DB::table('groups')->insert([
-            'id' => 4,
-            'type_id' => $this->chistesType->id,
-            'title' => 'Grupo Excluido',
-            'slug' => 'grupo-excluido',
-            'description' => 'Excluido por configuración',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        DB::table('groups')->updateOrInsert(
+            ['id' => 4],
+            [
+                'type_id' => $this->chistesType->id,
+                'title' => 'Grupo Excluido',
+                'slug' => 'grupo-excluido',
+                'description' => 'Excluido por configuración',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]
+        );
+        $this->syncPostgresSequence('groups', 'id', 100);
         $excludedGroup = Group::findOrFail(4);
 
         $safeContent = Content::create([

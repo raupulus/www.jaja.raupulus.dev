@@ -49,12 +49,7 @@ class ApiV1ContractTest extends TestCase
         $this->withoutVite();
         Cache::flush();
 
-        $this->generalCategory = Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->generalCategory = $this->ensureGeneralCategory();
 
         $this->devCategory = Category::create([
             'title' => 'Programación',

@@ -71,7 +71,7 @@
         ],
         "test:pgsql": [
             "@php artisan config:clear --ansi",
-            "@php artisan test --configuration=phpunit.pgsql.xml"
+            "@php artisan test -c phpunit.pgsql.xml"
         ],
         "quality": [
             "@pint",

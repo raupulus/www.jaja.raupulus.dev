@@ -49,7 +49,11 @@ php artisan route:cache && php artisan config:cache && php artisan view:cache &&
 
 - **Estilo (`pint`)**: formateo Laravel Pint (`composer pint` en modo `--test` o `./vendor/bin/pint` para corregir).
 - **Análisis estático (`phpstan.neon`)**: Larastan nivel 5 sobre `app/`, `config/` y `routes/` ejecutado vía `composer phpstan`.
-- **Tests**: suite rápida en SQLite `:memory:` (`php artisan test --compact`) y paridad en PostgreSQL real (`composer test:pgsql`).
+- **Tests en SQLite (`phpunit.xml`)**: suite rápida en memoria con `php artisan test --compact`.
+- **Paridad en PostgreSQL (`phpunit.pgsql.xml`)**: ejecuta toda la suite contra PostgreSQL real vía `composer test:pgsql` (equivalente a `php artisan test -c phpunit.pgsql.xml`).
+  - Requisitos locales o en CI: base de datos `jaja_raupulus_test` existente y variables `DB_CONNECTION=pgsql`, `DB_HOST=127.0.0.1`, `DB_PORT=5432`, `DB_DATABASE=jaja_raupulus_test`, `DB_USERNAME=dev`, `DB_PASSWORD=""` (sobreescribibles por entorno sin `force="true"` en `phpunit.pgsql.xml`).
+  - Creación local rápida: `createdb -U dev jaja_raupulus_test` (o `CREATE DATABASE jaja_raupulus_test OWNER dev;`).
+  - Todas las 12 tablas principales disponen de su correspondiente `Model Factory` bajo `database/factories/`.
 
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

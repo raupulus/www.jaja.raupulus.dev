@@ -29,12 +29,7 @@ class ImageSanitizationAndCleanupTest extends TestCase
     {
         parent::setUp();
 
-        Category::create([
-            'id' => 1,
-            'title' => 'General',
-            'slug' => 'general',
-            'description' => 'Categoría general',
-        ]);
+        $this->ensureGeneralCategory();
     }
 
     public function test_convert_image_to_webp_scales_down_and_strips_exif(): void
