@@ -55,9 +55,9 @@
                         @endif
 
                         <div class="category-card-text">
-                            <h3 class="category-card-title">
+                            <h2 class="category-card-title">
                                 {{ Str::limit($category->title, 80) }}
-                            </h3>
+                            </h2>
 
                             @if($category->description)
                                 <p class="category-card-description">

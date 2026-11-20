@@ -105,7 +105,7 @@
 
             @if($project->image)
                 <div class="project-image">
-                    <img src="{{$project->urlImage}}" alt="{{$project->name}}">
+                    <img src="{{$project->urlImage}}" alt="{{$project->title}}">
                 </div>
             @endif
 

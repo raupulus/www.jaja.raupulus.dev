@@ -71,7 +71,7 @@
         <h1>Bienvenid@ a {{config('app.name')}}</h1>
 
         <div class="mw-800 m-auto">
-            <img src="{{asset('images/portada-jaja-project.webp')}}" alt="Logo" class="logo">
+            <img src="{{asset('images/portada-jaja-project.webp')}}" alt="Portada ilustrada de {{ config('app.name') }}, comunidad de chistes, adivinanzas y quiz" class="logo">
         </div>
 
         <p class="mw-800 m-auto text-center text-destacado">

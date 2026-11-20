@@ -15,7 +15,7 @@
     <div>
         <span class="social-box-icon social-color-telegram">
             <a href="https://t.me/jajaproject" title="Telegram" target="_blank" rel="noopener noreferrer">
-                <img src="https://raw.githubusercontent.com/raupulus/www.raupulus.dev/main/public/images/icons/telegram.svg" alt="GitHub" title="GitHub" />
+                <img src="https://raw.githubusercontent.com/raupulus/www.raupulus.dev/main/public/images/icons/telegram.svg" alt="Telegram" title="Telegram" />
             </a>
         </span>
     </div>
@@ -34,7 +34,7 @@
     <div>
         <span class="social-box-icon social-color-bluesky">
             <a href="https://bsky.app/profile/jajupulus.bsky.social" title="Bluesky" target="_blank" rel="noopener noreferrer">
-                <img src="{{asset('images/icons/bluesky.svg')}}" alt="Twitter" title="Twitter" />
+                <img src="{{asset('images/icons/bluesky.svg')}}" alt="Bluesky" title="Bluesky" />
             </a>
         </span>
     </div>

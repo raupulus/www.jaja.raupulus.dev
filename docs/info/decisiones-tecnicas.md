@@ -28,5 +28,10 @@ Registro de decisiones deliberadas del proyecto verificadas en el código, para 
 - **Decisión**: Inyectar las cabeceras de seguridad (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` y `Strict-Transport-Security` en HTTPS) desde middleware global y replicarlas en `apache.conf` para cubrir también archivos estáticos. Evitar closures en archivos de rutas (`routes/web.php`) para mantener `php artisan route:cache` operativo.
 - **Motivo**: Defensa en profundidad tanto para respuestas dinámicas PHP como para activos servidos directamente por Apache y despliegue optimizado con caché de rutas.
 
+## 6. Dominio canónico único y archivos de rastreo SEO
+- **Dónde**: `apache.conf`, `public/robots.txt`, `public/llms.txt` y `.env.example.production`.
+- **Decisión**: Estandarizar el dominio canónico público en `https://jaja.raupulus.dev` (sin `www.`), redirigiendo `301` desde `www.jaja.raupulus.dev` en `apache.conf` y alineando `robots.txt` (`Sitemap`) y `llms.txt`. Mantener `public/llms.txt` limitado exclusivamente a rutas públicas reales y endpoints públicos de `/api/v1/random`.
+- **Motivo**: Evitar contenido duplicado entre subdominios, preservar la autoridad SEO y no exponer rutas internas ni obsoletas a rastreadores e integraciones LLM.
+
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

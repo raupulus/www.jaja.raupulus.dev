@@ -10,10 +10,11 @@ Inventario real de layouts, parciales Blade y módulos JavaScript del frontend p
 - `footer.blade.php` — Pie de página público.
 - `footer_meta.blade.php` — Metadatos y cierre de scripts en el pie.
 
-## Convenciones de seguridad en vistas y enlaces
+## Convenciones de seguridad y SEO en vistas y enlaces
 
 - Todos los enlaces con `target="_blank"` en vistas y parciales incluyen `rel="noopener noreferrer"`.
 - Las descripciones de grupos y categorías en `contents/groups/show.blade.php` y `contents/categories/show.blade.php` se imprimen escapadas con `{{ ... }}`.
+- Las vistas públicas respetan la jerarquía secuencial de encabezados (`h1 → h2`, o `h1 → h2 → h3` dentro de parciales titulados), usan textos descriptivos en enlaces y mantienen atributos `alt` fieles a cada imagen/icono.
 
 ## Parciales reutilizables (`resources/views/partials/`)
 

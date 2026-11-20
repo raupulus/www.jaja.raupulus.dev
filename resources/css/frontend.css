@@ -336,6 +336,7 @@ form button.btn {
     gap: 0.8rem;
 }
 
+.card-content-body h2,
 .card-content-body h3 {
     font-size: 1.3em;
     color: var(--color-primario);

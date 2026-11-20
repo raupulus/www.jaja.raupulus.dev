@@ -4,8 +4,11 @@ namespace App\Console\Commands;
 
 use App\Models\Category;
 use App\Models\Collaborator;
+use App\Models\CollaboratorProject;
+use App\Models\Content;
 use App\Models\Group;
 use App\Models\Page;
+use App\Models\Type;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
@@ -17,7 +20,8 @@ class SitemapGeneratorCommand extends Command
 {
     protected $signature = 'sitemap:generate
                             {--force : Forzar regeneración sin cache}
-                            {--chunk=100 : Número de registros por chunk}';
+                            {--chunk=100 : Número de registros por chunk}
+                            {--output= : Ruta alternativa del archivo sitemap}';
 
     protected $description = 'Genera el sitemap del sitio completo con metadatos optimizados';
 
@@ -58,20 +62,31 @@ class SitemapGeneratorCommand extends Command
     {
         $sitemap = Sitemap::create();
 
-        ## URLs estáticas con prioridades y frecuencia de actualización
+        $latestContentAt = Content::whereNotIn('group_id', [4, 14])
+            ->where('is_adult', false)
+            ->max('updated_at');
+        $contentModAt = $latestContentAt ? Carbon::parse($latestContentAt) : Carbon::now();
+
+        $latestPageAt = Page::where('status', 'published')->max('updated_at');
+        $pageModAt = $latestPageAt ? Carbon::parse($latestPageAt) : Carbon::now();
+
+        $latestCollabAt = CollaboratorProject::where('status', 'published')->max('updated_at');
+        $collabModAt = $latestCollabAt ? Carbon::parse($latestCollabAt) : Carbon::now();
+
+        $docsFile = resource_path('views/scribe/index.blade.php');
+        $docsModAt = file_exists($docsFile)
+            ? Carbon::createFromTimestamp(filemtime($docsFile))
+            : Carbon::now();
+
+        ## URLs estáticas con prioridades, frecuencia y fecha real de modificación
         $staticUrls = [
-            ['url' => route('index'), 'priority' => 1.0, 'changefreq' => 'daily'],
-            ['url' => route('page.index'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => route('collaborator.index'), 'priority' => 0.9, 'changefreq' => 'weekly'],
-            ['url' => route('content.types.index'), 'priority' => 0.7, 'changefreq' => 'monthly'],
-            ['url' => route('content.categories.index'), 'priority' => 0.8, 'changefreq' => 'monthly'],
-            ['url' => route('content.groups.index'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => route('content.type.group.index', 'chistes'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => route('content.type.group.index', 'quiz'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => route('content.type.group.index', 'adivinanzas'), 'priority' => 0.8, 'changefreq' => 'weekly'],
-            ['url' => url('docs'), 'priority' => 0.7, 'changefreq' => 'monthly'],
-            ['url' => url('docs/collection.json'), 'priority' => 0.6, 'changefreq' => 'monthly'],
-            ['url' => url('docs/openapi.yaml'), 'priority' => 0.6, 'changefreq' => 'monthly'],
+            ['url' => route('index'), 'priority' => 1.0, 'changefreq' => 'daily', 'lastmod' => $contentModAt],
+            ['url' => route('page.index'), 'priority' => 0.8, 'changefreq' => 'weekly', 'lastmod' => $pageModAt],
+            ['url' => route('collaborator.index'), 'priority' => 0.9, 'changefreq' => 'weekly', 'lastmod' => $collabModAt],
+            ['url' => route('content.types.index'), 'priority' => 0.7, 'changefreq' => 'monthly', 'lastmod' => $contentModAt],
+            ['url' => route('content.categories.index'), 'priority' => 0.8, 'changefreq' => 'monthly', 'lastmod' => $contentModAt],
+            ['url' => route('content.groups.index'), 'priority' => 0.8, 'changefreq' => 'weekly', 'lastmod' => $contentModAt],
+            ['url' => url('docs'), 'priority' => 0.7, 'changefreq' => 'monthly', 'lastmod' => $docsModAt],
         ];
 
         foreach ($staticUrls as $urlData) {
@@ -79,7 +94,25 @@ class SitemapGeneratorCommand extends Command
                 Url::create($urlData['url'])
                     ->setPriority($urlData['priority'])
                     ->setChangeFrequency($urlData['changefreq'])
-                    ->setLastModificationDate(Carbon::now())
+                    ->setLastModificationDate($urlData['lastmod'])
+            );
+        }
+
+        foreach (Type::all() as $type) {
+            $latestTypeContent = $type->contents()
+                ->whereNotIn('contents.group_id', [4, 14])
+                ->where('contents.is_adult', false)
+                ->max('contents.updated_at');
+
+            $typeModAt = $latestTypeContent
+                ? Carbon::parse($latestTypeContent)
+                : ($type->updated_at ?? $type->created_at ?? Carbon::now());
+
+            $sitemap->add(
+                Url::create(route('content.type.group.index', $type->slug))
+                    ->setPriority(0.8)
+                    ->setChangeFrequency('weekly')
+                    ->setLastModificationDate($typeModAt)
             );
         }
 
@@ -212,8 +245,8 @@ class SitemapGeneratorCommand extends Command
     {
         $this->info('💾 Escribiendo sitemap a archivo...');
 
-        $sitemapPath = public_path('sitemap.xml');
-        $backupPath = public_path('sitemap_backup.xml');
+        $sitemapPath = $this->option('output') ?: public_path('sitemap.xml');
+        $backupPath = $sitemapPath . '.bak';
 
         // Creo backup del sitemap anterior si existe
         if (file_exists($sitemapPath)) {

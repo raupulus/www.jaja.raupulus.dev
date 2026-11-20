@@ -5,8 +5,9 @@ Este módulo contiene los comandos de consola (Artisan) personalizados que se ej
 
 ## Componentes
 1. **SitemapGeneratorCommand (`app/Console/Commands/SitemapGeneratorCommand.php`)**:
-   - Genera dinámicamente el `sitemap.xml` para la web pública.
-   - Itera a través de páginas estáticas, grupos, tipos, categorías y colaboradores.
+   - Genera dinámicamente el `sitemap.xml` para la web pública (acepta `--output=` para escribir en ruta alternativa durante pruebas o validaciones).
+   - Itera a través de páginas estáticas publicadas, colaboradores con proyectos publicados, `Type::all()` para construir las rutas `/{type}/grupos`, grupos y categorías.
+   - Excluye artefactos técnicos no indexables (`docs/collection.json`, `docs/openapi.yaml`) y utiliza fechas `lastmod` reales derivadas de los registros en base de datos y fecha de compilación de `docs`.
    - **Optimización SEO**: Filtra grupos y categorías utilizando el scope `hasAvailableContent()`, asegurando que no se indexen ni se añadan al sitemap URLs vacías que puedan provocar errores de tipo *Soft 404* en Google Search Console.
    - Previene errores de permisos en servidor y asegura la visibilidad SEO.
 

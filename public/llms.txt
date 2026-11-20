@@ -1,103 +1,31 @@
-# JaJa Project - Comunidad de Chistes y Entretenimiento
+# JaJa Project - Comunidad de Chistes, Adivinanzas y Preguntas Quiz
 
 ## Información General
 
-**Nombre del proyecto**: JaJa Project
-**URL**: https://jaja.raupulus.dev
-**Tipo**: Aplicación web Laravel con panel de administración Filament y API REST
-**Propósito**: Plataforma comunitaria para compartir chistes, adivinanzas y preguntas quiz
+- **Nombre del proyecto**: JaJa Project
+- **URL canónica**: https://jaja.raupulus.dev
+- **Tipo**: Aplicación web Laravel con API REST pública/privada
+- **Propósito**: Plataforma comunitaria en español para compartir y consumir chistes, adivinanzas y preguntas tipo quiz mediante web, API y bots.
 
-## Tecnologías Principales
+## Rutas Públicas Principales
 
-- **Backend**: Laravel 13 (PHP 8.4+)
-- **Panel Admin**: Filament 3.3.57
-- **Base de datos**: PostgreSQL
-- **Colas**: Database queue connection
-- **Autenticación API**: Laravel Sanctum
-- **Frontend**: Blade templates, TailwindCSS, Vite
-- **Testing**: PHPUnit, Mockery
+- `/` — Portada principal, envío de sugerencias comunitarias y muestra aleatoria de contenidos.
+- `/tipos` — Listado de tipos de contenido disponibles (`chistes`, `adivinanzas`, `quiz`).
+- `/grupos` — Listado completo de grupos de contenido activos.
+- `/{type}/grupos` — Grupos de contenido filtrados por tipo (ej. `/chistes/grupos`, `/adivinanzas/grupos`, `/quiz/grupos`).
+- `/grupo/{slug}/random` — Contenido aleatorio perteneciente a un grupo.
+- `/categorias` — Listado de categorías temáticas con contenido disponible.
+- `/categoria/{slug}/random` — Contenido aleatorio perteneciente a una categoría.
+- `/colaboradores` — Directorio público de colaboradores de desarrollo.
+- `/colaborador/{nick}` — Perfil público y proyectos de un colaborador.
+- `/colaborador/{nick}/project/{slug}` — Ficha técnica de un proyecto publicado por un colaborador.
+- `/paginas` — Listado de páginas informativas, guías y documentos legales.
+- `/pagina/{slug}` — Página estática informativa o legal (ej. `/pagina/api`, `/pagina/normas`, `/pagina/bots-para-la-api-de-jaja-project`).
+- `/docs` — Documentación interactiva OpenAPI/Scribe de la API REST.
 
-## Estructura del Proyecto
+## Endpoints Públicos de la API REST (sin autenticación)
 
-### Modelos Principales
-- `Content`: Contenido aprobado (chistes, adivinanzas, quiz)
-- `Suggestion`: Sugerencias de contenido pendientes de aprobación
-- `Category`: Categorías de contenido
-- `Type`: Tipos de contenido (chiste, adivinanza, quiz)
-- `Group`: Grupos de contenido (familiar, adultos, etc.)
-- `User`: Usuarios del sistema
-- `Report`: Reportes de contenido
-- `ContentOption`: Opciones para preguntas quiz
-- `Collaborator`: Colaboradores del proyecto
+- `GET /api/v1/random` — Devuelve contenidos aleatorios excluyendo contenido adulto o privado (máximo 5 elementos por petición).
+- `GET /api/v1/random/{type}` — Devuelve contenidos aleatorios filtrados por tipo (`chistes`, `adivinanzas`, `quiz`).
 
-### Controladores
-- `IndexController`: Página principal
-- `ContentController`: Gestión de contenido público
-- `PageController`: Páginas estáticas
-- `CollaboratorController`: Información de colaboradores
-- `AdminController`: Panel de administración
-- `Api\V1Controller`: API REST
-- `Api\AuthController`: Autenticación API
-
-### Características Clave
-
-1. **API Pública**: Endpoint `/api/random` para obtener contenido aleatorio
-2. **API Privada**: Endpoints con autenticación para desarrolladores
-3. **Panel de Administración**: Gestión completa de contenido y usuarios
-4. **Panel de Usuarios**: Interfaz para colaboradores
-5. **Sistema de Sugerencias**: Los usuarios pueden enviar contenido para aprobación
-6. **Sistema de Reportes**: Reporte de contenido inapropiado
-7. **Filtros de Contenido**: Por tipo, categoría y grupo
-8. **Contenido Quiz**: Preguntas con múltiples opciones
-9. **Gestión de Imágenes**: Subida y almacenamiento de imágenes
-10. **SEO Optimizado**: Metadatos, sitemap automático, URLs amigables
-
-### Rutas Principales
-
-- `/` - Página principal
-- `/docs` - Documentación de la API
-- `/admin` - Panel de administración
-- `/panel` - Panel de usuarios
-- `/api/random` - Endpoint público para contenido aleatorio
-- `/chiste/random` - Chiste aleatorio
-- `/adivinanza/random` - Adivinanza aleatoria
-- `/quiz/random` - Pregunta quiz aleatoria
-- `/grupos` - Listado de grupos
-- `/tipos` - Listado de tipos
-- `/categorias` - Listado de categorías
-
-### Características Especiales
-
-- **Recaptcha v3**: Protección contra spam
-- **Rate Limiting**: Límites de peticiones por IP
-- **Caché**: Sistema de caché para consultas frecuentes
-- **Comandos Artisan**: Regeneración de estadísticas y sitemap
-- **Eventos**: Gestión de archivos al eliminar contenido
-- **Middleware**: Autenticación y limitación de peticiones
-- **Validaciones**: Requests personalizados para formularios
-- **Helpers**: Funciones auxiliares para el proyecto
-
-### Integración con Redes Sociales
-
-- Metadatos Open Graph
-- Twitter Cards
-- Botón para bot de Discord
-- Publicación automatizada en redes sociales
-
-### Contenido Soportado
-
-- **Chistes**: Texto con imagen opcional
-- **Adivinanzas**: Pregunta y respuesta con imagen opcional
-- **Quiz**: Pregunta con múltiples opciones de respuesta
-- **Categorías**: Clasificación temática
-- **Grupos**: Filtros por audiencia (familiar, adultos, etc.)
-
-### Configuración y Despliegue
-
-- Variables de entorno configurables
-- Migraciones y seeders incluidos
-- Configuración para Apache incluida
-- Scripts de despliegue automatizados
-- Gestión de permisos y storage links
-
-Este proyecto está diseñado para ser una plataforma colaborativa donde la comunidad puede contribuir con contenido de entretenimiento, manteniendo controles de calidad y moderación adecuados.
+La API autenticada mediante Laravel Sanctum (`/api/v1/*`) permite además consultar listados paginados, tipos, grupos, categorías, contenido por usuario/grupo/categoría y enviar sugerencias o reportes. Consulta https://jaja.raupulus.dev/docs para la referencia completa.

@@ -58,7 +58,7 @@
                     </div>
 
                     <div class="card-content-body">
-                        <h3>{{$page->title}}</h3>
+                        <h2>{{$page->title}}</h2>
 
                         <p>
                             {{$page->excerpt}}
@@ -73,7 +73,7 @@
                         </div>
 
                         <a href="{{$page->url}}" title="{{$page->title}}" class="btn">
-                            Ir
+                            Leer {{$page->title}}
                         </a>
                     </div>
 

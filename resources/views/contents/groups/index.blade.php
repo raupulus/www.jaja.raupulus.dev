@@ -83,7 +83,7 @@
 
         <div class="card-resume-horizontal">
             <div class="card-resume-left">
-                <h3 class="card-resume-title">{{$group->title}}</h3>
+                <h2 class="card-resume-title">{{$group->title}}</h2>
 
                 @if($group->image)
                     <div class="card-resume-image">
@@ -106,7 +106,7 @@
 
                 @if($group->contents()->count())
                     <a href="{{route('content.group.content.random', $group->slug)}}" class="card-resume-button">
-                        Ver Algunos
+                        Ver contenidos de {{$group->title}}
                     </a>
                 @endif
             </div>

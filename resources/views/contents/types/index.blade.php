@@ -47,7 +47,7 @@
 
         <div class="card-resume-horizontal">
             <div class="card-resume-left">
-                <h3 class="card-resume-title">{{$type->name}}</h3>
+                <h2 class="card-resume-title">{{$type->name}}</h2>
 
                 @if($type->image)
                     <div class="card-resume-image">
@@ -67,7 +67,7 @@
 
             <div class="card-resume-right">
                 <span class="card-resume-badge">{{$type->groups_count}}</span>
-                <a href="{{route('content.type.group.index', $type->slug)}}" class="card-resume-button">Ver Grupos</a>
+                <a href="{{route('content.type.group.index', $type->slug)}}" class="card-resume-button">Ver grupos de {{$type->name}}</a>
             </div>
         </div>
 

@@ -6,7 +6,7 @@
     @endif
 
     <div class="card-content-body">
-        <h3>{{$content->title}}</h3>
+        <{{ $contentHeadingTag ?? 'h3' }}>{{$content->title}}</{{ $contentHeadingTag ?? 'h3' }}>
 
         <p>
             {!! $content->formattedHtmlContent !!}
