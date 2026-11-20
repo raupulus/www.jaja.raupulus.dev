@@ -51,17 +51,6 @@ class PaginationRequest extends FormRequest
     }
 
     /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'page' => (int) $this->input('page', 1),
-            'limit' => (int) $this->input('limit', 20),
-        ]);
-    }
-
-    /**
      * Handle a failed validation attempt for API.
      */
     protected function failedValidation(Validator $validator): void
@@ -76,7 +65,7 @@ class PaginationRequest extends FormRequest
      */
     public function getPage(): int
     {
-        return $this->validated()['page'];
+        return (int) ($this->validated()['page'] ?? 1);
     }
 
     /**
@@ -84,7 +73,7 @@ class PaginationRequest extends FormRequest
      */
     public function getLimit(): int
     {
-        return $this->validated()['limit'];
+        return (int) ($this->validated()['limit'] ?? 20);
     }
 
     /**

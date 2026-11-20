@@ -57,7 +57,7 @@ class IndexController extends Controller
     public function sendSuggestion(SuggestionRequest $request): RedirectResponse
     {
         $validated = $request->validated();
-        unset($validated['image']);
+        unset($validated['image'], $validated['terms']);
 
         $options = isset($validated['options']) ? $validated['options'] : [];
 

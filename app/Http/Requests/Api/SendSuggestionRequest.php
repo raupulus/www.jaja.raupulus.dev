@@ -51,19 +51,22 @@ class SendSuggestionRequest extends FormRequest
 
     public function prepareForValidation()
     {
-        $nick = Str::replace(' ', '_', trim($this->nick ?? ''));
+        $nick = Str::replace(' ', '_', trim((string) ($this->input('nick') ?? '')));
 
         if (Str::startsWith($nick, '@')) {
             $nick = Str::substr($nick, 1);
         }
 
         $nick = preg_replace('/[^a-zA-Z0-9_]/', '', $nick);
+        $nick = $nick !== '' ? $nick : null;
+
+        $title = trim((string) ($this->input('title') ?? ''));
         $type = Type::where('slug', 'chistes')->first();
 
         $this->merge([
-            'type_id' => $type->id,
+            'type_id' => $type?->id,
             'nick' => $nick,
-            'title' => trim($this->title) ?? 'Sugerencia',
+            'title' => $title !== '' ? $title : 'Sugerencia',
             'ip_address' => $this->getRealIpAddress(),
             'user_agent' => $this->userAgent(),
         ]);
@@ -77,12 +80,10 @@ class SendSuggestionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //'type_id' => 'required|exists:types,id',
-            'nick' => 'sometimes|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
-            'title' => 'sometimes|string|max:255',
+            'type_id' => 'required|exists:types,id',
+            'nick' => 'nullable|string|max:25|regex:/^[a-zA-Z0-9_]+$/',
+            'title' => 'required|string|max:255',
             'content' => 'required|string|max:1024',
-            //'ip_address' => 'nullable|ip',
-            //'user_agent' => 'nullable|string|max:255',
         ];
     }
 

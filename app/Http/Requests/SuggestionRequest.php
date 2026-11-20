@@ -197,6 +197,7 @@ class SuggestionRequest extends FormRequest
             ],
             'ip_address' => 'nullable|ip',
             'user_agent' => 'nullable|string|max:255',
+            'terms' => 'accepted',
         ];
 
         // Validaciones condicionales para quiz
@@ -239,6 +240,7 @@ class SuggestionRequest extends FormRequest
             'image.max' => 'La imagen no debe superar los :max kilobytes',
             'nick.max' => 'El nick no debe superar los :max caracteres',
             'nick.regex' => 'El nick solo puede contener letras, números y guiones bajos sin @',
+            'terms.accepted' => 'Debes aceptar las normas, la política de privacidad y las condiciones de uso.',
             'throttle' => 'Has enviado demasiadas sugerencias recientemente. Por favor, espera un momento antes de enviar otra.',
 
             // Mensajes para options

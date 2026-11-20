@@ -7,9 +7,10 @@ El módulo `User` gestiona la autenticación, roles básicos y perfiles público
 - **User**: Representa a un individuo registrado en el sistema.
 
 ## Funcionalidad Técnica
-1. **Autenticación**:
+1. **Autenticación y Validación en Panel**:
    - Gestionada a través de Laravel Sanctum para la emisión y verificación de tokens en la API.
    - Existen dos puntos de entrada web: `/admin/login` para administradores y `/panel/login` (o `/login`) para usuarios generales.
+   - En `Admin/UserResource`, el campo `email` valida unicidad ignorando el registro actual (`unique(ignoreRecord: true)`).
 2. **Sistema de Roles y Control de Acceso**:
    - El modelo carece de un paquete complejo de roles y permisos (como Spatie) por simplicidad de negocio.
    - Se gestiona mediante el campo `role_id`. Por convención, el `role_id = 1` otorga privilegios totales y acceso al panel de administración `/admin`. Los nuevos usuarios creados (`php artisan make:filament-user`) adquieren el `role_id = 2` por defecto, restringiendo su acceso únicamente a `/panel`.

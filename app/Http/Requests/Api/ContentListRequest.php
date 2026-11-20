@@ -21,7 +21,7 @@ class ContentListRequest extends FormRequest
         return [
             'after_id' => 'sometimes|integer|min:0',
             'limit' => 'sometimes|integer|min:1|max:100',
-            'exclude_groups' => 'sometimes|array',
+            'exclude_groups' => 'sometimes|array|max:50',
             'exclude_groups.*' => 'integer|exists:groups,id',
         ];
     }
@@ -35,17 +35,10 @@ class ContentListRequest extends FormRequest
             'limit.min' => 'El límite debe ser mayor a 0.',
             'limit.max' => 'El límite no puede ser mayor a 100.',
             'exclude_groups.array' => 'El campo exclude_groups debe ser un arreglo.',
+            'exclude_groups.max' => 'No puedes excluir más de 50 grupos por petición.',
             'exclude_groups.*.integer' => 'Los grupos a excluir deben ser números enteros.',
             'exclude_groups.*.exists' => 'Uno de los grupos a excluir no existe.',
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'after_id' => $this->input('after_id') !== null ? (int) $this->input('after_id') : 0,
-            'limit' => $this->input('limit') !== null ? (int) $this->input('limit') : 25,
-        ]);
     }
 
     protected function failedValidation(Validator $validator): void
@@ -57,12 +50,12 @@ class ContentListRequest extends FormRequest
 
     public function getAfterId(): ?int
     {
-        return $this->validated()['after_id'] ?? null;
+        return isset($this->validated()['after_id']) ? (int) $this->validated()['after_id'] : null;
     }
 
     public function getLimit(): int
     {
-        return $this->validated()['limit'] ?? 25;
+        return (int) ($this->validated()['limit'] ?? 25);
     }
 
     public function getExcludedGroups(): array

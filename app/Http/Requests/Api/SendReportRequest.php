@@ -75,6 +75,10 @@ class SendReportRequest extends FormRequest
     {
         $validated = parent::validated($key, $default);
 
+        if ($key !== null) {
+            return $validated;
+        }
+
         // Añadir los campos adicionales que preparamos
         $validated['user_id'] = $this->user_id;
         $validated['reporter_ip'] = $this->ip_address;

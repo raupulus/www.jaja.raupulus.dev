@@ -8,7 +8,8 @@ El módulo `Report` provee a los consumidores de la API y visitantes de la web u
 
 ## Funcionalidad Técnica
 1. **Puntos de Entrada**:
-   - Endpoint público de la API para generar reportes (`POST /report`).
+   - Endpoint protegido de la API para generar reportes (`POST /api/v1/report/send` con `auth:sanctum`).
+   - El campo `description` es opcional en el payload de entrada (`nullable|string|max:1024`) y se normaliza a cadena vacía (`''`) al persistir para respetar la columna `NOT NULL` en base de datos sin romper clientes existentes.
    - Integración potencial desde la web pública (TODO list).
 2. **Moderación**:
    - Los reportes son visibles en el backoffice (`/admin`) a través de un Recurso de Filament para `Report`.

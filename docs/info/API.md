@@ -22,10 +22,11 @@ La API de JaJa Project es el principal medio por el cual clientes externos (Bots
    - Filtra internamente para excluir grupos como "Adultos" con el fin de proteger las integraciones públicas por defecto.
 2. **Endpoints de Ingesta**:
    - Existen endpoints para el envío de sugerencias comunitarias (ej. subir nuevos chistes) y para el reporte de contenido inapropiado.
-3. **Formatos, Errores y Seguridad HTTP**:
+3. **Formatos, Errores, Validación y Seguridad HTTP**:
    - Toda la comunicación se debe realizar forzando los headers `Accept: application/json` y `Content-type: application/json`. Aun sin `Accept: application/json`, cualquier ruta bajo `api/*` fuerza respuestas JSON en el manejador de excepciones de `bootstrap/app.php`.
    - En respuestas `ApiResponse::error()` con `APP_DEBUG=true`, el bloque `debug.request` excluye automáticamente campos sensibles (`password`, `password_confirmation`, `current_password`, `token`, `access_token`).
    - Las respuestas de la API y del sitio web incluyen cabeceras de seguridad estándar mediante `SecurityHeadersMiddleware` (`X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy` y `Strict-Transport-Security` en HTTPS).
+   - Los `FormRequest` de consulta (`PaginationRequest`, `ContentListRequest`, `ContentRandom*Request`) validan los parámetros (`page`, `limit`, `after_id`) sin conversión `(int)` previa, devolviendo `422` ante tipos inválidos; `ContentListRequest` limita `exclude_groups` a 50 elementos y `/api/v1/groups` pagina con el parámetro estándar `page`.
    - Las respuestas con colecciones múltiples o vacías siempre deben adaptar sus envoltorios JSON, devolviendo plural o singular según el caso.
 
 

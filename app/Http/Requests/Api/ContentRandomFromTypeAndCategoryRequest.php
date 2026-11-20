@@ -47,16 +47,6 @@ class ContentRandomFromTypeAndCategoryRequest extends FormRequest
     }
 
     /**
-     * Prepare the data for validation.
-     */
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'limit' => (int) $this->input('limit', 1),
-        ]);
-    }
-
-    /**
      * Handle a failed validation attempt for API.
      */
     protected function failedValidation(Validator $validator): void
@@ -71,7 +61,7 @@ class ContentRandomFromTypeAndCategoryRequest extends FormRequest
      */
     public function getLimit(): int
     {
-        return $this->validated()['limit'];
+        return (int) ($this->validated()['limit'] ?? 1);
     }
 
     /**

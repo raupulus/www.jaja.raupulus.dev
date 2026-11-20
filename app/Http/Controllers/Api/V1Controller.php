@@ -24,6 +24,8 @@ use App\Models\Suggestion;
 use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Controlador V1Controller
@@ -346,7 +348,7 @@ class V1Controller extends Controller
 
             $groups = Group::select(['id', 'title', 'slug', 'image'])
                 ->orderByDesc('title')
-                ->paginate($limit, ['*'], 'groups_index', $page);
+                ->paginate($limit, ['*'], 'page', $page);
 
             if ($page > $groups->lastPage() && $groups->total() > 0) {
                 return $this->errorResponse(
@@ -838,7 +840,7 @@ class V1Controller extends Controller
                 'reportable_id' => $data['reportable_id'],
                 'title' => $data['title'],
                 'type' => $data['type'] ?? 'other',
-                'description' => $data['description'] ?? null,
+                'description' => $data['description'] ?? '',
                 'additional_info' => $data['additional_info'] ?? null,
                 'status' => 'pending',
                 'priority' => 'medium',
@@ -864,10 +866,10 @@ class V1Controller extends Controller
             return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
 
         } catch (\Exception $e) {
-            \Log::error('Error al crear reporte: ' . $e->getMessage(), [
+            Log::error('Error creating report: ' . $e->getMessage(), [
                 'user_id' => Auth::id(),
-                'request_data' => $request->all(),
-                'exception' => $e->getTraceAsString()
+                'content_id' => $request->input('content_id'),
+                'exception' => $e->getTraceAsString(),
             ]);
 
             return $this->errorResponse('Error al enviar el reporte, si persiste contacta con el administrador', 500);
