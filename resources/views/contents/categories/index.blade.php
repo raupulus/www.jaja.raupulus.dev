@@ -50,7 +50,7 @@
                     <div class="category-card-content {{ $category->image ? '' : 'no-image' }}">
                         @if($category->image)
                             <div class="category-card-image">
-                                <img src="{{$category->urlImage}}" alt="{{$category->title}}">
+                                <img src="{{$category->urlImage}}" alt="{{$category->title}}" width="60" height="60" loading="lazy" decoding="async">
                             </div>
                         @endif
 

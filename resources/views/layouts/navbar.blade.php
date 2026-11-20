@@ -2,7 +2,10 @@
     <div class="nav-wrapper">
         <a href="{{ route('index') }}" class="brand-logo">
             <img src="{{ asset('images/logos/jaja-project-logo-square-small.webp') }}"
-                 alt="Logotipo de {{config('app.name')}}">
+                 alt="Logotipo de {{config('app.name')}}"
+                 width="30"
+                 height="30"
+                 decoding="async">
             {{config('app.name')}}
         </a>
 

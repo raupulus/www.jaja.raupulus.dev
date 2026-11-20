@@ -63,7 +63,7 @@
             </p>
 
             @if($group->image)
-                <img src="{{$group->urlimage}}" alt="{{$group->title}}" class="media-banner-md">
+                <img src="{{$group->urlimage}}" alt="{{$group->title}}" class="media-banner-md" width="500" height="333" loading="lazy" decoding="async">
             @endif
         </div>
 

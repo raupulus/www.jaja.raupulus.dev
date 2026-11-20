@@ -1,7 +1,11 @@
 <div class="desarrollador-card">
     <div class="dev-avatar">
         <img src="{{$collaborator->urlImage}}"
-             alt="Avatar desarrollador {{$collaborator->name}} ({{'@' . $collaborator->nick}})">
+             alt="Avatar desarrollador {{$collaborator->name}} ({{'@' . $collaborator->nick}})"
+             width="100"
+             height="100"
+             loading="lazy"
+             decoding="async">
     </div>
 
     <h3 class="dev-name">{{$collaborator->name}}</h3>

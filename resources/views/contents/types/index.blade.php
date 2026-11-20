@@ -51,7 +51,7 @@
 
                 @if($type->image)
                     <div class="card-resume-image">
-                        <img src="{{$type->urlImage}}" alt="{{$type->name}}">
+                        <img src="{{$type->urlImage}}" alt="{{$type->name}}" width="220" height="120" loading="lazy" decoding="async">
                     </div>
                 @endif
             </div>

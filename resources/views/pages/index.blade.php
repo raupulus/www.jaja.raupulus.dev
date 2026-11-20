@@ -53,7 +53,7 @@
                 <div class="card card-content {{ $page->image ? '' : 'card-content--no-image' }}">
                     @if ($page->image)
                         <div class="card-content-image">
-                            <img src="{{$page->urlImageThumbnail}}" title="{{$page->title}}" alt="{{$page->title}}"/>
+                            <img src="{{$page->urlImageThumbnail}}" title="{{$page->title}}" alt="{{$page->title}}" width="120" height="120" loading="lazy" decoding="async"/>
                         </div>
                     @endif
 

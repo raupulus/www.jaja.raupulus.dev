@@ -1,7 +1,7 @@
 <div class="project-item">
     @if($project->image)
         <div>
-            <img src="{{$project->urlImage}}" alt="{{$project->title}}">
+            <img src="{{$project->urlImage}}" alt="{{$project->title}}" width="200" height="140" loading="lazy" decoding="async">
         </div>
     @else
         <div>

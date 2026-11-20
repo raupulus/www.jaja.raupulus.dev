@@ -5,7 +5,11 @@
    title="Enlace al bot de discord de jaja project para añadirlo a tu servidor"
    href="https://discord.com/oauth2/authorize?client_id=1391159444490158202&permissions=274877908992&integration_type=0&scope=bot">
     <img src="{{ asset('images/icons/discord.svg') }}"
-         alt="Enlace al bot de discord de jaja project para añadirlo a tu servidor">
+         alt="Enlace al bot de discord de jaja project para añadirlo a tu servidor"
+         width="32"
+         height="32"
+         loading="lazy"
+         decoding="async">
 
     <span>
         Añadir Bot

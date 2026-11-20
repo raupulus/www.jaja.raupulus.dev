@@ -5,28 +5,33 @@ Los paneles de administración (`/admin`) y usuario (`/panel`) utilizan los esti
 
 ## Stack de estilos verificado
 
-- **Tailwind CSS v4** integrado mediante `@tailwindcss/vite` (`package.json`, `vite.config.js`).
-- **Compilación**: Vite (`npm run dev` / `npm run build`).
-- **Punto de entrada CSS**: `resources/css/app.css`.
-  - Importa `@import 'tailwindcss';`.
-  - Configura fuentes `@source` sobre vistas Blade, JS y paginación de Laravel.
-  - Define `--font-sans` con `'Instrument Sans'` y fallbacks del sistema en `@theme`.
+- **CSS Modular con tokens nativos** compilado mediante **Vite** (`vite.config.js` con `npm run dev` / `npm run build`).
+- **`color-scheme: dark`** declarado en `<meta name="color-scheme" content="dark">` (`head.blade.php`) y `:root` (`frontend.css`).
+- **Tipografía unificada**: familia `Inter` cargada localmente desde `public/fonts/inter/inter.css` con `preload` en `<head>` para `inter-400.woff2` e `inter-700.woff2`, expuesta como `--font-sans` y `--font-mono`.
 
-## Hojas CSS modulares (`resources/css/`)
+## Sistema de Tokens (`resources/css/frontend.css`)
 
-Además de `app.css`, el frontend público organiza estilos específicos por sección o componente:
+- **Colores de marca y superficie**: `--color-primary` (`#00bcd4`), `--color-primary-hover`, `--color-primary-soft`, `--color-on-primary`, `--color-bg` (`#121212`), `--color-surface` (`#1e1e1e`), `--color-surface-elevated`, `--color-border`, `--color-border-control`.
+- **Texto y estados WCAG AA**: `--color-text`, `--color-text-muted`, `--color-text-accent`, `--color-success`/`-text`, `--color-warning`/`-text`, `--color-danger`/`-text`/`-accent`, `--color-info`/`-text`. Se mantienen alias en español (`--color-primario`, etc.) apuntando a los tokens canónicos.
+- **Maquetación y lectura**: `--container-max: 1280px`, `--prose-max: 68ch`, `text-wrap: balance` en `h1–h3`, `text-wrap: pretty` en párrafos de `.page-content-wrapper`, `font-variant-numeric: tabular-nums` en contadores y `overflow-wrap: break-word` (sin `word-break: break-all`).
+- **Botones**: `.btn` sólido principal, `.btn--secondary` y `.btn--outline`.
+- **Animaciones**: keyframes prefijados sin colisión (`timer-pulse`, `dc-bot-ripple`, `contributor-value-pulse`, `randomPulse`, `loading-shimmer`) basados exclusivamente en `transform` y `opacity`.
 
-- Base y layout: `frontend.css`, `footer.css`, `page.css`, `pages.css`
-- Portada y navegación: `home.css`, `groups_links.css`, `grid_categories.css`, `general_stats.css`
-- Componentes visuales: `buttons.css`, `horizontal_card.css`, `social_icons.css`, `cookies.css`
+## Hojas CSS modulares activas en `vite.config.js`
+
+- Base y layout: `frontend.css`, `buttons.css`, `footer.css`, `page.css`
+- Portada y navegación: `groups_links.css`, `grid_categories.css`, `general_stats.css`
+- Componentes visuales: `horizontal_card.css`, `social_icons.css`, `cookies.css`
 - Colaboradores y proyectos: `collaborators.css`, `contributors.css`, `projects.css`
 - Formularios: `suggestions_form.css`
+
+> Nota: `home.css` y `pages.css` (vacíos) y las entradas huérfanas `app.css`/`app.js` fueron retirados de `vite.config.js`.
 
 ## Convenciones
 
 - Los textos visibles para el usuario deben estar en español.
-- Los nombres de ficheros CSS, clases e identificadores en inglés.
-- Antes de añadir nuevas hojas CSS, comprobar si el estilo corresponde a un módulo existente en `resources/css/` o puede resolverse con utilidades de Tailwind v4.
+- Los nombres de ficheros CSS, variables de diseño (`--color-*`), clases e identificadores en inglés.
+- Antes de añadir nuevas hojas CSS, comprobar si el estilo corresponde a un módulo existente en `resources/css/` usando sus tokens `:root`.
 
 ---
 > Creado: 2026-11-20 · Última revisión: 2026-11-20

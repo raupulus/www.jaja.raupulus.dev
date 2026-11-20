@@ -87,7 +87,7 @@
 
                 @if($group->image)
                     <div class="card-resume-image">
-                        <img src="{{$group->urlImage}}" alt="{{$group->title}}">
+                        <img src="{{$group->urlImage}}" alt="{{$group->title}}" width="220" height="120" loading="lazy" decoding="async">
                     </div>
                 @endif
             </div>
