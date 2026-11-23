@@ -107,6 +107,14 @@ class ContentController extends Controller
      */
     public function contentRandomFromGroup(Group $group): View
     {
+        $totalContents = $group->contents()
+            ->publicSafe()
+            ->count();
+
+        if ($totalContents === 0) {
+            abort(404);
+        }
+
         $contents = $group->contents()
             ->with([
                 'group.type',
@@ -118,13 +126,10 @@ class ContentController extends Controller
             ->limit(3)
             ->get();
 
-        if ($contents->isEmpty()) {
-            abort(404);
-        }
-
         return view('contents.groups.show')->with([
             'group' => $group,
             'contents' => $contents,
+            'hasMoreRandomContents' => $totalContents > 3,
         ]);
     }
 
@@ -133,6 +138,14 @@ class ContentController extends Controller
      */
     public function contentRandomFromcategory(Category $category): View
     {
+        $totalContents = $category->contents()
+            ->publicSafe()
+            ->count();
+
+        if ($totalContents === 0) {
+            abort(404);
+        }
+
         $contents = $category->contents()
             ->with([
                 'group.type',
@@ -144,13 +157,10 @@ class ContentController extends Controller
             ->limit(3)
             ->get();
 
-        if ($contents->isEmpty()) {
-            abort(404);
-        }
-
         return view('contents.categories.show')->with([
             'category' => $category,
             'contents' => $contents,
+            'hasMoreRandomContents' => $totalContents > 3,
         ]);
     }
 }

@@ -77,12 +77,33 @@ class AccessibilityAndPrivacyTest extends TestCase
         $category = Category::findOrFail(1);
         $category->contents()->syncWithoutDetaching([$content->id]);
 
+        // Con <= 3 contenidos no se muestra el botón Aleatorio
+        $groupHtmlSingle = $this->get(route('content.group.content.random', $group->slug))->assertStatus(200)->getContent();
+        $this->assertStringNotContainsString('id="box-btn-random"', $groupHtmlSingle);
+
+        $categoryHtmlSingle = $this->get(route('content.categoria.content.random', $category->slug))->assertStatus(200)->getContent();
+        $this->assertStringNotContainsString('id="box-btn-random"', $categoryHtmlSingle);
+
+        // Al superar los 3 contenidos mostrados, aparece el botón Aleatorio con parámetro de recarga
+        for ($i = 2; $i <= 4; $i++) {
+            $extra = Content::create([
+                'user_id' => $user->id,
+                'group_id' => $group->id,
+                'title' => "Chiste de prueba {$i}",
+                'content' => "Contenido de prueba {$i}",
+                'is_adult' => false,
+            ]);
+            $category->contents()->syncWithoutDetaching([$extra->id]);
+        }
+
         $groupHtml = $this->get(route('content.group.content.random', $group->slug))->assertStatus(200)->getContent();
         $this->assertStringNotContainsString('onclick="window.location.reload()', $groupHtml);
         $this->assertStringNotContainsString('<div class="wheel">', $groupHtml);
         $this->assertStringContainsString('<span class="wheel" aria-hidden="true">', $groupHtml);
+        $this->assertMatchesRegularExpression('/\/grupo\/chistes-cortos\/random\?r=[A-Za-z0-9]{6}#box-btn-random" rel="nofollow"/', $groupHtml);
 
         $categoryHtml = $this->get(route('content.categoria.content.random', $category->slug))->assertStatus(200)->getContent();
+        $this->assertMatchesRegularExpression('/\/categoria\/general\/random\?r=[A-Za-z0-9]{6}#box-btn-random" rel="nofollow"/', $categoryHtml);
         $this->assertStringNotContainsString('onclick="window.location.reload()', $categoryHtml);
         $this->assertStringNotContainsString('<div class="wheel">', $categoryHtml);
         $this->assertStringContainsString('<span class="wheel" aria-hidden="true">', $categoryHtml);

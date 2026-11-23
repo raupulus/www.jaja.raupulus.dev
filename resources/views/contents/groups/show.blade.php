@@ -68,9 +68,10 @@
             @endif
         </div>
 
+        @if($hasMoreRandomContents ?? false)
         <div id="box-btn-random">
             <div class="btn-random-content">
-                <a href="{{route('content.group.content.random', $group->slug)}}#box-btn-random">
+                <a href="{{ route('content.group.content.random', ['group' => $group->slug, 'r' => \Illuminate\Support\Str::random(6)]) }}#box-btn-random" rel="nofollow">
                     <span class="wheel" aria-hidden="true">
                         <span class="arrow"></span>
                         <span class="arrow"></span>
@@ -85,6 +86,7 @@
                 </a>
             </div>
         </div>
+        @endif
 
         <div>
             @include('contents.partials._contents', ['contents' => $contents])

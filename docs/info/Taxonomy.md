@@ -20,7 +20,7 @@
 
 ## Flujos principales
 1. **Listados web (`ContentController`)**: cachea `types_index`, `groups_index`, `groups_index_by_type_{id}` y `categories_index` (60 minutos), calculando `contents_count` y `last_content_date` en subconsultas (`withCount`, `withMax`) sin `N+1` y excluyendo grupos/categorías sin contenido público seguro.
-2. **Rutas aleatorias (`/grupo/{group:slug}/random` y `/categoria/{category:slug}/random`)**: obtienen hasta 3 elementos mediante `publicSafe()` y devuelven `404` intencionadamente si la colección está vacía.
+2. **Rutas aleatorias (`/grupo/{group:slug}/random` y `/categoria/{category:slug}/random`)**: obtienen hasta 3 elementos mediante `publicSafe()` y devuelven `404` intencionadamente si la colección está vacía. El botón «Aleatorio» (`#box-btn-random`) solo se muestra cuando el total de contenidos públicos aptos supera 3 (`$hasMoreRandomContents`), e incluye `?r=<token>#box-btn-random` con `rel="nofollow"` para forzar navegación real en el navegador sin JavaScript inline.
 3. **Diferenciación SEO por tipo (`/{type:slug}/grupos`)**: inyecta `$type` en la vista para emitir `<title>`, `<h1>`, `<meta name="description">` y JSON-LD (`CollectionPage` + `BreadcrumbList`) diferenciados respecto a `/grupos`.
 4. **Cálculo legible de última actividad**: `Type::getLastUpdateMessageAttribute()` y `Group::getLastUpdateMessageAttribute()` usan `CarbonInterface::DIFF_ABSOLUTE`.
 
@@ -53,4 +53,4 @@
 - Sin deuda técnica pendiente del alcance actual.
 
 ---
-> Creado: 2026-06-29 · Última revisión: 2026-11-20
+> Creado: 2026-06-29 · Última revisión: 2026-11-23
